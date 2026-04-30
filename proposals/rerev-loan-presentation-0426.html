@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReRev Labs — Capital Deployment Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F0F7F7;
+    --dark: #0D1F2D;
+    --cyan: #1A9E9E;
+    --purple: #7C3AED;
+    --grad: linear-gradient(90deg, #1A9E9E, #7C3AED);
+    --white: #ffffff;
+    --muted: #5a7a8a;
+    --card: #ffffff;
+    --border: rgba(26,158,158,0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  .nav-dots {
+    position: fixed;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(13,31,45,0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+  }
+  .nav-dot.active {
+    background: var(--cyan);
+    transform: scale(1.5);
+  }
+
+  .slide {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .slide.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .slide-inner { max-width: 860px; width: 100%; }
+
+  .slide-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .slide-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--cyan);
+    opacity: 0.4;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.1;
+    color: var(--dark);
+    margin-bottom: 20px;
+  }
+  h1 em {
+    font-style: italic;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    line-height: 1.15;
+    color: var(--dark);
+    margin-bottom: 16px;
+  }
+  h2 em {
+    font-style: italic;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 640px;
+  }
+
+  .slide-hero {
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+  .slide-hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,158,158,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .slide-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -150px; left: -150px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .slide-hero .slide-label { color: rgba(26,158,158,0.8); }
+  .slide-hero h1 { color: var(--white); }
+  .slide-hero p { color: rgba(255,255,255,0.55); }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    border-left: 2px solid rgba(26,158,158,0.4);
+    padding-left: 16px;
+  }
+  .hero-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(26,158,158,0.7);
+    margin-bottom: 4px;
+  }
+  .hero-meta-item .value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .grad-bar {
+    width: 80px;
+    height: 3px;
+    background: var(--grad);
+    border-radius: 2px;
+    margin-bottom: 32px;
+  }
+
+  .alloc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .alloc-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .alloc-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--grad);
+  }
+  .alloc-card .amount {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .alloc-card .pct {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .alloc-card .name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .alloc-card .desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .alloc-card.featured {
+    background: var(--dark);
+    border-color: transparent;
+  }
+  .alloc-card.featured .amount { color: var(--white); }
+  .alloc-card.featured .name { color: var(--white); }
+  .alloc-card.featured .desc { color: rgba(255,255,255,0.5); }
+
+  .strategy-block {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    margin-top: 32px;
+  }
+  .strategy-block h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .strategy-block .sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .strategy-block p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 0;
+  }
+
+  .pipeline-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 28px;
+  }
+  .pipeline-step {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .pipeline-step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan);
+    letter-spacing: 2px;
+    min-width: 32px;
+    padding-top: 2px;
+  }
+  .step-body .step-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .step-body p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .outreach-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .outreach-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+  }
+  .outreach-card .icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(26,158,158,0.12), rgba(124,58,237,0.12));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  .outreach-card h4 {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .outreach-card p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .roi-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .roi-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+  }
+  .roi-card.dark {
+    background: var(--dark);
+    border-color: transparent;
+  }
+  .roi-card .roi-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 10px;
+  }
+  .roi-card .roi-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    color: var(--dark);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .roi-card.dark .roi-num { color: var(--white); }
+  .roi-card .roi-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .roi-card.dark .roi-desc { color: rgba(255,255,255,0.5); }
+
+  .cost-breakdown {
+    margin-top: 28px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .cost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  .cost-row:last-child { border-bottom: none; }
+  .cost-row .cost-label { color: var(--muted); }
+  .cost-row .cost-val {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    color: var(--dark);
+    font-size: 0.85rem;
+  }
+  .cost-row.total { background: var(--dark); }
+  .cost-row.total .cost-label { color: rgba(255,255,255,0.6); font-weight: 700; }
+  .cost-row.total .cost-val { color: var(--white); }
+
+  .timeline-wrap {
+    margin-top: 36px;
+    position: relative;
+  }
+  .timeline-line {
+    position: absolute;
+    top: 28px;
+    left: 28px;
+    right: 28px;
+    height: 2px;
+    background: var(--border);
+  }
+  .timeline-fill {
+    height: 100%;
+    background: var(--grad);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 1.2s ease 0.5s;
+  }
+  .timeline-nodes {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+  }
+  .t-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .t-dot {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    position: relative;
+    z-index: 2;
+  }
+  .t-dot.active {
+    border-color: var(--cyan);
+    background: linear-gradient(135deg, rgba(26,158,158,0.1), rgba(124,58,237,0.1));
+  }
+  .t-info { text-align: center; }
+  .t-info .t-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--cyan);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .t-info .t-event {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .t-info .t-sub {
+    font-size: 0.75rem;
+    color: var(--muted);
+    max-width: 120px;
+  }
+
+  .repay-note {
+    margin-top: 36px;
+    background: var(--dark);
+    border-radius: 16px;
+    padding: 28px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .repay-note .rn-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: rgba(26,158,158,0.8);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .repay-note .rn-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: var(--white);
+  }
+
+  .hw-block {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .hw-col h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .hw-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .hw-col ul li {
+    font-size: 0.9rem;
+    color: var(--muted);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .hw-col ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+    font-size: 0.8rem;
+  }
+
+  .slide-footer {
+    position: absolute;
+    bottom: 28px;
+    right: 40px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(13,31,45,0.25);
+    text-transform: uppercase;
+  }
+  .slide-hero .slide-footer { color: rgba(255,255,255,0.2); }
+
+  @media (max-width: 640px) {
+    .alloc-grid { grid-template-columns: 1fr; }
+    .outreach-grid { grid-template-columns: 1fr; }
+    .roi-row { grid-template-columns: 1fr; }
+    .hw-block { grid-template-columns: 1fr; }
+    .timeline-nodes { gap: 8px; }
+    .t-info .t-sub { max-width: 80px; font-size: 0.65rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-dots" id="navDots"></nav>
+
+<section class="slide slide-hero" data-slide="0">
+  <div class="slide-inner">
+    <img src="https://res.cloudinary.com/dialhpycd/image/upload/v1770670281/rerev_labs_title_logo_afrgnu.png" alt="ReRev Labs" style="height: 48px; margin-bottom: 32px; display: block;">
+    <div class="slide-label">Capital Plan</div>
+    <div class="grad-bar"></div>
+    <h1>$2,500 deployed<br>to build <em>pipeline</em>.</h1>
+    <p>A targeted capital deployment across audience acquisition, outreach infrastructure, and operational reliability — designed to return multiples before repayment begins.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="label">Principal</div>
+        <div class="value">$2,500</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="label">Interest</div>
+        <div class="value">5% Simple</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="label">Grace Period</div>
+        <div class="value">3 Months</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="label">Total Cost</div>
+        <div class="value">$125</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">Confidential — For Lender Review</div>
+</section>
+
+<section class="slide" data-slide="1">
+  <div class="slide-inner">
+    <div class="slide-label">Use of Funds</div>
+    <h2>Three buckets.<br><em>One pipeline.</em></h2>
+    <p>Every dollar is mapped to a specific business function that directly supports client acquisition and delivery capacity.</p>
+    <div class="alloc-grid">
+      <div class="alloc-card featured">
+        <div class="amount">$1,850</div>
+        <div class="pct">74% — Core Investment</div>
+        <div class="name">Substack + Newsletter Collabs</div>
+        <div class="desc">Audience-intro campaigns and content partnerships targeting precise ICP emails before individual outreach begins.</div>
+      </div>
+      <div class="alloc-card">
+        <div class="amount">$300</div>
+        <div class="pct">12% — Outreach Stack</div>
+        <div class="name">Software & Apollo</div>
+        <div class="desc">Cold outreach tooling including Apollo.io and supporting personalization infrastructure.</div>
+      </div>
+      <div class="alloc-card">
+        <div class="amount">$350</div>
+        <div class="pct">14% — Infrastructure</div>
+        <div class="name">Hotspot Upgrade</div>
+        <div class="desc">Reliable connectivity enabling uninterrupted client delivery and outreach operations.</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">ReRev Labs — rerev.io</div>
+</section>
+
+<section class="slide" data-slide="2">
+  <div class="slide-inner">
+    <div class="slide-label">Core Investment — $1,850</div>
+    <h2>Warm the room<br><em>before you walk in.</em></h2>
+    <p>Cold outreach works better when the prospect has already been introduced to the sender's thinking. Newsletter and Substack collaborations make that happen at scale.</p>
+    <div class="strategy-block">
+      <div class="sub">The Strategy</div>
+      <h3>Audience introductions before individual engagement</h3>
+      <p>Rather than cold-contacting ICP prospects blind, this investment buys sponsored content and co-authored pieces inside newsletters our exact ICPs already read — agencies, fractional executives, boutique advisors, interim operators. By the time a 1:1 outreach lands, the name ReRev Labs is already familiar.</p>
+    </div>
+    <div class="pipeline-steps">
+      <div class="pipeline-step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <div class="step-title">Identify ICP-aligned newsletters</div>
+          <p>Curate a shortlist of Substack and independent newsletters with confirmed readership in marketing agencies, fractional exec circles, and boutique advisory firms.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <div class="step-title">Secure audience introductions + ad placements</div>
+          <p>Negotiate sponsored segments and collaborative content that deliver ReRev Labs' value proposition to a verified, engaged list — and capture ICP emails directly.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <div class="step-title">Activate warmed list through personalized outreach</div>
+          <p>Individual outreach follows audience exposure — open rates, response rates, and conversion rates all increase meaningfully when context has been established first.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">ReRev Labs — rerev.io</div>
+</section>
+
+<section class="slide" data-slide="3">
+  <div class="slide-inner">
+    <div class="slide-label">Outreach Infrastructure — $300</div>
+    <h2>Personalized outreach<br><em>at volume.</em></h2>
+    <p>Advanced cold outreach tools turn a warmed list into active conversations. Apollo and its supporting stack enable precision targeting, sequencing, and tracking at a scale no manual process can match.</p>
+    <div class="outreach-grid">
+      <div class="outreach-card">
+        <div class="icon">🎯</div>
+        <h4>Apollo.io</h4>
+        <p>Contact discovery, verified emails, sequencing, and pipeline tracking. Apollo becomes the operational engine for all cold and warm outreach at ReRev Labs.</p>
+      </div>
+      <div class="outreach-card">
+        <div class="icon">✍️</div>
+        <h4>Personalization Tools</h4>
+        <p>Supporting software for AI-assisted personalization at scale — ensuring each outreach touchpoint reflects specific research on the recipient, not a template blast.</p>
+      </div>
+      <div class="outreach-card">
+        <div class="icon">📊</div>
+        <h4>Sequence & Analytics</h4>
+        <p>Multi-step outreach sequences with open, click, and reply tracking. Data from every campaign informs the next, compounding performance over time.</p>
+      </div>
+      <div class="outreach-card">
+        <div class="icon">🔗</div>
+        <h4>Newsletter → CRM Pipeline</h4>
+        <p>Contacts captured from newsletter collaborations feed directly into Apollo sequences — closing the loop between audience acquisition and individual engagement.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">ReRev Labs — rerev.io</div>
+</section>
+
+<section class="slide" data-slide="4">
+  <div class="slide-inner">
+    <div class="slide-label">Infrastructure — $350</div>
+    <h2>Operations run on<br><em>reliable connectivity.</em></h2>
+    <p>Every client call, outreach sequence, and automation depends on a stable connection. The hotspot upgrade removes the single operational variable that can't be solved with software.</p>
+    <div class="hw-block">
+      <div class="hw-col">
+        <h4>What this covers</h4>
+        <ul>
+          <li>Upgraded mobile hotspot device for primary business use</li>
+          <li>Plan upgrade to support simultaneous client delivery and outreach tooling</li>
+          <li>Backup connectivity for uninterrupted operations during client engagements</li>
+        </ul>
+      </div>
+      <div class="hw-col">
+        <h4>Why it matters</h4>
+        <ul>
+          <li>Client delivery failures due to connectivity cost more than the hardware</li>
+          <li>Outreach sequences, CRM sync, and automation run continuously in background</li>
+          <li>Enables remote and mobile operations without quality degradation</li>
+        </ul>
+      </div>
+    </div>
+    <div class="strategy-block" style="margin-top: 20px;">
+      <div class="sub">Bottom Line</div>
+      <h3>$350 eliminates a recurring operational risk</h3>
+      <p>This is the smallest allocation but solves a concrete bottleneck. Reliable connectivity is the foundation everything else runs on — Apollo sequences, Zoom client calls, automation monitoring, and CRM management all require consistent uptime.</p>
+    </div>
+  </div>
+  <div class="slide-footer">ReRev Labs — rerev.io</div>
+</section>
+
+<section class="slide" data-slide="5">
+  <div class="slide-inner">
+    <div class="slide-label">Return on Investment</div>
+    <h2>The math is<br><em>straightforward.</em></h2>
+    <p>One new client engagement from this pipeline covers the loan and interest in full. The goal is two to three new engagements within the repayment window.</p>
+    <div class="roi-row">
+      <div class="roi-card dark">
+        <div class="roi-label">Total Cost of Capital</div>
+        <div class="roi-num">$125</div>
+        <div class="roi-desc">5% simple interest on $2,500. Fixed. No compounding. That's the full cost of this loan.</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-label">Single Client Engagement</div>
+        <div class="roi-num">$1,500+</div>
+        <div class="roi-desc">ReRev Labs' entry-level engagement. One new client from this pipeline pays back the loan and interest with room to spare.</div>
+      </div>
+    </div>
+    <div class="cost-breakdown">
+      <div class="cost-row">
+        <span class="cost-label">Principal borrowed</span>
+        <span class="cost-val">$2,500.00</span>
+      </div>
+      <div class="cost-row">
+        <span class="cost-label">Simple interest (5%)</span>
+        <span class="cost-val">$125.00</span>
+      </div>
+      <div class="cost-row">
+        <span class="cost-label">Grace period before repayment</span>
+        <span class="cost-val">3 months</span>
+      </div>
+      <div class="cost-row">
+        <span class="cost-label">New clients needed to break even</span>
+        <span class="cost-val">2 engagements</span>
+      </div>
+      <div class="cost-row total">
+        <span class="cost-label">Total repayment amount</span>
+        <span class="cost-val">$2,625.00</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">ReRev Labs — rerev.io</div>
+</section>
+
+<section class="slide" data-slide="6">
+  <div class="slide-inner">
+    <div class="slide-label">Repayment Timeline</div>
+    <h2>Clear terms.<br><em>Clean execution.</em></h2>
+    <p>Three months of runway to deploy capital, activate the pipeline, and begin generating revenue before a single repayment dollar is due.</p>
+    <div class="timeline-wrap">
+      <div class="timeline-line">
+        <div class="timeline-fill" id="timelineFill"></div>
+      </div>
+      <div class="timeline-nodes">
+        <div class="t-node">
+          <div class="t-dot active">📅</div>
+          <div class="t-info">
+            <div class="t-date">Month 0</div>
+            <div class="t-event">Issuance</div>
+            <div class="t-sub">Capital received, deployment begins immediately</div>
+          </div>
+        </div>
+        <div class="t-node">
+          <div class="t-dot active">🚀</div>
+          <div class="t-info">
+            <div class="t-date">Month 1–2</div>
+            <div class="t-event">Active Build</div>
+            <div class="t-sub">Newsletter collabs live, outreach sequences running</div>
+          </div>
+        </div>
+        <div class="t-node">
+          <div class="t-dot active">📈</div>
+          <div class="t-info">
+            <div class="t-date">Month 3</div>
+            <div class="t-event">Pipeline Active</div>
+            <div class="t-sub">First conversions expected, revenue generating</div>
+          </div>
+        </div>
+        <div class="t-node">
+          <div class="t-dot">💰</div>
+          <div class="t-info">
+            <div class="t-date">Month 3+</div>
+            <div class="t-event">Repayment</div>
+            <div class="t-sub">Begins after grace period, structured from revenue</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repay-note">
+      <div>
+        <div class="rn-label">Total Repayment</div>
+        <div class="rn-val">$2,625</div>
+      </div>
+      <div>
+        <div class="rn-label">Interest Only</div>
+        <div class="rn-val">$125</div>
+      </div>
+      <div>
+        <div class="rn-label">Structure</div>
+        <div class="rn-val">Simple, Fixed</div>
+      </div>
+      <div>
+        <div class="rn-label">Lender Risk</div>
+        <div class="rn-val">Minimal</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">ReRev Labs — rerev.io</div>
+</section>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const navDots = document.getElementById('navDots');
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Slide ${i + 1}`);
+    dot.addEventListener('click', () => slides[i].scrollIntoView({ behavior: 'smooth' }));
+    navDots.appendChild(dot);
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        const idx = Array.from(slides).indexOf(entry.target);
+        document.querySelectorAll('.nav-dot').forEach((d, i) => {
+          d.classList.toggle('active', i === idx);
+        });
+        if (idx === 6) {
+          setTimeout(() => {
+            document.getElementById('timelineFill').style.width = '75%';
+          }, 300);
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  slides.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
