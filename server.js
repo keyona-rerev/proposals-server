@@ -3,8 +3,8 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Serve static files from /proposals folder
-app.use('/proposals', express.static(path.join(__dirname, 'proposals')));
+// Serve static files from /proposals folder — extensions: ['html'] allows extensionless URLs
+app.use('/proposals', express.static(path.join(__dirname, 'proposals'), { extensions: ['html'] }));
 
 // Index route — lists available proposals (helpful for debugging)
 app.get('/', (req, res) => {
@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
     <html>
       <body style="font-family: sans-serif; padding: 2rem; background: #F0F7F7;">
         <h2 style="color: #0D1F2D;">Proposals Server</h2>
-        <p style="color: #555;">Running. Proposals are served at <code>/proposals/[slug].html</code></p>
+        <p style="color: #555;">Running. Proposals are served at <code>/proposals/[slug]</code></p>
       </body>
     </html>
   `);
