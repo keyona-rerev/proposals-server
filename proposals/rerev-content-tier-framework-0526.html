@@ -37,25 +37,11 @@
     min-height: 100vh;
   }
 
-  .header {
-    padding: 48px 40px 40px;
-    max-width: 900px;
-    margin: 0 auto;
-  }
+  .header { padding: 48px 40px 40px; max-width: 900px; margin: 0 auto; }
 
-  .wordmark {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 48px;
-  }
+  .wordmark { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 48px; }
 
-  .wordmark-bar {
-    width: 28px;
-    height: 3px;
-    background: var(--gradient);
-    border-radius: 2px;
-  }
+  .wordmark-bar { width: 28px; height: 3px; background: var(--gradient); border-radius: 2px; }
 
   .wordmark-text {
     font-family: var(--font-heading);
@@ -98,13 +84,7 @@
     background-clip: text;
   }
 
-  .hero-sub {
-    font-size: 17px;
-    color: var(--body-text);
-    max-width: 560px;
-    line-height: 1.7;
-    margin-bottom: 0;
-  }
+  .hero-sub { font-size: 17px; color: var(--body-text); max-width: 560px; line-height: 1.7; margin-bottom: 0; }
 
   .divider {
     height: 1px;
@@ -114,11 +94,7 @@
     margin: 0 auto 56px;
   }
 
-  .content {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 40px 80px;
-  }
+  .content { max-width: 900px; margin: 0 auto; padding: 0 40px 80px; }
 
   .insight {
     background: white;
@@ -129,23 +105,10 @@
     box-shadow: 0 1px 4px rgba(13,31,45,0.06);
   }
 
-  .insight p {
-    font-size: 15px;
-    color: var(--body-text);
-    line-height: 1.7;
-  }
+  .insight p { font-size: 15px; color: var(--body-text); line-height: 1.7; }
+  .insight strong { color: var(--primary); font-weight: 500; }
 
-  .insight strong {
-    color: var(--primary);
-    font-weight: 500;
-  }
-
-  .stack {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin-bottom: 64px;
-  }
+  .stack { display: flex; flex-direction: column; gap: 4px; margin-bottom: 64px; }
 
   .stack-tier {
     display: flex;
@@ -156,10 +119,7 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .stack-tier:hover {
-    transform: translateX(4px);
-    box-shadow: 0 4px 20px rgba(13,31,45,0.08);
-  }
+  .stack-tier:hover { transform: translateX(4px); box-shadow: 0 4px 20px rgba(13,31,45,0.08); }
 
   .stack-tier.t1 { background: var(--tier1-bg); border-color: var(--tier1-border); }
   .stack-tier.t2 { background: var(--tier2-bg); border-color: var(--tier2-border); }
@@ -180,164 +140,60 @@
   .t2 .tier-badge { background: rgba(124,58,237,0.10); }
   .t3 .tier-badge { background: rgba(13,31,45,0.08); }
 
-  .tier-num {
-    font-family: var(--font-heading);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
+  .tier-num { font-family: var(--font-heading); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
   .t1 .tier-num { color: var(--cyan-dark); }
   .t2 .tier-num { color: var(--purple-dark); }
   .t3 .tier-num { color: var(--primary); }
 
-  .tier-name {
-    font-family: var(--font-heading);
-    font-size: 13px;
-    font-weight: 600;
-    text-align: center;
-    line-height: 1.3;
-  }
-
+  .tier-name { font-family: var(--font-heading); font-size: 13px; font-weight: 600; text-align: center; line-height: 1.3; }
   .t1 .tier-name { color: var(--cyan-dark); }
   .t2 .tier-name { color: var(--purple-dark); }
   .t3 .tier-name { color: var(--primary); }
 
-  .tier-body {
-    padding: 24px 28px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 6px;
-  }
+  .tier-body { padding: 24px 28px; flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
 
-  .tier-desc {
-    font-size: 14px;
-    color: var(--body-text);
-    line-height: 1.6;
-  }
+  .tier-desc { font-size: 14px; color: var(--body-text); line-height: 1.6; }
 
-  .tier-examples {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 8px;
-  }
+  .tier-examples { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 
-  .example-pill {
-    font-size: 11px;
-    font-weight: 500;
-    padding: 3px 10px;
-    border-radius: 100px;
-    font-family: var(--font-heading);
-    letter-spacing: 0.02em;
-  }
-
+  .example-pill { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 100px; font-family: var(--font-heading); letter-spacing: 0.02em; }
   .t1 .example-pill { background: var(--cyan-light); color: var(--cyan-dark); border: 1px solid var(--tier1-border); }
   .t2 .example-pill { background: var(--purple-light); color: var(--purple-dark); border: 1px solid var(--tier2-border); }
   .t3 .example-pill { background: rgba(13,31,45,0.06); color: var(--primary); border: 1px solid var(--tier3-border); }
 
-  .tier-reach {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-family: var(--font-heading);
-    margin-top: 4px;
-  }
-
+  .tier-reach { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--font-heading); margin-top: 4px; }
   .t1 .tier-reach { color: var(--cyan-dark); }
   .t2 .tier-reach { color: var(--purple-dark); }
   .t3 .tier-reach { color: var(--body-text); }
 
-  .connector {
-    display: flex;
-    align-items: center;
-    padding: 0 0 0 59px;
-    gap: 8px;
-    height: 20px;
-  }
-
-  .connector-line {
-    width: 2px;
-    height: 20px;
-    background: var(--gradient);
-    opacity: 0.3;
-    margin-left: 1px;
-  }
+  .connector { display: flex; align-items: center; padding: 0 0 0 59px; gap: 8px; height: 20px; }
+  .connector-line { width: 2px; height: 20px; background: var(--gradient); opacity: 0.3; margin-left: 1px; }
 
   .section { margin-bottom: 56px; }
 
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-  }
+  .section-label { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
 
-  .section-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
+  .section-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .dot-cyan { background: var(--cyan); }
   .dot-purple { background: var(--purple); }
   .dot-primary { background: var(--primary); }
 
-  h2 {
-    font-family: var(--font-heading);
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--primary);
-    letter-spacing: -0.01em;
-  }
+  h2 { font-family: var(--font-heading); font-size: 22px; font-weight: 600; color: var(--primary); letter-spacing: -0.01em; }
 
-  .section p {
-    font-size: 15px;
-    color: var(--body-text);
-    line-height: 1.75;
-    margin-bottom: 14px;
-  }
-
+  .section p { font-size: 15px; color: var(--body-text); line-height: 1.75; margin-bottom: 14px; }
   .section p:last-child { margin-bottom: 0; }
 
-  .feed-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-    margin-top: 24px;
-  }
+  .feed-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 24px; }
 
-  .feed-card {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    border: 1px solid rgba(13,31,45,0.08);
-    box-shadow: 0 1px 3px rgba(13,31,45,0.05);
-  }
+  .feed-card { background: white; border-radius: 12px; padding: 20px; border: 1px solid rgba(13,31,45,0.08); box-shadow: 0 1px 3px rgba(13,31,45,0.05); }
 
-  .feed-card-title {
-    font-family: var(--font-heading);
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: var(--primary);
-  }
+  .feed-card-title { font-family: var(--font-heading); font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--primary); }
 
-  .feed-card p {
-    font-size: 13px;
-    color: var(--body-text);
-    line-height: 1.6;
-    margin: 0;
-  }
+  .feed-card p { font-size: 13px; color: var(--body-text); line-height: 1.6; margin: 0; }
 
   .venture-grid {
     display: grid;
-    grid-template-columns: 140px 1fr 1fr 1fr;
+    grid-template-columns: 160px 1fr;
     border: 1px solid rgba(13,31,45,0.10);
     border-radius: 12px;
     overflow: hidden;
@@ -355,32 +211,14 @@
     line-height: 1.5;
   }
 
-  .vg-cell:nth-child(4n) { border-right: none; }
+  .vg-cell:nth-child(2n) { border-right: none; }
   .vg-cell.last-row { border-bottom: none; }
 
-  .vg-head {
-    background: var(--primary);
-    color: white;
-    font-family: var(--font-heading);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
+  .vg-head { background: var(--primary); color: white; font-family: var(--font-heading); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
 
-  .vg-tier-label {
-    background: rgba(13,31,45,0.03);
-    font-family: var(--font-heading);
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--primary);
-    display: flex;
-    align-items: center;
-  }
+  .vg-tier-label { background: rgba(13,31,45,0.03); font-family: var(--font-heading); font-size: 12px; font-weight: 600; color: var(--primary); display: flex; align-items: center; }
 
-  .vg-btc { border-left: 3px solid var(--cyan); }
   .vg-rerev { border-left: 3px solid var(--purple); }
-  .vg-prismm { border-left: 3px solid #F59E0B; }
 
   .cta-block {
     background: var(--primary);
@@ -393,20 +231,8 @@
     margin-top: 64px;
   }
 
-  .cta-text h3 {
-    font-family: var(--font-heading);
-    font-size: 20px;
-    font-weight: 600;
-    color: white;
-    margin-bottom: 8px;
-  }
-
-  .cta-text p {
-    font-size: 14px;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.6;
-    margin: 0;
-  }
+  .cta-text h3 { font-family: var(--font-heading); font-size: 20px; font-weight: 600; color: white; margin-bottom: 8px; }
+  .cta-text p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; margin: 0; }
 
   .cta-btn {
     display: inline-block;
@@ -423,33 +249,16 @@
     letter-spacing: 0.02em;
   }
 
-  .footer {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 40px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  .footer { max-width: 900px; margin: 0 auto; padding: 0 40px 48px; display: flex; align-items: center; justify-content: space-between; }
 
-  .footer-brand {
-    font-family: var(--font-heading);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--body-text);
-  }
+  .footer-brand { font-family: var(--font-heading); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--body-text); }
 
-  .footer-note {
-    font-size: 12px;
-    color: rgba(61,81,102,0.6);
-  }
+  .footer-note { font-size: 12px; color: rgba(61,81,102,0.6); }
 
   @media (max-width: 640px) {
     .header, .content, .footer { padding-left: 20px; padding-right: 20px; }
     .feed-grid { grid-template-columns: 1fr; }
-    .venture-grid { grid-template-columns: 110px 1fr 1fr 1fr; }
+    .venture-grid { grid-template-columns: 120px 1fr; }
     .cta-block { flex-direction: column; text-align: center; }
     .tier-badge { width: 88px; padding: 20px 10px; }
     .tier-body { padding: 18px 16px; }
@@ -496,11 +305,11 @@
         <span class="tier-name">Mid-Funnel</span>
       </div>
       <div class="tier-body">
-        <p class="tier-desc">Direct company content designed for people who are already evaluating you. Thesis explainers, portfolio spotlights, use case walkthroughs, before and after stories. This content lives on your website and gets scheduled on LinkedIn.</p>
+        <p class="tier-desc">Direct company content designed for people who are already evaluating you. Thesis explainers, use case walkthroughs, before and after stories. This content lives on your website and gets scheduled on LinkedIn.</p>
         <div class="tier-examples">
-          <span class="example-pill">Investment thesis</span>
-          <span class="example-pill">Portfolio spotlights</span>
-          <span class="example-pill">System walkthroughs</span>
+          <span class="example-pill">Who you are</span>
+          <span class="example-pill">What you do</span>
+          <span class="example-pill">Proof it works</span>
           <span class="example-pill">Use case breakdowns</span>
         </div>
         <span class="tier-reach">Highest intent audience</span>
@@ -574,28 +383,21 @@
       <div class="section-dot dot-purple"></div>
       <h2>What this looks like in practice</h2>
     </div>
-    <p>The framework applies across categories. Three different businesses, three different audiences, the same structural logic.</p>
+    <p>ReRev Labs is an AI automation and operations consultancy that works with founders, operators, and growing teams who are drowning in manual work. We build and deploy systems that remove the repetitive operational burden from the people who should be focused on strategy, relationships, and growth. Our clients are delegation buyers: they are not looking to learn a new tool, they are looking for something to be handled.</p>
+    <p>Applied to ReRev Labs, the three tiers look like this:</p>
 
     <div class="venture-grid">
       <div class="vg-cell vg-head">Tier</div>
-      <div class="vg-cell vg-head vg-btc">BlackTech Capital</div>
-      <div class="vg-cell vg-head vg-rerev">ReRev Labs</div>
-      <div class="vg-cell vg-head vg-prismm">Prismm</div>
+      <div class="vg-cell vg-head vg-rerev">ReRev Labs content</div>
 
       <div class="vg-cell vg-tier-label">Tier 1<br>Mid-Funnel</div>
-      <div class="vg-cell">Investment thesis, portfolio spotlights, IC perspectives</div>
-      <div class="vg-cell">System explainers, ICP use cases, before/after automation stories</div>
-      <div class="vg-cell">Vault walkthroughs, bank use cases, wealth transfer proof points</div>
+      <div class="vg-cell">System explainers for each ICP, before and after automation stories, use case walkthroughs by role, proof points from deployed work</div>
 
       <div class="vg-cell vg-tier-label">Tier 2<br>Market Signal</div>
-      <div class="vg-cell">BYD pricing data, IRA updates, renewable cost parity reports</div>
-      <div class="vg-cell">AI capability releases, ops cost studies, founder burnout data</div>
-      <div class="vg-cell">$124T wealth transfer stat, 70% deposit loss data, estate planning gaps</div>
+      <div class="vg-cell">AI capability releases translated for non-technical operators, ops cost studies, founder burnout data, time-on-task research</div>
 
       <div class="vg-cell vg-tier-label last-row">Tier 3<br>Flagship</div>
-      <div class="vg-cell last-row">ClimateTech Exit Lab, bi-weekly, Founder + Investor tracks</div>
-      <div class="vg-cell last-row">Substack series on building AI systems, recurring format</div>
-      <div class="vg-cell last-row">Monthly co-hosted webinar panel with estate attorneys, CPAs, FAs</div>
+      <div class="vg-cell last-row">A recurring Substack series documenting how AI systems get built and deployed in real operating environments, with honest coverage of what works and what does not</div>
     </div>
   </div>
 
