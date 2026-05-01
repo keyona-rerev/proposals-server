@@ -561,52 +561,102 @@
             display: inline-block;
             margin-bottom: 1rem;
         }
-        
-        .cta-section {
-            background: linear-gradient(135deg, var(--primary) 0%, #374151 100%);
-            color: white;
-            text-align: center;
-            border-radius: 2rem;
-            padding: 4rem 3rem;
-            margin-top: 4rem;
+
+        /* ─── CLEAN FOOTER STYLES ─── */
+        .footer-section {
             position: relative;
+            width: 100%;
+            height: 500px;
+            margin: 0;
             overflow: hidden;
         }
         
-        .contact-info {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            backdrop-filter: blur(10px);
-            display: inline-block;
-            margin-bottom: 1rem;
+        /* Giphy embed container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
         }
         
-        .calendar-button {
-            background: var(--cyan);
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            pointer-events: none; /* Disables all hover interactions */
+        }
+        
+        /* Overlay to prevent any iframe interactions */
+        .video-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 1;
+        }
+        
+        /* Glass overlay for CTA */
+        .glass-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            z-index: 2;
+        }
+        
+        .cta-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+        }
+        
+        .cta-button {
+            background: var(--gradient);
             color: white;
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 600;
             padding: 1rem 2rem;
             border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            font-size: 1rem;
+            border-radius: 2rem;
             text-decoration: none;
             display: inline-block;
-            margin-top: 1rem;
+            cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(26, 158, 158, 0.3);
         }
         
-        .calendar-button:hover {
-            background: #128E8E;
+        .cta-button:hover {
             transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(26, 158, 158, 0.4);
         }
-        
+
         .quote-footer {
-            margin-top: 3rem;
-            padding-top: 2rem;
+            margin: 3rem 0 0 0;
+            padding: 2rem 3rem 0 3rem;
             border-top: 1px solid rgba(255,255,255,0.2);
             font-style: italic;
-            color: rgba(255,255,255,0.9);
+            color: var(--text-secondary);
+            text-align: center;
+            background: var(--bg-surface);
         }
         
         @media (max-width: 768px) {
@@ -619,6 +669,46 @@
             .automation-card { width: 140px; }
             .admin-cards { gap: 20px; }
             .admin-cards .automation-card { width: 160px; }
+            
+            .footer-section {
+                height: 400px;
+            }
+            
+            .glass-overlay {
+                width: 90%;
+                height: 160px;
+                padding: 1.5rem;
+            }
+            
+            .cta-title {
+                font-size: 1.25rem;
+            }
+            
+            .cta-button {
+                padding: 0.875rem 1.75rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .footer-section {
+                height: 350px;
+            }
+            
+            .glass-overlay {
+                height: 140px;
+                padding: 1.25rem;
+            }
+            
+            .cta-title {
+                font-size: 1.1rem;
+                margin-bottom: 0.75rem;
+            }
+            
+            .cta-button {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
@@ -901,22 +991,29 @@
             <p style="text-align: center; margin-top: 2rem; color: var(--text-secondary);">All pricing is one-time implementation. Systems designed to integrate with your existing Google Workspace and Apple ecosystem.</p>
         </div>
 
-        <div class="cta-section">
-            <h3>Ready to Optimize Your Complete Workflow?</h3>
-            <p>Your note processing request revealed a systematic opportunity. Let's implement the full consultant automation stack, starting with what you need most.</p>
-            <div class="contact-info">
-                <p><strong>Keyona Meeks</strong></p>
-                <p>keyona@rerev.io</p>
-                <p>ReRev Labs</p>
-            </div>
-            <a href="https://calendly.com/keyona-rerev" target="_blank" class="calendar-button">Schedule Strategy Call</a>
-            
-            <div class="quote-footer">
-                <p>
-                    <strong>Nicole Clarke:</strong> "I love being analog but living in 2026 I can do more with that. This has inspired me to think about how I can use the tools of today and the automations to really extract max value out of my processes."
-                </p>
-            </div>
+    </div>
+
+    <!-- ─── NEW CLEAN FOOTER ─── -->
+    <div class="footer-section">
+        <!-- Exact Giphy embed as provided -->
+        <div class="video-container">
+            <iframe src="https://giphy.com/embed/5e25aUTZPcI94uMZgv" width="480" height="271" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
         </div>
+        
+        <!-- Simple glass overlay with CTA -->
+        <div class="glass-overlay">
+            <h2 class="cta-title">Ready to Optimize Your Workflow?</h2>
+            <a href="https://calendly.com/keyona-rerev" target="_blank" class="cta-button">
+                Book Your Strategy Call
+            </a>
+        </div>
+    </div>
+
+    <!-- Quote Footer -->
+    <div class="quote-footer">
+        <p>
+            <strong>Nicole Clarke:</strong> "I love being analog but living in 2026 I can do more with that. This has inspired me to think about how I can use the tools of today and the automations to really extract max value out of my processes."
+        </p>
     </div>
 
     <!-- ─── MODAL ─── -->
