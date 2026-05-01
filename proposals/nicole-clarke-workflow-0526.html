@@ -12,7 +12,9 @@
             --primary: #0D1F2D;
             --text-secondary: #3D5166;
             --cyan: #1A9E9E;
+            --cyan-dark: #0D7E7E;
             --purple: #7C3AED;
+            --red: #DC2626;
             --gradient: linear-gradient(90deg, #1A9E9E, #7C3AED);
             --accent-highlight: #DC2626;
             --border-light: #E5E7EB;
@@ -23,6 +25,14 @@
             --shadow-medium: 0 4px 6px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.06);
             --glow-cyan: rgba(26, 158, 158, 0.15);
             --glow-purple: rgba(124, 58, 237, 0.2);
+
+            /* Automation Hub Variables */
+            --col-outreach: rgba(26, 158, 158, 0.09);
+            --col-outreach-border: rgba(26, 158, 158, 0.22);
+            --col-client: rgba(124, 58, 237, 0.09);
+            --col-client-border: rgba(124, 58, 237, 0.22);
+            --col-admin: rgba(220, 38, 38, 0.07);
+            --col-admin-border: rgba(220, 38, 38, 0.2);
         }
         
         * {
@@ -156,87 +166,352 @@
             font-weight: 600;
             margin-bottom: 1rem;
         }
-        
-        .compact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
+
+        /* ─── AUTOMATION HUB STYLES ─── */
+        .automation-hub {
+            width: 100%;
+            max-width: 1200px;
+            height: 780px;
+            margin: 3rem auto;
+            background: linear-gradient(160deg, #f6fbfb 0%, #f0f7f7 100%);
+            border-radius: 2rem;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.12);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
-        
-        .compact-card {
-            background: var(--bg-surface);
-            border-radius: 1rem;
-            padding: 2rem 1.5rem;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid var(--border-light);
-            text-align: center;
-            transition: all 0.3s ease;
+
+        .label-bar {
+            display: flex;
+            width: 100%;
+            height: 54px;
+            flex-shrink: 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            position: relative;
+            z-index: 10;
+        }
+
+        .label-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: var(--font-heading);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-right: 1px solid rgba(0,0,0,0.06);
+        }
+        .label-cell:last-child { border-right: none; }
+
+        .label-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .label-outreach {
+            width: 380px;
+            background: var(--col-outreach);
+            color: var(--cyan-dark);
+        }
+        .label-outreach .label-dot { background: var(--cyan); }
+
+        .label-center {
+            flex: 1;
+            background: transparent;
+            color: var(--primary);
+            border-right: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .label-client {
+            width: 380px;
+            background: var(--col-client);
+            color: var(--purple);
+        }
+        .label-client .label-dot { background: var(--purple); }
+
+        .hub-body {
+            display: flex;
+            flex: 1;
             position: relative;
         }
-        
-        .compact-card.highlighted {
-            border: 2px solid var(--cyan);
-            background: linear-gradient(135deg, rgba(26, 158, 158, 0.02) 0%, rgba(26, 158, 158, 0.05) 100%);
+
+        .col-outreach {
+            width: 380px;
+            flex-shrink: 0;
+            background: var(--col-outreach);
+            border-right: 1px solid var(--col-outreach-border);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 32px 20px;
+            gap: 18px;
+            z-index: 3;
         }
-        
-        .compact-card.highlighted::after {
-            content: 'What you requested';
+
+        .col-center {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 4;
+        }
+
+        .col-client {
+            width: 380px;
+            flex-shrink: 0;
+            background: var(--col-client);
+            border-left: 1px solid var(--col-client-border);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 32px 20px;
+            gap: 18px;
+            z-index: 3;
+        }
+
+        .admin-band {
+            width: 100%;
+            height: 210px;
+            flex-shrink: 0;
+            background: var(--col-admin);
+            border-top: 1px solid var(--col-admin-border);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+            z-index: 3;
+        }
+
+        .admin-band-label {
             position: absolute;
-            top: -0.5rem;
+            top: 14px;
             left: 50%;
             transform: translateX(-50%);
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            white-space: nowrap;
+        }
+        .admin-band-label .label-dot { background: var(--red); width: 7px; height: 7px; border-radius: 50%; }
+
+        .automation-card {
+            width: 170px;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 3px 14px rgba(0,0,0,0.07);
+            padding: 18px 14px 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.07);
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .automation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 28px rgba(0,0,0,0.11);
+        }
+        .automation-card.highlighted {
+            border: 2px solid var(--cyan);
+            box-shadow: 0 0 0 4px rgba(26,158,158,0.12), 0 6px 20px rgba(0,0,0,0.08);
+        }
+        .automation-card.highlighted::after {
+            content: 'YOUR REQUEST';
+            position: absolute;
+            top: -11px;
+            right: -2px;
             background: var(--cyan);
             color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            font-size: 0.75rem;
-            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            font-family: var(--font-heading);
+            white-space: nowrap;
         }
-        
+
         .timeline-badge {
             position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.75rem;
-            font-size: 0.7rem;
-            font-weight: 600;
+            top: 8px;
+            right: 8px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.62rem;
+            font-weight: 700;
             text-transform: uppercase;
-        }
-        
-        .timeline-immediate {
-            background: rgba(26, 158, 158, 0.15);
-            color: var(--cyan);
-            border: 1px solid rgba(26, 158, 158, 0.3);
-        }
-        
-        .timeline-fast {
-            background: rgba(124, 58, 237, 0.15);
-            color: var(--purple);
-            border: 1px solid rgba(124, 58, 237, 0.3);
-        }
-        
-        .timeline-complex {
-            background: rgba(220, 38, 38, 0.15);
-            color: var(--accent-highlight);
-            border: 1px solid rgba(220, 38, 38, 0.3);
-        }
-        
-        .compact-icon {
-            width: 48px;
-            height: 48px;
-            margin: 0 auto 1rem;
-            border-radius: 8px;
-            background: var(--gradient);
-        }
-        
-        .compact-card h4 {
+            letter-spacing: 0.04em;
             font-family: var(--font-heading);
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
         }
+        .badge-immediate { background: rgba(26,158,158,0.14); color: var(--cyan-dark); }
+        .badge-fast      { background: rgba(124,58,237,0.12); color: var(--purple); }
+        .badge-complex   { background: rgba(220,38,38,0.10); color: var(--red); }
+
+        .card-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            margin-bottom: 10px;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .card-icon svg { width: 20px; height: 20px; }
+
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+        .card-desc {
+            font-size: 0.76rem;
+            color: var(--text-secondary);
+            line-height: 1.35;
+        }
+
+        .automation-core {
+            width: 164px;
+            height: 164px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            z-index: 10;
+            box-shadow:
+                0 0 0 10px rgba(255,255,255,0.9),
+                0 0 0 22px rgba(26,158,158,0.1),
+                0 20px 50px rgba(13,31,45,0.2);
+            animation: pulse-core 4s ease-in-out infinite;
+            position: relative;
+            flex-shrink: 0;
+        }
+        @keyframes pulse-core {
+            0%, 100% { box-shadow: 0 0 0 10px rgba(255,255,255,0.9), 0 0 0 22px rgba(26,158,158,0.10), 0 20px 50px rgba(13,31,45,0.20); }
+            50%       { box-shadow: 0 0 0 14px rgba(255,255,255,0.9), 0 0 0 30px rgba(26,158,158,0.14), 0 28px 60px rgba(13,31,45,0.25); }
+        }
+        .core-icon { margin-bottom: 6px; }
+        .core-title {
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            font-weight: 800;
+            line-height: 1.15;
+            padding: 0 10px;
+        }
+        .core-sub {
+            font-size: 0.72rem;
+            opacity: 0.88;
+            margin-top: 2px;
+            font-weight: 500;
+        }
+
+        .connection-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .connection-svg line {
+            stroke: url(#grad);
+            stroke-width: 1.5;
+            stroke-dasharray: 5 3;
+            opacity: 0.35;
+        }
+
+        .admin-cards {
+            display: flex;
+            gap: 48px;
+            align-items: center;
+            margin-top: 28px;
+        }
+        .admin-cards .automation-card {
+            width: 200px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            max-width: 540px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem; right: 1.25rem;
+            background: none; border: none;
+            font-size: 1.7rem; cursor: pointer;
+            color: var(--text-secondary);
+        }
+        .modal-content h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+        .modal-desc { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .workflow-steps { display: grid; gap: 0.85rem; margin: 1rem 0; }
+        .workflow-step { display: flex; gap: 1rem; align-items: flex-start; }
+        .step-num {
+            width: 26px; height: 26px; border-radius: 50%;
+            background: var(--cyan); color: white;
+            font-weight: 700; font-size: 0.8rem;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .step-content h5 { font-weight: 600; font-size: 0.9rem; margin-bottom: 2px; }
+        .step-content p { font-size: 0.85rem; color: var(--text-secondary); }
+        .modal-metrics { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .metric {
+            background: #F4FAFA; border-radius: 1rem;
+            padding: 0.9rem 1.25rem; text-align: center; flex: 1;
+        }
+        .metric-value { font-size: 1.4rem; font-weight: 700; color: var(--purple); }
+        .metric-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-secondary); margin-top: 2px; }
         
         .tech-stack-section, .pricing-section {
             background: var(--bg-surface);
@@ -336,8 +611,14 @@
         
         @media (max-width: 768px) {
             .container { padding: 2rem 1rem; }
-            .compact-grid, .tech-grid, .pricing-options { grid-template-columns: 1fr; }
+            .tech-grid, .pricing-options { grid-template-columns: 1fr; }
             .workflow-viz { padding: 2rem; }
+            .automation-hub { height: 600px; margin: 1rem; }
+            .label-outreach, .label-client { width: 200px; }
+            .col-outreach, .col-client { width: 200px; }
+            .automation-card { width: 140px; }
+            .admin-cards { gap: 20px; }
+            .admin-cards .automation-card { width: 160px; }
         }
     </style>
 </head>
@@ -432,56 +713,140 @@
             <p>Your note processing request fits into a comprehensive consultant workflow optimization framework</p>
         </div>
         
-        <div class="compact-grid">
-            <div class="compact-card highlighted">
-                <div class="timeline-badge timeline-fast">2 hours</div>
-                <div class="compact-icon"></div>
-                <h4>Note Processing</h4>
-                <p>3-tier system automation</p>
+        <!-- ─── AUTOMATION HUB ─── -->
+        <div class="automation-hub">
+
+            <!-- ─── LABEL BAR ─── -->
+            <div class="label-bar">
+                <div class="label-cell label-outreach">
+                    <span class="label-dot"></span> Outreach &amp; Prospecting
+                </div>
+                <div class="label-cell label-center">Automation Core</div>
+                <div class="label-cell label-client">
+                    <span class="label-dot"></span> Client Management
+                </div>
             </div>
 
-            <div class="compact-card">
-                <div class="timeline-badge timeline-immediate">Out of box</div>
-                <div class="compact-icon"></div>
-                <h4>Meeting Intelligence</h4>
-                <p>Auto follow-up engine</p>
+            <!-- ─── MAIN 3-COLUMN BODY ─── -->
+            <div class="hub-body">
+
+                <!-- LEFT: Outreach column -->
+                <div class="col-outreach">
+                    <div class="automation-card" onclick="openModal('network-intelligence')">
+                        <span class="timeline-badge badge-fast">1–2 WKS</span>
+                        <div class="card-icon">
+                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5" y2="16"/><line x1="12" y1="8" x2="19" y2="16"/></svg>
+                        </div>
+                        <div class="card-title">Network Intel</div>
+                        <div class="card-desc">Warm intro detection</div>
+                    </div>
+
+                    <div class="automation-card" onclick="openModal('meeting-intelligence')">
+                        <span class="timeline-badge badge-immediate">OUT OF BOX</span>
+                        <div class="card-icon">
+                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 3H7a2 2 0 0 0-2 2v14l4-4h8a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/></svg>
+                        </div>
+                        <div class="card-title">Meeting Intel</div>
+                        <div class="card-desc">Auto follow-up engine</div>
+                    </div>
+
+                    <div class="automation-card" onclick="openModal('proposal-generation')">
+                        <span class="timeline-badge badge-immediate">OUT OF BOX</span>
+                        <div class="card-icon">
+                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+                        </div>
+                        <div class="card-title">Proposal Publisher</div>
+                        <div class="card-desc">Conversation to live URL</div>
+                    </div>
+                </div>
+
+                <!-- CENTER: Core -->
+                <div class="col-center">
+                    <!-- SVG lines from center to each card -->
+                    <svg class="connection-svg" viewBox="0 0 440 626" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#1A9E9E"/>
+                                <stop offset="100%" stop-color="#7C3AED"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Lines from center (220,313) toward column edges -->
+                        <line x1="220" y1="313" x2="0" y2="120"/>
+                        <line x1="220" y1="313" x2="0" y2="313"/>
+                        <line x1="220" y1="313" x2="0" y2="506"/>
+                        <line x1="220" y1="313" x2="440" y2="120"/>
+                        <line x1="220" y1="313" x2="440" y2="313"/>
+                        <circle cx="220" cy="313" r="5" fill="#1A9E9E"/>
+                    </svg>
+
+                    <div class="automation-core">
+                        <div class="core-icon">
+                            <svg width="30" height="30" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg>
+                        </div>
+                        <div class="core-title">Human<br>in the Loop</div>
+                        <div class="core-sub">Automation Core</div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Client column -->
+                <div class="col-client">
+                    <div class="automation-card" onclick="openModal('client-intelligence')">
+                        <span class="timeline-badge badge-fast">1–2 WKS</span>
+                        <div class="card-icon">
+                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <div class="card-title">Client Intel</div>
+                        <div class="card-desc">Scope + relationship monitoring</div>
+                    </div>
+
+                    <div class="automation-card highlighted" onclick="openModal('note-processing')">
+                        <span class="timeline-badge badge-immediate">20 MIN</span>
+                        <div class="card-icon">
+                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+                        </div>
+                        <div class="card-title">Note Processing</div>
+                        <div class="card-desc">3-tier system automation</div>
+                    </div>
+
+                    <div class="automation-card" onclick="openModal('client-reporting')">
+                        <span class="timeline-badge badge-fast">1–2 WKS</span>
+                        <div class="card-icon">
+                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                        </div>
+                        <div class="card-title">Client Reporting</div>
+                        <div class="card-desc">Automated report delivery</div>
+                    </div>
+                </div>
+
+            </div><!-- end hub-body -->
+
+            <!-- ─── ADMIN BOTTOM BAND ─── -->
+            <div class="admin-band">
+                <div class="admin-band-label">
+                    <span class="label-dot"></span>
+                    Operations &amp; Admin
+                </div>
+                <div class="admin-cards">
+                    <div class="automation-card" onclick="openModal('content-automation')">
+                        <span class="timeline-badge badge-complex">3–4 WKS</span>
+                        <div class="card-icon" style="background: linear-gradient(135deg,#DC2626,#7C3AED);">
+                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        </div>
+                        <div class="card-title">Content Engine</div>
+                        <div class="card-desc">3-tier publishing stack</div>
+                    </div>
+                    <div class="automation-card" onclick="openModal('daily-ops')">
+                        <span class="timeline-badge badge-immediate">OUT OF BOX</span>
+                        <div class="card-icon" style="background: linear-gradient(135deg,#DC2626,#7C3AED);">
+                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div class="card-title">Daily Briefing</div>
+                        <div class="card-desc">Executive preparation</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="compact-card">
-                <div class="timeline-badge timeline-immediate">Out of box</div>
-                <div class="compact-icon"></div>
-                <h4>Proposal Publisher</h4>
-                <p>Conversation to live URL</p>
-            </div>
-
-            <div class="compact-card">
-                <div class="timeline-badge timeline-fast">1-2 weeks</div>
-                <div class="compact-icon"></div>
-                <h4>Network Intelligence</h4>
-                <p>Warm intro detection</p>
-            </div>
-
-            <div class="compact-card">
-                <div class="timeline-badge timeline-complex">3-4 weeks</div>
-                <div class="compact-icon"></div>
-                <h4>Content Automation Engine</h4>
-                <p>Three-tier publishing stack</p>
-            </div>
-
-            <div class="compact-card">
-                <div class="timeline-badge timeline-fast">1-2 weeks</div>
-                <div class="compact-icon"></div>
-                <h4>Client Intelligence</h4>
-                <p>Relationship monitoring</p>
-            </div>
-
-            <div class="compact-card">
-                <div class="timeline-badge timeline-immediate">Out of box</div>
-                <div class="compact-icon"></div>
-                <h4>Daily Briefing</h4>
-                <p>Executive preparation</p>
-            </div>
-        </div>
+        </div><!-- end automation-hub -->
 
         <div class="tech-stack-section">
             <div class="section-header">
@@ -553,5 +918,129 @@
             </div>
         </div>
     </div>
+
+    <!-- ─── MODAL ─── -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modal-header"></div>
+            <p class="modal-desc" id="modal-desc"></p>
+            <div class="workflow-steps" id="modal-steps"></div>
+            <div class="modal-metrics" id="modal-metrics"></div>
+        </div>
+    </div>
+
+    <script>
+        const cardData = {
+            'note-processing': {
+                title: 'Note Processing Engine',
+                desc: 'Custom Claude skill formats your three-tier system automatically. Photos, voice, or text become formatted output in your exact specifications.',
+                steps: [
+                    {h:'Capture Notes', p:'Snap photos of field notes or voice recordings during meetings.'},
+                    {h:'Upload to Claude', p:'Custom skill applies automatic 3-tier formatting.'},
+                    {h:'Auto-Route', p:'Archive notes go to Google Drive; action items to Apple Reminders.'},
+                    {h:'Access Anywhere', p:'Searchable archive organized by your system.'}
+                ],
+                metrics: [{v:'8+ hrs', l:'Weekly savings'}, {v:'Zero', l:'Manual steps'}]
+            },
+            'meeting-intelligence': {
+                title: 'Post-Meeting Intelligence',
+                desc: 'Meeting transcripts instantly become follow-up emails, contact updates, and tasks.',
+                steps: [
+                    {h:'Meeting Ends', p:'Transcript captured via Google Meet or Zoom.'},
+                    {h:'Auto Processing', p:'Claude extracts action items, insights, and contact updates.'},
+                    {h:'Draft Generation', p:'Follow-up emails appear in Gmail drafts within 5 minutes.'},
+                    {h:'Review & Send', p:'Quickly review and send. No manual notes needed.'}
+                ],
+                metrics: [{v:'100%', l:'Follow-up rate'}, {v:'10 hrs', l:'Weekly savings'}]
+            },
+            'proposal-generation': {
+                title: 'Proposal Publisher',
+                desc: 'Turn a conversation into a live, branded proposal in under 30 minutes.',
+                steps: [
+                    {h:'Proposal Chat', p:'Discuss your needs with Claude in natural language.'},
+                    {h:'Auto Generate', p:'HTML proposal built with your branding and content.'},
+                    {h:'Live Deployment', p:'Published instantly via GitHub + Railway.'},
+                    {h:'Share & Track', p:'Send the link and monitor client engagement.'}
+                ],
+                metrics: [{v:'30 min', l:'Creation time'}, {v:'Live URL', l:'Delivery'}]
+            },
+            'network-intelligence': {
+                title: 'Network Intelligence',
+                desc: 'Identifies warm introduction opportunities from your email and board networks.',
+                steps: [
+                    {h:'Email Monitoring', p:'Scans conversations for intro opportunities.'},
+                    {h:'Match Detection', p:'AI finds valuable connections in your network.'},
+                    {h:'Consent Process', p:'Both parties contacted separately for approval.'},
+                    {h:'Warm Introduction', p:'Professional intro email sent with full context.'}
+                ],
+                metrics: [{v:'2x', l:'Intro velocity'}, {v:'Auto', l:'Detection'}]
+            },
+            'content-automation': {
+                title: 'Content Automation Engine',
+                desc: 'Three-tier content stack: flagship thought leadership, amplification, and engagement.',
+                steps: [
+                    {h:'Signal Detection', p:'AI monitors news and finds content opportunities.'},
+                    {h:'Content Planning', p:'Three tiers: flagship, amplification, engagement.'},
+                    {h:'Auto Drafting', p:'Posts, articles, and insights generated from your voice.'},
+                    {h:'Scheduled Publishing', p:'Multi-platform distribution with optimal timing.'}
+                ],
+                metrics: [{v:'3 Tiers', l:'Content stack'}, {v:'Auto', l:'Publishing'}]
+            },
+            'client-intelligence': {
+                title: 'Client Relationship Intelligence',
+                desc: 'Scope tracking, health monitoring, and early warning for relationship changes. Includes automatic scope creep detection so nothing slips through.',
+                steps: [
+                    {h:'Gmail Labeling', p:'Automatic project and client email categorization.'},
+                    {h:'Scope Tracking', p:'Monitors contract boundaries and flags scope creep indicators.'},
+                    {h:'Health Scoring', p:'Measures relationship health from communication patterns.'},
+                    {h:'Early Alerts', p:'Proactive warnings before issues surface.'}
+                ],
+                metrics: [{v:'Early', l:'Warning system'}, {v:'Scope', l:'Tracking'}]
+            },
+            'client-reporting': {
+                title: 'Automated Client Reporting',
+                desc: 'Auto-generate and deliver branded client reports on a schedule — no manual assembly, no missed sends.',
+                steps: [
+                    {h:'Data Pull', p:'Pulls activity, milestones, and metrics from your connected tools.'},
+                    {h:'Report Generation', p:'Claude assembles a branded report in your format.'},
+                    {h:'Review Gate', p:'You approve before it sends — human stays in the loop.'},
+                    {h:'Scheduled Delivery', p:'Delivered to the client automatically on your cadence.'}
+                ],
+                metrics: [{v:'Auto', l:'Report delivery'}, {v:'1–2 wks', l:'To deploy'}]
+            },
+            'daily-ops': {
+                title: 'Executive Daily Briefing',
+                desc: 'Every morning: calendar analysis, relationship context, and priority routing.',
+                steps: [
+                    {h:'7am Trigger', p:'Briefing generated automatically each morning.'},
+                    {h:'Calendar Scan', p:'Meeting context, attendee backgrounds, recent interactions.'},
+                    {h:'Priority Sort', p:'Key decisions, urgent items, relationship updates.'},
+                    {h:'Delivered', p:'Ready in your inbox for a prepared day.'}
+                ],
+                metrics: [{v:'7am', l:'Daily sync'}, {v:'Context', l:'Aware'}]
+            }
+        };
+
+        function openModal(id) {
+            const d = cardData[id]; if (!d) return;
+            document.getElementById('modal-header').innerHTML = `<h3>${d.title}</h3>`;
+            document.getElementById('modal-desc').textContent = d.desc;
+            document.getElementById('modal-steps').innerHTML = d.steps.map((s,i) => `
+                <div class="workflow-step">
+                    <div class="step-num">${i+1}</div>
+                    <div class="step-content"><h5>${s.h}</h5><p>${s.p}</p></div>
+                </div>`).join('');
+            document.getElementById('modal-metrics').innerHTML = d.metrics.map(m => `
+                <div class="metric">
+                    <div class="metric-value">${m.v}</div>
+                    <div class="metric-label">${m.l}</div>
+                </div>`).join('');
+            document.getElementById('modal').classList.add('active');
+        }
+        function closeModal() { document.getElementById('modal').classList.remove('active'); }
+        document.getElementById('modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    </script>
 </body>
 </html>
