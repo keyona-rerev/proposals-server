@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fathom Post-Meeting Engine — Setup Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F0F7F7;--pr:#0D1F2D;--bt:#3D5166;--mu:#6B7E94;--di:#A0B0C0;--cy:#1A9E9E;--cd:#0D7E7E;--cb:rgba(26,158,158,.1);--cbr:rgba(26,158,158,.25);--pu:#7C3AED;--pd:#5B21B6;--pb:rgba(124,58,237,.08);--pbr:rgba(124,58,237,.2);--gr:linear-gradient(90deg,#1A9E9E,#7C3AED);--bd:rgba(13,31,45,.09);--bs:rgba(13,31,45,.15);--sf:#fff;--s2:#F7FAFA;--wb:rgba(245,158,11,.08);--wr:rgba(245,158,11,.25);--wt:#92400E;--sg:#065F46;--gb:rgba(16,185,129,.08);--gbr:rgba(16,185,129,.25);--fh:'Outfit',sans-serif;--fb:'Inter',sans-serif;--fm:'JetBrains Mono','Courier New',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--bt);font-family:var(--fb);font-size:15px;line-height:1.7}
+header{background:var(--pr);padding:52px 44px 48px;position:relative;overflow:hidden}
+header::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,158,158,.15) 0%,transparent 50%,rgba(124,58,237,.12) 100%);pointer-events:none}
+.hi{position:relative;z-index:1;max-width:800px}
+.ey{font-family:var(--fh);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--cy);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.ey::before{content:'';display:inline-block;width:20px;height:2px;background:var(--gr);border-radius:2px}
+h1{font-family:var(--fh);font-size:clamp(22px,3.5vw,36px);font-weight:800;line-height:1.15;letter-spacing:-.01em;color:#fff;margin-bottom:14px}
+h1 .g{background:var(--gr);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hd{font-size:14px;color:rgba(255,255,255,.6);max-width:540px;line-height:1.7;margin-bottom:20px}
+.pr2{display:flex;gap:10px;flex-wrap:wrap}
+.pi{display:inline-flex;align-items:center;gap:6px;font-family:var(--fh);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 13px;border-radius:100px}
+.pc{background:rgba(26,158,158,.15);border:1px solid rgba(26,158,158,.35);color:#5ECECE}
+.pp{background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.35);color:#C4B5FD}
+.ld{width:6px;height:6px;background:var(--cy);border-radius:50%;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.ctn{max-width:880px;margin:0 auto;padding:0 44px 80px}
+section{padding-top:48px}
+.sl{font-family:var(--fh);font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--di);margin-bottom:6px}
+h2{font-family:var(--fh);font-size:21px;font-weight:700;color:var(--pr);margin-bottom:16px;display:flex;align-items:center;gap:12px;letter-spacing:-.01em}
+.sb{display:flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--gr);border-radius:8px;font-family:var(--fh);font-size:13px;font-weight:800;color:#fff;flex-shrink:0}
+h3{font-family:var(--fh);font-size:11px;font-weight:700;color:var(--cd);text-transform:uppercase;letter-spacing:.12em;margin:22px 0 9px}
+p{color:var(--bt);margin-bottom:13px}p:last-child{margin-bottom:0}
+strong{color:var(--pr);font-weight:600}
+code{font-family:var(--fm);font-size:12px;background:var(--cb);color:var(--cd);border:1px solid var(--cbr);padding:2px 6px;border-radius:4px}
+.dv{height:1px;background:var(--bd);margin-top:48px}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:13px;margin:18px 0}
+.sc{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden;transition:box-shadow .2s,border-color .2s}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gr);opacity:.5}
+.sc:hover{border-color:var(--cbr);box-shadow:0 4px 16px rgba(26,158,158,.08)}
+.si{font-size:19px;margin-bottom:8px;display:block}
+.sn{font-family:var(--fh);font-size:13px;font-weight:700;color:var(--pr);margin-bottom:4px}
+.sr{font-size:12px;color:var(--mu);line-height:1.6;margin-bottom:10px}
+.tg{display:inline-block;font-family:var(--fh);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:100px}
+.tc{background:var(--cb);color:var(--cd);border:1px solid var(--cbr)}
+.tp{background:var(--pb);color:var(--pd);border:1px solid var(--pbr)}
+.tgr{background:var(--gb);color:var(--sg);border:1px solid var(--gbr)}
+.fl{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0;align-items:stretch}
+.fn{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:9px 11px;flex:1;min-width:90px;text-align:center}
+.fn strong{display:block;font-family:var(--fh);font-size:11px;color:var(--pr);margin-bottom:2px}
+.fn span{font-size:11px;color:var(--mu)}
+.fa{display:flex;align-items:center;color:var(--cy);font-size:13px;flex-shrink:0;opacity:.5}
+.ca{border-radius:12px;padding:16px 20px;margin:13px 0}
+.ca.info{background:var(--cb);border:1px solid var(--cbr)}
+.ca.warn{background:var(--wb);border:1px solid var(--wr)}
+.ca.ok{background:var(--gb);border:1px solid var(--gbr)}
+.ca.sc2{background:var(--pb);border:1px solid var(--pbr)}
+.cl2{font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;margin-bottom:6px}
+.ca.info .cl2{color:var(--cd)}.ca.warn .cl2{color:#92400E}.ca.ok .cl2{color:var(--sg)}.ca.sc2 .cl2{color:var(--pd)}
+.ca p{font-size:14px}
+.ca.info p{color:#0D5F5F}.ca.warn p{color:var(--wt)}.ca.ok p{color:var(--sg)}.ca.sc2 p{color:var(--pd)}
+.st{list-style:none;counter-reset:s;margin:11px 0}
+.st li{counter-increment:s;display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
+.st li:last-child{border-bottom:none}
+.st li::before{content:counter(s);display:flex;align-items:center;justify-content:center;width:21px;height:21px;min-width:21px;background:var(--bg);border:1.5px solid var(--bs);border-radius:6px;font-family:var(--fh);font-size:11px;font-weight:700;color:var(--cd);margin-top:2px}
+.st li p{margin:0;font-size:14px}
+.pt{width:100%;border-collapse:collapse;margin:11px 0;font-size:13px;background:var(--sf);border-radius:10px;overflow:hidden;border:1px solid var(--bd)}
+.pt th{font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--mu);text-align:left;padding:9px 13px;background:var(--s2);border-bottom:1px solid var(--bd)}
+.pt td{padding:10px 13px;border-bottom:1px solid rgba(13,31,45,.05);vertical-align:top}
+.pt tr:last-child td{border-bottom:none}
+.pt td:first-child{font-family:var(--fm);font-size:11.5px;color:var(--cd);font-weight:500;white-space:nowrap}
+.pt td:nth-child(2){color:var(--bt)}
+.pt td:last-child{color:var(--mu);font-size:12px}
+.wl{display:inline-block;background:var(--pb);color:var(--pd);border:1px solid var(--pbr);font-family:var(--fh);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;padding:1px 7px;border-radius:4px}
+.ftl{margin:14px 0;display:flex;flex-direction:column;gap:7px}
+.ft{border:1px solid var(--bd);border-radius:10px;overflow:hidden;background:var(--sf)}
+.fth{display:flex;align-items:center;gap:11px;padding:13px 16px;cursor:pointer;user-select:none;transition:background .15s}
+.fth:hover{background:var(--s2)}
+.fna{font-family:var(--fm);font-size:13px;font-weight:500;color:var(--pr);flex:1}
+.fde{font-size:12px;color:var(--mu);flex:2}
+.fba{display:flex;gap:5px;flex-shrink:0}
+.bge{font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:100px}
+.bt2{background:var(--wb);color:#92400E;border:1px solid var(--wr)}
+.bn{background:var(--gb);color:var(--sg);border:1px solid var(--gbr)}
+.bh{background:var(--pb);color:var(--pd);border:1px solid var(--pbr)}
+.ch{font-size:11px;color:var(--di);transition:transform .2s;flex-shrink:0}
+.ft.open .ch{transform:rotate(180deg)}
+.ftb{display:none;border-top:1px solid var(--bd)}
+.ft.open .ftb{display:block}
+.cw{position:relative}
+.cb2{background:#0D1F2D;padding:14px 16px;font-family:var(--fm);font-size:11.5px;color:#A8C0CC;line-height:1.75;overflow-x:auto;white-space:pre;max-height:420px;overflow-y:auto}
+.hl{background:rgba(26,158,158,.18);display:block;margin:0 -16px;padding:0 16px;border-left:3px solid var(--cy)}
+.cm{color:#4A6070}
+.cp{position:absolute;top:9px;right:9px;background:rgba(26,158,158,.15);border:1px solid rgba(26,158,158,.3);color:#5ECECE;font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:4px 9px;border-radius:5px;cursor:pointer;transition:background .15s}
+.cp:hover{background:rgba(26,158,158,.25)}
+.cub{background:var(--s2);padding:14px 16px}
+.cul{font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--cd);margin-bottom:7px}
+.cub p{font-size:13px;margin-bottom:7px}
+.pb2{background:var(--pb);border:1px solid var(--pbr);border-radius:10px;padding:16px 18px;margin:13px 0}
+.pl{font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--pd);margin-bottom:9px;display:flex;align-items:center;justify-content:space-between}
+.ptxt{font-family:var(--fm);font-size:12px;color:var(--pr);line-height:1.7;white-space:pre-wrap;word-break:break-word}
+.tgd{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:11px 0}
+.tr2{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:9px 13px}
+.tl2{font-family:var(--fh);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--di);margin-bottom:3px}
+.tv{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--pr)}
+.ck{list-style:none;margin:9px 0}
+.ck li{display:flex;align-items:flex-start;gap:9px;padding:8px 0;font-size:14px;color:var(--bt);border-bottom:1px solid rgba(13,31,45,.05)}
+.ck li:last-child{border-bottom:none}
+.cx{width:16px;height:16px;min-width:16px;border:1.5px solid var(--bs);border-radius:4px;background:var(--bg);margin-top:2px}
+.tlr{display:flex;gap:15px;padding:12px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
+.tlr:last-child{border-bottom:none}
+.tt{font-family:var(--fh);font-size:11px;font-weight:700;color:var(--cy);min-width:50px;padding-top:2px}
+.tt.you{color:var(--pu)}
+.ttl{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--pr);margin-bottom:2px}
+.tde{font-size:13px;color:var(--mu);line-height:1.6}
+.tri{border:1px solid var(--bd);border-radius:10px;overflow:hidden;margin-bottom:7px;background:var(--sf)}
+.trq{padding:12px 16px;font-family:var(--fh);font-size:14px;font-weight:600;color:var(--pr);display:flex;gap:9px;align-items:flex-start;background:var(--s2);border-bottom:1px solid var(--bd)}
+.trq::before{content:'?';display:flex;align-items:center;justify-content:center;width:18px;height:18px;min-width:18px;background:var(--wb);color:#92400E;border-radius:50%;font-family:var(--fh);font-size:11px;font-weight:800;margin-top:1px;border:1px solid var(--wr)}
+.tra{padding:10px 16px 10px 43px;font-size:13px;color:var(--bt);line-height:1.7}
+.rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px;margin:13px 0}
+.rc{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:12px 14px}
+.rl{font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--di);margin-bottom:4px}
+.rv{font-size:13px;color:var(--cd);font-weight:500;word-break:break-all}
+.nav{position:fixed;right:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:100}
+.nav a{display:block;width:5px;height:5px;background:var(--di);border-radius:50%;text-decoration:none;transition:background .2s,transform .2s}
+.nav a:hover{background:var(--cy);transform:scale(1.5)}
+@media(max-width:680px){header{padding:34px 18px 30px}.ctn{padding:0 18px 60px}.nav{display:none}.tgd{grid-template-columns:1fr}.fl{flex-direction:column}.fde{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="#stack"></a><a href="#prereqs"></a><a href="#s1"></a><a href="#s2"></a>
+  <a href="#s3"></a><a href="#s4"></a><a href="#s5"></a><a href="#s6"></a>
+  <a href="#files"></a><a href="#cust"></a><a href="#after"></a><a href="#trbl"></a>
+</nav>
+
+<header>
+<div class="hi">
+  <div class="ey">Setup Guide &middot; Live Session</div>
+  <h1>Post-Meeting Engine<br><span class="g">Fathom Build</span></h1>
+  <p class="hd">Polls the Fathom API for new meeting recordings, extracts todos and contact intel via Claude, creates a follow-up email draft, and dispatches a digest &mdash; automatically every 5 minutes.</p>
+  <div class="pr2">
+    <div class="pi pc"><span class="ld"></span>Live screen-share session</div>
+    <div class="pi pp">Fathom + Gmail + GAS + Claude API</div>
+  </div>
+</div>
+</header>
+
+<div class="ctn">
+
+<section id="stack">
+<div class="sl">What's under the hood</div>
+<h2>Tech Stack Overview</h2>
+<p>This version uses <strong>Fathom</strong> as the meeting recorder instead of Google Meet's built-in notes. Fathom provides a richer API with full transcripts, summaries, and attendee data. The script polls the Fathom API directly &mdash; no Drive folder needed.</p>
+<div class="sg">
+  <div class="sc"><span class="si">&#127897;&#65039;</span><div class="sn">Fathom</div><div class="sr">Records your calls and stores transcripts + AI summaries. The script polls Fathom's API to detect new meetings.</div><span class="tg tp">API key required</span></div>
+  <div class="sc"><span class="si">&#128108;</span><div class="sn">Gmail</div><div class="sr">Two outputs land here: a follow-up draft to the meeting attendee, and a digest email summarizing what was extracted.</div><span class="tg tc">Already have it</span></div>
+  <div class="sc"><span class="si">&#128197;</span><div class="sn">Google Calendar</div><div class="sr">Fallback for attendee lookup when Fathom's transcript speaker data doesn't have matched emails.</div><span class="tg tc">Already have it</span></div>
+  <div class="sc"><span class="si">&#9881;&#65039;</span><div class="sn">Google Apps Script</div><div class="sr">The automation layer. Runs in your browser &mdash; no installs. Houses all 9 script files and the trigger.</div><span class="tg tgr">Free &middot; No install</span></div>
+  <div class="sc"><span class="si">&#129302;</span><div class="sn">Claude API</div><div class="sr">Reads the Fathom summary and transcript, returns a personalized follow-up email draft. Fractions of a cent per meeting.</div><span class="tg tp">API key required</span></div>
+  <div class="sc"><span class="si">&#128190;</span><div class="sn">Script Properties</div><div class="sr">Secure key-value storage inside GAS. Your Fathom and Anthropic API keys live here &mdash; never in the code.</div><span class="tg tc">Built into GAS</span></div>
+</div>
+<h3>How the pieces connect</h3>
+<div class="fl">
+  <div class="fn"><strong>Fathom</strong><span>Meeting recorded</span></div>
+  <div class="fa">&#8594;</div>
+  <div class="fn"><strong>Apps Script</strong><span>Polls Fathom API</span></div>
+  <div class="fa">&#8594;</div>
+  <div class="fn"><strong>FathomClient</strong><span>Fetches transcript</span></div>
+  <div class="fa">&#8594;</div>
+  <div class="fn"><strong>Claude API</strong><span>Writes follow-up</span></div>
+  <div class="fa">&#8594;</div>
+  <div class="fn"><strong>Gmail Draft</strong><span>+ Digest email</span></div>
+</div>
+
+<h3>Key difference from the Google Meet build</h3>
+<p>The Google Meet build (T018) watches a Drive folder for new docs. This build polls the Fathom API directly &mdash; no Drive folder required. Fathom provides richer data (speaker-matched transcripts, AI summaries, recording URLs), which makes for better follow-ups. The tradeoff: you need a Fathom account and API key.</p>
+</section>
+
+<div class="dv"></div>
+
+<section id="prereqs">
+<div class="sl">Before we start</div>
+<h2>What You Need</h2>
+<div class="ca info">
+  <div class="cl2">Checklist</div>
+  <ul class="ck">
+    <li><div class="cx"></div><span>A <strong>Fathom account</strong> with at least one recorded meeting &mdash; free tier works. Download the Fathom desktop app and record a call to test with.</span></li>
+    <li><div class="cx"></div><span>A <strong>Fathom API key</strong> &mdash; get one at <strong>app.fathom.video</strong> &#8594; Settings &#8594; Integrations &#8594; API. This is different from your login credentials.</span></li>
+    <li><div class="cx"></div><span>An <strong>Anthropic API key</strong> &mdash; get one at <strong>console.anthropic.com</strong>. Free to sign up, pay-as-you-go.</span></li>
+    <li><div class="cx"></div><span>A <strong>Google account</strong> with Gmail access &mdash; where drafts and digest emails will land.</span></li>
+    <li><div class="cx"></div><span>A browser tab open to <strong>script.google.com</strong> &mdash; nothing to install.</span></li>
+  </ul>
+</div>
+<div class="ca sc2">
+  <div class="cl2">&#128421;&#65039; During this session</div>
+  <p>You'll be <strong>sharing your screen</strong> and doing the clicking. Walk through each step in order. The Files section below has all the code &mdash; Config.gs and the MeetingProcessor system prompt are the only files that need editing.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="s1">
+<div class="sl">Step 1</div>
+<h2><span class="sb">1</span>Get Your Fathom API Key</h2>
+<ul class="st">
+  <li><p>Log into <strong>app.fathom.video</strong></p></li>
+  <li><p>Click your profile icon &#8594; <strong>Settings</strong></p></li>
+  <li><p>Find the <strong>Integrations</strong> or <strong>API</strong> section</p></li>
+  <li><p>Click <strong>Create API Key</strong> (or copy an existing one)</p></li>
+  <li><p>Save it somewhere safe &mdash; you'll paste it into Script Properties in Step 3</p></li>
+</ul>
+<div class="ca warn">
+  <div class="cl2">Keep this key private</div>
+  <p>Your Fathom API key gives access to all your meeting recordings. Never paste it directly into script code &mdash; always store it in Script Properties.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="s2">
+<div class="sl">Step 2</div>
+<h2><span class="sb">2</span>Create the Apps Script Project</h2>
+<ul class="st">
+  <li><p>In a new tab, go to <strong>script.google.com</strong></p></li>
+  <li><p>Confirm you're signed into the Google account where you want drafts to land &mdash; check the avatar top right</p></li>
+  <li><p>Click <strong>New Project</strong> &mdash; name it <em>Fathom Post-Meeting Engine</em></p></li>
+  <li><p>You'll see a default <code>Code.gs</code> file &mdash; you'll be replacing it with the 9 files below</p></li>
+</ul>
+<div class="ca warn">
+  <div class="cl2">File naming matters</div>
+  <p>Click the <strong>+</strong> icon next to "Files" to add each new file. Select <strong>Script</strong> for .gs files, <strong>HTML</strong> for Dashboard. Names are case-sensitive.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="s3">
+<div class="sl">Step 3</div>
+<h2><span class="sb">3</span>Add Script Properties</h2>
+<p>Your API keys live in Script Properties &mdash; never in the code.</p>
+<ul class="st">
+  <li><p>Click the <strong>gear icon &#9881;</strong> in the left sidebar &#8594; <strong>Project Settings</strong></p></li>
+  <li><p>Scroll to <strong>Script Properties</strong> &#8594; click <strong>Add Script Property</strong></p></li>
+  <li><p>Add all rows below, then click <strong>Save Script Properties</strong></p></li>
+</ul>
+<table class="pt">
+  <thead><tr><th>Property Name</th><th>What to Enter</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>FATHOM_API_KEY</td><td>Your Fathom API key</td><td><span class="wl">app.fathom.video &#8594; Settings &#8594; API</span></td></tr>
+    <tr><td>ANTHROPIC_API_KEY</td><td>Your Anthropic API key (starts with sk-ant-...)</td><td><span class="wl">console.anthropic.com</span></td></tr>
+    <tr><td>PRIMARY_EMAIL</td><td>Your email address</td><td>Where drafts + digest are sent</td></tr>
+    <tr><td>STAGING_EMAIL</td><td>(optional) A test email address</td><td>Set this to redirect all output to a test inbox during setup</td></tr>
+    <tr><td>CC_EMAIL</td><td>(optional) A CC address</td><td>Leave blank to skip CC</td></tr>
+  </tbody>
+</table>
+<div class="ca info">
+  <div class="cl2">About STAGING_EMAIL</div>
+  <p>When <code>STAGING_EMAIL</code> is set, all drafts and digest emails go to that address instead of the real recipients. Use it during setup to verify output before going live. Clear it when you're ready to send for real.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="s4">
+<div class="sl">Step 4</div>
+<h2><span class="sb">4</span>Paste the Files &amp; Customize</h2>
+<p>Copy each file below. <strong>Two files need customization</strong>: <strong>Config.gs</strong> (your name, email) and the system prompt inside <strong>MeetingProcessor.gs</strong>. Everything else is paste-and-go.</p>
+<div class="ca warn">
+  <div class="cl2">Order matters</div>
+  <p>Start with <strong>Config.gs</strong> &mdash; fill in your name, full name, and email before moving on. Then paste <strong>MeetingProcessor.gs</strong> and replace the highlighted system prompt. All other files paste as-is.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="s5">
+<div class="sl">Step 5</div>
+<h2><span class="sb">5</span>Authorize the Script</h2>
+<ul class="st">
+  <li><p>In the function dropdown, select <code>runEngine</code> &mdash; click <strong>Run &#9654;</strong></p></li>
+  <li><p>Click <strong>Review Permissions</strong> &#8594; select your account &#8594; <strong>Advanced</strong> &#8594; <strong>"Go to [project] (unsafe)"</strong> &#8594; <strong>Allow</strong></p></li>
+  <li><p>The script will run but likely return "No new meetings" &mdash; that's expected if your <code>LAST_RUN_TIMESTAMP</code> hasn't been set yet</p></li>
+</ul>
+<div class="ca warn">
+  <div class="cl2">About the "unsafe" warning</div>
+  <p>Standard for personal scripts. You're authorizing access to your own Gmail and Google Calendar &mdash; nothing external except Fathom and the Anthropic API.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="s6">
+<div class="sl">Step 6</div>
+<h2><span class="sb">6</span>Test &amp; Install Trigger</h2>
+<h3>Run a diagnostic first</h3>
+<ul class="st">
+  <li><p>In the function dropdown, select <code>pingFathom</code> and click <strong>Run &#9654;</strong></p></li>
+  <li><p>Check the <strong>Execution Log</strong> &mdash; you should see <code>Fathom status: 200</code> and some meeting data</p></li>
+  <li><p>If you see a 401 or 403, your <code>FATHOM_API_KEY</code> is incorrect &mdash; go back to Step 3</p></li>
+  <li><p>Run <code>pingClaude</code> to confirm the Anthropic key works too</p></li>
+</ul>
+<h3>Run the engine manually</h3>
+<ul class="st">
+  <li><p>Select <code>runEngine</code> and click <strong>Run &#9654;</strong></p></li>
+  <li><p>Check the Execution Log for "Processed: [meeting name]" or "No new meetings"</p></li>
+  <li><p>If processed: open Gmail Drafts &mdash; a follow-up should be there. Check your inbox for the digest email.</p></li>
+  <li><p>If "No new meetings": the script only fetches meetings created <em>after</em> the last run timestamp. Run <code>serverBackfill</code> from the dashboard (Step 6b) to load existing meetings.</p></li>
+</ul>
+<h3>Install the automatic trigger</h3>
+<ul class="st">
+  <li><p>Click the <strong>clock icon &#128336;</strong> &#8594; Triggers &#8594; <strong>+ Add Trigger</strong></p></li>
+  <li><p>Configure as below and click <strong>Save</strong></p></li>
+</ul>
+<div class="tgd">
+  <div class="tr2"><div class="tl2">Function</div><div class="tv">runEngine</div></div>
+  <div class="tr2"><div class="tl2">Deployment</div><div class="tv">Head</div></div>
+  <div class="tr2"><div class="tl2">Event source</div><div class="tv">Time-driven</div></div>
+  <div class="tr2"><div class="tl2">Trigger type</div><div class="tv">Minutes timer</div></div>
+  <div class="tr2" style="grid-column:1/-1"><div class="tl2">Interval</div><div class="tv">Every 5 minutes</div></div>
+</div>
+<h3>Access the dashboard</h3>
+<p>Deploy as a Web App: <strong>Deploy &#8594; New deployment &#8594; Web app &#8594; Execute as: Me &#8594; Access: Anyone</strong>. Copy the URL. The dashboard lets you run the engine manually, load past meetings, reprocess specific recordings, and run diagnostics.</p>
+<div class="ca ok">
+  <div class="cl2">You're live</div>
+  <p>Every 5 minutes, the script checks Fathom for new meetings since the last run. When it finds one, it processes it and lands a draft in your Gmail within seconds.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="files">
+<div class="sl">All 9 files &mdash; copy-paste ready</div>
+<h2>Script Files</h2>
+<p>Two files need customization: <strong>Config.gs</strong> (your name and email) and the Claude system prompt in <strong>MeetingProcessor.gs</strong>. Everything else pastes as-is.</p>
+
+<div class="ftl">
+
+<div class="ft open" id="ft-config">
+<div class="fth" onclick="toggleFile('config')">
+  <span class="fna">Config.gs</span>
+  <span class="fde">Your name, email, Fathom base URL &mdash; edit before running</span>
+  <div class="fba"><span class="bge bt2">&#9999; Customize</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="cub">
+    <div class="cul">What to change</div>
+    <p><strong>PERSON_NAME</strong> &mdash; your first name (used in email sign-offs and logging).</p>
+    <p><strong>PERSON_FULL_NAME</strong> &mdash; your full name.</p>
+    <p><strong>MY_EMAIL</strong> &mdash; your email address. Used to exclude you from the attendee list when building follow-ups.</p>
+    <p>The API keys (<code>FATHOM_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>) and email routing (<code>PRIMARY_EMAIL</code>, <code>STAGING_EMAIL</code>, <code>CC_EMAIL</code>) are read from Script Properties &mdash; do not hardcode them here.</p>
+  </div>
+  <div class="cw">
+    <button class="cp" onclick="copyCode('cfg')">Copy</button>
+    <pre class="cb2" id="cfg">const CONFIG = {
+  get FATHOM_API_KEY() { return PropertiesService.getScriptProperties().getProperty('FATHOM_API_KEY'); },
+  get ANTHROPIC_API_KEY() { return PropertiesService.getScriptProperties().getProperty('ANTHROPIC_API_KEY'); },
+  get PRIMARY_EMAIL() { return PropertiesService.getScriptProperties().getProperty('PRIMARY_EMAIL') || ''; },
+  get STAGING_EMAIL() { return PropertiesService.getScriptProperties().getProperty('STAGING_EMAIL') || ''; },
+  get CC_EMAIL() { return PropertiesService.getScriptProperties().getProperty('CC_EMAIL') || ''; },
+  get LOG_SHEET_ID() { return PropertiesService.getScriptProperties().getProperty('LOG_SHEET_ID') || ''; },
+  get LAST_RUN_TIMESTAMP() { return PropertiesService.getScriptProperties().getProperty('LAST_RUN_TIMESTAMP') || ''; },
+  set LAST_RUN_TIMESTAMP(val) { PropertiesService.getScriptProperties().setProperty('LAST_RUN_TIMESTAMP', val); },
+  FATHOM_BASE: 'https://api.fathom.ai/external/v1',
+<span class="hl">  PERSON_NAME: 'YOUR_FIRST_NAME',</span>
+<span class="hl">  PERSON_FULL_NAME: 'YOUR FULL NAME',</span>
+<span class="hl">  MY_EMAIL: 'YOUR_EMAIL@DOMAIN.COM'</span>
+};</pre>
+  </div>
+</div>
+</div>
+
+<div class="ft" id="ft-fc">
+<div class="fth" onclick="toggleFile('fc')">
+  <span class="fna">FathomClient.gs</span>
+  <span class="fde">Fathom API wrapper &mdash; fetches meetings, transcripts, summaries</span>
+  <div class="fba"><span class="bge bn">No edits needed</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="cw">
+    <button class="cp" onclick="copyCode('fc')">Copy from source</button>
+    <pre class="cb2" id="fc"><span class="cm">// Copy FathomClient.gs verbatim from the source GAS project.
+// Source script ID: 1vcDe9QjKUxu0jjTWdc0RDW7Ef8DXCKw5hm7nurqED3prxdauTy7FLz8Z
+//
+// Contains: FathomClient object with:
+//   getNewMeetings()     &mdash; polls for meetings since LAST_RUN_TIMESTAMP
+//   getAllMeetings(limit) &mdash; backfill: fetches up to N recent meetings
+//   getMeetingById(recordingId) &mdash; fetches full transcript + summary for a specific meeting
+//   _normalize(), _normalizeShallow() &mdash; internal data shaping
+//   _getAttendeesFromCalendar() &mdash; calendar fallback for attendee lookup
+//
+// No edits needed.</span></pre>
+  </div>
+</div>
+</div>
+
+<div class="ft" id="ft-mp">
+<div class="fth" onclick="toggleFile('mp')">
+  <span class="fna">MeetingProcessor.gs</span>
+  <span class="fde">Core engine &mdash; orchestrates Fathom fetch, Claude call, output dispatch</span>
+  <div class="fba"><span class="bge bt2">&#9999; Customize prompt</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="cub">
+    <div class="cul">What to change &mdash; 1 spot</div>
+    <p>The only section you edit is the <strong>Claude system prompt</strong> inside <code>_callClaude()</code> &mdash; specifically the <code>systemPrompt</code> variable that describes who you are, your company, and your email style.</p>
+    <p><strong>Do not touch:</strong> <code>run()</code>, <code>backfill()</code>, <code>reprocessById()</code>, <code>_processMeeting()</code>, <code>_callClaude()</code> logic outside the system prompt. These handle meeting routing and output dispatch.</p>
+    <p>Use the <strong>Claude Customization Prompt</strong> in the next section to generate your version of the system prompt.</p>
+  </div>
+  <div class="cw">
+    <button class="cp" onclick="copyCode('mp')">Copy</button>
+    <pre class="cb2" id="mp">const MeetingProcessor = {
+
+  run() {
+    if (!CONFIG.FATHOM_API_KEY) return 'FATHOM_API_KEY not set in Script Properties.';
+    if (!CONFIG.ANTHROPIC_API_KEY) return 'ANTHROPIC_API_KEY not set in Script Properties.';
+    const meetings = FathomClient.getNewMeetings();
+    if (!meetings.length) { Logger.log('No new meetings.'); return 'No new meetings to process.'; }
+    let processed = 0;
+    const now = new Date().toISOString();
+    meetings.forEach(meeting => {
+      try { Logger.log('Processing: ' + meeting.title); this._processMeeting(meeting); processed++; }
+      catch(e) { Logger.log('Error: ' + meeting.title + ': ' + e.message); ProcessingLog.markSkipped(meeting.id, meeting.title, e.message); }
+    });
+    CONFIG.LAST_RUN_TIMESTAMP = now;
+    return 'Processed ' + processed + ' of ' + meetings.length + ' meeting(s).';
+  },
+
+  backfill(limit) {
+    limit = limit || 100;
+    if (!CONFIG.FATHOM_API_KEY) return 'FATHOM_API_KEY not set.';
+    const meetings = FathomClient.getAllMeetings(limit);
+    if (!meetings.length) return 'No meetings found in Fathom.';
+    const existing = ProcessingLog.getProcessedIds();
+    let added = 0;
+    meetings.forEach(meeting => {
+      if (existing.has(meeting.id)) return;
+      const attendeeStr = meeting.attendees.map(a => a.name || a.email).filter(Boolean).join(', ') || 'Unknown';
+      ProcessingLog.markBackfilled(meeting.id, meeting.title, attendeeStr, meeting.fathomUrl);
+      added++;
+    });
+    return 'Loaded ' + added + ' meetings (' + (meetings.length - added) + ' already existed). Select any to reprocess.';
+  },
+
+  reprocessById(recordingId) {
+    const meeting = FathomClient.getMeetingById(recordingId);
+    if (!meeting) throw new Error('Could not fetch meeting ' + recordingId + ' from Fathom.');
+    this._processMeeting(meeting);
+    return 'Reprocessed: ' + meeting.title;
+  },
+
+  _processMeeting(meeting) {
+    if (!meeting.hasContent && !meeting.hasTranscript && !meeting.summary) {
+      ProcessingLog.markSkipped(meeting.id, meeting.title, 'No transcript or summary available');
+      return;
+    }
+    const { result, rawResponse } = this._callClaude(meeting);
+    if (!result) {
+      ProcessingLog.markSkipped(meeting.id, meeting.title, 'Claude parse failed: ' + (rawResponse||'').substring(0,200));
+      return;
+    }
+    const { follow_up_draft } = result;
+    if (follow_up_draft && meeting.attendees.length) {
+      const allEmails = meeting.attendees.map(a => a.email).filter(Boolean);
+      if (allEmails.length && !follow_up_draft.to) follow_up_draft.to = allEmails.join(', ');
+    }
+    const draftId = OutputDispatcher.dispatchDraft(follow_up_draft, meeting.attendees, meeting.title);
+    OutputDispatcher.sendDigest({ meetingName: meeting.title, fathomUrl: meeting.fathomUrl, attendees: meeting.attendees, draftId });
+    ProcessingLog.markProcessed(meeting.id, meeting.title, meeting.attendees.map(a => a.name||a.email).join(', '), draftId, meeting.fathomUrl);
+  },
+
+  _callClaude(meeting) {
+    const attendeeList = meeting.attendees.length
+      ? meeting.attendees.map(a => a.name+(a.email?' ('+a.email+')':'')).join(', ')
+      : 'Unknown attendees';
+    const meetingDate = new Date(meeting.createdAt);
+    const meetingDateStr = meetingDate.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    const now = new Date();
+    const sendDateStr = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    const sameDay = meetingDate.toDateString() === now.toDateString();
+    const daysDiff = Math.floor((now-meetingDate)/(1000*60*60*24));
+    const isGroup = meeting.attendees.filter(a => a.email).length > 1;
+    const timeContext = 'TIME CONTEXT:\n- Meeting date: '+meetingDateStr+'\n- Email send date: '+sendDateStr+'\n- Time since meeting: '+(sameDay?'same day':daysDiff+' day(s) ago')+'\n\nTIME RULES:\n1. NEVER use relative time words\n2. Use the actual date or a neutral opener\n3. Specific future deadlines are fine\n4. When in doubt, omit the time reference';
+    const fathomRef = meeting.fathomUrl ? '\nFathom recording: '+meeting.fathomUrl : '';
+    const emailStyle = isGroup
+      ? 'EMAIL STYLE: group reply-all. Address everyone by first name. Warm, direct, specific. No generic openers. No emojis. Plain text only. Close with "Warmly," then "<span class="hl">YOUR FIRST NAME</span>" on the next line.'+fathomRef
+      : 'EMAIL STYLE: warm, direct, specific. No generic openers. No emojis. Plain text only. Lead with something concrete. Close with "Warmly," then "<span class="hl">YOUR FIRST NAME</span>" on the next line.'+fathomRef;
+
+    <span class="cm">// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // CUSTOMIZE THIS BLOCK &mdash; use the Claude Prompt below to generate
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+    const systemPrompt =
+<span class="hl">      'You are a post-meeting intelligence assistant for [YOUR NAME].\n\n'+
+      'ABOUT [YOUR NAME] AND [YOUR COMPANY]:\n'+
+      '- [Company name]: [one paragraph description of what you do]\n'+
+      '- [Your role]: [what you lead and who you serve]\n'+
+      '- Your network spans: [key stakeholder types]\n\n'+
+      'CONTACT INTELLIGENCE: For each attendee identify likely role: [list your role types]\n\n'</span>
+      + emailStyle + '\n\n' + timeContext
+      + '\n\nReturn ONLY raw JSON. No markdown. No preamble.\nSTRUCTURE: {"follow_up_draft":{"to":"string","subject":"string","body":"string"}}';
+    <span class="cm">// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+    const content = meeting.summary
+      ? 'Meeting: '+meeting.title+'\nAttendees: '+attendeeList+'\n\nFATHOM SUMMARY:\n'+meeting.summary+(meeting.transcriptText?'\n\nTRANSCRIPT EXCERPT:\n'+meeting.transcriptText.substring(0,8000):'')
+      : 'Meeting: '+meeting.title+'\nAttendees: '+attendeeList+'\n\nTRANSCRIPT:\n'+meeting.transcriptText;
+    const payload = { model: 'claude-sonnet-4-20250514', max_tokens: 1500, system: systemPrompt, messages: [{ role: 'user', content }] };
+    try {
+      const response = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', { method: 'post', contentType: 'application/json', headers: { 'x-api-key': CONFIG.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' }, payload: JSON.stringify(payload), muteHttpExceptions: true });
+      const data = JSON.parse(response.getContentText());
+      if (!data.content || !data.content[0]) return { result: null, rawResponse: response.getContentText().substring(0,200) };
+      const raw = data.content[0].text.trim();
+      try { return { result: JSON.parse(raw), rawResponse: raw }; }
+      catch(e) { try { return { result: JSON.parse(raw.replace(/^```json\n?/,'').replace(/```$/,'').trim()), rawResponse: raw }; } catch(e2) { return { result: null, rawResponse: raw }; } }
+    } catch(e) { return { result: null, rawResponse: e.message }; }
+  }
+};</pre>
+  </div>
+</div>
+</div>
+
+<div class="ft" id="ft-pl">
+<div class="fth" onclick="toggleFile('pl')">
+  <span class="fna">ProcessingLog.gs</span>
+  <span class="fde">Tracks processed meetings in a Google Sheet &mdash; paste as-is</span>
+  <div class="fba"><span class="bge bn">No edits needed</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="cw">
+    <button class="cp" onclick="copyCode('pl')">Copy from source</button>
+    <pre class="cb2" id="pl"><span class="cm">// Copy ProcessingLog.gs verbatim from the source GAS project.
+// Source script ID: 1vcDe9QjKUxu0jjTWdc0RDW7Ef8DXCKw5hm7nurqED3prxdauTy7FLz8Z
+//
+// Note: Unlike the Google Meet build, this version logs to a Google Sheet
+// (auto-created on first run if LOG_SHEET_ID is not set in Script Properties).
+// The sheet will appear in your Google Drive as "Meeting Log".
+//
+// Contains: ProcessingLog object with getProcessedIds(), getLog(),
+//   markProcessed(), markSkipped(), markBackfilled()
+//
+// No edits needed.</span></pre>
+  </div>
+</div>
+</div>
+
+<div class="ft" id="ft-od">
+<div class="fth" onclick="toggleFile('od')">
+  <span class="fna">OutputDispatcher.gs</span>
+  <span class="fde">Creates Gmail draft, sends digest email &mdash; paste as-is</span>
+  <div class="fba"><span class="bge bn">No edits needed</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="cw">
+    <button class="cp" onclick="copyCode('od')">Copy from source</button>
+    <pre class="cb2" id="od"><span class="cm">// Copy OutputDispatcher.gs verbatim from the source GAS project.
+// Source script ID: 1vcDe9QjKUxu0jjTWdc0RDW7Ef8DXCKw5hm7nurqED3prxdauTy7FLz8Z
+//
+// Contains: scrubRelativeTime(), _stripEmoji(), _textToHtml(),
+//   OutputDispatcher.dispatchDraft() &mdash; creates Gmail draft (respects STAGING_EMAIL)
+//   OutputDispatcher.sendDigest() &mdash; sends processing summary to PRIMARY_EMAIL
+//
+// Note: This build does NOT dispatch to Google Tasks or Super Connector.
+// It is email-only: follow-up draft + digest. If you want task/contact
+// dispatch, use the Google Meet (T018) build instead.
+//
+// No edits needed.</span></pre>
+  </div>
+</div>
+</div>
+
+<div class="ft" id="ft-ts">
+<div class="fth" onclick="toggleFile('ts')">
+  <span class="fna">TriggerSetup.gs</span>
+  <span class="fde">Entry points, trigger management, dashboard server functions</span>
+  <div class="fba"><span class="bge bn">No edits needed</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="cw">
+    <button class="cp" onclick="copyCode('ts')">Copy from source</button>
+    <pre class="cb2" id="ts"><span class="cm">// Copy TriggerSetup.gs verbatim from the source GAS project.
+// Source script ID: 1vcDe9QjKUxu0jjTWdc0RDW7Ef8DXCKw5hm7nurqED3prxdauTy7FLz8Z
+//
+// Key functions:
+//   doGet()                    &mdash; serves the Dashboard web app
+//   runEngine()                &mdash; main entry point (called by trigger)
+//   serverRunNow()             &mdash; dashboard: run immediately
+//   serverBackfill()           &mdash; dashboard: load past meetings from Fathom
+//   serverReprocessSelected()  &mdash; dashboard: reprocess selected meetings
+//   serverGetLog()             &mdash; dashboard: fetch processing log
+//   serverGetStatus()          &mdash; dashboard: check key/config status
+//   serverRunDiagnostic()      &mdash; dashboard: run Fathom API diagnostic
+//   installTrigger()           &mdash; one-time: installs the 5-min trigger
+//   pingFathom(), pingClaude() &mdash; manual API connectivity checks
+//
+// No edits needed.</span></pre>
+  </div>
+</div>
+</div>
+
+<div class="ft" id="ft-fd">
+<div class="fth" onclick="toggleFile('fd')">
+  <span class="fna">FathomDiagnostic.gs</span>
+  <span class="fde">One-function diagnostic runner &mdash; paste as-is</span>
+  <div class="fba"><span class="bge bn">No edits needed</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="cw">
+    <button class="cp" onclick="copyCode('fd')">Copy</button>
+    <pre class="cb2" id="fd">function diagnoseFathomApi() {
+  const result = serverRunDiagnostic();
+  result.lines.forEach(l => Logger.log(l));
+}</pre>
+  </div>
+</div>
+</div>
+
+<div class="ft" id="ft-dash">
+<div class="fth" onclick="toggleFile('dash')">
+  <span class="fna">Dashboard.html</span>
+  <span class="fde">Web dashboard &mdash; run, backfill, reprocess, diagnose</span>
+  <div class="fba"><span class="bge bh">HTML file</span><span class="bge bn">No edits needed</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="ca info" style="border-radius:0;margin:0;border-left:none;border-right:none;border-top:none;">
+    <div class="cl2">How to access the dashboard</div>
+    <p>Deploy as a Web App: <strong>Deploy &#8594; New deployment &#8594; Web app &#8594; Execute as: Me &#8594; Access: Anyone</strong>. Bookmark the URL. The dashboard shows connection status, lets you run the engine or load past Fathom meetings, and has a built-in Fathom API diagnostic tool.</p>
+  </div>
+  <div class="cw">
+    <button class="cp" onclick="copyCode('dash')">Copy from source</button>
+    <pre class="cb2" id="dash"><span class="cm">// Copy Dashboard.html verbatim from the source GAS project.
+// Source script ID: 1vcDe9QjKUxu0jjTWdc0RDW7Ef8DXCKw5hm7nurqED3prxdauTy7FLz8Z
+//
+// No edits needed.</span></pre>
+  </div>
+</div>
+</div>
+
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="cust">
+<div class="sl">Personalization</div>
+<h2>Claude Customization Prompt</h2>
+<p>Use this in a new Claude conversation to generate your personalized <code>systemPrompt</code> string &mdash; the block that goes inside <code>MeetingProcessor.gs</code>. Fill in the brackets first.</p>
+<div class="pb2">
+  <div class="pl">
+    <span>Paste into Claude &mdash; fill in brackets first</span>
+    <button class="cp" style="position:static;margin:0;" onclick="copyPrompt()">Copy</button>
+  </div>
+  <div class="ptxt" id="cprompt">I'm setting up a post-meeting follow-up script that uses Fathom for recording and Claude to write follow-up emails. I need the systemPrompt string for the _callClaude() function in MeetingProcessor.gs.
+
+My info:
+Name: [YOUR FULL NAME]
+First name (for email sign-off): [YOUR FIRST NAME]
+Company name: [COMPANY NAME]
+What your company does: [2-3 sentence description]
+Your role at the company: [title and key responsibilities]
+Who you typically meet with: [types of stakeholders, e.g. LPs, founders, clients]
+How you categorize people: [role types, e.g. LP/Investor, Founder/GP, Partner, Client]
+Email tone preference: [e.g. warm and direct, formal, conversational]
+
+Write the systemPrompt as a plain JavaScript string starting with 'You are a post-meeting intelligence assistant for...'
+
+Requirements:
+1. Describe who I am, my company, and my role in 2-3 sentences
+2. Include context about my network and who I typically meet with
+3. Include CONTACT INTELLIGENCE instruction: for each attendee identify their likely role using my categories above
+4. Keep emailStyle and timeContext as injected variables written as: + emailStyle + '\n\n' + timeContext
+5. End with this EXACT JSON structure (do not modify):
+\n\nReturn ONLY raw JSON. No markdown. No preamble.\nSTRUCTURE: {"follow_up_draft":{"to":"string","subject":"string","body":"string"}}</div>
+</div>
+<div class="ca info" style="margin-top:13px;">
+  <div class="cl2">After Claude generates your prompt</div>
+  <p>Replace the highlighted <code>systemPrompt</code> block in <strong>MeetingProcessor.gs</strong> (between the two rows of dashes). Also replace the two <code>YOUR FIRST NAME</code> instances in the <code>emailStyle</code> lines just above it. Then update <code>PERSON_NAME</code>, <code>PERSON_FULL_NAME</code>, and <code>MY_EMAIL</code> in <strong>Config.gs</strong>.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="after">
+<div class="sl">After setup</div>
+<h2>What Happens After Every Meeting</h2>
+<div class="tlr"><div class="tt">00:00</div><div><div class="ttl">Call ends</div><div class="tde">You stop recording in Fathom (or the call ends and Fathom auto-stops)</div></div></div>
+<div class="tlr"><div class="tt">~2 min</div><div><div class="ttl">Fathom processes the recording</div><div class="tde">Fathom generates a transcript and AI summary in your account</div></div></div>
+<div class="tlr"><div class="tt">~5 min</div><div><div class="ttl">Script polls Fathom API</div><div class="tde">The 5-minute trigger fires, checks for meetings created after LAST_RUN_TIMESTAMP, finds the new one</div></div></div>
+<div class="tlr"><div class="tt">~5 min</div><div><div class="ttl">Claude writes the follow-up</div><div class="tde">The Fathom summary (and transcript if available) is sent to Claude, which generates a personalized email</div></div></div>
+<div class="tlr"><div class="tt">~5 min</div><div><div class="ttl">Outputs dispatched</div><div class="tde">Gmail draft created for attendee(s), digest email sent to your PRIMARY_EMAIL, meeting logged to sheet</div></div></div>
+<div class="tlr"><div class="tt you">You</div><div><div class="ttl">Review and send</div><div class="tde">Open Gmail Drafts, review the follow-up, make any edits, hit Send.</div></div></div>
+</section>
+
+<div class="dv"></div>
+
+<section id="trbl">
+<div class="sl">If something goes wrong</div>
+<h2>Troubleshooting</h2>
+<div class="tri"><div class="trq">"No new meetings" every time the engine runs</div><div class="tra">The script only fetches meetings created after LAST_RUN_TIMESTAMP. Use the dashboard &#8594; "Load Past Meetings" (serverBackfill) to pull existing Fathom meetings into the log, then select any and click Reprocess.</div></div>
+<div class="tri"><div class="trq">Fathom API returns 401 or 403</div><div class="tra">Your FATHOM_API_KEY in Script Properties is incorrect or expired. Go to app.fathom.video &#8594; Settings &#8594; API and regenerate. Update Script Properties and re-run pingFathom().</div></div>
+<div class="tri"><div class="trq">Draft created but attendee email is missing or wrong</div><div class="tra">Fathom tries to match speakers to calendar invitees. If it can't match, the script falls back to Google Calendar. Check the Execution Log for "Attendees from transcript: 0" &mdash; this means matching failed. Ensure your Google Calendar event was invite-based.</div></div>
+<div class="tri"><div class="trq">Claude parse failed</div><div class="tra">Check the Execution Log for the raw Claude response. Usually a malformed systemPrompt. Run pingClaude() to confirm the API key works, then check for unescaped quotes in MeetingProcessor.gs.</div></div>
+<div class="tri"><div class="trq">I want to test without sending to real attendees</div><div class="tra">Set STAGING_EMAIL in Script Properties to your own address. All drafts and digests will redirect there until you clear it.</div></div>
+<div class="tri"><div class="trq">The follow-up is too generic / doesn't reference the meeting</div><div class="tra">Open the dashboard &#8594; Run Diagnostic to see what data Fathom returned. If the summary is thin, check that Fathom's AI summary feature is enabled in your account settings.</div></div>
+</section>
+
+<div class="dv"></div>
+
+<section>
+<div class="sl">Bookmark these</div>
+<h2>Quick Reference</h2>
+<div class="rg">
+  <div class="rc"><div class="rl">Apps Script</div><div class="rv">script.google.com</div></div>
+  <div class="rc"><div class="rl">Fathom API Key</div><div class="rv">app.fathom.video &#8594; Settings &#8594; API</div></div>
+  <div class="rc"><div class="rl">Anthropic Console</div><div class="rv">console.anthropic.com</div></div>
+  <div class="rc"><div class="rl">Gmail Drafts</div><div class="rv">mail.google.com &#8594; Drafts</div></div>
+  <div class="rc"><div class="rl">Script Properties</div><div class="rv">GAS &#8594; &#9881;&#65039; &#8594; Project Settings</div></div>
+  <div class="rc"><div class="rl">Triggers</div><div class="rv">GAS &#8594; &#128336; &#8594; Triggers</div></div>
+  <div class="rc"><div class="rl">Dashboard</div><div class="rv">Deploy &#8594; Web App &#8594; URL</div></div>
+  <div class="rc"><div class="rl">Source Project</div><div class="rv">Script ID: 1vcDe9QjKUxu0jj...</div></div>
+</div>
+</section>
+
+</div>
+
+<script>
+function toggleFile(key) { document.getElementById('ft-'+key).classList.toggle('open'); }
+function copyCode(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var text = el.innerText || el.textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    var btns = document.querySelectorAll('.cp');
+    btns.forEach(function(b) { if (b.getAttribute('onclick') === "copyCode('"+id+"')") { var o=b.textContent; b.textContent='Copied!'; setTimeout(function(){b.textContent=o;},1500); } });
+  });
+}
+function copyPrompt() {
+  var el = document.getElementById('cprompt');
+  var text = el.innerText || el.textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = event.target; var o=btn.textContent; btn.textContent='Copied!'; setTimeout(function(){btn.textContent=o;},1500);
+  });
+}
+</script>
+</body>
+</html>
