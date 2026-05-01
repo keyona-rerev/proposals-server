@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Publishing Layer — ReRev Labs</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F0F7F7;
+    --primary: #0D1F2D;
+    --body-text: #3D5166;
+    --cyan: #1A9E9E;
+    --purple: #7C3AED;
+    --gradient: linear-gradient(90deg, #1A9E9E, #7C3AED);
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--primary); overflow-x: hidden; }
+
+  .slide { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 80px 10vw; position: relative; border-bottom: 1px solid rgba(13,31,45,0.08); }
+  .slide-number { font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan); margin-bottom: 32px; }
+
+  .slide-title { background: var(--primary); color: white; }
+  .slide-title .eyebrow { font-family: var(--font-heading); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 24px; }
+  .slide-title h1 { font-family: var(--font-heading); font-size: clamp(48px, 7vw, 96px); font-weight: 800; line-height: 1.0; margin-bottom: 32px; letter-spacing: -0.02em; }
+  .slide-title h1 .gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .slide-title .subtitle { font-family: var(--font-body); font-size: clamp(16px, 2vw, 20px); font-weight: 300; color: rgba(255,255,255,0.6); max-width: 560px; line-height: 1.6; }
+  .title-bg-accent { position: absolute; right: -100px; top: 50%; transform: translateY(-50%); width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(26,158,158,0.15) 0%, transparent 70%); pointer-events: none; }
+
+  .slide-problem h2 { font-family: var(--font-heading); font-size: clamp(32px, 4vw, 56px); font-weight: 700; line-height: 1.15; margin-bottom: 40px; max-width: 700px; }
+  .pain-list { list-style: none; display: flex; flex-direction: column; gap: 16px; max-width: 600px; }
+  .pain-list li { display: flex; align-items: flex-start; gap: 16px; font-size: 18px; color: var(--body-text); line-height: 1.5; }
+  .pain-list li .icon { width: 28px; height: 28px; border-radius: 50%; background: rgba(124,58,237,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; font-size: 13px; }
+
+  .slide-what h2 { font-family: var(--font-heading); font-size: clamp(28px, 3.5vw, 48px); font-weight: 700; line-height: 1.2; margin-bottom: 16px; max-width: 760px; }
+  .big-statement { font-family: var(--font-heading); font-size: clamp(20px, 2.5vw, 32px); font-weight: 600; line-height: 1.4; max-width: 700px; margin-bottom: 48px; color: var(--body-text); }
+  .big-statement strong { color: var(--primary); }
+  .use-case-grid { display: flex; flex-wrap: wrap; gap: 12px; max-width: 640px; }
+  .use-case-tag { font-family: var(--font-heading); font-size: 14px; font-weight: 600; padding: 8px 18px; border-radius: 100px; background: rgba(26,158,158,0.1); color: #0D7E7E; border: 1px solid rgba(26,158,158,0.2); }
+
+  .slide-how h2 { font-family: var(--font-heading); font-size: clamp(28px, 3.5vw, 48px); font-weight: 700; margin-bottom: 56px; }
+  .steps { display: flex; flex-direction: column; gap: 0; max-width: 680px; position: relative; }
+  .steps::before { content: ''; position: absolute; left: 20px; top: 40px; bottom: 40px; width: 2px; background: linear-gradient(180deg, var(--cyan), var(--purple)); }
+  .step { display: flex; gap: 32px; align-items: flex-start; padding: 20px 0; position: relative; }
+  .step-dot { width: 42px; height: 42px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: white; flex-shrink: 0; position: relative; z-index: 1; }
+  .step-dot.cyan { background: var(--cyan); }
+  .step-dot.purple { background: var(--purple); }
+  .step-content h3 { font-family: var(--font-heading); font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+  .step-content p { font-size: 15px; color: var(--body-text); line-height: 1.5; }
+
+  .slide-pieces h2 { font-family: var(--font-heading); font-size: clamp(28px, 3.5vw, 48px); font-weight: 700; margin-bottom: 56px; }
+  .pieces-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 860px; }
+  .piece-card { background: white; border-radius: 16px; padding: 32px 28px; border: 1px solid rgba(13,31,45,0.08); position: relative; overflow: hidden; }
+  .piece-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .piece-card.claude::before { background: var(--gradient); }
+  .piece-card.github::before { background: var(--primary); }
+  .piece-card.railway::before { background: var(--purple); }
+  .piece-label { font-family: var(--font-heading); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
+  .piece-card h3 { font-family: var(--font-heading); font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+  .piece-card p { font-size: 14px; color: var(--body-text); line-height: 1.6; }
+
+  .slide-demo { background: var(--primary); color: white; }
+  .slide-demo h2 { font-family: var(--font-heading); font-size: clamp(40px, 6vw, 80px); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px; }
+  .slide-demo h2 .gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .slide-demo p { font-size: 20px; color: rgba(255,255,255,0.6); max-width: 480px; line-height: 1.6; }
+  .demo-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(26,158,158,0.2); border: 1px solid rgba(26,158,158,0.4); border-radius: 100px; padding: 8px 20px; font-family: var(--font-heading); font-size: 13px; font-weight: 600; color: var(--cyan); letter-spacing: 0.05em; margin-bottom: 32px; }
+  .demo-badge::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+
+  .slide-setup-intro h2 { font-family: var(--font-heading); font-size: clamp(28px, 3.5vw, 48px); font-weight: 700; margin-bottom: 16px; }
+  .setup-intro-sub { font-size: 20px; color: var(--body-text); margin-bottom: 56px; }
+  .setup-overview { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .overview-item { background: white; border-radius: 14px; padding: 24px 28px; border: 1px solid rgba(13,31,45,0.08); min-width: 160px; }
+  .overview-num { font-family: var(--font-heading); font-size: 28px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+  .overview-label { font-family: var(--font-heading); font-size: 14px; font-weight: 600; color: var(--primary); }
+  .overview-arrow { font-size: 24px; color: var(--cyan); font-weight: 300; }
+
+  .slide-step h2 { font-family: var(--font-heading); font-size: clamp(24px, 3vw, 40px); font-weight: 700; margin-bottom: 40px; }
+  .step-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .instruction-list { display: flex; flex-direction: column; gap: 20px; }
+  .instruction-item { display: flex; gap: 16px; align-items: flex-start; font-size: 15px; color: var(--body-text); line-height: 1.6; }
+  .instruction-item strong { color: var(--primary); }
+  .instruction-num { width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: white; font-family: var(--font-heading); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+
+  .screenshot-placeholder { background: white; border-radius: 16px; border: 1px solid rgba(13,31,45,0.1); overflow: hidden; box-shadow: 0 8px 32px rgba(13,31,45,0.08); }
+  .screenshot-label { background: var(--primary); color: rgba(255,255,255,0.6); font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 20px; }
+  .screenshot-fields { padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .mock-field { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--bg); border-radius: 8px; border: 1px solid rgba(13,31,45,0.08); }
+  .mock-label { font-family: var(--font-heading); font-size: 12px; font-weight: 600; color: var(--body-text); }
+  .mock-value { font-family: var(--font-heading); font-size: 13px; font-weight: 600; color: var(--primary); }
+  .mock-btn { background: var(--primary); color: white; font-family: var(--font-heading); font-size: 13px; font-weight: 600; padding: 10px 20px; border-radius: 8px; text-align: center; margin-top: 4px; }
+  .mock-warning { font-size: 12px; color: var(--purple); font-weight: 600; text-align: center; padding: 8px; background: rgba(124,58,237,0.08); border-radius: 8px; }
+  .mock-scope { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--body-text); padding: 10px 14px; background: rgba(26,158,158,0.06); border-radius: 8px; border: 1px solid rgba(26,158,158,0.2); }
+  .mock-check { color: var(--cyan); font-weight: 700; flex-shrink: 0; }
+  .mock-badge { font-family: var(--font-heading); font-size: 12px; font-weight: 600; padding: 8px 14px; border-radius: 100px; border: 1px solid; text-align: center; }
+  .mock-code { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--primary); border-radius: 6px; gap: 12px; }
+  .mock-key { font-family: monospace; font-size: 12px; color: var(--cyan); flex-shrink: 0; }
+  .mock-value-code { font-family: monospace; font-size: 12px; color: rgba(255,255,255,0.7); text-align: right; }
+
+  .toggle-block { margin-top: 20px; border-radius: 12px; border: 1px solid rgba(26,158,158,0.25); overflow: hidden; }
+  .toggle-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; background: rgba(26,158,158,0.08); cursor: pointer; user-select: none; gap: 12px; }
+  .toggle-header:hover { background: rgba(26,158,158,0.14); }
+  .toggle-label { font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0D7E7E; display: flex; align-items: center; gap: 8px; }
+  .toggle-label .tag { background: rgba(26,158,158,0.15); border: 1px solid rgba(26,158,158,0.3); border-radius: 4px; padding: 2px 8px; font-size: 10px; }
+  .toggle-arrow { font-size: 12px; color: var(--cyan); transition: transform 0.2s; flex-shrink: 0; }
+  .toggle-block.open .toggle-arrow { transform: rotate(180deg); }
+  .toggle-body { display: none; background: var(--primary); padding: 0; }
+  .toggle-block.open .toggle-body { display: block; }
+  .toggle-copy-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 18px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .toggle-copy-bar span { font-family: var(--font-heading); font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.05em; }
+  .copy-btn { font-family: var(--font-heading); font-size: 11px; font-weight: 600; color: var(--cyan); background: rgba(26,158,158,0.15); border: 1px solid rgba(26,158,158,0.3); border-radius: 6px; padding: 4px 12px; cursor: pointer; letter-spacing: 0.05em; transition: all 0.15s; }
+  .copy-btn:hover { background: rgba(26,158,158,0.25); }
+  .copy-btn.copied { color: #4ade80; border-color: #4ade80; background: rgba(74,222,128,0.1); }
+  .toggle-code { padding: 16px 18px; font-family: monospace; font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.85); white-space: pre-wrap; word-break: break-all; overflow-x: auto; }
+  .toggle-code .placeholder { color: #f59e0b; font-weight: 700; }
+  .toggle-code .comment { color: rgba(255,255,255,0.3); }
+
+  .pause-callout { margin-top: 24px; padding: 16px 20px; background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2); border-radius: 12px; display: flex; align-items: flex-start; gap: 12px; }
+  .pause-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .pause-callout p { font-size: 13px; color: var(--body-text); line-height: 1.5; }
+  .pause-callout strong { color: var(--purple); }
+
+  .slide-ship { background: var(--primary); color: white; align-items: center; text-align: center; }
+  .slide-ship h2 { font-family: var(--font-heading); font-size: clamp(56px, 10vw, 128px); font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin-bottom: 24px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .slide-ship p { font-size: 20px; color: rgba(255,255,255,0.5); font-weight: 300; }
+
+  .nav { position: fixed; right: 32px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 100; }
+  .nav a { width: 8px; height: 8px; border-radius: 50%; background: rgba(13,31,45,0.2); display: block; transition: all 0.2s; }
+  .nav a:hover, .nav a.active { background: var(--cyan); transform: scale(1.4); }
+
+  @media (max-width: 768px) {
+    .slide { padding: 60px 6vw; }
+    .pieces-grid { grid-template-columns: 1fr; }
+    .step-layout { grid-template-columns: 1fr; }
+    .setup-overview { flex-direction: column; }
+    .overview-arrow { transform: rotate(90deg); }
+    .nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#s1"></a><a href="#s2"></a><a href="#s3"></a><a href="#s4"></a>
+  <a href="#s5"></a><a href="#s6"></a><a href="#s7"></a><a href="#s7b"></a>
+  <a href="#s7c"></a><a href="#s7d"></a><a href="#s7e"></a><a href="#s8"></a>
+</nav>
+
+<section class="slide slide-title" id="s1">
+  <div class="title-bg-accent"></div>
+  <div class="eyebrow">ReRev Labs — Consulting Session</div>
+  <h1>The<br><span class="gradient-text">Publishing<br>Layer</span></h1>
+  <p class="subtitle">How to turn anything you build in Claude into a live, shareable link without leaving the interface.</p>
+</section>
+
+<section class="slide slide-problem" id="s2">
+  <div class="slide-number">01 — The Problem</div>
+  <h2>You build something great in Claude. Then what?</h2>
+  <ul class="pain-list">
+    <li><span class="icon">→</span>Copy it into a Google Doc, format it again, share a link with edit access you didn't mean to give</li>
+    <li><span class="icon">→</span>Export as PDF, attach to an email, client asks for one change, do it all over</li>
+    <li><span class="icon">→</span>Screenshot it, paste it in Canva, spend 20 minutes making it look like what Claude already made</li>
+    <li><span class="icon">→</span>Leave Claude, open three other tools, lose the thread entirely</li>
+  </ul>
+</section>
+
+<section class="slide slide-what" id="s3">
+  <div class="slide-number">02 — What This Is</div>
+  <h2>A publishing layer on top of Claude.</h2>
+  <p class="big-statement">Anything you build with HTML/CSS goes live as a <strong>real hosted link</strong> instantly. You never leave the interface.</p>
+  <div class="use-case-grid">
+    <span class="use-case-tag">Proposals</span>
+    <span class="use-case-tag">Presentations</span>
+    <span class="use-case-tag">Mini Sites</span>
+    <span class="use-case-tag">Reference Docs</span>
+    <span class="use-case-tag">One-Pagers</span>
+    <span class="use-case-tag">Client Deliverables</span>
+    <span class="use-case-tag">Landing Pages</span>
+    <span class="use-case-tag">Anything HTML/CSS</span>
+  </div>
+</section>
+
+<section class="slide slide-how" id="s4">
+  <div class="slide-number">03 — How It Works</div>
+  <h2>The whole loop, never leaving Claude.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-dot cyan">1</div>
+      <div class="step-content"><h3>Describe what you want</h3><p>Tell Claude what to build. Proposal, mini site, reference doc, presentation. It designs it in the conversation.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-dot">2</div>
+      <div class="step-content"><h3>Review and approve</h3><p>Claude shows you the design as an artifact. You review it, request changes, iterate until it's right.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-dot">3</div>
+      <div class="step-content"><h3>Say "ship it"</h3><p>Claude pushes the file to GitHub. Railway deploys it automatically in about 30 seconds.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-dot purple">4</div>
+      <div class="step-content"><h3>There's a URL</h3><p>Claude returns a live link. You copy it and send it. Done. No other tools touched.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide slide-pieces" id="s5">
+  <div class="slide-number">04 — Under the Hood</div>
+  <h2>Three pieces. All connected.</h2>
+  <div class="pieces-grid">
+    <div class="piece-card claude">
+      <div class="piece-label">Where you work</div>
+      <h3>Claude + Skill Doc</h3>
+      <p>A skill document tells Claude exactly how to publish: slug format, repo name, your Railway URL, your design system. Claude handles the rest.</p>
+    </div>
+    <div class="piece-card github">
+      <div class="piece-label">Where files live</div>
+      <h3>GitHub Repo</h3>
+      <p>Every published file lives here as a standalone HTML file. Each gets a unique slug. All permanent. All version controlled.</p>
+    </div>
+    <div class="piece-card railway">
+      <div class="piece-label">Where they're served</div>
+      <h3>Railway</h3>
+      <p>Auto-deploys on every GitHub push. Your files are live at a real URL within 30 seconds of saying ship it. No manual deploys ever.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide slide-demo" id="s6">
+  <div class="demo-badge">Live Demo</div>
+  <h2>Let's build<br>something<br><span class="gradient-text">right now.</span></h2>
+  <p>Watch the full loop from conversation to live URL in under two minutes.</p>
+</section>
+
+<section class="slide slide-setup-intro" id="s7">
+  <div class="slide-number">05 — Your Setup</div>
+  <h2>Now let's get you set up.</h2>
+  <p class="setup-intro-sub">Four steps. Claude handles the heavy lifting.</p>
+  <div class="setup-overview">
+    <div class="overview-item"><div class="overview-num">01</div><div class="overview-label">Create GitHub Repo</div></div>
+    <div class="overview-arrow">→</div>
+    <div class="overview-item"><div class="overview-num">02</div><div class="overview-label">Claude Pushes Server Files</div></div>
+    <div class="overview-arrow">→</div>
+    <div class="overview-item"><div class="overview-num">03</div><div class="overview-label">Deploy to Railway</div></div>
+    <div class="overview-arrow">→</div>
+    <div class="overview-item"><div class="overview-num">04</div><div class="overview-label">Install Skill Doc</div></div>
+  </div>
+</section>
+
+<section class="slide slide-step" id="s7b">
+  <div class="slide-number">Step 01 — GitHub Repo</div>
+  <h2>Create your GitHub repo.</h2>
+  <div class="step-layout">
+    <div class="step-instructions">
+      <div class="instruction-list">
+        <div class="instruction-item"><div class="instruction-num">1</div><div>Go to <strong>github.com</strong> and sign in. If you don't have an account, create one now.</div></div>
+        <div class="instruction-item"><div class="instruction-num">2</div><div>Click the <strong>+</strong> icon in the top right corner, then click <strong>New repository</strong>.</div></div>
+        <div class="instruction-item"><div class="instruction-num">3</div><div>Name it <strong>publishing-server</strong>. Lowercase, no spaces.</div></div>
+        <div class="instruction-item"><div class="instruction-num">4</div><div>Set visibility to <strong>Private</strong>.</div></div>
+        <div class="instruction-item"><div class="instruction-num">5</div><div>Check <strong>Add a README file</strong>. This is required — Claude cannot push to an empty repo.</div></div>
+        <div class="instruction-item"><div class="instruction-num">6</div><div>Click <strong>Create repository</strong>. Note your username and repo name — you'll give these to Claude next.</div></div>
+      </div>
+    </div>
+    <div class="step-screenshot">
+      <div class="screenshot-placeholder">
+        <div class="screenshot-label">github.com → New Repository</div>
+        <div class="screenshot-fields">
+          <div class="mock-field"><span class="mock-label">Repository name</span><span class="mock-value">publishing-server</span></div>
+          <div class="mock-field"><span class="mock-label">Visibility</span><span class="mock-value">● Private</span></div>
+          <div class="mock-field"><span class="mock-label">Initialize</span><span class="mock-value">☑ Add a README file</span></div>
+          <div class="mock-btn">Create repository</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide slide-step" id="s7c">
+  <div class="slide-number">Step 02 — Claude Pushes the Server Files</div>
+  <h2>Tell Claude to set up your repo.</h2>
+  <div class="step-layout">
+    <div class="step-instructions">
+      <div class="instruction-list">
+        <div class="instruction-item"><div class="instruction-num">1</div><div>Open a new Claude conversation. Make sure the <strong>GitHub Custom MCP</strong> connector is active in your tools panel.</div></div>
+        <div class="instruction-item"><div class="instruction-num">2</div><div>Copy the prompt below, swap in your GitHub username, and paste it into Claude.</div></div>
+        <div class="instruction-item"><div class="instruction-num">3</div><div>Claude commits all three server files directly to your repo. No terminal, no cloning.</div></div>
+        <div class="instruction-item"><div class="instruction-num">4</div><div>When Claude confirms, go to your GitHub repo and verify <strong>server.js</strong>, <strong>package.json</strong>, and <strong>.gitignore</strong> all appear.</div></div>
+        <div class="instruction-item"><div class="instruction-num">5</div><div>Claude is authenticated through the MCP. No personal access token needed.</div></div>
+      </div>
+      <div class="pause-callout">
+        <div class="pause-icon">⏸</div>
+        <p><strong>Pause here.</strong> Copy the prompt below, replace <strong>[your-github-username]</strong> with your actual GitHub username, then paste it into a new Claude conversation.</p>
+      </div>
+      <div class="toggle-block" id="toggle-7c">
+        <div class="toggle-header" onclick="toggleBlock('toggle-7c')">
+          <div class="toggle-label"><span>Claude Prompt</span><span class="tag">1 value to swap</span></div>
+          <span class="toggle-arrow">▼</span>
+        </div>
+        <div class="toggle-body">
+          <div class="toggle-copy-bar">
+            <span>Copy → paste into Claude → swap username → send</span>
+            <button class="copy-btn" onclick="copyToggle('toggle-7c', this)">Copy</button>
+          </div>
+          <div class="toggle-code" id="toggle-7c-code">I'm setting up a publishing server so Claude can push HTML files to a live URL. Please push the following three files to my GitHub repo:
+
+Owner: [your-github-username]
+Repo: publishing-server
+
+Files to push:
+
+1. server.js — Express app that serves files from a /proposals folder
+2. package.json — with express as the only dependency, start script: "node server.js"
+3. .gitignore — ignoring node_modules, .env, and *.log
+
+Use the standard publishing server setup. Confirm when all three files are committed.</div>
+        </div>
+      </div>
+    </div>
+    <div class="step-screenshot">
+      <div class="screenshot-placeholder">
+        <div class="screenshot-label">github.com → your repo after push</div>
+        <div class="screenshot-fields">
+          <div class="mock-field"><span class="mock-label" style="color:#1A9E9E">✓</span><span class="mock-value">server.js</span></div>
+          <div class="mock-field"><span class="mock-label" style="color:#1A9E9E">✓</span><span class="mock-value">package.json</span></div>
+          <div class="mock-field"><span class="mock-label" style="color:#1A9E9E">✓</span><span class="mock-value">.gitignore</span></div>
+          <div class="mock-field"><span class="mock-label" style="color:#1A9E9E">✓</span><span class="mock-value">README.md</span></div>
+          <div class="mock-badge" style="background:rgba(26,158,158,0.15);color:#0D7E7E;border-color:rgba(26,158,158,0.3)">4 files — ready to deploy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide slide-step" id="s7d">
+  <div class="slide-number">Step 03 — Railway</div>
+  <h2>Deploy your server to Railway.</h2>
+  <div class="step-layout">
+    <div class="step-instructions">
+      <div class="instruction-list">
+        <div class="instruction-item"><div class="instruction-num">1</div><div>Go to <strong>railway.app</strong> and sign up with your GitHub account. This links the two automatically.</div></div>
+        <div class="instruction-item"><div class="instruction-num">2</div><div>Click <strong>New Project</strong>, then <strong>Deploy from GitHub repo</strong>. Select <strong>publishing-server</strong>.</div></div>
+        <div class="instruction-item"><div class="instruction-num">3</div><div>Railway detects Node automatically and starts the build. Go to the <strong>Deployments</strong> tab and watch the logs. You're looking for: <span style="color:#1A9E9E;font-weight:600;">Proposals server running on port 8080</span></div></div>
+        <div class="instruction-item"><div class="instruction-num">4</div><div>Go to <strong>Settings → Networking</strong> and click <strong>Generate Domain</strong>. Copy the URL — this is your base URL.</div></div>
+        <div class="instruction-item"><div class="instruction-num">5</div><div>Go to <strong>Settings → Source</strong>. If you see a <strong>Disable</strong> button next to auto-deploy, it's already on. You're done with Railway forever.</div></div>
+      </div>
+    </div>
+    <div class="step-screenshot">
+      <div class="screenshot-placeholder">
+        <div class="screenshot-label">railway.app → Deployments</div>
+        <div class="screenshot-fields">
+          <div class="mock-field"><span class="mock-label">Status</span><span class="mock-value" style="color:#1A9E9E">● Active</span></div>
+          <div class="mock-field"><span class="mock-label">Source</span><span class="mock-value">publishing-server / main</span></div>
+          <div class="mock-field"><span class="mock-label">Domain</span><span class="mock-value" style="color:#1A9E9E">your-app.up.railway.app ↗</span></div>
+          <div class="mock-field"><span class="mock-label">Auto-deploy</span><span class="mock-value">● On</span></div>
+          <div class="mock-badge" style="background:rgba(26,158,158,0.15);color:#0D7E7E;border-color:rgba(26,158,158,0.3)">Every push deploys in ~30 seconds</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide slide-step" id="s7e">
+  <div class="slide-number">Step 04 — Skill Document</div>
+  <h2>Customize and install your skill doc.</h2>
+  <div class="step-layout">
+    <div class="step-instructions">
+      <div class="instruction-list">
+        <div class="instruction-item"><div class="instruction-num">1</div><div>Copy the customization prompt below and paste it into a new Claude conversation.</div></div>
+        <div class="instruction-item"><div class="instruction-num">2</div><div>Claude will ask for your GitHub username, Railway URL, and optionally your brand colors and fonts. Answer each question.</div></div>
+        <div class="instruction-item"><div class="instruction-num">3</div><div>Claude outputs your fully customized skill doc. Copy the entire thing.</div></div>
+        <div class="instruction-item"><div class="instruction-num">4</div><div>In Claude, go to <strong>Settings → Custom Instructions</strong>. Paste the skill doc in and save.</div></div>
+        <div class="instruction-item"><div class="instruction-num">5</div><div>Start a new conversation. Ask Claude to build something. Say <strong>ship it</strong>. Your live URL comes back in chat.</div></div>
+      </div>
+      <div class="pause-callout">
+        <div class="pause-icon">⏸</div>
+        <p><strong>Pause here.</strong> Copy the customization prompt below and paste it into a new Claude conversation. Claude will walk you through setup and output your personalized skill doc ready to paste.</p>
+      </div>
+      <div class="toggle-block" id="toggle-7e-prompt">
+        <div class="toggle-header" onclick="toggleBlock('toggle-7e-prompt')">
+          <div class="toggle-label"><span>Customization Prompt</span><span class="tag">paste into Claude</span></div>
+          <span class="toggle-arrow">▼</span>
+        </div>
+        <div class="toggle-body">
+          <div class="toggle-copy-bar">
+            <span>Copy → paste into a new Claude conversation → answer questions → copy output</span>
+            <button class="copy-btn" onclick="copyToggle('toggle-7e-prompt', this)">Copy</button>
+          </div>
+          <div class="toggle-code" id="toggle-7e-prompt-code">I'm setting up a publishing layer on top of Claude so I can push HTML files to a live URL without leaving the interface. I need you to help me customize a skill document that tells Claude how to do this.
+
+Please ask me the following questions one at a time:
+
+1. What is your GitHub username?
+2. What is the name of your publishing server repo? (default: publishing-server)
+3. What is your Railway URL? (the domain Railway generated, e.g. your-app.up.railway.app)
+4. Do you want to set up a custom design system? If yes, I'll ask for your background color, primary color, accent color, heading font, and body font. If no, we'll use a clean neutral default.
+
+Once you have my answers, output the complete customized skill document as a markdown code block, ready for me to copy and paste into Claude's Custom Instructions.</div>
+        </div>
+      </div>
+      <div class="toggle-block" id="toggle-7e-template" style="margin-top:12px">
+        <div class="toggle-header" onclick="toggleBlock('toggle-7e-template')">
+          <div class="toggle-label"><span>Skill Doc Template</span><span class="tag">for reference</span></div>
+          <span class="toggle-arrow">▼</span>
+        </div>
+        <div class="toggle-body">
+          <div class="toggle-copy-bar">
+            <span>Template — swap highlighted values before using</span>
+            <button class="copy-btn" onclick="copyToggle('toggle-7e-template', this)">Copy</button>
+          </div>
+          <div class="toggle-code" id="toggle-7e-template-code"># Publishing Layer Skill
+
+Publishes HTML files to a live Railway URL with zero manual deploys.
+Every file gets a unique slug and permanent link.
+
+## Infrastructure
+
+GitHub repo: [your-username]/publishing-server
+Railway URL: https://[your-app].up.railway.app
+Path pattern: /proposals/[slug].html
+Auto-deploy: On — every push to main triggers Railway (~30s)
+
+## Slug Format
+
+[client-or-project]-[context]-[MMYY]
+Examples: client-proposal-0526, team-reference-0526
+Never reuse a slug. Each file is permanent at its URL.
+
+## Workflow
+
+1. Build HTML/CSS in conversation using the design system below
+2. Show in artifact for approval — do not push until approved
+3. Propose a slug, confirm before pushing
+4. Check if slug exists in repo (get SHA if updating)
+5. Push via GitHub MCP to proposals/[slug].html
+6. Return live URL in conversation
+
+## Design System
+
+--bg: [your-background-color]
+--primary: [your-primary-color]
+--accent: [your-accent-color]
+--font-heading: '[Your Heading Font]'
+--font-body: '[Your Body Font]'</div>
+        </div>
+      </div>
+    </div>
+    <div class="step-screenshot">
+      <div class="screenshot-placeholder">
+        <div class="screenshot-label">Claude Settings → Custom Instructions</div>
+        <div class="screenshot-fields">
+          <div class="mock-field"><span class="mock-label">Section</span><span class="mock-value">Custom Instructions</span></div>
+          <div class="mock-scope" style="flex-direction:column;align-items:flex-start;gap:6px">
+            <span style="color:var(--cyan);font-weight:700;font-size:11px;">PASTE YOUR SKILL DOC HERE</span>
+            <span style="font-size:12px;">Publishing Layer Skill<br>GitHub repo: your-username/publishing-server<br>Railway URL: your-app.up.railway.app<br>...</span>
+          </div>
+          <div class="mock-btn">Save</div>
+          <div class="mock-badge" style="background:rgba(26,158,158,0.15);color:#0D7E7E;border-color:rgba(26,158,158,0.3)">Active in all new conversations</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide slide-ship" id="s8">
+  <h2>Ship it.</h2>
+  <p>Your turn. Let's get your first link live before we're done.</p>
+</section>
+
+<script>
+  function toggleBlock(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  function copyToggle(id, btn) {
+    const text = document.getElementById(id + '-code').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.nav a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const index = Array.from(slides).findIndex(s => s.id === entry.target.id);
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+      }
+    });
+  }, { threshold: 0.5 });
+  slides.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
