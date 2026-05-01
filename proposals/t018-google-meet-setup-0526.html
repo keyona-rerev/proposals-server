@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T018 Post-Meeting Engine — Setup Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F0F7F7;--pr:#0D1F2D;--bt:#3D5166;--mu:#6B7E94;--di:#A0B0C0;--cy:#1A9E9E;--cd:#0D7E7E;--cb:rgba(26,158,158,.1);--cbr:rgba(26,158,158,.25);--pu:#7C3AED;--pd:#5B21B6;--pb:rgba(124,58,237,.08);--pbr:rgba(124,58,237,.2);--gr:linear-gradient(90deg,#1A9E9E,#7C3AED);--bd:rgba(13,31,45,.09);--bs:rgba(13,31,45,.15);--sf:#fff;--s2:#F7FAFA;--wb:rgba(245,158,11,.08);--wr:rgba(245,158,11,.25);--wt:#92400E;--sg:#065F46;--gb:rgba(16,185,129,.08);--gr2:rgba(16,185,129,.25);--fh:'Outfit',sans-serif;--fb:'Inter',sans-serif;--fm:'JetBrains Mono','Courier New',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--bt);font-family:var(--fb);font-size:15px;line-height:1.7}
+header{background:var(--pr);padding:52px 44px 48px;position:relative;overflow:hidden}
+header::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,158,158,.15) 0%,transparent 50%,rgba(124,58,237,.12) 100%);pointer-events:none}
+.hi{position:relative;z-index:1;max-width:800px}
+.ey{font-family:var(--fh);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--cy);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.ey::before{content:'';display:inline-block;width:20px;height:2px;background:var(--gr);border-radius:2px}
+h1{font-family:var(--fh);font-size:clamp(22px,3.5vw,36px);font-weight:800;line-height:1.15;letter-spacing:-.01em;color:#fff;margin-bottom:14px}
+h1 .g{background:var(--gr);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hd{font-size:14px;color:rgba(255,255,255,.6);max-width:540px;line-height:1.7;margin-bottom:20px}
+.pr2{display:flex;gap:10px;flex-wrap:wrap}
+.pi{display:inline-flex;align-items:center;gap:6px;font-family:var(--fh);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 13px;border-radius:100px}
+.pc{background:rgba(26,158,158,.15);border:1px solid rgba(26,158,158,.35);color:#5ECECE}
+.pp{background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.35);color:#C4B5FD}
+.ld{width:6px;height:6px;background:var(--cy);border-radius:50%;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.ctn{max-width:880px;margin:0 auto;padding:0 44px 80px}
+section{padding-top:48px}
+.sl{font-family:var(--fh);font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--di);margin-bottom:6px}
+h2{font-family:var(--fh);font-size:21px;font-weight:700;color:var(--pr);margin-bottom:16px;display:flex;align-items:center;gap:12px;letter-spacing:-.01em}
+.sb{display:flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--gr);border-radius:8px;font-family:var(--fh);font-size:13px;font-weight:800;color:#fff;flex-shrink:0}
+h3{font-family:var(--fh);font-size:11px;font-weight:700;color:var(--cd);text-transform:uppercase;letter-spacing:.12em;margin:22px 0 9px}
+p{color:var(--bt);margin-bottom:13px}p:last-child{margin-bottom:0}
+strong{color:var(--pr);font-weight:600}
+code{font-family:var(--fm);font-size:12px;background:var(--cb);color:var(--cd);border:1px solid var(--cbr);padding:2px 6px;border-radius:4px}
+.dv{height:1px;background:var(--bd);margin-top:48px}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:13px;margin:18px 0}
+.sc{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden;transition:box-shadow .2s,border-color .2s}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gr);opacity:.5}
+.sc:hover{border-color:var(--cbr);box-shadow:0 4px 16px rgba(26,158,158,.08)}
+.si{font-size:19px;margin-bottom:8px;display:block}
+.sn{font-family:var(--fh);font-size:13px;font-weight:700;color:var(--pr);margin-bottom:4px}
+.sr{font-size:12px;color:var(--mu);line-height:1.6;margin-bottom:10px}
+.tg{display:inline-block;font-family:var(--fh);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:100px}
+.tc{background:var(--cb);color:var(--cd);border:1px solid var(--cbr)}
+.tp{background:var(--pb);color:var(--pd);border:1px solid var(--pbr)}
+.tgr{background:var(--gb);color:var(--sg);border:1px solid var(--gr2)}
+.fl{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0;align-items:stretch}
+.fn{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:9px 11px;flex:1;min-width:90px;text-align:center}
+.fn strong{display:block;font-family:var(--fh);font-size:11px;color:var(--pr);margin-bottom:2px}
+.fn span{font-size:11px;color:var(--mu)}
+.fa{display:flex;align-items:center;color:var(--cy);font-size:13px;flex-shrink:0;opacity:.5}
+.ca{border-radius:12px;padding:16px 20px;margin:13px 0}
+.ca.info{background:var(--cb);border:1px solid var(--cbr)}
+.ca.warn{background:var(--wb);border:1px solid var(--wr)}
+.ca.ok{background:var(--gb);border:1px solid var(--gr2)}
+.ca.sc2{background:var(--pb);border:1px solid var(--pbr)}
+.cl2{font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;margin-bottom:6px}
+.ca.info .cl2{color:var(--cd)}.ca.warn .cl2{color:#92400E}.ca.ok .cl2{color:var(--sg)}.ca.sc2 .cl2{color:var(--pd)}
+.ca p{font-size:14px}
+.ca.info p{color:#0D5F5F}.ca.warn p{color:var(--wt)}.ca.ok p{color:var(--sg)}.ca.sc2 p{color:var(--pd)}
+.st{list-style:none;counter-reset:s;margin:11px 0}
+.st li{counter-increment:s;display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
+.st li:last-child{border-bottom:none}
+.st li::before{content:counter(s);display:flex;align-items:center;justify-content:center;width:21px;height:21px;min-width:21px;background:var(--bg);border:1.5px solid var(--bs);border-radius:6px;font-family:var(--fh);font-size:11px;font-weight:700;color:var(--cd);margin-top:2px}
+.st li p{margin:0;font-size:14px}
+.pt{width:100%;border-collapse:collapse;margin:11px 0;font-size:13px;background:var(--sf);border-radius:10px;overflow:hidden;border:1px solid var(--bd)}
+.pt th{font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--mu);text-align:left;padding:9px 13px;background:var(--s2);border-bottom:1px solid var(--bd)}
+.pt td{padding:10px 13px;border-bottom:1px solid rgba(13,31,45,.05);vertical-align:top}
+.pt tr:last-child td{border-bottom:none}
+.pt td:first-child{font-family:var(--fm);font-size:11.5px;color:var(--cd);font-weight:500;white-space:nowrap}
+.pt td:nth-child(2){color:var(--bt)}
+.pt td:last-child{color:var(--mu);font-size:12px}
+.wl{display:inline-block;background:var(--pb);color:var(--pd);border:1px solid var(--pbr);font-family:var(--fh);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;padding:1px 7px;border-radius:4px}
+.ftl{margin:14px 0;display:flex;flex-direction:column;gap:7px}
+.ft{border:1px solid var(--bd);border-radius:10px;overflow:hidden;background:var(--sf)}
+.fth{display:flex;align-items:center;gap:11px;padding:13px 16px;cursor:pointer;user-select:none;transition:background .15s}
+.fth:hover{background:var(--s2)}
+.fna{font-family:var(--fm);font-size:13px;font-weight:500;color:var(--pr);flex:1}
+.fde{font-size:12px;color:var(--mu);flex:2}
+.fba{display:flex;gap:5px;flex-shrink:0}
+.bge{font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:100px}
+.bt2{background:var(--wb);color:#92400E;border:1px solid var(--wr)}
+.bn{background:var(--gb);color:var(--sg);border:1px solid var(--gr2)}
+.bh{background:var(--pb);color:var(--pd);border:1px solid var(--pbr)}
+.ch{font-size:11px;color:var(--di);transition:transform .2s;flex-shrink:0}
+.ft.open .ch{transform:rotate(180deg)}
+.ftb{display:none;border-top:1px solid var(--bd)}
+.ft.open .ftb{display:block}
+.cw{position:relative}
+.cb2{background:#0D1F2D;padding:14px 16px;font-family:var(--fm);font-size:11.5px;color:#A8C0CC;line-height:1.75;overflow-x:auto;white-space:pre;max-height:400px;overflow-y:auto}
+.hl{background:rgba(26,158,158,.18);display:block;margin:0 -16px;padding:0 16px;border-left:3px solid var(--cy)}
+.cm{color:#4A6070}
+.cp{position:absolute;top:9px;right:9px;background:rgba(26,158,158,.15);border:1px solid rgba(26,158,158,.3);color:#5ECECE;font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:4px 9px;border-radius:5px;cursor:pointer;transition:background .15s}
+.cp:hover{background:rgba(26,158,158,.25)}
+.cub{background:var(--s2);padding:14px 16px}
+.cul{font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--cd);margin-bottom:7px}
+.cub p{font-size:13px;margin-bottom:7px}
+.pb2{background:var(--pb);border:1px solid var(--pbr);border-radius:10px;padding:16px 18px;margin:13px 0}
+.pl{font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--pd);margin-bottom:9px;display:flex;align-items:center;justify-content:space-between}
+.ptxt{font-family:var(--fm);font-size:12px;color:var(--pr);line-height:1.7;white-space:pre-wrap;word-break:break-word}
+.tgd{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:11px 0}
+.tr2{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:9px 13px}
+.tl2{font-family:var(--fh);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--di);margin-bottom:3px}
+.tv{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--pr)}
+.ck{list-style:none;margin:9px 0}
+.ck li{display:flex;align-items:flex-start;gap:9px;padding:8px 0;font-size:14px;color:var(--bt);border-bottom:1px solid rgba(13,31,45,.05)}
+.ck li:last-child{border-bottom:none}
+.cx{width:16px;height:16px;min-width:16px;border:1.5px solid var(--bs);border-radius:4px;background:var(--bg);margin-top:2px}
+.tlr{display:flex;gap:15px;padding:12px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
+.tlr:last-child{border-bottom:none}
+.tt{font-family:var(--fh);font-size:11px;font-weight:700;color:var(--cy);min-width:50px;padding-top:2px}
+.tt.you{color:var(--pu)}
+.ttl{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--pr);margin-bottom:2px}
+.tde{font-size:13px;color:var(--mu);line-height:1.6}
+.tri{border:1px solid var(--bd);border-radius:10px;overflow:hidden;margin-bottom:7px;background:var(--sf)}
+.trq{padding:12px 16px;font-family:var(--fh);font-size:14px;font-weight:600;color:var(--pr);display:flex;gap:9px;align-items:flex-start;background:var(--s2);border-bottom:1px solid var(--bd)}
+.trq::before{content:'?';display:flex;align-items:center;justify-content:center;width:18px;height:18px;min-width:18px;background:var(--wb);color:#92400E;border-radius:50%;font-family:var(--fh);font-size:11px;font-weight:800;margin-top:1px;border:1px solid var(--wr)}
+.tra{padding:10px 16px 10px 43px;font-size:13px;color:var(--bt);line-height:1.7}
+.rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px;margin:13px 0}
+.rc{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:12px 14px}
+.rl{font-family:var(--fh);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--di);margin-bottom:4px}
+.rv{font-size:13px;color:var(--cd);font-weight:500;word-break:break-all}
+.nav{position:fixed;right:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:100}
+.nav a{display:block;width:5px;height:5px;background:var(--di);border-radius:50%;text-decoration:none;transition:background .2s,transform .2s}
+.nav a:hover{background:var(--cy);transform:scale(1.5)}
+@media(max-width:680px){header{padding:34px 18px 30px}.ctn{padding:0 18px 60px}.nav{display:none}.tgd{grid-template-columns:1fr}.fl{flex-direction:column}.fde{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="#stack"></a><a href="#prereqs"></a><a href="#s1"></a><a href="#s2"></a>
+  <a href="#s3"></a><a href="#s4"></a><a href="#s5"></a><a href="#s6"></a>
+  <a href="#files"></a><a href="#cust"></a><a href="#after"></a><a href="#trbl"></a>
+</nav>
+
+<header>
+<div class="hi">
+  <div class="ey">Setup Guide &middot; Live Session</div>
+  <h1>Post-Meeting Engine<br><span class="g">T018 &mdash; Google Meet Build</span></h1>
+  <p class="hd">Watches a Google Drive folder for meeting transcripts, extracts todos and contacts via Claude, creates a follow-up email draft, and logs everything &mdash; automatically every 5 minutes.</p>
+  <div class="pr2">
+    <div class="pi pc"><span class="ld"></span>Live screen-share session</div>
+    <div class="pi pp">Google Meet + Drive + Gmail + Tasks</div>
+  </div>
+</div>
+</header>
+
+<div class="ctn">
+
+<section id="stack">
+<div class="sl">What's under the hood</div>
+<h2>Tech Stack Overview</h2>
+<p>Everything runs inside your existing Google account. The script watches a Drive folder, reads new transcript docs, and dispatches four outputs automatically: a Gmail draft, Google Tasks, Super Connector contact updates, and a digest email.</p>
+<div class="sg">
+  <div class="sc"><span class="si">&#128197;</span><div class="sn">Google Meet</div><div class="sr">Hosts your calls. Gemini saves a meeting notes doc to a Drive folder after each call ends.</div><span class="tg tc">Already have it</span></div>
+  <div class="sc"><span class="si">&#128193;</span><div class="sn">Google Drive</div><div class="sr">The transcript folder is the input queue. Every new Google Doc that appears here gets picked up.</div><span class="tg tc">Already have it</span></div>
+  <div class="sc"><span class="si">&#128108;</span><div class="sn">Gmail</div><div class="sr">Two outputs: a follow-up draft to the attendee, and a digest email summarizing what was extracted.</div><span class="tg tc">Already have it</span></div>
+  <div class="sc"><span class="si">&#9989;</span><div class="sn">Google Tasks</div><div class="sr">Action items are created as tasks, routed to the correct list by project/venture keyword.</div><span class="tg tc">Already have it</span></div>
+  <div class="sc"><span class="si">&#9881;&#65039;</span><div class="sn">Google Apps Script</div><div class="sr">The automation layer. Runs in your browser &mdash; no installs. Houses all 7 script files and the trigger.</div><span class="tg tgr">Free &middot; No install</span></div>
+  <div class="sc"><span class="si">&#129302;</span><div class="sn">Claude API</div><div class="sr">Reads the transcript, returns structured JSON: todos, contact intel, and a follow-up draft. Fractions of a cent per meeting.</div><span class="tg tp">API key required</span></div>
+</div>
+<h3>How the pieces connect</h3>
+<div class="fl">
+  <div class="fn"><strong>Google Meet</strong><span>Call ends</span></div>
+  <div class="fa">&#8594;</div>
+  <div class="fn"><strong>Drive Folder</strong><span>Notes doc appears</span></div>
+  <div class="fa">&#8594;</div>
+  <div class="fn"><strong>Apps Script</strong><span>Detects new doc</span></div>
+  <div class="fa">&#8594;</div>
+  <div class="fn"><strong>Claude API</strong><span>Extracts outputs</span></div>
+  <div class="fa">&#8594;</div>
+  <div class="fn"><strong>Gmail + Tasks</strong><span>+ Contacts + Digest</span></div>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="prereqs">
+<div class="sl">Before we start</div>
+<h2>What You Need</h2>
+<div class="ca info">
+  <div class="cl2">Checklist</div>
+  <ul class="ck">
+    <li><div class="cx"></div><span>A <strong>Google Workspace account</strong> &mdash; tied to a work domain. Gemini meeting notes are a Workspace feature.</span></li>
+    <li><div class="cx"></div><span>A <strong>Google Drive folder</strong> where your Meet transcripts will land &mdash; you'll grab the folder ID from the URL.</span></li>
+    <li><div class="cx"></div><span>An <strong>Anthropic API key</strong> &mdash; get one at <strong>console.anthropic.com</strong>. Free to sign up, pay-as-you-go.</span></li>
+    <li><div class="cx"></div><span>A <strong>Super Connector API key</strong> &mdash; from your SC setup. Needed for contact syncing. (Skip if not using SC.)</span></li>
+    <li><div class="cx"></div><span>At least one <strong>meeting notes doc</strong> already in the folder to test against.</span></li>
+  </ul>
+</div>
+<div class="ca sc2">
+  <div class="cl2">&#128421;&#65039; During this session</div>
+  <p>You'll be <strong>sharing your screen</strong> and doing the clicking. Walk through each step in order. The Files section below has all the code &mdash; everything is copy-paste ready.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="s1">
+<div class="sl">Step 1</div>
+<h2><span class="sb">1</span>Get Your Drive Folder ID</h2>
+<p>The script monitors a specific Drive folder for new transcript docs. You need its ID before configuring the script.</p>
+<ul class="st">
+  <li><p>Open <strong>Google Drive</strong> and go to the folder where your Meet notes will land (or create one)</p></li>
+  <li><p>Look at the URL: <code>drive.google.com/drive/folders/<strong>YOUR_FOLDER_ID</strong></code></p></li>
+  <li><p>Copy the long alphanumeric string after <code>/folders/</code> &mdash; that's your <strong>Folder ID</strong></p></li>
+  <li><p>Keep it handy &mdash; you'll paste it into Config.gs in Step 4</p></li>
+</ul>
+<div class="ca info">
+  <div class="cl2">Configure Meet to save notes here</div>
+  <p>In Google Meet &#8594; Settings, enable <strong>Gemini meeting notes</strong> and point the save location to this Drive folder. After each call, a new Google Doc will appear there within a few minutes.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="s2">
+<div class="sl">Step 2</div>
+<h2><span class="sb">2</span>Create the Apps Script Project</h2>
+<ul class="st">
+  <li><p>In a new tab, go to <strong>script.google.com</strong></p></li>
+  <li><p>Confirm you're signed into the <strong>same Google account</strong> as your Drive folder &mdash; check the avatar top right</p></li>
+  <li><p>Click <strong>New Project</strong> in the top left &mdash; name it <em>Post-Meeting Engine</em></p></li>
+  <li><p>You'll see a default <code>Code.gs</code> file &mdash; you'll be replacing this with the 7 files below</p></li>
+</ul>
+<div class="ca warn">
+  <div class="cl2">File naming matters</div>
+  <p>Click the <strong>+</strong> icon next to "Files" to add each new file. Select <strong>Script</strong> for .gs files. For <code>Dashboard</code>, select <strong>HTML</strong>. Names are case-sensitive &mdash; the files call each other by name.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="s3">
+<div class="sl">Step 3</div>
+<h2><span class="sb">3</span>Add Script Properties</h2>
+<p>Your API keys live in Script Properties &mdash; never in the code.</p>
+<ul class="st">
+  <li><p>Click the <strong>gear icon &#9881;</strong> in the left sidebar &#8594; <strong>Project Settings</strong></p></li>
+  <li><p>Scroll to <strong>Script Properties</strong> &#8594; click <strong>Add Script Property</strong></p></li>
+  <li><p>Add both rows below, then click <strong>Save Script Properties</strong></p></li>
+</ul>
+<table class="pt">
+  <thead><tr><th>Property Name</th><th>What to Enter</th><th>Where to get it</th></tr></thead>
+  <tbody>
+    <tr><td>ANTHROPIC_API_KEY</td><td>Your Anthropic API key (starts with sk-ant-...)</td><td><span class="wl">console.anthropic.com</span></td></tr>
+    <tr><td>SC_API_KEY</td><td>Your Super Connector API key</td><td><span class="wl">From your SC setup</span></td></tr>
+  </tbody>
+</table>
+<div class="ca info">
+  <div class="cl2">What about folder ID and email?</div>
+  <p>Those go directly in <strong>Config.gs</strong> as hardcoded values &mdash; not in Script Properties. You'll edit them in Step 4.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="s4">
+<div class="sl">Step 4</div>
+<h2><span class="sb">4</span>Paste the Files &amp; Customize</h2>
+<p>Copy each file below. <strong>Two files need customization</strong> &mdash; they're marked. Everything else is paste-and-go.</p>
+<div class="ca warn">
+  <div class="cl2">Order matters</div>
+  <p>Start with <strong>Config.gs</strong> &mdash; paste, then fill in your folder ID, email, and task list IDs. Then paste <strong>Transcriptprocessor.gs</strong> and replace the highlighted system prompt block. All other files paste as-is.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="s5">
+<div class="sl">Step 5</div>
+<h2><span class="sb">5</span>Enable the Tasks Advanced Service</h2>
+<ul class="st">
+  <li><p>In the Apps Script editor, click the <strong>+</strong> icon next to "Services" in the left sidebar</p></li>
+  <li><p>Find <strong>Tasks API</strong> and click <strong>Add</strong> &mdash; leave the identifier as <code>Tasks</code></p></li>
+</ul>
+<div class="ca sc2">
+  <div class="cl2">&#128421;&#65039; What you should see</div>
+  <p>"Tasks" appears under Services. Without this, the script errors on every task creation attempt.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="s6">
+<div class="sl">Step 6</div>
+<h2><span class="sb">6</span>Authorize, Test &amp; Install Trigger</h2>
+<ul class="st">
+  <li><p>In the function dropdown, select <code>runEngine</code> &mdash; click <strong>Run &#9654;</strong></p></li>
+  <li><p>Click <strong>Review Permissions</strong> &#8594; select your account &#8594; <strong>Advanced</strong> &#8594; <strong>"Go to [project] (unsafe)"</strong> &#8594; <strong>Allow</strong></p></li>
+  <li><p>Run <code>runEngine</code> again &mdash; check the <strong>Execution Log</strong> at the bottom</p></li>
+  <li><p>Open <strong>Gmail Drafts</strong> &mdash; a follow-up draft should appear if there was a transcript doc in your folder</p></li>
+</ul>
+<div class="ca warn">
+  <div class="cl2">About the "unsafe" warning</div>
+  <p>Standard for personal scripts. You're authorizing access to your own Gmail, Drive, Calendar, and Tasks &mdash; nothing external except the Anthropic API.</p>
+</div>
+<h3>Install the automatic trigger</h3>
+<ul class="st">
+  <li><p>Click the <strong>clock icon &#128336;</strong> &#8594; Triggers &#8594; <strong>+ Add Trigger</strong></p></li>
+  <li><p>Configure as below and click <strong>Save</strong></p></li>
+</ul>
+<div class="tgd">
+  <div class="tr2"><div class="tl2">Function</div><div class="tv">runEngine</div></div>
+  <div class="tr2"><div class="tl2">Deployment</div><div class="tv">Head</div></div>
+  <div class="tr2"><div class="tl2">Event source</div><div class="tv">Time-driven</div></div>
+  <div class="tr2"><div class="tl2">Trigger type</div><div class="tv">Minutes timer</div></div>
+  <div class="tr2" style="grid-column:1/-1"><div class="tl2">Interval</div><div class="tv">Every 5 minutes</div></div>
+</div>
+<div class="ca ok">
+  <div class="cl2">You're live</div>
+  <p>Every 5 minutes it checks the Drive folder for unprocessed docs. End a meeting, wait a few minutes, check Drafts.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="files">
+<div class="sl">All 7 files &mdash; copy-paste ready</div>
+<h2>Script Files</h2>
+<p>Two files need customization: <strong>Config.gs</strong> and the Claude prompt inside <strong>Transcriptprocessor.gs</strong>. Highlighted lines show exactly what to change. Everything else pastes as-is.</p>
+
+<div class="ftl">
+
+<div class="ft open" id="ft-config">
+<div class="fth" onclick="toggleFile('config')">
+  <span class="fna">Config.gs</span>
+  <span class="fde">Folder ID, digest email, task list routing</span>
+  <div class="fba"><span class="bge bt2">&#9999; Customize</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="cub">
+    <div class="cul">What to change</div>
+    <p><strong>TRANSCRIPT_FOLDER_ID</strong> &mdash; your Drive folder ID from Step 1.</p>
+    <p><strong>DIGEST_EMAIL</strong> &mdash; your email for the post-meeting summary.</p>
+    <p><strong>TASK_LISTS</strong> &mdash; replace with your actual Google Tasks list IDs. Find a list ID: in Google Tasks, click the three dots next to a list &mdash; the ID appears in the URL. Start with just <code>'default'</code> and add more later.</p>
+    <p><strong>VENTURE_TO_LIST</strong> &mdash; maps keywords Claude extracts to task list keys. Simplify to <code>'default':'default'</code> if you only have one list.</p>
+  </div>
+  <div class="cw">
+    <button class="cp" onclick="copyCode('cfg')">Copy</button>
+    <pre class="cb2" id="cfg">const CONFIG = {
+<span class="hl">  TRANSCRIPT_FOLDER_ID: 'YOUR_DRIVE_FOLDER_ID_HERE',</span>
+  SUPER_CONNECTOR_API: 'https://super-connector-api-production.up.railway.app',
+  TASK_LISTS: {
+<span class="hl">    'default': 'YOUR_DEFAULT_TASK_LIST_ID',</span>
+    <span class="cm">// 'projecta': 'TASK_LIST_ID_FOR_PROJECT_A',</span>
+  },
+<span class="hl">  DIGEST_EMAIL: 'YOUR_EMAIL@DOMAIN.COM',</span>
+  get ANTHROPIC_API_KEY() { return PropertiesService.getScriptProperties().getProperty('ANTHROPIC_API_KEY'); },
+  get SC_API_KEY() { return PropertiesService.getScriptProperties().getProperty('SC_API_KEY'); }
+};
+
+<span class="cm">// Maps venture keywords in Claude output to task list keys above.</span>
+const VENTURE_TO_LIST = {
+<span class="hl">  'default': 'default'  <span class="cm">// add project keys matching TASK_LISTS above</span></span>
+};
+
+function getTaskListId(venture) {
+  if (!venture) return CONFIG.TASK_LISTS['default'];
+  return CONFIG.TASK_LISTS[VENTURE_TO_LIST[venture.toLowerCase().trim()] || 'default'];
+}</pre>
+  </div>
+</div>
+</div>
+
+<div class="ft" id="ft-pl">
+<div class="fth" onclick="toggleFile('pl')">
+  <span class="fna">Processinglog.gs</span>
+  <span class="fde">Tracks processed file IDs &mdash; paste as-is</span>
+  <div class="fba"><span class="bge bn">No edits needed</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="cw">
+    <button class="cp" onclick="copyCode('pl')">Copy</button>
+    <pre class="cb2" id="pl">const ProcessingLog = {
+  getProcessedIds() {
+    try { const raw = PropertiesService.getScriptProperties().getProperty('PROCESSED_IDS'); return new Set(raw ? JSON.parse(raw) : []); }
+    catch(e) { return new Set(); }
+  },
+  _saveProcessedIds(idSet) { PropertiesService.getScriptProperties().setProperty('PROCESSED_IDS', JSON.stringify([...idSet])); },
+  getLog() {
+    try { const raw = PropertiesService.getScriptProperties().getProperty('PROCESSING_LOG'); return raw ? JSON.parse(raw) : []; }
+    catch(e) { return []; }
+  },
+  _appendLog(entry) {
+    try {
+      const log = this.getLog(); log.unshift(entry);
+      if (log.length > 100) log.length = 100;
+      PropertiesService.getScriptProperties().setProperty('PROCESSING_LOG', JSON.stringify(log));
+    } catch(e) {}
+  },
+  markProcessed(fileId, fileName, attendees, todosCount, contactsUpdated, draftId, transcriptUrl) {
+    const ids = this.getProcessedIds(); ids.add(fileId); this._saveProcessedIds(ids);
+    this._appendLog({ 'File ID': fileId, 'File Name': fileName, 'Processed At': new Date().toISOString(),
+      'Attendees': attendees, 'Todos Count': String(todosCount), 'Contacts Updated': String(contactsUpdated),
+      'Draft ID': draftId || '', 'Transcript URL': transcriptUrl || '' });
+  },
+  markSkipped(fileId, fileName, reason) {
+    const ids = this.getProcessedIds(); ids.add(fileId); this._saveProcessedIds(ids);
+    this._appendLog({ 'File ID': fileId, 'File Name': fileName, 'Processed At': new Date().toISOString(),
+      'Attendees': 'SKIPPED: ' + reason, 'Todos Count': '0', 'Contacts Updated': '0', 'Draft ID': '', 'Transcript URL': '' });
+  }
+};</pre>
+  </div>
+</div>
+</div>
+
+<div class="ft" id="ft-tp">
+<div class="fth" onclick="toggleFile('tp')">
+  <span class="fna">Transcriptprocessor.gs</span>
+  <span class="fde">Core engine &mdash; reads docs, calls Claude, dispatches all outputs</span>
+  <div class="fba"><span class="bge bt2">&#9999; Customize prompt</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="cub">
+    <div class="cul">What to change &mdash; 3 spots</div>
+    <p><strong>1.</strong> <code>MY_EMAIL</code> in <code>_getAttendeesFromCalendar()</code> &mdash; your email, used to exclude yourself from the attendee list.</p>
+    <p><strong>2.</strong> <code>baseContext</code> in <code>_callClaude()</code> &mdash; the "About" block. Replace the entire highlighted block using the Claude Customization Prompt below.</p>
+    <p><strong>3.</strong> The two <code>YOUR FIRST NAME</code> instances in the <code>emailStyle</code> lines above baseContext.</p>
+    <p><strong>Do not touch:</strong> <code>run()</code>, <code>_processFile()</code>, <code>_getAttendeesFromCalendar()</code> logic, <code>_extractText()</code>, <code>_isGeminiNotes()</code>.</p>
+  </div>
+  <div class="cw">
+    <button class="cp" onclick="copyCode('tp')">Copy</button>
+    <pre class="cb2" id="tp">const TranscriptProcessor = {
+
+  run() {
+    const processedIds = ProcessingLog.getProcessedIds();
+    const folder = DriveApp.getFolderById(CONFIG.TRANSCRIPT_FOLDER_ID);
+    const files = folder.getFiles();
+    const unprocessed = [];
+    while (files.hasNext()) {
+      const file = files.next();
+      if (file.getMimeType() !== MimeType.GOOGLE_DOCS) continue;
+      if (processedIds.has(file.getId())) continue;
+      unprocessed.push(file);
+    }
+    if (!unprocessed.length) { Logger.log('No unprocessed transcripts.'); return 'No unprocessed transcripts.'; }
+    unprocessed.sort((a, b) => b.getDateCreated() - a.getDateCreated());
+    try { this._processFile(unprocessed[0]); return 'Processed: ' + unprocessed[0].getName(); }
+    catch(e) { ProcessingLog.markSkipped(unprocessed[0].getId(), unprocessed[0].getName(), e.message); return 'Error: ' + e.message; }
+  },
+
+  _isGeminiNotes(fileName, text) {
+    return fileName.toLowerCase().includes('notes by gemini') || text.includes('Suggested next steps');
+  },
+
+  _processFile(file, opts) {
+    const o = Object.assign({ draft: true, tasks: true, sc_contacts: true, sc_followups: true }, opts || {});
+    const text = this._extractText(file);
+    if (!text) { ProcessingLog.markSkipped(file.getId(), file.getName(), 'Could not extract text'); return; }
+    const isGemini = this._isGeminiNotes(file.getName(), text);
+    let attendees = this._getAttendeesFromCalendar(file);
+    if (!attendees.length) attendees = isGemini ? this._extractAttendeesFromGemini(text) : this._extractAttendeesFromTranscript(text);
+    const transcriptUrl = 'https://docs.google.com/document/d/' + file.getId();
+    const meetingDate = file.getDateCreated();
+    const result = this._callClaude(file.getName(), text, attendees, isGemini, meetingDate, transcriptUrl);
+    if (!result) { ProcessingLog.markSkipped(file.getId(), file.getName(), 'Claude parse failed'); return; }
+    const { todos, contact_updates, follow_up_draft } = result;
+    if (follow_up_draft && attendees.length) {
+      const allEmails = attendees.map(a => a.email).filter(Boolean);
+      if (allEmails.length) follow_up_draft.to = allEmails.join(', ');
+    }
+    const { todosAdded, listsUsed } = o.tasks ? OutputDispatcher.dispatchTasks(todos) : { todosAdded: [], listsUsed: {} };
+    const { contactsSummary } = o.sc_contacts ? OutputDispatcher.dispatchContacts(contact_updates) : { contactsSummary: [] };
+    const draftId = o.draft ? OutputDispatcher.dispatchDraft(follow_up_draft, attendees, file.getName()) : null;
+    const draftLink = draftId ? 'https://mail.google.com/mail/#all/' + draftId : null;
+    if (o.sc_followups) OutputDispatcher.dispatchFollowUps(contact_updates, file.getName(), meetingDate, transcriptUrl, draftLink);
+    if (o.draft || o.tasks) OutputDispatcher.sendDigest({ meetingName: file.getName(), transcriptUrl, attendees, todos: todosAdded, listsUsed, contacts: contactsSummary, draftId });
+    ProcessingLog.markProcessed(file.getId(), file.getName(), attendees.map(a => a.name || a.email).join(', '), todosAdded.length, contactsSummary.length, draftId, transcriptUrl);
+  },
+
+  _getAttendeesFromCalendar(file) {
+    try {
+<span class="hl">      const MY_EMAIL = 'YOUR_EMAIL@DOMAIN.COM'; // &#8592; change this</span>
+      const fileDate = file.getDateCreated();
+      const windowStart = new Date(fileDate.getTime() - 24*60*60*1000);
+      const windowEnd = new Date(fileDate.getTime() + 24*60*60*1000);
+      const rawName = file.getName().replace(/notes by gemini( for)?/i,'').replace(/[^a-z0-9 ]/gi,' ').trim().toLowerCase();
+      const searchWords = rawName.split(/\s+/).filter(w => w.length > 2);
+      const events = CalendarApp.getDefaultCalendar().getEvents(windowStart, windowEnd);
+      let bestEvent = null, bestScore = 0;
+      events.forEach(event => { const score = searchWords.filter(w => event.getTitle().toLowerCase().includes(w)).length; if (score > bestScore) { bestScore = score; bestEvent = event; } });
+      if (!bestEvent || bestScore === 0) return [];
+      const token = ScriptApp.getOAuthToken();
+      const res = UrlFetchApp.fetch('https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(CalendarApp.getDefaultCalendar().getId()) + '/events/' + encodeURIComponent(bestEvent.getId().split('@')[0]), { headers: { Authorization: 'Bearer ' + token }, muteHttpExceptions: true });
+      if (res.getResponseCode() === 200) {
+        const attendees = [], seen = new Set();
+        (JSON.parse(res.getContentText()).attendees || []).forEach(a => { const email = (a.email||'').toLowerCase().trim(); if (!email || email === MY_EMAIL || seen.has(email) || a.resource) return; seen.add(email); attendees.push({ name: a.displayName||'', email }); });
+        return attendees;
+      }
+      return [];
+    } catch(e) { return []; }
+  },
+
+  _extractText(file) {
+    try { const body = DocumentApp.openById(file.getId()).getBody().getText(); if (body && body.trim().length > 50) return body.length > 15000 ? body.substring(0,15000)+'\n\n[truncated]' : body; } catch(e) {}
+    try { const res = UrlFetchApp.fetch('https://docs.google.com/feeds/download/documents/export/Export?id='+file.getId()+'&exportFormat=txt', { headers: { Authorization: 'Bearer '+ScriptApp.getOAuthToken() }, muteHttpExceptions: true }); if (res.getResponseCode()===200) { const text = res.getContentText(); if (text && text.trim().length > 50) return text.length > 15000 ? text.substring(0,15000)+'\n\n[truncated]' : text; } } catch(e) {}
+    return null;
+  },
+
+  _extractAttendeesFromTranscript(text) {
+    const attendees = [];
+    text.split('\n').slice(0,40).forEach(line => { const e = line.match(/[\w.+-]+@[\w-]+\.[a-z]{2,}/i); const n = line.match(/^([A-Z][a-z]+(?: [A-Z][a-z]+)+)/); if (e) { const entry = { email: e[0].toLowerCase() }; if (n) entry.name = n[1]; attendees.push(entry); } });
+    return attendees;
+  },
+
+  _extractAttendeesFromGemini(text) {
+    const attendees = [], seen = new Set();
+    text.split('\n').slice(0,20).forEach(line => { if (line.startsWith('Invited')) { line.replace('Invited','').trim().split(/[,;]/).forEach(n => { const name = n.trim(); if (name && !seen.has(name)) { seen.add(name); attendees.push({ name, email: '' }); } }); } });
+    return attendees;
+  },
+
+  _callClaude(meetingName, text, attendees, isGemini, meetingDate, transcriptUrl) {
+    const attendeeList = attendees.length ? attendees.map(a => a.name+(a.email?' ('+a.email+')':'')).join(', ') : 'Unknown attendees';
+    const now = new Date();
+    const meetingDateStr = meetingDate.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    const sendDateStr = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    const sameDay = meetingDate.toDateString() === now.toDateString();
+    const daysDiff = Math.floor((now-meetingDate)/(1000*60*60*24));
+    const isGroup = attendees.filter(a => a.email).length > 1;
+    const timeContext = 'TIME CONTEXT:\n- Meeting date: '+meetingDateStr+'\n- Email send date: '+sendDateStr+'\n- Time since meeting: '+(sameDay?'same day':daysDiff+' day(s) ago')+'\n\nTIME RULES:\n1. NEVER use relative time words\n2. Use actual date or neutral opener\n3. Specific future deadlines ARE fine\n4. When in doubt, omit the time reference';
+    const emailStyle = isGroup
+      ? 'EMAIL STYLE: group reply-all. Address everyone by name. Warm, direct, specific. No generic openers. No emojis. Plain text. Close with "Warmly," then "<span class="hl">YOUR FIRST NAME</span>". Include near end: "Meeting notes: '+transcriptUrl+'"'
+      : 'EMAIL STYLE: warm, direct, specific. No generic openers. No emojis. Plain text. Lead with something concrete. Close with "Warmly," then "<span class="hl">YOUR FIRST NAME</span>". Include near end: "Meeting notes: '+transcriptUrl+'"';
+
+    <span class="cm">// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // CUSTOMIZE THIS BLOCK &mdash; use the Claude Prompt below to generate
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+    const baseContext =
+<span class="hl">      'You are a post-meeting intelligence assistant for [YOUR NAME].\n\n'+
+      'ABOUT [YOUR NAME]:\n'+
+      '- [Venture 1]: [one-line description]\n'+
+      '- [Venture 2]: [one-line description]\n\n'+
+      'CONTACT INTELLIGENCE: For each person identify role: Funder/Customer/Partner/Distribution/Talent\n'+
+      'TASK ROUTING ventures: [keywords matching your TASK_LISTS keys in Config.gs]\n\n'</span>
+      + emailStyle+'\n\n'+timeContext
+      +'\n\nReturn ONLY raw JSON. No markdown fences. No preamble.\nSTRUCTURE:\n{"todos":[{"task":"string","notes":"string","venture":"string"}],"contact_updates":[{"email":"string","full_name":"string","title_role":"string","organization":"string","notes":"string","what_building":"string","what_need":"string","what_offer":"string","venture_relevance":"string","next_action":"string","next_action_date":"string"}],"follow_up_draft":{"to":"string","subject":"string","body":"string"}}';
+    <span class="cm">// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+    const instructions = isGemini ? '\n\nGEMINI NOTES: Extract todos from Suggested next steps. Extract all participant names. Draft warm follow-up.' : '\n\nRAW TRANSCRIPT: Extract action items, attendee intel, draft follow-up.';
+    const payload = { model: 'claude-sonnet-4-20250514', max_tokens: 2000, system: baseContext+instructions, messages: [{ role: 'user', content: 'Meeting: '+meetingName+'\nAttendees: '+attendeeList+'\n\n'+text }] };
+    const response = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', { method: 'post', contentType: 'application/json', headers: { 'x-api-key': CONFIG.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' }, payload: JSON.stringify(payload), muteHttpExceptions: true });
+    const data = JSON.parse(response.getContentText());
+    if (!data.content || !data.content[0]) { Logger.log('Claude error: '+response.getContentText()); return null; }
+    const raw = data.content[0].text.trim();
+    try { return JSON.parse(raw); } catch(e) { try { return JSON.parse(raw.replace(/^```json\n?/,'').replace(/```$/,'').trim()); } catch(e2) { return null; } }
+  }
+};</pre>
+  </div>
+</div>
+</div>
+
+<div class="ft" id="ft-od">
+<div class="fth" onclick="toggleFile('od')">
+  <span class="fna">Outputdispatcher.gs</span>
+  <span class="fde">Creates tasks, syncs contacts, creates draft, sends digest</span>
+  <div class="fba"><span class="bge bn">No edits needed</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="cw">
+    <button class="cp" onclick="copyCode('od')">Copy from source</button>
+    <pre class="cb2" id="od"><span class="cm">// Copy Outputdispatcher.gs verbatim from the source GAS project.
+// Source script ID: 1u3aNNWF9VBvEg8eouLIZUvC6DmtYPCk3t54JVOvl9IolFgMn2Nw2odB3
+//
+// Contains: scrubRelativeTime(), _stripEmoji(), _textToHtml(),
+//   OutputDispatcher.dispatchTasks(), dispatchContacts(),
+//   dispatchFollowUps(), dispatchDraft(), sendDigest()
+//
+// No edits needed.</span></pre>
+  </div>
+</div>
+</div>
+
+<div class="ft" id="ft-ts">
+<div class="fth" onclick="toggleFile('ts')">
+  <span class="fna">Triggersetup.gs</span>
+  <span class="fde">Entry points, trigger management, dashboard server functions</span>
+  <div class="fba"><span class="bge bn">No edits needed</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="cw">
+    <button class="cp" onclick="copyCode('ts')">Copy from source</button>
+    <pre class="cb2" id="ts"><span class="cm">// Copy Triggersetup.gs verbatim from the source GAS project.
+// Source script ID: 1u3aNNWF9VBvEg8eouLIZUvC6DmtYPCk3t54JVOvl9IolFgMn2Nw2odB3
+//
+// Key functions: doGet(), runEngine(), runNow(), installTrigger(),
+//   serverRunNow(), serverReprocessById(), serverGetLog(),
+//   seedProcessedIds(), checkTriggers(), removeTriggers(), pingClaude()
+//
+// No edits needed.</span></pre>
+  </div>
+</div>
+</div>
+
+<div class="ft" id="ft-br">
+<div class="fth" onclick="toggleFile('br')">
+  <span class="fna">Backlogreprocessor.gs</span>
+  <span class="fde">Batch processes past transcripts for contact extraction (optional)</span>
+  <div class="fba"><span class="bge bn">No edits needed</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="cw">
+    <button class="cp" onclick="copyCode('br')">Copy from source</button>
+    <pre class="cb2" id="br"><span class="cm">// Copy Backlogreprocessor.gs verbatim from the source GAS project.
+// Source script ID: 1u3aNNWF9VBvEg8eouLIZUvC6DmtYPCk3t54JVOvl9IolFgMn2Nw2odB3
+//
+// To use: run seedProcessedIds() first, then startBacklog().
+// Processes contacts + follow-ups only, no drafts or tasks.
+// One file every 5 minutes until queue is empty.
+//
+// No edits needed.</span></pre>
+  </div>
+</div>
+</div>
+
+<div class="ft" id="ft-dash">
+<div class="fth" onclick="toggleFile('dash')">
+  <span class="fna">Dashboard.html</span>
+  <span class="fde">Web dashboard &mdash; run, reprocess with mode toggles, view log</span>
+  <div class="fba"><span class="bge bh">HTML file</span><span class="bge bn">No edits needed</span></div>
+  <span class="ch">&#9660;</span>
+</div>
+<div class="ftb">
+  <div class="ca info" style="border-radius:0;margin:0;border-left:none;border-right:none;border-top:none;">
+    <div class="cl2">How to access the dashboard</div>
+    <p>After pasting, deploy as a Web App: <strong>Deploy &#8594; New deployment &#8594; Type: Web app &#8594; Execute as: Me &#8594; Access: Anyone</strong>. Copy the URL and bookmark it. From there you can run manually, reprocess specific files, and toggle which outputs fire (draft, tasks, contacts, follow-ups).</p>
+  </div>
+  <div class="cw">
+    <button class="cp" onclick="copyCode('dash')">Copy from source</button>
+    <pre class="cb2" id="dash"><span class="cm">// Copy Dashboard.html verbatim from the source GAS project.
+// Source script ID: 1u3aNNWF9VBvEg8eouLIZUvC6DmtYPCk3t54JVOvl9IolFgMn2Nw2odB3
+//
+// No edits needed.</span></pre>
+  </div>
+</div>
+</div>
+
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="cust">
+<div class="sl">Personalization</div>
+<h2>Claude Customization Prompt</h2>
+<p>Use this in a new Claude conversation to generate your personalized <code>baseContext</code> string. Fill in the brackets first.</p>
+<div class="pb2">
+  <div class="pl">
+    <span>Paste into Claude &mdash; fill in brackets first</span>
+    <button class="cp" style="position:static;margin:0;" onclick="copyPrompt()">Copy</button>
+  </div>
+  <div class="ptxt" id="cprompt">I'm setting up a post-meeting intelligence script (T018) in Google Apps Script. I need the baseContext string for the _callClaude() function in Transcriptprocessor.gs.
+
+My info:
+Name: [YOUR FULL NAME]
+Email: [YOUR EMAIL]
+Ventures/projects: [list each with one-line description]
+Task list keys from Config.gs TASK_LISTS: [e.g. 'default', 'projecta']
+Contact role categories: [e.g. Funder, Customer, Partner, Distribution, Talent]
+Email sign-off first name: [YOUR FIRST NAME]
+
+Write the baseContext as a plain JavaScript string starting with 'You are a post-meeting intelligence assistant for...'
+
+Requirements:
+1. Describe who I am and my ventures
+2. Include contact role classification matching my categories
+3. Include TASK ROUTING keywords matching my Config.gs keys exactly
+4. Keep emailStyle and timeContext as injected: ' + emailStyle + '\n\n' + timeContext
+5. End with this EXACT JSON structure (do not modify):
+\n\nReturn ONLY raw JSON. No markdown fences. No preamble.\nSTRUCTURE:\n{"todos":[{"task":"string","notes":"string","venture":"string"}],"contact_updates":[{"email":"string","full_name":"string","title_role":"string","organization":"string","notes":"string","what_building":"string","what_need":"string","what_offer":"string","venture_relevance":"string","next_action":"string","next_action_date":"string"}],"follow_up_draft":{"to":"string","subject":"string","body":"string"}}</div>
+</div>
+<div class="ca info" style="margin-top:13px;">
+  <div class="cl2">After Claude generates your prompt</div>
+  <p>Replace the highlighted <code>baseContext</code> block in <strong>Transcriptprocessor.gs</strong> (between the two rows of dashes). Also replace the two <code>YOUR FIRST NAME</code> instances in the emailStyle lines above it, and replace <code>YOUR_EMAIL@DOMAIN.COM</code> in <code>_getAttendeesFromCalendar()</code>.</p>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section id="after">
+<div class="sl">After setup</div>
+<h2>What Happens After Every Meeting</h2>
+<div class="tlr"><div class="tt">00:00</div><div><div class="ttl">Call ends</div><div class="tde">You leave the Google Meet</div></div></div>
+<div class="tlr"><div class="tt">~2 min</div><div><div class="ttl">Gemini saves notes to Drive</div><div class="tde">A new Google Doc appears in your transcript folder</div></div></div>
+<div class="tlr"><div class="tt">~5 min</div><div><div class="ttl">Script detects the new doc</div><div class="tde">The 5-minute trigger fires, finds the unprocessed doc, reads the content</div></div></div>
+<div class="tlr"><div class="tt">~5 min</div><div><div class="ttl">Claude processes the transcript</div><div class="tde">Extracts todos, contact intel, writes a follow-up email &mdash; returns structured JSON</div></div></div>
+<div class="tlr"><div class="tt">~5 min</div><div><div class="ttl">Outputs dispatched</div><div class="tde">Tasks created in Google Tasks, contacts synced to Super Connector, Gmail draft created, digest email sent</div></div></div>
+<div class="tlr"><div class="tt you">You</div><div><div class="ttl">Review and send</div><div class="tde">Open Gmail Drafts, review the follow-up, make any edits, hit Send. That's the only step you own.</div></div></div>
+</section>
+
+<div class="dv"></div>
+
+<section id="trbl">
+<div class="sl">If something goes wrong</div>
+<h2>Troubleshooting</h2>
+<div class="tri"><div class="trq">No draft appeared after running manually</div><div class="tra">Check the Execution Log for errors. Confirm there's an unprocessed Google Doc in your transcript folder (not a PDF &mdash; must be a Google Doc). Verify TRANSCRIPT_FOLDER_ID in Config.gs.</div></div>
+<div class="tri"><div class="trq">Script runs but creates no tasks</div><div class="tra">Confirm the Tasks Advanced Service is enabled (Step 5). Verify your task list IDs in Config.gs &mdash; an incorrect ID fails silently.</div></div>
+<div class="tri"><div class="trq">Claude parse failed in the Execution Log</div><div class="tra">Check the baseContext string for unescaped quotes or broken concatenation. Run <code>pingClaude()</code> first to confirm the API key returns a 200 status.</div></div>
+<div class="tri"><div class="trq">Attendees are wrong or missing</div><div class="tra">The script matches the doc filename to a Calendar event title. If no match, it falls back to extracting emails from the first 40 lines. Make sure your calendar event title shares words with the meeting notes filename.</div></div>
+<div class="tri"><div class="trq">Authorization error after trigger fires</div><div class="tra">Run <code>runEngine()</code> manually to re-authorize, then delete and re-add the trigger.</div></div>
+<div class="tri"><div class="trq">I want to reprocess a specific file</div><div class="tra">Open the dashboard (Web App URL). Click the entry in the Processing Log, toggle which outputs you want, click Reprocess.</div></div>
+</section>
+
+<div class="dv"></div>
+
+<section>
+<div class="sl">Bookmark these</div>
+<h2>Quick Reference</h2>
+<div class="rg">
+  <div class="rc"><div class="rl">Apps Script</div><div class="rv">script.google.com</div></div>
+  <div class="rc"><div class="rl">Anthropic Console</div><div class="rv">console.anthropic.com</div></div>
+  <div class="rc"><div class="rl">Gmail Drafts</div><div class="rv">mail.google.com &rarr; Drafts</div></div>
+  <div class="rc"><div class="rl">Script Properties</div><div class="rv">GAS &rarr; &#9881;&#65039; &rarr; Project Settings</div></div>
+  <div class="rc"><div class="rl">Triggers</div><div class="rv">GAS &rarr; &#128336; &rarr; Triggers</div></div>
+  <div class="rc"><div class="rl">Execution Logs</div><div class="rv">GAS &rarr; Executions</div></div>
+  <div class="rc"><div class="rl">Dashboard</div><div class="rv">Deploy &rarr; Web App &rarr; URL</div></div>
+  <div class="rc"><div class="rl">Source Project</div><div class="rv">Script ID: 1u3aNNWF9VBvEg8...</div></div>
+</div>
+</section>
+
+</div>
+
+<script>
+function toggleFile(key) { document.getElementById('ft-'+key).classList.toggle('open'); }
+function copyCode(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var text = el.innerText || el.textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    var btns = document.querySelectorAll('.cp');
+    btns.forEach(function(b) { if (b.getAttribute('onclick') === "copyCode('"+id+"')") { var o=b.textContent; b.textContent='Copied!'; setTimeout(function(){b.textContent=o;},1500); } });
+  });
+}
+function copyPrompt() {
+  var el = document.getElementById('cprompt');
+  var text = el.innerText || el.textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = event.target; var o=btn.textContent; btn.textContent='Copied!'; setTimeout(function(){btn.textContent=o;},1500);
+  });
+}
+</script>
+</body>
+</html>
