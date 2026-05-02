@@ -575,10 +575,10 @@
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
             margin-top: 3rem;
-            max-width: 900px;
+            max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -587,13 +587,14 @@
             background: var(--bg-surface);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 2.5rem;
+            padding: 2rem;
             text-align: left;
         }
 
         .pricing-card.featured {
             border-color: var(--cyan);
             background: linear-gradient(135deg, rgba(26, 158, 158, 0.02), rgba(26, 158, 158, 0.01));
+            transform: scale(1.02);
         }
 
         .pricing-label {
@@ -607,14 +608,15 @@
 
         .pricing-title {
             font-family: var(--font-serif);
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 1rem;
+            line-height: 1.2;
         }
 
         .pricing-value {
             font-family: var(--font-serif);
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 600;
             color: var(--cyan);
             margin-bottom: 1rem;
@@ -624,17 +626,18 @@
             color: var(--text-secondary);
             line-height: 1.6;
             margin-bottom: 1.5rem;
+            font-size: 0.9rem;
         }
 
         .pricing-features {
             list-style: none;
             color: var(--text-secondary);
-            font-size: 0.875rem;
-            line-height: 1.6;
+            font-size: 0.8rem;
+            line-height: 1.5;
         }
 
         .pricing-features li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
         /* ─── CTA SECTION ─── */
@@ -692,12 +695,13 @@
             .automation-card { width: 140px; }
             .admin-cards { gap: 24px; }
             .admin-cards .automation-card { width: 160px; }
+            .pricing-grid { grid-template-columns: 1fr 1fr; }
         }
 
         @media (max-width: 768px) {
             .container { padding: 0 1.5rem; }
             .hero-title { font-size: 3rem; }
-            .pricing-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .pricing-grid { grid-template-columns: 1fr; gap: 1.5rem; }
             .section { padding: 4rem 0; }
         }
     </style>
@@ -942,9 +946,22 @@
         <div class="container">
             <div class="section-label">Investment Options</div>
             <h2 class="section-title">Implementation Approaches</h2>
-            <p class="section-subtitle">Individual systems or complete framework with significant bundle savings</p>
+            <p class="section-subtitle">Start with a strategic audit, then choose individual systems or the complete framework</p>
             
             <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-label">Start Here</div>
+                    <div class="pricing-title">Strategy Audit</div>
+                    <div class="pricing-value">$200</div>
+                    <div class="pricing-desc">90-minute deep dive into your current workflow, friction points, and automation opportunities.</div>
+                    <ul class="pricing-features">
+                        <li>Comprehensive workflow analysis</li>
+                        <li>Custom automation roadmap</li>
+                        <li>Priority system recommendations</li>
+                        <li>Implementation timeline</li>
+                    </ul>
+                </div>
+
                 <div class="pricing-card featured">
                     <div class="pricing-label">Recommended</div>
                     <div class="pricing-title">Complete Framework</div>
@@ -955,6 +972,7 @@
                         <li>Integrated system design</li>
                         <li>Priority implementation</li>
                         <li>Ongoing optimization included</li>
+                        <li>Free strategy audit included</li>
                     </ul>
                 </div>
 
@@ -968,6 +986,7 @@
                         <li>Meeting Intelligence: $500</li>
                         <li>Network Intelligence: $1,000</li>
                         <li>Content Automation: $2,000</li>
+                        <li>Plus others as shown above</li>
                     </ul>
                 </div>
             </div>
@@ -978,8 +997,8 @@
     <section class="cta-section section">
         <div class="container">
             <h2 class="cta-title">Ready to Optimize Your Complete Workflow?</h2>
-            <p class="cta-text">Your note processing request revealed a systematic opportunity. Let's implement the full consultant automation stack, starting with what you need most.</p>
-            <a href="https://calendly.com/keyona-rerev" target="_blank" class="cta-button">Schedule Strategy Call</a>
+            <p class="cta-text">Your note processing request revealed a systematic opportunity. Let's start with a strategy audit to map your complete automation roadmap.</p>
+            <a href="https://calendar.app.google/34kT1vGWRha2yzjA9" target="_blank" class="cta-button">Book Strategy Audit</a>
             <div class="contact-info">
                 <strong>Keyona Meeks</strong> • keyona@rerev.io • ReRev Labs
             </div>
