@@ -3,36 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nicole Clarke — Complete Workflow Optimization</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Nicole Clarke — Beyond Note Taking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #F0F7F7;
-            --bg-surface: #FFFFFF;
-            --primary: #0D1F2D;
-            --text-secondary: #3D5166;
+            --bg: #FEFEFE;
+            --bg-warm: #FDFCFA;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B7280;
+            --text-light: #9CA3AF;
             --cyan: #1A9E9E;
-            --cyan-dark: #0D7E7E;
             --purple: #7C3AED;
-            --red: #DC2626;
-            --gradient: linear-gradient(90deg, #1A9E9E, #7C3AED);
-            --accent-highlight: #DC2626;
-            --border-light: #E5E7EB;
-            --font-heading: 'Outfit', sans-serif;
-            --font-body: 'Inter', sans-serif;
-            
-            --shadow-soft: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
-            --shadow-medium: 0 4px 6px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.06);
-            --glow-cyan: rgba(26, 158, 158, 0.15);
-            --glow-purple: rgba(124, 58, 237, 0.2);
-
-            /* Automation Hub Variables */
-            --col-outreach: rgba(26, 158, 158, 0.09);
-            --col-outreach-border: rgba(26, 158, 158, 0.22);
-            --col-client: rgba(124, 58, 237, 0.09);
-            --col-client-border: rgba(124, 58, 237, 0.22);
-            --col-admin: rgba(220, 38, 38, 0.07);
-            --col-admin-border: rgba(220, 38, 38, 0.2);
+            --accent-warm: #F3F4F6;
+            --border: #E5E7EB;
+            --font-serif: 'Crimson Text', serif;
+            --font-sans: 'Inter', sans-serif;
         }
         
         * {
@@ -42,1102 +27,611 @@
         }
         
         body {
-            font-family: var(--font-body);
+            font-family: var(--font-sans);
             background: var(--bg);
-            color: var(--primary);
-            line-height: 1.6;
-            overflow-x: hidden;
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 16px;
         }
-        
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            background: linear-gradient(135deg, var(--bg) 0%, #F9FAFB 100%);
-            overflow: hidden;
-            padding: 2rem;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(circle at 25% 25%, var(--glow-cyan) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, var(--glow-purple) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-            opacity: 0.6;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(-30px, -30px) rotate(120deg); }
-            66% { transform: translate(30px, -20px) rotate(240deg); }
-        }
-        
-        .hero-content {
+
+        /* ─── HEADER ─── */
+        .header {
+            padding: 3rem 0 6rem;
             text-align: center;
-            max-width: 800px;
-            position: relative;
-            z-index: 10;
-            animation: fadeInUp 1s ease-out;
+            border-bottom: 1px solid var(--border);
         }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .hero h1 {
-            font-family: var(--font-heading);
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 700;
-            line-height: 1.1;
+
+        .client-tag {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
             margin-bottom: 1.5rem;
-            background: var(--gradient);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
-        
-        .subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
+
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 600;
+            line-height: 0.9;
+            color: var(--text-primary);
             margin-bottom: 2rem;
-            font-weight: 500;
-        }
-        
-        .client-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--bg-surface);
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            box-shadow: var(--shadow-soft);
-            margin-bottom: 3rem;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-        
-        .section-header h2 {
-            font-family: var(--font-heading);
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-        
-        .workflow-viz {
-            background: var(--bg-surface);
-            border-radius: 2rem;
-            padding: 3rem;
-            margin: 2rem 0;
-            box-shadow: var(--shadow-medium);
-            position: relative;
-        }
-        
-        .workflow-viz::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient);
-        }
-        
-        .workflow-viz h3 {
-            font-family: var(--font-heading);
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
         }
 
-        /* ─── AUTOMATION HUB STYLES ─── */
-        .automation-hub {
-            width: 100%;
-            max-width: 1200px;
-            height: 780px;
-            margin: 3rem auto;
-            background: linear-gradient(160deg, #f6fbfb 0%, #f0f7f7 100%);
-            border-radius: 2rem;
-            box-shadow: 0 24px 80px rgba(0,0,0,0.12);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .label-bar {
-            display: flex;
-            width: 100%;
-            height: 54px;
-            flex-shrink: 0;
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-            position: relative;
-            z-index: 10;
-        }
-
-        .label-cell {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-family: var(--font-heading);
-            font-size: 0.82rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            border-right: 1px solid rgba(0,0,0,0.06);
-        }
-        .label-cell:last-child { border-right: none; }
-
-        .label-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .label-outreach {
-            width: 380px;
-            background: var(--col-outreach);
-            color: var(--cyan-dark);
-        }
-        .label-outreach .label-dot { background: var(--cyan); }
-
-        .label-center {
-            flex: 1;
-            background: transparent;
-            color: var(--primary);
-            border-right: 1px solid rgba(0,0,0,0.06);
-        }
-
-        .label-client {
-            width: 380px;
-            background: var(--col-client);
-            color: var(--purple);
-        }
-        .label-client .label-dot { background: var(--purple); }
-
-        .hub-body {
-            display: flex;
-            flex: 1;
-            position: relative;
-        }
-
-        .col-outreach {
-            width: 380px;
-            flex-shrink: 0;
-            background: var(--col-outreach);
-            border-right: 1px solid var(--col-outreach-border);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 32px 20px;
-            gap: 18px;
-            z-index: 3;
-        }
-
-        .col-center {
-            flex: 1;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 4;
-        }
-
-        .col-client {
-            width: 380px;
-            flex-shrink: 0;
-            background: var(--col-client);
-            border-left: 1px solid var(--col-client-border);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 32px 20px;
-            gap: 18px;
-            z-index: 3;
-        }
-
-        .admin-band {
-            width: 100%;
-            height: 210px;
-            flex-shrink: 0;
-            background: var(--col-admin);
-            border-top: 1px solid var(--col-admin-border);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 48px;
-            z-index: 3;
-        }
-
-        .admin-band-label {
-            position: absolute;
-            top: 14px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: var(--font-heading);
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--red);
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            white-space: nowrap;
-        }
-        .admin-band-label .label-dot { background: var(--red); width: 7px; height: 7px; border-radius: 50%; }
-
-        .automation-card {
-            width: 170px;
-            background: #ffffff;
-            border-radius: 14px;
-            box-shadow: 0 3px 14px rgba(0,0,0,0.07);
-            padding: 18px 14px 14px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            border: 1px solid rgba(0,0,0,0.07);
-            cursor: pointer;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            position: relative;
-            flex-shrink: 0;
-        }
-        .automation-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 28px rgba(0,0,0,0.11);
-        }
-        .automation-card.highlighted {
-            border: 2px solid var(--cyan);
-            box-shadow: 0 0 0 4px rgba(26,158,158,0.12), 0 6px 20px rgba(0,0,0,0.08);
-        }
-        .automation-card.highlighted::after {
-            content: 'YOUR REQUEST';
-            position: absolute;
-            top: -11px;
-            right: -2px;
-            background: var(--cyan);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            font-family: var(--font-heading);
-            white-space: nowrap;
-        }
-
-        .timeline-badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 0.62rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            font-family: var(--font-heading);
-        }
-        .badge-immediate { background: rgba(26,158,158,0.14); color: var(--cyan-dark); }
-        .badge-fast      { background: rgba(124,58,237,0.12); color: var(--purple); }
-        .badge-complex   { background: rgba(220,38,38,0.10); color: var(--red); }
-
-        .card-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, var(--cyan), var(--purple));
-            margin-bottom: 10px;
-            margin-top: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .card-icon svg { width: 20px; height: 20px; }
-
-        .card-title {
-            font-family: var(--font-heading);
-            font-size: 0.92rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 4px;
-            line-height: 1.2;
-        }
-        .card-desc {
-            font-size: 0.76rem;
-            color: var(--text-secondary);
-            line-height: 1.35;
-        }
-
-        .automation-core {
-            width: 164px;
-            height: 164px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            z-index: 10;
-            box-shadow:
-                0 0 0 10px rgba(255,255,255,0.9),
-                0 0 0 22px rgba(26,158,158,0.1),
-                0 20px 50px rgba(13,31,45,0.2);
-            animation: pulse-core 4s ease-in-out infinite;
-            position: relative;
-            flex-shrink: 0;
-        }
-        @keyframes pulse-core {
-            0%, 100% { box-shadow: 0 0 0 10px rgba(255,255,255,0.9), 0 0 0 22px rgba(26,158,158,0.10), 0 20px 50px rgba(13,31,45,0.20); }
-            50%       { box-shadow: 0 0 0 14px rgba(255,255,255,0.9), 0 0 0 30px rgba(26,158,158,0.14), 0 28px 60px rgba(13,31,45,0.25); }
-        }
-        .core-icon { margin-bottom: 6px; }
-        .core-title {
-            font-family: var(--font-heading);
-            font-size: 1.05rem;
-            font-weight: 800;
-            line-height: 1.15;
-            padding: 0 10px;
-        }
-        .core-sub {
-            font-size: 0.72rem;
-            opacity: 0.88;
-            margin-top: 2px;
-            font-weight: 500;
-        }
-
-        .connection-svg {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-        }
-        .connection-svg line {
-            stroke: url(#grad);
-            stroke-width: 1.5;
-            stroke-dasharray: 5 3;
-            opacity: 0.35;
-        }
-
-        .admin-cards {
-            display: flex;
-            gap: 48px;
-            align-items: center;
-            margin-top: 28px;
-        }
-        .admin-cards .automation-card {
-            width: 200px;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.55);
-            backdrop-filter: blur(8px);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-content {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            max-width: 540px;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-        }
-        .modal-close {
-            position: absolute;
-            top: 1rem; right: 1.25rem;
-            background: none; border: none;
-            font-size: 1.7rem; cursor: pointer;
-            color: var(--text-secondary);
-        }
-        .modal-content h3 {
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            color: var(--primary);
-        }
-        .modal-desc { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; }
-        .workflow-steps { display: grid; gap: 0.85rem; margin: 1rem 0; }
-        .workflow-step { display: flex; gap: 1rem; align-items: flex-start; }
-        .step-num {
-            width: 26px; height: 26px; border-radius: 50%;
-            background: var(--cyan); color: white;
-            font-weight: 700; font-size: 0.8rem;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-        }
-        .step-content h5 { font-weight: 600; font-size: 0.9rem; margin-bottom: 2px; }
-        .step-content p { font-size: 0.85rem; color: var(--text-secondary); }
-        .modal-metrics { display: flex; gap: 1rem; margin-top: 1.5rem; }
-        .metric {
-            background: #F4FAFA; border-radius: 1rem;
-            padding: 0.9rem 1.25rem; text-align: center; flex: 1;
-        }
-        .metric-value { font-size: 1.4rem; font-weight: 700; color: var(--purple); }
-        .metric-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-secondary); margin-top: 2px; }
-        
-        .tech-stack-section, .pricing-section {
-            background: var(--bg-surface);
-            border-radius: 2rem;
-            padding: 3rem;
-            margin: 3rem 0;
-            box-shadow: var(--shadow-medium);
-        }
-        
-        .tech-grid, .pricing-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .tech-card, .pricing-option {
-            padding: 2rem;
-            border-radius: 1rem;
-            text-align: center;
-        }
-        
-        .tech-card.primary, .pricing-option.bundle {
-            background: linear-gradient(135deg, rgba(26, 158, 158, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
-            border: 2px solid var(--cyan);
-        }
-        
-        .tech-card.secondary, .pricing-option.individual {
-            background: #F8FAFC;
-            border: 1px solid var(--border-light);
-        }
-        
-        .pricing-value {
-            font-size: 2.5rem;
-            font-weight: 700;
+        .hero-title .accent {
             color: var(--cyan);
-            margin: 1rem 0;
-        }
-        
-        .pricing-savings {
-            background: var(--purple);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1rem;
+            font-style: italic;
         }
 
-        /* ─── CLEAN FOOTER STYLES ─── */
-        .footer-section {
-            position: relative;
-            width: 100%;
-            height: 500px;
-            margin: 0;
-            overflow: hidden;
-        }
-        
-        /* Giphy embed container */
-        .video-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .video-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            pointer-events: none; /* Disables all hover interactions */
-        }
-        
-        /* Overlay to prevent any iframe interactions */
-        .video-container::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: 1;
-        }
-        
-        /* Glass overlay for CTA */
-        .glass-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 1.5rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            z-index: 2;
-        }
-        
-        .cta-title {
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
-        }
-        
-        .cta-button {
-            background: var(--gradient);
-            color: white;
-            font-family: var(--font-heading);
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 2rem;
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(26, 158, 158, 0.3);
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(26, 158, 158, 0.4);
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            font-weight: 400;
         }
 
-        .quote-footer {
-            margin: 3rem 0 0 0;
-            padding: 2rem 3rem 0 3rem;
-            border-top: 1px solid rgba(255,255,255,0.2);
+        /* ─── MAIN CONTENT ─── */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 6rem;
+            margin: 6rem 0;
+        }
+
+        .content-main {
+            max-width: 800px;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .lead-text {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .quote-block {
+            background: var(--accent-warm);
+            padding: 2.5rem;
+            border-left: 4px solid var(--cyan);
+            margin: 3rem 0;
             font-style: italic;
             color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .quote-attribution {
+            margin-top: 1rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* ─── SIDEBAR ─── */
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .automation-showcase {
+            background: var(--cyan);
+            color: white;
+            padding: 3rem 2.5rem;
+            border-radius: 8px;
             text-align: center;
-            background: var(--bg-surface);
+            margin-bottom: 3rem;
         }
-        
+
+        .showcase-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .showcase-title {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .showcase-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .system-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .system-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .system-item:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 2px 12px rgba(26, 158, 158, 0.1);
+        }
+
+        .system-item.featured {
+            border-color: var(--cyan);
+            background: linear-gradient(135deg, rgba(26, 158, 158, 0.03), rgba(26, 158, 158, 0.01));
+        }
+
+        .system-item.featured::before {
+            content: 'Your Request';
+            display: inline-block;
+            background: var(--cyan);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            margin-bottom: 0.75rem;
+        }
+
+        .system-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .system-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .system-timeline {
+            font-size: 0.75rem;
+            color: var(--cyan);
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        /* ─── WORKFLOW SECTION ─── */
+        .workflow-section {
+            margin: 6rem 0;
+            padding: 4rem 0;
+            background: var(--bg-warm);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        .workflow-diagram {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2.5rem;
+        }
+
+        .diagram-title {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .flow-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--cyan);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        /* ─── PRICING SECTION ─── */
+        .pricing-section {
+            margin: 6rem 0;
+            text-align: center;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2.5rem;
+            text-align: left;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--cyan);
+            background: linear-gradient(135deg, rgba(26, 158, 158, 0.03), rgba(26, 158, 158, 0.01));
+        }
+
+        .pricing-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-value {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--cyan);
+            margin-bottom: 1rem;
+        }
+
+        .pricing-desc {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .pricing-features li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* ─── CTA SECTION ─── */
+        .cta-section {
+            background: var(--text-primary);
+            color: var(--bg);
+            padding: 6rem 0;
+            text-align: center;
+            margin-top: 6rem;
+        }
+
+        .cta-title {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-text {
+            font-size: 1.125rem;
+            opacity: 0.8;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background: var(--cyan);
+            color: white;
+            font-weight: 600;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background: #168B8B;
+            transform: translateY(-1px);
+        }
+
+        .contact-info {
+            margin-top: 3rem;
+            opacity: 0.7;
+            font-size: 0.875rem;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+            
+            .workflow-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
         @media (max-width: 768px) {
-            .container { padding: 2rem 1rem; }
-            .tech-grid, .pricing-options { grid-template-columns: 1fr; }
-            .workflow-viz { padding: 2rem; }
-            .automation-hub { height: 600px; margin: 1rem; }
-            .label-outreach, .label-client { width: 200px; }
-            .col-outreach, .col-client { width: 200px; }
-            .automation-card { width: 140px; }
-            .admin-cards { gap: 20px; }
-            .admin-cards .automation-card { width: 160px; }
-            
-            .footer-section {
-                height: 400px;
+            .container {
+                padding: 0 1.5rem;
             }
             
-            .glass-overlay {
-                width: 90%;
-                height: 160px;
-                padding: 1.5rem;
+            .hero-title {
+                font-size: 3rem;
             }
             
-            .cta-title {
-                font-size: 1.25rem;
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
             
-            .cta-button {
-                padding: 0.875rem 1.75rem;
-                font-size: 0.9rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .footer-section {
-                height: 350px;
-            }
-            
-            .glass-overlay {
-                height: 140px;
-                padding: 1.25rem;
-            }
-            
-            .cta-title {
-                font-size: 1.1rem;
-                margin-bottom: 0.75rem;
-            }
-            
-            .cta-button {
-                padding: 0.75rem 1.5rem;
-                font-size: 0.85rem;
+            .cta-section {
+                padding: 4rem 0;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="client-badge">
-                <span>🧬</span>
-                <span>Nicole Clarke — Biotech Venture Builder</span>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="client-tag">Biotech Venture Builder</div>
+            <h1 class="hero-title">Beyond <em class="accent">Note Taking</em></h1>
+            <p class="hero-subtitle">Complete workflow optimization for sophisticated consultants who value both analog process and digital efficiency.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="content-grid">
+            <article class="content-main">
+                <div class="section-label">What We Discussed</div>
+                <h2 class="section-title">Your Three-Tier Sequential System</h2>
+                <p class="lead-text">You described a sophisticated analog workflow that captures the full spectrum of professional thinking, from live meeting notes to deep study sessions.</p>
+                
+                <div class="quote-block">
+                    "I have a three tier system. So this is field notes when I'm in meetings when I'm live like it's me and it's the fountain pen. I have the archive... I'm sitting down at my desk I love longhand like I'm there I'm getting things written down. This is like the journal if you will of my professional mind... and then I have the workbook because I still study like I'm in school."
+                    <div class="quote-attribution">— Nicole Clarke</div>
+                </div>
+
+                <p>Your analog process reveals deep intentionality. Field notes capture immediate insights, the archive becomes your professional memory, and the workbook maintains your learning edge. The friction isn't in your system — it's in the manual bridges between each tier.</p>
+
+                <p>What you requested was note processing automation. What we're proposing is a complete consultant workflow optimization that preserves your analog preferences while eliminating digital friction entirely.</p>
+
+                <div class="section-label" style="margin-top: 4rem;">The Complete Framework</div>
+                <h2 class="section-title">Seven Integrated Systems</h2>
+                <p class="lead-text">Your note processing request fits into a comprehensive automation framework designed for sophisticated consultants operating at the intersection of deep thinking and practical execution.</p>
+            </article>
+
+            <aside class="sidebar">
+                <div class="automation-showcase">
+                    <div class="showcase-label">ReRev Labs</div>
+                    <div class="showcase-title">The Complete<br>Consultant<br>Stack</div>
+                    <div class="showcase-subtitle">Automation Framework</div>
+                </div>
+
+                <div class="system-grid">
+                    <div class="system-item featured">
+                        <div class="system-name">Note Processing</div>
+                        <div class="system-desc">3-tier system automation with photo upload, formatting, and routing to Drive + Reminders</div>
+                        <div class="system-timeline">Implementation: 2 hours</div>
+                    </div>
+
+                    <div class="system-item">
+                        <div class="system-name">Meeting Intelligence</div>
+                        <div class="system-desc">Post-meeting automation: transcripts → follow-ups + contact updates + tasks</div>
+                        <div class="system-timeline">Ready: Out of box</div>
+                    </div>
+
+                    <div class="system-item">
+                        <div class="system-name">Proposal Publisher</div>
+                        <div class="system-desc">Conversation to live, branded proposal in under 30 minutes</div>
+                        <div class="system-timeline">Ready: Out of box</div>
+                    </div>
+
+                    <div class="system-item">
+                        <div class="system-name">Network Intelligence</div>
+                        <div class="system-desc">Warm introduction detection from email and board networks</div>
+                        <div class="system-timeline">Implementation: 1-2 weeks</div>
+                    </div>
+
+                    <div class="system-item">
+                        <div class="system-name">Client Intelligence</div>
+                        <div class="system-desc">Scope tracking, health monitoring, early warning systems</div>
+                        <div class="system-timeline">Implementation: 1-2 weeks</div>
+                    </div>
+
+                    <div class="system-item">
+                        <div class="system-name">Content Automation</div>
+                        <div class="system-desc">Three-tier publishing stack: flagship, amplification, engagement</div>
+                        <div class="system-timeline">Implementation: 3-4 weeks</div>
+                    </div>
+
+                    <div class="system-item">
+                        <div class="system-name">Daily Briefing</div>
+                        <div class="system-desc">Morning preparation: calendar context + relationship intelligence</div>
+                        <div class="system-timeline">Ready: Out of box</div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Workflow Section -->
+    <section class="workflow-section">
+        <div class="container">
+            <div class="workflow-grid">
+                <div>
+                    <div class="section-label">Current State</div>
+                    <h3 class="section-title">Manual Bridges</h3>
+                    <p class="lead-text">Your analog system works beautifully. The friction is in manual copy-paste to Apple Reminders and reformatting between tiers.</p>
+                </div>
+                
+                <div class="workflow-diagram">
+                    <div class="diagram-title">Automated Implementation</div>
+                    
+                    <div class="flow-step">
+                        <div class="step-icon">1</div>
+                        <div class="step-content">
+                            <h4>Field Notes</h4>
+                            <p>Photo upload to Claude via custom skill</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="step-icon">2</div>
+                        <div class="step-content">
+                            <h4>Auto-Formatting</h4>
+                            <p>3-tier specifications applied automatically</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="step-icon">3</div>
+                        <div class="step-content">
+                            <h4>Smart Routing</h4>
+                            <p>Archive to Drive, action items to Reminders</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="step-icon">4</div>
+                        <div class="step-content">
+                            <h4>Searchable System</h4>
+                            <p>Organized, accessible, zero manual steps</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h1>Beyond Note Taking</h1>
-            <p class="subtitle">Complete workflow optimization for sophisticated consultants</p>
         </div>
     </section>
 
-    <!-- What We Discussed -->
-    <div class="container">
-        <div class="section-header">
-            <h2>What We Discussed Explicitly</h2>
-            <p>Your three-tier sequential note system and automation opportunities</p>
-        </div>
-        
-        <div class="workflow-viz">
-            <h3>Your Current Three-Tier System</h3>
-            <p><em>"I have a three tier system. So this is field notes when I'm in meetings when I'm live like it's me and it's the fountain pen. I have the archive... I'm sitting down at my desk I love longhand like I'm there I'm getting things written down. This is like the journal if you will of my professional mind... and then I have the workbook because I still study like I'm in school... that's my like my class notes, if you will."</em> — Nicole Clarke</p>
+    <!-- Pricing -->
+    <section class="pricing-section">
+        <div class="container">
+            <div class="section-label">Investment</div>
+            <h2 class="section-title">Implementation Options</h2>
+            <p class="lead-text">Individual systems or complete framework with significant bundle savings</p>
             
-            <svg width="100%" viewBox="0 0 680 140" style="margin: 1rem 0;">
-                <defs>
-                    <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                        <path d="M2 1L8 5L2 9" fill="none" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </marker>
-                </defs>
-                <rect x="40" y="40" width="120" height="60" rx="8" fill="#FFFFFF" stroke="#1A9E9E" stroke-width="2"/>
-                <text x="100" y="60" text-anchor="middle" font-family="Inter" font-size="13" font-weight="600" fill="#0D1F2D">Field Notes</text>
-                <text x="100" y="75" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D5166">"Me and fountain pen"</text>
-                <text x="100" y="88" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D5166">Live meetings</text>
-                <line x1="160" y1="70" x2="200" y2="70" stroke="#DC2626" stroke-width="3" stroke-dasharray="5,3" marker-end="url(#arrow-red)"/>
-                <text x="180" y="60" text-anchor="middle" font-family="Inter" font-size="9" fill="#DC2626" font-weight="600">Manual</text>
-                <rect x="200" y="40" width="120" height="60" rx="8" fill="#FFFFFF" stroke="#1A9E9E" stroke-width="2"/>
-                <text x="260" y="60" text-anchor="middle" font-family="Inter" font-size="13" font-weight="600" fill="#0D1F2D">Archive</text>
-                <text x="260" y="75" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D5166">"Professional journal"</text>
-                <text x="260" y="88" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D5166">Longhand at desk</text>
-                <line x1="320" y1="70" x2="360" y2="70" stroke="#DC2626" stroke-width="3" stroke-dasharray="5,3" marker-end="url(#arrow-red)"/>
-                <text x="340" y="60" text-anchor="middle" font-family="Inter" font-size="9" fill="#DC2626" font-weight="600">Manual</text>
-                <rect x="360" y="40" width="120" height="60" rx="8" fill="#FFFFFF" stroke="#1A9E9E" stroke-width="2"/>
-                <text x="420" y="60" text-anchor="middle" font-family="Inter" font-size="13" font-weight="600" fill="#0D1F2D">Workbook</text>
-                <text x="420" y="75" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D5166">"Study like school"</text>
-                <text x="420" y="88" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D5166">Literature & learning</text>
-                <text x="520" y="70" text-anchor="start" font-family="Inter" font-size="11" fill="#DC2626">+ Manual copy-paste to Apple Reminders</text>
-                <text x="520" y="85" text-anchor="start" font-family="Inter" font-size="11" fill="#DC2626">+ Voice notes after calls</text>
-            </svg>
-        </div>
-        
-        <div class="workflow-viz" style="margin-top: 2rem;">
-            <h3>Automated Workflow Design</h3>
-            <p><strong>Custom Nicole skill (2 hours setup):</strong> Photo upload → formatted to your exact 3-tier specifications → auto-routed to Google Drive + Apple Reminders via community MCP</p>
-            
-            <svg width="100%" viewBox="0 0 680 160" style="margin: 1rem 0;">
-                <defs>
-                    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                        <path d="M2 1L8 5L2 9" fill="none" stroke="#1A9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </marker>
-                </defs>
-                <rect x="40" y="40" width="120" height="60" rx="8" fill="#FFFFFF" stroke="#1A9E9E" stroke-width="2"/>
-                <text x="100" y="60" text-anchor="middle" font-family="Inter" font-size="13" font-weight="600" fill="#0D1F2D">Field Notes</text>
-                <text x="100" y="75" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D5166">Photo upload</text>
-                <text x="100" y="88" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D5166">+ Voice notes</text>
-                <line x1="160" y1="70" x2="200" y2="70" stroke="#1A9E9E" stroke-width="3" marker-end="url(#arrow-green)"/>
-                <text x="180" y="60" text-anchor="middle" font-family="Inter" font-size="9" fill="#1A9E9E" font-weight="600">Auto</text>
-                <rect x="200" y="40" width="120" height="60" rx="8" fill="#FFFFFF" stroke="#1A9E9E" stroke-width="2"/>
-                <text x="260" y="60" text-anchor="middle" font-family="Inter" font-size="13" font-weight="600" fill="#0D1F2D">Archive</text>
-                <text x="260" y="75" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D5166">Auto-formatted</text>
-                <text x="260" y="88" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D5166">Google Drive</text>
-                <line x1="320" y1="70" x2="360" y2="70" stroke="#1A9E9E" stroke-width="3" marker-end="url(#arrow-green)"/>
-                <text x="340" y="60" text-anchor="middle" font-family="Inter" font-size="9" fill="#1A9E9E" font-weight="600">Auto</text>
-                <rect x="360" y="40" width="120" height="60" rx="8" fill="#FFFFFF" stroke="#1A9E9E" stroke-width="2"/>
-                <text x="420" y="60" text-anchor="middle" font-family="Inter" font-size="13" font-weight="600" fill="#0D1F2D">Workbook</text>
-                <text x="420" y="75" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D5166">Smart categorization</text>
-                <text x="420" y="88" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D5166">Searchable</text>
-                <path d="M260 100 Q260 130 420 130 Q460 130 500 110" fill="none" stroke="#1A9E9E" stroke-width="2" stroke-dasharray="3,2" marker-end="url(#arrow-green)"/>
-                <text x="380" y="125" text-anchor="middle" font-family="Inter" font-size="10" fill="#1A9E9E">Action items extracted</text>
-                <rect x="500" y="90" width="100" height="30" rx="6" fill="rgba(26, 158, 158, 0.1)" stroke="#1A9E9E" stroke-width="1"/>
-                <text x="550" y="110" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#1A9E9E">Apple Reminders</text>
-            </svg>
-            
-            <p><strong>Implementation:</strong> Custom Claude skill + Google Apps Script + community Apple Reminders MCP. Your analog process stays exactly the same — digital friction disappears.</p>
-        </div>
-
-        <div class="section-header" style="margin-top: 4rem;">
-            <h2>The Complete System Available</h2>
-            <p>Your note processing request fits into a comprehensive consultant workflow optimization framework</p>
-        </div>
-        
-        <!-- ─── AUTOMATION HUB ─── -->
-        <div class="automation-hub">
-
-            <!-- ─── LABEL BAR ─── -->
-            <div class="label-bar">
-                <div class="label-cell label-outreach">
-                    <span class="label-dot"></span> Outreach &amp; Prospecting
-                </div>
-                <div class="label-cell label-center">Automation Core</div>
-                <div class="label-cell label-client">
-                    <span class="label-dot"></span> Client Management
-                </div>
-            </div>
-
-            <!-- ─── MAIN 3-COLUMN BODY ─── -->
-            <div class="hub-body">
-
-                <!-- LEFT: Outreach column -->
-                <div class="col-outreach">
-                    <div class="automation-card" onclick="openModal('network-intelligence')">
-                        <span class="timeline-badge badge-fast">1–2 WKS</span>
-                        <div class="card-icon">
-                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5" y2="16"/><line x1="12" y1="8" x2="19" y2="16"/></svg>
-                        </div>
-                        <div class="card-title">Network Intel</div>
-                        <div class="card-desc">Warm intro detection</div>
-                    </div>
-
-                    <div class="automation-card" onclick="openModal('meeting-intelligence')">
-                        <span class="timeline-badge badge-immediate">OUT OF BOX</span>
-                        <div class="card-icon">
-                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 3H7a2 2 0 0 0-2 2v14l4-4h8a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/></svg>
-                        </div>
-                        <div class="card-title">Meeting Intel</div>
-                        <div class="card-desc">Auto follow-up engine</div>
-                    </div>
-
-                    <div class="automation-card" onclick="openModal('proposal-generation')">
-                        <span class="timeline-badge badge-immediate">OUT OF BOX</span>
-                        <div class="card-icon">
-                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
-                        </div>
-                        <div class="card-title">Proposal Publisher</div>
-                        <div class="card-desc">Conversation to live URL</div>
-                    </div>
-                </div>
-
-                <!-- CENTER: Core -->
-                <div class="col-center">
-                    <!-- SVG lines from center to each card -->
-                    <svg class="connection-svg" viewBox="0 0 440 626" preserveAspectRatio="none">
-                        <defs>
-                            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#1A9E9E"/>
-                                <stop offset="100%" stop-color="#7C3AED"/>
-                            </linearGradient>
-                        </defs>
-                        <!-- Lines from center (220,313) toward column edges -->
-                        <line x1="220" y1="313" x2="0" y2="120"/>
-                        <line x1="220" y1="313" x2="0" y2="313"/>
-                        <line x1="220" y1="313" x2="0" y2="506"/>
-                        <line x1="220" y1="313" x2="440" y2="120"/>
-                        <line x1="220" y1="313" x2="440" y2="313"/>
-                        <circle cx="220" cy="313" r="5" fill="#1A9E9E"/>
-                    </svg>
-
-                    <div class="automation-core">
-                        <div class="core-icon">
-                            <svg width="30" height="30" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg>
-                        </div>
-                        <div class="core-title">Human<br>in the Loop</div>
-                        <div class="core-sub">Automation Core</div>
-                    </div>
-                </div>
-
-                <!-- RIGHT: Client column -->
-                <div class="col-client">
-                    <div class="automation-card" onclick="openModal('client-intelligence')">
-                        <span class="timeline-badge badge-fast">1–2 WKS</span>
-                        <div class="card-icon">
-                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                        </div>
-                        <div class="card-title">Client Intel</div>
-                        <div class="card-desc">Scope + relationship monitoring</div>
-                    </div>
-
-                    <div class="automation-card highlighted" onclick="openModal('note-processing')">
-                        <span class="timeline-badge badge-immediate">20 MIN</span>
-                        <div class="card-icon">
-                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
-                        </div>
-                        <div class="card-title">Note Processing</div>
-                        <div class="card-desc">3-tier system automation</div>
-                    </div>
-
-                    <div class="automation-card" onclick="openModal('client-reporting')">
-                        <span class="timeline-badge badge-fast">1–2 WKS</span>
-                        <div class="card-icon">
-                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
-                        </div>
-                        <div class="card-title">Client Reporting</div>
-                        <div class="card-desc">Automated report delivery</div>
-                    </div>
-                </div>
-
-            </div><!-- end hub-body -->
-
-            <!-- ─── ADMIN BOTTOM BAND ─── -->
-            <div class="admin-band">
-                <div class="admin-band-label">
-                    <span class="label-dot"></span>
-                    Operations &amp; Admin
-                </div>
-                <div class="admin-cards">
-                    <div class="automation-card" onclick="openModal('content-automation')">
-                        <span class="timeline-badge badge-complex">3–4 WKS</span>
-                        <div class="card-icon" style="background: linear-gradient(135deg,#DC2626,#7C3AED);">
-                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                        </div>
-                        <div class="card-title">Content Engine</div>
-                        <div class="card-desc">3-tier publishing stack</div>
-                    </div>
-                    <div class="automation-card" onclick="openModal('daily-ops')">
-                        <span class="timeline-badge badge-immediate">OUT OF BOX</span>
-                        <div class="card-icon" style="background: linear-gradient(135deg,#DC2626,#7C3AED);">
-                            <svg fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        </div>
-                        <div class="card-title">Daily Briefing</div>
-                        <div class="card-desc">Executive preparation</div>
-                    </div>
-                </div>
-            </div>
-
-        </div><!-- end automation-hub -->
-
-        <div class="tech-stack-section">
-            <div class="section-header">
-                <h3>Our Technology Specialization</h3>
-                <p>We adapt to your existing tech stack, but we specialize in tools that integrate seamlessly</p>
-            </div>
-            
-            <div class="tech-grid">
-                <div class="tech-card primary">
-                    <h4>Claude & AI Integration</h4>
-                    <p>Custom skills, automation workflows, and intelligent content processing. We build with Claude because it integrates natively with your existing tools and learns your specific formatting preferences.</p>
-                </div>
-                
-                <div class="tech-card secondary">
-                    <h4>Google Workspace Ecosystem</h4>
-                    <p>Google Apps Script, Drive, Calendar, Gmail, and Tasks integration. Since you mentioned running on Google Workspace, we can build seamless automations that work within your existing environment.</p>
-                </div>
-            </div>
-            
-            <p style="text-align: center; margin-top: 2rem; color: var(--text-secondary);">
-                <strong>Note:</strong> Apple Reminders integration available via community MCP connectors. While not officially supported by Anthropic, multiple reliable implementations exist for macOS users.
-            </p>
-        </div>
-
-        <div class="pricing-section">
-            <div class="section-header">
-                <h3>Investment Options</h3>
-                <p>Individual automations or complete system bundle</p>
-            </div>
-            
-            <div class="pricing-options">
-                <div class="pricing-option bundle">
-                    <h4>Complete System Bundle</h4>
+            <div class="pricing-grid">
+                <div class="pricing-card featured">
+                    <div class="pricing-label">Recommended</div>
+                    <div class="pricing-title">Complete Framework</div>
                     <div class="pricing-value">$3,000</div>
-                    <div class="pricing-savings">Save $2,250</div>
-                    <p>All 7 automation systems integrated and optimized for your workflow. Significant savings vs individual purchase.</p>
+                    <div class="pricing-desc">All seven automation systems integrated and optimized for your workflow.</div>
+                    <ul class="pricing-features">
+                        <li>$2,250 savings vs individual purchase</li>
+                        <li>Integrated system design</li>
+                        <li>Priority implementation</li>
+                        <li>Ongoing optimization included</li>
+                    </ul>
                 </div>
-                
-                <div class="pricing-option individual">
-                    <h4>Individual Systems</h4>
-                    <div class="pricing-value">$500-$2,000</div>
-                    <p>Note Processing: $500<br>
-                    Meeting Intelligence: $500<br>
-                    Proposal Publisher: $500<br>
-                    Network Intelligence: $1,000<br>
-                    Content Automation Engine: $2,000<br>
-                    Client Intelligence: $750<br>
-                    Daily Briefing: $500</p>
+
+                <div class="pricing-card">
+                    <div class="pricing-label">Individual</div>
+                    <div class="pricing-title">Single Systems</div>
+                    <div class="pricing-value">$500-2,000</div>
+                    <div class="pricing-desc">Start with note processing, add systems as needed.</div>
+                    <ul class="pricing-features">
+                        <li>Note Processing: $500</li>
+                        <li>Meeting Intelligence: $500</li>
+                        <li>Network Intelligence: $1,000</li>
+                        <li>Content Automation: $2,000</li>
+                    </ul>
                 </div>
             </div>
-            
-            <p style="text-align: center; margin-top: 2rem; color: var(--text-secondary);">All pricing is one-time implementation. Systems designed to integrate with your existing Google Workspace and Apple ecosystem.</p>
         </div>
+    </section>
 
-    </div>
-
-    <!-- ─── NEW CLEAN FOOTER ─── -->
-    <div class="footer-section">
-        <!-- Exact Giphy embed as provided -->
-        <div class="video-container">
-            <iframe src="https://giphy.com/embed/5e25aUTZPcI94uMZgv" width="480" height="271" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Ready to Optimize Your Complete Workflow?</h2>
+            <p class="cta-text">Your note processing request revealed a systematic opportunity. Let's implement the full consultant automation stack, starting with what you need most.</p>
+            <a href="https://calendly.com/keyona-rerev" target="_blank" class="cta-button">Schedule Strategy Call</a>
+            <div class="contact-info">
+                <strong>Keyona Meeks</strong> • keyona@rerev.io • ReRev Labs
+            </div>
         </div>
-        
-        <!-- Simple glass overlay with CTA -->
-        <div class="glass-overlay">
-            <h2 class="cta-title">Ready to Optimize Your Workflow?</h2>
-            <a href="https://calendly.com/keyona-rerev" target="_blank" class="cta-button">
-                Book Your Strategy Call
-            </a>
-        </div>
-    </div>
-
-    <!-- Quote Footer -->
-    <div class="quote-footer">
-        <p>
-            <strong>Nicole Clarke:</strong> "I love being analog but living in 2026 I can do more with that. This has inspired me to think about how I can use the tools of today and the automations to really extract max value out of my processes."
-        </p>
-    </div>
-
-    <!-- ─── MODAL ─── -->
-    <div class="modal-overlay" id="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-            <div id="modal-header"></div>
-            <p class="modal-desc" id="modal-desc"></p>
-            <div class="workflow-steps" id="modal-steps"></div>
-            <div class="modal-metrics" id="modal-metrics"></div>
-        </div>
-    </div>
-
-    <script>
-        const cardData = {
-            'note-processing': {
-                title: 'Note Processing Engine',
-                desc: 'Custom Claude skill formats your three-tier system automatically. Photos, voice, or text become formatted output in your exact specifications.',
-                steps: [
-                    {h:'Capture Notes', p:'Snap photos of field notes or voice recordings during meetings.'},
-                    {h:'Upload to Claude', p:'Custom skill applies automatic 3-tier formatting.'},
-                    {h:'Auto-Route', p:'Archive notes go to Google Drive; action items to Apple Reminders.'},
-                    {h:'Access Anywhere', p:'Searchable archive organized by your system.'}
-                ],
-                metrics: [{v:'8+ hrs', l:'Weekly savings'}, {v:'Zero', l:'Manual steps'}]
-            },
-            'meeting-intelligence': {
-                title: 'Post-Meeting Intelligence',
-                desc: 'Meeting transcripts instantly become follow-up emails, contact updates, and tasks.',
-                steps: [
-                    {h:'Meeting Ends', p:'Transcript captured via Google Meet or Zoom.'},
-                    {h:'Auto Processing', p:'Claude extracts action items, insights, and contact updates.'},
-                    {h:'Draft Generation', p:'Follow-up emails appear in Gmail drafts within 5 minutes.'},
-                    {h:'Review & Send', p:'Quickly review and send. No manual notes needed.'}
-                ],
-                metrics: [{v:'100%', l:'Follow-up rate'}, {v:'10 hrs', l:'Weekly savings'}]
-            },
-            'proposal-generation': {
-                title: 'Proposal Publisher',
-                desc: 'Turn a conversation into a live, branded proposal in under 30 minutes.',
-                steps: [
-                    {h:'Proposal Chat', p:'Discuss your needs with Claude in natural language.'},
-                    {h:'Auto Generate', p:'HTML proposal built with your branding and content.'},
-                    {h:'Live Deployment', p:'Published instantly via GitHub + Railway.'},
-                    {h:'Share & Track', p:'Send the link and monitor client engagement.'}
-                ],
-                metrics: [{v:'30 min', l:'Creation time'}, {v:'Live URL', l:'Delivery'}]
-            },
-            'network-intelligence': {
-                title: 'Network Intelligence',
-                desc: 'Identifies warm introduction opportunities from your email and board networks.',
-                steps: [
-                    {h:'Email Monitoring', p:'Scans conversations for intro opportunities.'},
-                    {h:'Match Detection', p:'AI finds valuable connections in your network.'},
-                    {h:'Consent Process', p:'Both parties contacted separately for approval.'},
-                    {h:'Warm Introduction', p:'Professional intro email sent with full context.'}
-                ],
-                metrics: [{v:'2x', l:'Intro velocity'}, {v:'Auto', l:'Detection'}]
-            },
-            'content-automation': {
-                title: 'Content Automation Engine',
-                desc: 'Three-tier content stack: flagship thought leadership, amplification, and engagement.',
-                steps: [
-                    {h:'Signal Detection', p:'AI monitors news and finds content opportunities.'},
-                    {h:'Content Planning', p:'Three tiers: flagship, amplification, engagement.'},
-                    {h:'Auto Drafting', p:'Posts, articles, and insights generated from your voice.'},
-                    {h:'Scheduled Publishing', p:'Multi-platform distribution with optimal timing.'}
-                ],
-                metrics: [{v:'3 Tiers', l:'Content stack'}, {v:'Auto', l:'Publishing'}]
-            },
-            'client-intelligence': {
-                title: 'Client Relationship Intelligence',
-                desc: 'Scope tracking, health monitoring, and early warning for relationship changes. Includes automatic scope creep detection so nothing slips through.',
-                steps: [
-                    {h:'Gmail Labeling', p:'Automatic project and client email categorization.'},
-                    {h:'Scope Tracking', p:'Monitors contract boundaries and flags scope creep indicators.'},
-                    {h:'Health Scoring', p:'Measures relationship health from communication patterns.'},
-                    {h:'Early Alerts', p:'Proactive warnings before issues surface.'}
-                ],
-                metrics: [{v:'Early', l:'Warning system'}, {v:'Scope', l:'Tracking'}]
-            },
-            'client-reporting': {
-                title: 'Automated Client Reporting',
-                desc: 'Auto-generate and deliver branded client reports on a schedule — no manual assembly, no missed sends.',
-                steps: [
-                    {h:'Data Pull', p:'Pulls activity, milestones, and metrics from your connected tools.'},
-                    {h:'Report Generation', p:'Claude assembles a branded report in your format.'},
-                    {h:'Review Gate', p:'You approve before it sends — human stays in the loop.'},
-                    {h:'Scheduled Delivery', p:'Delivered to the client automatically on your cadence.'}
-                ],
-                metrics: [{v:'Auto', l:'Report delivery'}, {v:'1–2 wks', l:'To deploy'}]
-            },
-            'daily-ops': {
-                title: 'Executive Daily Briefing',
-                desc: 'Every morning: calendar analysis, relationship context, and priority routing.',
-                steps: [
-                    {h:'7am Trigger', p:'Briefing generated automatically each morning.'},
-                    {h:'Calendar Scan', p:'Meeting context, attendee backgrounds, recent interactions.'},
-                    {h:'Priority Sort', p:'Key decisions, urgent items, relationship updates.'},
-                    {h:'Delivered', p:'Ready in your inbox for a prepared day.'}
-                ],
-                metrics: [{v:'7am', l:'Daily sync'}, {v:'Context', l:'Aware'}]
-            }
-        };
-
-        function openModal(id) {
-            const d = cardData[id]; if (!d) return;
-            document.getElementById('modal-header').innerHTML = `<h3>${d.title}</h3>`;
-            document.getElementById('modal-desc').textContent = d.desc;
-            document.getElementById('modal-steps').innerHTML = d.steps.map((s,i) => `
-                <div class="workflow-step">
-                    <div class="step-num">${i+1}</div>
-                    <div class="step-content"><h5>${s.h}</h5><p>${s.p}</p></div>
-                </div>`).join('');
-            document.getElementById('modal-metrics').innerHTML = d.metrics.map(m => `
-                <div class="metric">
-                    <div class="metric-value">${m.v}</div>
-                    <div class="metric-label">${m.l}</div>
-                </div>`).join('');
-            document.getElementById('modal').classList.add('active');
-        }
-        function closeModal() { document.getElementById('modal').classList.remove('active'); }
-        document.getElementById('modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-    </script>
+    </section>
 </body>
 </html>
