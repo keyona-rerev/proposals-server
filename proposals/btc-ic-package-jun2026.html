@@ -181,17 +181,15 @@
     }
     
     /* Company Cards & Sections */
-    .company-section {
-      margin-bottom: 3rem;
-    }
-    
     .company-header {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.5rem;
       padding-bottom: 1rem;
       border-bottom: 2px solid #1a9e9e;
+      flex-wrap: wrap;
+      gap: 0.75rem;
     }
     
     .company-name {
@@ -199,6 +197,18 @@
       font-size: 1.8rem;
       font-weight: 700;
       color: #0d1f2d;
+    }
+    
+    .company-name a {
+      color: #0d1f2d;
+      text-decoration: none;
+      border-bottom: 2px dotted #1a9e9e;
+    }
+    
+    .company-tagline {
+      color: #666;
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
     }
     
     .exec-summary-grid {
@@ -230,9 +240,19 @@
       color: #0d1f2d;
     }
     
-    .recommendation-invest {
-      background: #e8f5e9;
-      color: #1b5e20;
+    .recommendation-pending {
+      background: #fff3e0;
+      color: #e65100;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-block;
+      font-size: 0.9rem;
+    }
+    
+    .reinvest-badge {
+      background: #ede7f6;
+      color: #4527a0;
       padding: 0.5rem 1rem;
       border-radius: 4px;
       font-weight: 600;
@@ -242,17 +262,14 @@
     
     .alignment-check {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.75rem;
       font-weight: 600;
       font-size: 0.95rem;
+      flex-wrap: wrap;
     }
     
     .check-yes {
       color: #2e7d32;
-    }
-    
-    .check-no {
-      color: #c62828;
     }
     
     /* Content Sections */
@@ -268,9 +285,9 @@
     
     .metric-row {
       display: grid;
-      grid-template-columns: 200px 1fr;
+      grid-template-columns: 220px 1fr;
       gap: 1.5rem;
-      margin: 1rem 0;
+      margin: 0;
       padding: 0.75rem 0;
       border-bottom: 1px solid #f0f0f0;
     }
@@ -308,7 +325,7 @@
       color: #666;
     }
     
-    /* Scorecard */
+    /* Scorecard (pending state) */
     .scorecard {
       background: #f8f9fa;
       border: 1px solid #e0e0e0;
@@ -319,10 +336,10 @@
     
     .scorecard-row {
       display: grid;
-      grid-template-columns: 200px 2fr 100px;
+      grid-template-columns: 1fr 160px;
       gap: 1.5rem;
       align-items: center;
-      padding: 1rem 0;
+      padding: 0.85rem 0;
       border-bottom: 1px solid #e0e0e0;
     }
     
@@ -336,31 +353,15 @@
       font-size: 0.95rem;
     }
     
-    .scorecard-bar {
-      background: white;
-      border-radius: 4px;
-      overflow: hidden;
-      height: 24px;
-      border: 1px solid #ddd;
-    }
-    
-    .scorecard-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #1a9e9e 0%, #0f6e56 100%);
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding-right: 8px;
-      color: white;
-      font-size: 0.8rem;
+    .pending-pill {
+      background: #fff3e0;
+      color: #e65100;
+      border: 1px dashed #f57f17;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
       font-weight: 600;
-    }
-    
-    .scorecard-score {
-      text-align: right;
-      font-weight: 700;
-      color: #1a9e9e;
-      font-size: 1.1rem;
+      text-align: center;
     }
     
     /* Comparative Table */
@@ -368,13 +369,13 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 1.5rem;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
     }
     
     .comparative-table th {
       background: #0d1f2d;
       color: white;
-      padding: 1rem;
+      padding: 0.85rem;
       text-align: center;
       font-weight: 600;
       border: none;
@@ -385,7 +386,7 @@
     }
     
     .comparative-table td {
-      padding: 1rem;
+      padding: 0.85rem;
       text-align: center;
       border-bottom: 1px solid #e0e0e0;
     }
@@ -400,38 +401,34 @@
       background: #f8f9fa;
     }
     
-    .score-high {
-      color: #1b5e20;
+    .pending-cell {
+      color: #e65100;
       font-weight: 600;
+      font-size: 0.85rem;
     }
     
-    .score-med {
-      color: #f57f17;
+    /* Impact tags */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    
+    .impact-card {
+      background: #f0f7f7;
+      border-radius: 8px;
+      padding: 1.25rem;
+      border-left: 4px solid #1a9e9e;
+    }
+    
+    .impact-card-label {
+      font-size: 0.85rem;
+      color: #1a9e9e;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       font-weight: 600;
-    }
-    
-    .score-low {
-      color: #c62828;
-      font-weight: 600;
-    }
-    
-    /* Abbreviated Company */
-    .abbreviated-company {
-      page-break-inside: avoid;
-      margin-bottom: 2rem;
-    }
-    
-    .abbreviated-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 700;
       margin-bottom: 0.5rem;
-      color: #0d1f2d;
-    }
-    
-    .abbreviated-subtitle {
-      color: #666;
-      margin-bottom: 1rem;
     }
     
     /* Footer */
@@ -452,8 +449,8 @@
     <div class="page cover-page">
       <div class="logo">Black<span class="logo-accent">Tech</span> Capital</div>
       <div class="cover-title">Investment Committee Package</div>
-      <div class="cover-subtitle">Q2 2026 Portfolio Review</div>
-      <div class="cover-subtitle" style="font-size: 1rem; opacity: 0.7;">Four Climate Technology Opportunities Under Review</div>
+      <div class="cover-subtitle">BTC Catalyst Fund | Q2 2026 Review</div>
+      <div class="cover-subtitle" style="font-size: 1rem; opacity: 0.7;">Four Climate Technology Opportunities Under Review: One Reinvestment, Three First-Time Investments</div>
       <div class="cover-date">June 2026</div>
     </div>
     
@@ -545,13 +542,397 @@
           <p style="font-size: 0.9rem; color: #333; margin-top: 0.5rem;">Does not meet Fund requirements or criteria at this time.</p>
         </div>
       </div>
+      
+      <p style="margin-top: 2rem; color: #999; font-size: 0.9rem;"><em>Scorecards in this package are intentionally left pending. Scores will be completed from GP diligence and IC member input ahead of the vote.</em></p>
     </div>
     
-    <!-- PAGE 4: COMPANY 1 - DETAILED EXAMPLE -->
+    <!-- PAGE 4: RESILIOCS INTELLIGENCE -->
     <div class="page">
       <div class="company-header">
-        <div class="company-name">SoilCarbon</div>
-        <div class="recommendation-invest">✓ INVEST</div>
+        <div class="company-name"><a href="https://resiliocs.com/" target="_blank">Resiliocs Intelligence</a></div>
+        <div class="recommendation-pending">UNDER IC REVIEW: First-Time Investment</div>
+      </div>
+      <div class="company-tagline">Climate Risk Intelligence | AI-Powered Portfolio Resilience</div>
+      
+      <h3>Executive Summary</h3>
+      
+      <div class="exec-summary-grid">
+        <div class="summary-card">
+          <div class="summary-card-label">Founders</div>
+          <div class="summary-card-value">2 BIPOC Male Founders</div>
+          <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">Canadian early-stage ClimateTech company.</p>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card-label">Stage & Raise</div>
+          <div class="summary-card-value">Pre-seed | $1M round</div>
+          <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">50% committed. $4M USD pre-money valuation cap.</p>
+        </div>
+      </div>
+      
+      <div style="background: #f0f7f7; padding: 1.25rem; border-radius: 8px; margin: 1.5rem 0;">
+        <span style="font-weight: 600; color: #1a9e9e;">Thesis Alignment:</span>
+        <span class="alignment-check"><span class="check-yes">✓ ClimateTech + AI</span> <span class="check-yes">✓ Underrepresented Founders</span> <span class="check-yes">✓ Venture Scale ($80B TAM)</span></span>
+      </div>
+      
+      <h3>Problem & Solution</h3>
+      <div class="section-content">
+        <p><strong>Problem:</strong> Climate-related damages are rising, creating asset devaluation, portfolio losses, regulatory pressure, and higher insurance exposure for institutions.</p>
+        <p><strong>Solution:</strong> The Resiliocs Intelligence platform turns complex climate data into practical decision-making tools: asset-level risk scoring, financial exposure analysis, adaptation recommendations, and real-time climate hazard warnings. The platform helps users understand not only where risk exists, but what actions to take to reduce exposure.</p>
+        <p><strong>Target markets:</strong> Asset owners, real estate institutional investors, financial institutions, insurance/reinsurance, and government.</p>
+      </div>
+      
+      <h3>Market Opportunity</h3>
+      <div class="section-content">
+        <div class="metric-row">
+          <div class="metric-label">TAM</div>
+          <div class="metric-value">$80B global</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">SAM</div>
+          <div class="metric-value">$9B U.S./Canada + Europe</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">SOM</div>
+          <div class="metric-value">$100M 5-year revenue target</div>
+        </div>
+      </div>
+      
+      <h3>Business Model</h3>
+      <div class="section-content">
+        <p>Multi-tiered B2B SaaS, software licensing/API integration, and portfolio-level climate risk projects.</p>
+      </div>
+      
+      <h3>Traction & GTM Validation</h3>
+      <div class="section-content">
+        <div class="metric-row">
+          <div class="metric-label">Pilots</div>
+          <div class="metric-value">4 pilot projects, $30K in pilot revenue</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Partnerships</div>
+          <div class="metric-value">6 strategic partnerships, 3 LOIs/MOUs</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Pilot outcomes</div>
+          <div class="metric-value">90% prediction accuracy, 70% exposure reduction, US$200M in identified savings</div>
+        </div>
+      </div>
+      
+      <h3>Financial Potential</h3>
+      <div class="section-content">
+        <div class="metric-row">
+          <div class="metric-label">2026</div>
+          <div class="metric-value">$1M ARR</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">2028</div>
+          <div class="metric-value">$15M ARR</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">2031</div>
+          <div class="metric-value">$100M ARR</div>
+        </div>
+      </div>
+      
+      <div class="impact-grid">
+        <div class="impact-card">
+          <div class="impact-card-label">Environmental Impact</div>
+          <p style="font-size: 0.95rem;">3.5 megatons CO2e estimated to be avoided by 2031</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-card-label">Social Impact</div>
+          <p style="font-size: 0.95rem;">2 BIPOC male founders</p>
+        </div>
+      </div>
+      
+      <h3>Fit with BlackTech Capital</h3>
+      <div class="section-content">
+        <p>Resiliocs combines AI, climate adaptation, financial resilience, and measurable impact. The company helps institutions protect assets from climate risk while supporting more resilient communities and reducing emissions associated with disaster recovery and rebuilding. This aligns with BTC's focus on underrepresented founders building scalable solutions where climate impact and financial performance reinforce each other.</p>
+      </div>
+      
+      <h3>Investment Scorecard</h3>
+      <div class="scorecard">
+        <div class="scorecard-row"><div class="scorecard-criteria">Market Opportunity (25%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">Business Model Scalability (20%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">GTM Validation (20%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">Competitive Moats & IP (10%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">Founder & Team Quality (25%)</div><div class="pending-pill">Pending IC Review</div></div>
+      </div>
+    </div>
+    
+    <!-- PAGE 5: SERENITY POWER -->
+    <div class="page">
+      <div class="company-header">
+        <div class="company-name"><a href="https://www.serenitypower.ca/" target="_blank">Serenity Power</a></div>
+        <div class="recommendation-pending">UNDER IC REVIEW: First-Time Investment</div>
+      </div>
+      <div class="company-tagline">Clean Off-Grid Power | Advanced Solid Oxide Fuel Cells</div>
+      
+      <h3>Executive Summary</h3>
+      
+      <div class="exec-summary-grid">
+        <div class="summary-card">
+          <div class="summary-card-label">Founders</div>
+          <div class="summary-card-value">3 Co-Founders</div>
+          <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">Black female co-founder (CEO), Asian female co-founder, Asian male co-founder. Technical founding team.</p>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card-label">Funding to Date</div>
+          <div class="summary-card-value">$1.16M pre-seed + ~$800K non-dilutive</div>
+          <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">Pre-seed dilutive raise completed. 12-month plan targets MVP development and pilot demos.</p>
+        </div>
+      </div>
+      
+      <div style="background: #f0f7f7; padding: 1.25rem; border-radius: 8px; margin: 1.5rem 0;">
+        <span style="font-weight: 600; color: #1a9e9e;">Thesis Alignment:</span>
+        <span class="alignment-check"><span class="check-yes">✓ CleanTech Hardware</span> <span class="check-yes">✓ Underrepresented Founders</span> <span class="check-yes">✓ Venture Scale ($900B TAM)</span></span>
+      </div>
+      
+      <h3>Problem & Solution</h3>
+      <div class="section-content">
+        <p><strong>Problem:</strong> Off-grid industrial sites rely on diesel/ICE units or inefficient legacy systems that are expensive, polluting, logistically fragile, and difficult to align with net-zero goals.</p>
+        <p><strong>Solution:</strong> Compact, fuel-flexible portable solid oxide fuel cell (SOFC) systems that provide cleaner, quieter, more efficient off-grid power. The technology converts natural gas, hydrogen, biogas, and fuel blends into low-emission electricity, offering a practical transition pathway from natural gas today toward a future green hydrogen economy.</p>
+      </div>
+      
+      <h3>Technology Advantage</h3>
+      <div class="moat-item">
+        <div class="moat-item-title">Performance Claims</div>
+        <div class="moat-item-desc">12x faster start-up, 20x more compact, and 10x more cost-effective than conventional SOFC systems. Approximately 60% efficiency with direct fuel feed and low emissions.</div>
+      </div>
+      <div class="moat-item">
+        <div class="moat-item-title">Fuel Flexibility</div>
+        <div class="moat-item-desc">Operates across methane, hydrogen, biogas, and blends, enabling decarbonization today with a hydrogen pathway tomorrow.</div>
+      </div>
+      <div class="moat-item">
+        <div class="moat-item-title">IP & Validation</div>
+        <div class="moat-item-desc">1 provisional U.S. patent filed. SOSV HAX Phase-0 accelerator completion. Awards and investments from Startupfest, Elevate, Pilotathon, and MaRS-RXNHUB.</div>
+      </div>
+      
+      <h3>Market Opportunity</h3>
+      <div class="section-content">
+        <div class="metric-row">
+          <div class="metric-label">TAM</div>
+          <div class="metric-value">$900B global power generation units market</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">SAM</div>
+          <div class="metric-value">$35B global diesel + gas generator segment</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Beachhead SAM</div>
+          <div class="metric-value">$2B Canadian oil & gas remote/off-grid systems</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">SOM</div>
+          <div class="metric-value">$15B global oil & gas diesel-unit replacement opportunity</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Beachhead SOM</div>
+          <div class="metric-value">$100M, based on 5% Canadian market penetration</div>
+        </div>
+      </div>
+      
+      <h3>Go-To-Market</h3>
+      <div class="section-content">
+        <p><strong>Beachhead:</strong> Oil & gas remote/off-grid power systems, including pipeline instrumentation, monitoring, sensors, and SCADA.</p>
+        <p><strong>Future markets:</strong> Data centres, microgrids, ports, mining, construction, film/TV, remote communities, emergency relief, and other diesel-replacement applications.</p>
+        <div class="metric-row">
+          <div class="metric-label">Traction</div>
+          <div class="metric-value">100+ customer interactions in 2025, 5+ LOIs for pilots</div>
+        </div>
+      </div>
+      
+      <h3>Financial Potential</h3>
+      <div class="section-content">
+        <div class="metric-row">
+          <div class="metric-label">2026</div>
+          <div class="metric-value">$120K</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">2027</div>
+          <div class="metric-value">$2M</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">2031</div>
+          <div class="metric-value"><span class="pending-cell">Not provided in deal summary</span></div>
+        </div>
+      </div>
+      
+      <div class="impact-grid">
+        <div class="impact-card">
+          <div class="impact-card-label">Environmental Impact</div>
+          <p style="font-size: 0.95rem;">50-60% lower emissions per unit versus conventional power generation</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-card-label">Social Impact</div>
+          <p style="font-size: 0.95rem;">Black female co-founder and CEO; Asian female co-founder; Asian male co-founder</p>
+        </div>
+      </div>
+      
+      <h3>Fit with BlackTech Capital</h3>
+      <div class="section-content">
+        <p>Serenity Power targets a clear, high-emissions pain point: diesel-dependent off-grid power. The company offers a pragmatic decarbonization pathway for hard-to-abate industrial sectors by using cleaner fuel-cell technology today while enabling a transition toward hydrogen over time. With a technical founding team, strong accelerator validation, early customer demand, pilot momentum, and a large diesel-replacement market, Serenity aligns with BTC's focus on underrepresented founders building scalable solutions where climate impact and financial performance reinforce each other.</p>
+      </div>
+      
+      <h3>Investment Scorecard</h3>
+      <div class="scorecard">
+        <div class="scorecard-row"><div class="scorecard-criteria">Market Opportunity (25%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">Business Model Scalability (20%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">GTM Validation (20%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">Competitive Moats & IP (10%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">Founder & Team Quality (25%)</div><div class="pending-pill">Pending IC Review</div></div>
+      </div>
+    </div>
+    
+    <!-- PAGE 6: KIWI CHARGE -->
+    <div class="page">
+      <div class="company-header">
+        <div class="company-name"><a href="https://www.kiwicharge.ca/" target="_blank">Kiwi Charge</a></div>
+        <div class="recommendation-pending">UNDER IC REVIEW: First-Time Investment</div>
+      </div>
+      <div class="company-tagline">Autonomous EV Charging | Robotics + AI</div>
+      
+      <h3>Executive Summary</h3>
+      
+      <div class="exec-summary-grid">
+        <div class="summary-card">
+          <div class="summary-card-label">Founders & Team</div>
+          <div class="summary-card-value">4 Active Co-Founders</div>
+          <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">Abdel Ali, Harshit Madaan, Aamir Abubakkar, and Jumana Fathima. All-BIPOC founding team. 3 full-time and 2 part-time team members plus 5 interns. HQ at the Clean Energy Zone at Toronto Metropolitan University; also part of YSpace at York University. Federally incorporated June 2023.</p>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card-label">Stage & Raise</div>
+          <div class="summary-card-value">Seed | Seeking $2M</div>
+          <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">$600K in grants and $900K in investment to date. Round funds product development, operations, marketing, and IP.</p>
+        </div>
+      </div>
+      
+      <div style="background: #f0f7f7; padding: 1.25rem; border-radius: 8px; margin: 1.5rem 0;">
+        <span style="font-weight: 600; color: #1a9e9e;">Thesis Alignment:</span>
+        <span class="alignment-check"><span class="check-yes">✓ EV Infrastructure + Robotics</span> <span class="check-yes">✓ All-BIPOC Founding Team</span> <span class="check-yes">✓ Venture Scale ($112B TAM)</span></span>
+      </div>
+      
+      <h3>Problem & Solution</h3>
+      <div class="section-content">
+        <p><strong>Problem:</strong> 1 in 3 North Americans live in multi-tenant buildings and often cannot charge at home. Fixed chargers are expensive, slow to install, require electrical upgrades, trenching and permitting, and suffer from low utilization.</p>
+        <p><strong>Solution:</strong> Instead of wiring a charger to every parking stall, Kiwi Charge brings the charge to the car. Autonomous, AI-driven EV charging robots navigate to parked EVs and charge multiple vehicles without human intervention. Each building starts with one robot and adds a second once the building exceeds 30 EV owners, supporting up to 60 EV customers per building.</p>
+      </div>
+      
+      <h3>Technology & Cost Advantage</h3>
+      <div class="moat-item">
+        <div class="moat-item-title">Unit Economics vs. Fixed Chargers</div>
+        <div class="moat-item-desc">A single Kiwi robot services the equivalent of roughly 30 Level 2 charging spaces at about 40% of the cost of conventional installation, with 3x utilization and 60% lower installation costs.</div>
+      </div>
+      <div class="moat-item">
+        <div class="moat-item-title">AI Layer</div>
+        <div class="moat-item-desc">AI-based load management, smart scheduling, building dashboards, and personalized charging based on user driving and charging habits.</div>
+      </div>
+      <div class="moat-item">
+        <div class="moat-item-title">Business Model</div>
+        <div class="moat-item-desc">Hardware sales plus recurring subscription revenue: Kiwi Dock units, Kiwi Charge robots, and monthly EV-user subscriptions at $149/month.</div>
+      </div>
+      
+      <h3>Market Opportunity</h3>
+      <div class="section-content">
+        <div class="metric-row">
+          <div class="metric-label">TAM</div>
+          <div class="metric-value">$112B global EV charging market by 2030</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Alternative TAM</div>
+          <div class="metric-value">$54B Charging-as-a-Service market by 2030</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">SAM</div>
+          <div class="metric-value">Multi-tenant building EV charging, starting with 563,556 potential customers in Toronto</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">SOM</div>
+          <div class="metric-value">$420M company-estimated obtainable market</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Beachhead SOM</div>
+          <div class="metric-value">$10M/year in Toronto at 1% penetration and $149/month subscription pricing</div>
+        </div>
+      </div>
+      
+      <h3>Traction & GTM Validation</h3>
+      <div class="section-content">
+        <div class="metric-row">
+          <div class="metric-label">Deployments</div>
+          <div class="metric-value">Working prototype with live deployments with the Cities of Markham and Vaughan</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Paid Pilots</div>
+          <div class="metric-value">Tridel and Mattamy; $1.7M pilot with General Motors and Pfaff Group supported by a $500K grant</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Demand</div>
+          <div class="metric-value">140+ buildings on the waitlist</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Target Customers</div>
+          <div class="metric-value">Developers, property managers, EV owners in condos/apartments, car makers, cities, dealerships, fleet operators</div>
+        </div>
+      </div>
+      
+      <h3>Financial Potential</h3>
+      <div class="section-content">
+        <div class="metric-row">
+          <div class="metric-label">2026</div>
+          <div class="metric-value">$0.5M USD</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">2027</div>
+          <div class="metric-value">$11.0M USD</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">2028</div>
+          <div class="metric-value">$41.0M USD</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">2031</div>
+          <div class="metric-value">$90M USD</div>
+        </div>
+      </div>
+      
+      <div class="impact-grid">
+        <div class="impact-card">
+          <div class="impact-card-label">Environmental Impact</div>
+          <p style="font-size: 0.95rem;">4.2 tonnes of CO₂ emissions eliminated, 16,874 km of EV travel enabled, 3,058 kWh delivered, 223 charging sessions completed</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-card-label">Social Impact</div>
+          <p style="font-size: 0.95rem;">All-BIPOC founding team; expanding equitable access to clean transportation for renters and condo residents</p>
+        </div>
+      </div>
+      
+      <h3>Fit with BlackTech Capital</h3>
+      <div class="section-content">
+        <p>Kiwi Charge removes one of the biggest infrastructure barriers to EV adoption: affordable, scalable charging access for people living in condos, apartments, and other multi-tenant buildings. The company combines robotics, AI, EV infrastructure, and energy optimization in a model that reduces installation costs, increases charger utilization, and accelerates equitable access to clean transportation. With strong early pilots, major real estate and automotive partners, a working prototype, and clear recurring revenue potential, Kiwi aligns with BTC's focus on underrepresented founders building scalable solutions.</p>
+        <p><strong>Data Room:</strong> <a href="https://drive.google.com/drive/folders/1FbayjDFhCK5fisxlZttv0AzHnK7M06ih?usp=drive_link" target="_blank" style="color: #1a9e9e;">Google Drive folder</a></p>
+      </div>
+      
+      <h3>Investment Scorecard</h3>
+      <div class="scorecard">
+        <div class="scorecard-row"><div class="scorecard-criteria">Market Opportunity (25%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">Business Model Scalability (20%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">GTM Validation (20%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">Competitive Moats & IP (10%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">Founder & Team Quality (25%)</div><div class="pending-pill">Pending IC Review</div></div>
+      </div>
+    </div>
+    
+    <!-- PAGE 7: MARS MATERIALS -->
+    <div class="page">
+      <div class="company-header">
+        <div class="company-name"><a href="https://www.marsmaterials.tech/" target="_blank">Mars Materials</a></div>
+        <div class="reinvest-badge">UNDER IC REVIEW: Reinvestment</div>
+      </div>
+      <div class="company-tagline">Carbon Utilization | Carbon-Negative Industrial Materials</div>
+      
+      <div style="background: #ede7f6; border-left: 4px solid #4527a0; padding: 1.25rem; border-radius: 4px; margin-bottom: 1.5rem;">
+        <p style="font-size: 0.95rem; margin: 0;"><strong style="color: #4527a0;">Warehoused position:</strong> BlackTech SPV Corp invested in Mars in April 2022 as part of its oversubscribed pre-seed round, with the investment expected to roll into the BTC Catalyst Fund.</p>
       </div>
       
       <h3>Executive Summary</h3>
@@ -559,237 +940,148 @@
       <div class="exec-summary-grid">
         <div class="summary-card">
           <div class="summary-card-label">Founder</div>
-          <div class="summary-card-value">Dr. Aisha Patel</div>
-          <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">PhD Soil Science, 12 years in agricultural biotech. First-time founder, women of color.</p>
+          <div class="summary-card-value">Black Gay Male Founder</div>
+          <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">Carbon utilization company transforming captured CO₂ into high-value industrial materials.</p>
         </div>
         <div class="summary-card">
-          <div class="summary-card-label">Stage & Ask</div>
-          <div class="summary-card-value">Pre-seed | $350K</div>
-          <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">Building soil carbon sequestration monitoring platform for agricultural cooperatives.</p>
+          <div class="summary-card-label">Capital Raised</div>
+          <div class="summary-card-value">~$6.3M to date</div>
+          <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">Including $4.3M in non-dilutive funding from Breakthrough Energy.</p>
         </div>
       </div>
       
       <div style="background: #f0f7f7; padding: 1.25rem; border-radius: 8px; margin: 1.5rem 0;">
-        <div style="margin-bottom: 1rem;">
-          <span style="font-weight: 600; color: #1a9e9e;">Thesis Alignment:</span>
-          <span class="alignment-check"><span class="check-yes">✓ Climate-Ag Tech</span> <span class="check-yes">✓ Underrepresented Founder</span> <span class="check-yes">✓ Venture Scale</span></span>
-        </div>
-        <div>
-          <span style="font-weight: 600; color: #1a9e9e;">Investment Quality:</span>
-          <span class="alignment-check"><span class="check-yes">✓ Proven Market Need</span> <span class="check-yes">✓ Technical Moat</span> <span class="check-yes">✓ Strong Founder</span></span>
-        </div>
+        <span style="font-weight: 600; color: #1a9e9e;">Thesis Alignment:</span>
+        <span class="alignment-check"><span class="check-yes">✓ Carbon Utilization</span> <span class="check-yes">✓ Underrepresented Founder</span> <span class="check-yes">✓ Venture Scale ($40B TAM)</span></span>
       </div>
       
-      <h3>Market Opportunity & Venture Scale</h3>
+      <h3>Problem & Solution</h3>
       <div class="section-content">
-        <p><strong>Global Agricultural Carbon Market:</strong> $15.2B market projected by 2030 (CAGR 18%). Driven by voluntary carbon credit demand, mandatory emissions reporting (EU Carbon Accounting Directive), and regenerative agriculture subsidies.</p>
-        
-        <div class="metric-row">
-          <div class="metric-label">TAM (US Only)</div>
-          <div class="metric-value">$4.2B (50M acres × $85/acre/year monitoring fee)</div>
-        </div>
-        <div class="metric-row">
-          <div class="metric-label">Initial TAM (Year 3)</div>
-          <div class="metric-value">$250M (precision monitoring for organic + regenerative operators)</div>
-        </div>
-        <div class="metric-row">
-          <div class="metric-label">Regulatory Tailwind</div>
-          <div class="metric-value">USDA Carbon Sequestration Program expanding 2024-2026; $4B+ funding</div>
-        </div>
-        
-        <p><strong>Why Venture Scale:</strong> Agricultural tech adoption is accelerating. Commodity prices + climate regulations create urgent need for carbon verification. Winner can scale globally across all high-value crops.</p>
+        <p><strong>Problem:</strong> Acrylonitrile is a critical industrial chemical used in water purification polymers, carbon fiber, plastics, textiles, mining, pulp and paper, personal care, and infrastructure. The industry has relied on the same fossil-based petrochemical production process for over 50 years.</p>
+        <p><strong>Solution:</strong> Mars produces carbon-negative acrylonitrile from captured CO₂, water, electricity, and ammonia as a physically verifiable, drop-in alternative for existing industrial supply chains, turning everyday materials into long-term carbon storage products.</p>
       </div>
       
-      <h3>Business Model & Scalability</h3>
-      <div class="section-content">
-        <p><strong>Revenue Model:</strong> SaaS + carbon credit marketplace. Cooperatives and farms pay subscription ($500–2,000/month) for soil carbon monitoring dashboard. SoilCarbon captures 5% of verified carbon credits (worth $20–50 per ton).</p>
-        
-        <div class="metric-row">
-          <div class="metric-label">Gross Margin</div>
-          <div class="metric-value">72% (software) + 18% upside (credit royalties)</div>
-        </div>
-        <div class="metric-row">
-          <div class="metric-label">CAC Payback</div>
-          <div class="metric-value">8 months (cooperative referrals, low churn)</div>
-        </div>
-        <div class="metric-row">
-          <div class="metric-label">Path to $10M ARR</div>
-          <div class="metric-value">2,500 paying cooperatives × $4,000 ARPU + carbon capture share</div>
-        </div>
-      </div>
-      
-      <h3>Go-To-Market Validation</h3>
-      <div class="section-content">
-        <p><strong>Current Traction:</strong></p>
-        <div class="metric-row">
-          <div class="metric-label">Pilot Customers</div>
-          <div class="metric-value">3 agricultural cooperatives in California, Iowa (50 farms total)</div>
-        </div>
-        <div class="metric-row">
-          <div class="metric-label">Pipeline</div>
-          <div class="metric-value">$200K in LOIs from regional cooperatives + 2 carbon credit platforms</div>
-        </div>
-        <div class="metric-row">
-          <div class="metric-label">Channel Proof</div>
-          <div class="metric-value">Closing 8 new cooperative pilots this quarter through existing relationships</div>
-        </div>
-        <p style="margin-top: 1rem;"><strong>GTM Strategy:</strong> Direct B2B2C through agricultural cooperatives and carbon offset brokers. Founder has 12 years of relationships in agribusiness. Partners with USDA-certified soil labs for field verification.</p>
-      </div>
-      
-      <h3>Competitive Moats & Differentiation</h3>
+      <h3>Validation & Moats</h3>
       <div class="moat-item">
-        <div class="moat-item-title">Proprietary Soil Sampling & ML Models</div>
-        <div class="moat-item-desc">Patents filed on soil carbon prediction algorithm (accuracy: 97% vs. 84% industry standard). Built on 10 years of Patel's research data.</div>
+        <div class="moat-item-title">SNF Validation</div>
+        <div class="moat-item-desc">Mars' acrylonitrile was validated by SNF, a global leader in water-soluble polymers, and met performance standards across SNF's product portfolio.</div>
       </div>
       <div class="moat-item">
-        <div class="moat-item-title">First-Mover Network Effects</div>
-        <div class="moat-item-desc">Early partnerships with USDA-certified labs lock in verification supply chain. Sticky cooperative integrations create switching costs.</div>
+        <div class="moat-item-title">Industry First</div>
+        <div class="moat-item-desc">Mars' product became a physically verifiable drop-in alternative in an industry that historically lacked viable low-carbon acrylonitrile substitutes. Carbon negative, no incumbent toxic by-products, and potential to improve water production by 40%.</div>
       </div>
       <div class="moat-item">
-        <div class="moat-item-title">Founder Credibility</div>
-        <div class="moat-item-desc">Dr. Patel is published, has 200+ citations, trusted by USDA and conservation organizations. Board includes former USDA carbon coordinator.</div>
+        <div class="moat-item-title">Breakthrough Energy Backing</div>
+        <div class="moat-item-desc">$4.3M in non-dilutive funding from Breakthrough Energy, plus advancing supplier validation, commercial demonstration plant design, offtake development, and strategic partnerships with multi-billion-dollar industrial customers.</div>
+      </div>
+      
+      <h3>Market Opportunity</h3>
+      <div class="section-content">
+        <div class="metric-row">
+          <div class="metric-label">TAM</div>
+          <div class="metric-value">$40B global acrylonitrile opportunity by 2050</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">SAM (Beachhead)</div>
+          <div class="metric-value">$11B polyacrylamide / water-soluble polymers market, including water treatment and purification</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Adjacent SAM</div>
+          <div class="metric-value">$4B carbon fiber market</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">SOM</div>
+          <div class="metric-value">$3B revenue opportunity at 8% market capture</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">Initial Wedge</div>
+          <div class="metric-value">SNF-validated water treatment polymers, followed by carbon fiber and broader acrylonitrile derivative markets</div>
+        </div>
+      </div>
+      
+      <h3>Financial Potential</h3>
+      <div class="section-content">
+        <div class="metric-row">
+          <div class="metric-label">Revenue Projections</div>
+          <div class="metric-value"><span class="pending-cell">Not provided in deal summary; to be added from data room</span></div>
+        </div>
+      </div>
+      
+      <div class="impact-grid">
+        <div class="impact-card">
+          <div class="impact-card-label">Environmental Impact</div>
+          <p style="font-size: 0.95rem;">Mission to store 3.52 million megatonnes of CO₂e by 2035 and abate 1-3 gigatonnes of CO₂e by 2050</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-card-label">Social Impact</div>
+          <p style="font-size: 0.95rem;">Black gay male founder</p>
+        </div>
+      </div>
+      
+      <h3>Fit with BlackTech Capital</h3>
+      <div class="section-content">
+        <p>Mars Materials combines carbon utilization, industrial decarbonization, water infrastructure, and high-performance materials in a platform technology with gigaton-scale impact potential. The company targets hard-to-abate chemical supply chains where customers need lower-carbon inputs that do not require costly retooling or downtime. With Breakthrough Energy backing, SNF validation, carbon fiber expansion potential, and a clear pathway from specialty chemical beachhead to broader industrial markets, Mars reflects BTC's "performance powered by purpose" investment thesis. This positions Mars as a warehoused BTC company with a validated carbon-utilization pathway, a major industrial beachhead, and long-term platform potential across water treatment, carbon fiber, and low-carbon chemical supply chains.</p>
       </div>
       
       <h3>Investment Scorecard</h3>
       <div class="scorecard">
-        <div class="scorecard-row">
-          <div class="scorecard-criteria">Market Opportunity</div>
-          <div class="scorecard-bar"><div class="scorecard-fill" style="width: 95%;">95/100</div></div>
-          <div class="scorecard-score">95</div>
-        </div>
-        <div class="scorecard-row">
-          <div class="scorecard-criteria">Business Model Scalability</div>
-          <div class="scorecard-bar"><div class="scorecard-fill" style="width: 88%;">88/100</div></div>
-          <div class="scorecard-score">88</div>
-        </div>
-        <div class="scorecard-row">
-          <div class="scorecard-criteria">GTM Validation</div>
-          <div class="scorecard-bar"><div class="scorecard-fill" style="width: 92%;">92/100</div></div>
-          <div class="scorecard-score">92</div>
-        </div>
-        <div class="scorecard-row">
-          <div class="scorecard-criteria">Competitive Moats & IP</div>
-          <div class="scorecard-bar"><div class="scorecard-fill" style="width: 90%;">90/100</div></div>
-          <div class="scorecard-score">90</div>
-        </div>
-        <div class="scorecard-row">
-          <div class="scorecard-criteria">Founder & Team Quality</div>
-          <div class="scorecard-bar"><div class="scorecard-fill" style="width: 94%;">94/100</div></div>
-          <div class="scorecard-score">94</div>
-        </div>
-      </div>
-      
-      <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem;">
-        <h4 style="margin-top: 0; color: #0d1f2d;">Key Risks & Mitigants</h4>
-        <ul style="list-style: none; margin-top: 1rem;">
-          <li style="margin-bottom: 0.75rem;"><strong>Risk:</strong> Farmer adoption friction. <strong>Mitigant:</strong> Cooperative distribution model removes IT barriers; software is mobile-first.</li>
-          <li style="margin-bottom: 0.75rem;"><strong>Risk:</strong> Carbon credit volatility. <strong>Mitigant:</strong> SaaS model independent of carbon price; credits are upside.</li>
-          <li><strong>Risk:</strong> Regulatory uncertainty. <strong>Mitigant:</strong> Multiple policy pathways (USDA, EU, voluntary); tech is regulation-agnostic.</li>
-        </ul>
-      </div>
-      
-      <p style="margin-top: 2rem; font-weight: 600; color: #1b5e20; font-size: 1.05rem;">✓ <strong>RECOMMENDATION: INVEST</strong></p>
-      <p style="color: #666; margin-top: 0.5rem;">SoilCarbon is an exceptional fit for BTC: proven founder, massive climate market, early traction, defensible tech, underrepresented founder. Recommend $350K investment at $3.5M post-money valuation.</p>
-    </div>
-    
-    <!-- PAGE 5-7: ABBREVIATED COMPANIES -->
-    <div class="page">
-      <h1>Additional Opportunities Under Review</h1>
-      
-      <!-- Company 2 -->
-      <div class="abbreviated-company">
-        <div class="abbreviated-title">GridFlow Energy <span class="recommendation-invest">✓ INVEST</span></div>
-        <div class="abbreviated-subtitle">Energy Storage Software Platform for Microgrids</div>
-        
-        <p><strong>Founder:</strong> Marcus Chen, formerly energy director at Tesla Energy. Black American founder.</p>
-        
-        <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem; font-size: 1rem;">Thesis Alignment</h4>
-        <p style="margin: 0 0 1rem 0;"><span class="alignment-check"><span class="check-yes">✓ Energy Software</span> <span class="check-yes">✓ Underrepresented Founder</span> <span class="check-yes">✓ $8B+ TAM</span></span></p>
-        
-        <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; font-size: 1rem;">The Opportunity</h4>
-        <p><strong>GridFlow</strong> provides real-time optimization software for microgrid battery systems, maximizing revenue from energy arbitrage and grid services. Target: commercial/industrial sites with 500kW–5MW storage.</p>
-        
-        <div class="metric-row" style="grid-template-columns: 200px 1fr; margin: 1rem 0;">
-          <div class="metric-label">Market Size</div>
-          <div class="metric-value">$8.3B projected by 2030 (energy storage software CAGR 22%)</div>
-        </div>
-        <div class="metric-row" style="grid-template-columns: 200px 1fr;">
-          <div class="metric-label">Current Traction</div>
-          <div class="metric-value">12 commercial pilots, $1.2M pipeline, 2 enterprise contracts in negotiation</div>
-        </div>
-        <div class="metric-row" style="grid-template-columns: 200px 1fr;">
-          <div class="metric-label">Scorecard</div>
-          <div class="metric-value"><span class="score-high">90.2/100</span> (GTM validated, strong tech, experienced founder)</div>
-        </div>
-        
-        <p style="margin-top: 1rem; font-weight: 600; color: #1b5e20;">✓ RECOMMENDATION: INVEST $400K</p>
-      </div>
-      
-      <!-- Company 3 -->
-      <div class="abbreviated-company">
-        <div class="abbreviated-title">WasteZero Analytics <span class="recommendation-invest">✓ INVEST</span></div>
-        <div class="abbreviated-subtitle">Waste Tracking & Circular Economy Platform</div>
-        
-        <p><strong>Founder:</strong> Nia Williams, serial entrepreneur in waste management tech. Black female founder.</p>
-        
-        <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem; font-size: 1rem;">Thesis Alignment</h4>
-        <p style="margin: 0 0 1rem 0;"><span class="alignment-check"><span class="check-yes">✓ Circular Economy</span> <span class="check-yes">✓ Underrepresented Founder</span> <span class="check-yes">✓ $3.2B TAM</span></span></p>
-        
-        <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; font-size: 1rem;">The Opportunity</h4>
-        <p><strong>WasteZero</strong> provides real-time waste stream tracking and compliance reporting for commercial real estate and manufacturing. Integrates IoT sensors, AI classification, and regulatory reporting automations.</p>
-        
-        <div class="metric-row" style="grid-template-columns: 200px 1fr; margin: 1rem 0;">
-          <div class="metric-label">Market Size</div>
-          <div class="metric-value">$3.2B total addressable, 15% CAGR through 2028</div>
-        </div>
-        <div class="metric-row" style="grid-template-columns: 200px 1fr;">
-          <div class="metric-label">Current Traction</div>
-          <div class="metric-value">18 active customers, $540K ARR, 35% MoM growth, $2.8M enterprise pipeline</div>
-        </div>
-        <div class="metric-row" style="grid-template-columns: 200px 1fr;">
-          <div class="metric-label">Scorecard</div>
-          <div class="metric-value"><span class="score-high">86.8/100</span> (Exceptional GTM, profitable unit economics)</div>
-        </div>
-        
-        <p style="margin-top: 1rem; font-weight: 600; color: #1b5e20;">✓ RECOMMENDATION: INVEST $300K</p>
-      </div>
-      
-      <!-- Company 4 -->
-      <div class="abbreviated-company">
-        <div class="abbreviated-title">CoolRoof Solutions <span class="recommendation-invest">✓ INVEST</span></div>
-        <div class="abbreviated-subtitle">Cool Roofing Material & Energy Monitoring</div>
-        
-        <p><strong>Founder:</strong> Jamal Okafor, materials engineer from Nigeria. Immigrant founder, Black.</p>
-        
-        <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem; font-size: 1rem;">Thesis Alignment</h4>
-        <p style="margin: 0 0 1rem 0;"><span class="alignment-check"><span class="check-yes">✓ Built Environment</span> <span class="check-yes">✓ Underrepresented Founder</span> <span class="check-yes">✓ $5.1B TAM</span></span></p>
-        
-        <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; font-size: 1rem;">The Opportunity</h4>
-        <p><strong>CoolRoof</strong> manufactures high-albedo roofing materials with embedded temperature sensors. Reduces building cooling loads by 25–40%, sells carbon credits from verified energy savings.</p>
-        
-        <div class="metric-row" style="grid-template-columns: 200px 1fr; margin: 1rem 0;">
-          <div class="metric-label">Market Size</div>
-          <div class="metric-value">$5.1B addressable (commercial + residential re-roofing markets)</div>
-        </div>
-        <div class="metric-row" style="grid-template-columns: 200px 1fr;">
-          <div class="metric-label">Current Traction</div>
-          <div class="metric-value">3 pilot installations, $180K in revenue, 12-month contracts with 2 commercial property managers</div>
-        </div>
-        <div class="metric-row" style="grid-template-columns: 200px 1fr;">
-          <div class="metric-label">Scorecard</div>
-          <div class="metric-value"><span class="score-high">80.7/100</span> (Hardware capital intensity offset by carbon credit revenue stream)</div>
-        </div>
-        
-        <p style="margin-top: 1rem; font-weight: 600; color: #1b5e20;">✓ RECOMMENDATION: INVEST $250K</p>
+        <div class="scorecard-row"><div class="scorecard-criteria">Market Opportunity (25%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">Business Model Scalability (20%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">GTM Validation (20%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">Competitive Moats & IP (10%)</div><div class="pending-pill">Pending IC Review</div></div>
+        <div class="scorecard-row"><div class="scorecard-criteria">Founder & Team Quality (25%)</div><div class="pending-pill">Pending IC Review</div></div>
       </div>
     </div>
     
-    <!-- PAGE 8: COMPARATIVE SCORECARD -->
+    <!-- PAGE 8: COMPARATIVE VIEW -->
     <div class="page">
-      <h1>Comparative Investment Scorecard</h1>
+      <h1>Comparative View</h1>
       
-      <p style="margin-bottom: 1.5rem; color: #666;">Summary scores across the four opportunities, ranked by overall quality score:</p>
+      <h3>Deal Terms at a Glance</h3>
+      <table class="comparative-table">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Sector</th>
+            <th>Type</th>
+            <th>Stage / Raise</th>
+            <th>Terms / Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Resiliocs Intelligence</td>
+            <td>Climate Risk Intelligence</td>
+            <td>First-Time</td>
+            <td>Pre-seed, $1M round</td>
+            <td>50% committed, $4M USD pre-money cap</td>
+          </tr>
+          <tr>
+            <td>Serenity Power</td>
+            <td>Clean Off-Grid Power</td>
+            <td>First-Time</td>
+            <td>$1.16M pre-seed completed</td>
+            <td>~$800K non-dilutive secured; 12-month MVP and pilot plan</td>
+          </tr>
+          <tr>
+            <td>Kiwi Charge</td>
+            <td>Autonomous EV Charging</td>
+            <td>First-Time</td>
+            <td>Seed, seeking $2M</td>
+            <td>$600K grants + $900K investment to date</td>
+          </tr>
+          <tr>
+            <td>Mars Materials</td>
+            <td>Carbon Utilization</td>
+            <td>Reinvestment</td>
+            <td>~$6.3M raised to date</td>
+            <td>SPV position (Apr 2022) rolling into Catalyst Fund</td>
+          </tr>
+        </tbody>
+      </table>
       
+      <h3 style="margin-top: 2.5rem;">Scoring Summary</h3>
+      <p style="color: #666; margin-bottom: 1rem;">Scores will be completed from GP diligence and IC member input ahead of the vote. Overall scores will be weighted: Market Opportunity 25%, Business Model 20%, GTM Validation 20%, Moats/IP 10%, Founder & Team 25%.</p>
       <table class="comparative-table">
         <thead>
           <tr>
@@ -800,88 +1092,80 @@
             <th>Moats/IP</th>
             <th>Founder</th>
             <th>Overall</th>
-            <th>Recommendation</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>SoilCarbon</strong></td>
-            <td class="score-high">95</td>
-            <td class="score-high">88</td>
-            <td class="score-high">92</td>
-            <td class="score-high">90</td>
-            <td class="score-high">94</td>
-            <td><strong class="score-high">92.3</strong></td>
-            <td><span class="recommendation-invest">✓ INVEST</span></td>
+            <td>Resiliocs Intelligence</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
           </tr>
           <tr>
-            <td><strong>GridFlow Energy</strong></td>
-            <td class="score-high">92</td>
-            <td class="score-high">86</td>
-            <td class="score-high">91</td>
-            <td class="score-high">88</td>
-            <td class="score-high">92</td>
-            <td><strong class="score-high">90.2</strong></td>
-            <td><span class="recommendation-invest">✓ INVEST</span></td>
+            <td>Serenity Power</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
           </tr>
           <tr>
-            <td><strong>WasteZero Analytics</strong></td>
-            <td class="score-high">84</td>
-            <td class="score-high">89</td>
-            <td class="score-high">90</td>
-            <td class="score-high">85</td>
-            <td class="score-high">86</td>
-            <td><strong class="score-high">86.8</strong></td>
-            <td><span class="recommendation-invest">✓ INVEST</span></td>
+            <td>Kiwi Charge</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
           </tr>
           <tr>
-            <td><strong>CoolRoof Solutions</strong></td>
-            <td class="score-high">81</td>
-            <td class="score-med">76</td>
-            <td class="score-high">80</td>
-            <td class="score-high">82</td>
-            <td class="score-high">84</td>
-            <td><strong class="score-high">80.7</strong></td>
-            <td><span class="recommendation-invest">✓ INVEST</span></td>
+            <td>Mars Materials</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
+            <td class="pending-cell">Pending</td>
           </tr>
         </tbody>
       </table>
-      
-      <p style="margin-top: 1rem; color: #999; font-size: 0.85rem;"><em>Overall scores are weighted: Market Opportunity 25%, Business Model 20%, GTM Validation 20%, Moats/IP 10%, Founder & Team 25%.</em></p>
       
       <h3 style="margin-top: 2.5rem;">Portfolio Construction Notes</h3>
       
       <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px;">
         <h4 style="margin-top: 0;">Sector Diversification</h4>
         <ul style="list-style: none; margin-top: 1rem; padding-left: 0;">
-          <li style="margin-bottom: 0.75rem;"><strong>Climate Agriculture:</strong> SoilCarbon (high scalability, strong defensibility)</li>
-          <li style="margin-bottom: 0.75rem;"><strong>Energy Tech:</strong> GridFlow (software, recurring revenue, rapid adoption path)</li>
-          <li style="margin-bottom: 0.75rem;"><strong>Circular Economy:</strong> WasteZero (profitable, proven GTM, regulation tailwind)</li>
-          <li><strong>Built Environment:</strong> CoolRoof (hardware + carbon revenue, longer sales cycle but massive market)</li>
+          <li style="margin-bottom: 0.75rem;"><strong>Climate Risk Intelligence:</strong> Resiliocs (AI software, institutional buyers, B2B SaaS)</li>
+          <li style="margin-bottom: 0.75rem;"><strong>Clean Energy Hardware:</strong> Serenity Power (SOFC systems, diesel replacement, industrial beachhead)</li>
+          <li style="margin-bottom: 0.75rem;"><strong>EV Infrastructure:</strong> Kiwi Charge (robotics + AI, hardware plus recurring subscription)</li>
+          <li><strong>Carbon Utilization:</strong> Mars Materials (industrial materials, gigaton-scale impact pathway, warehoused position)</li>
         </ul>
         
-        <p style="margin-top: 1.5rem; margin-bottom: 0;"><strong>Aggregate Metrics:</strong></p>
+        <p style="margin-top: 1.5rem; margin-bottom: 0;"><strong>Portfolio Notes:</strong></p>
         <ul style="list-style: none; margin-top: 1rem; padding-left: 0;">
-          <li style="margin-bottom: 0.5rem;">Total Proposed Investment: $1.3M</li>
-          <li style="margin-bottom: 0.5rem;">Aggregate TAM: $20.8B</li>
-          <li style="margin-bottom: 0.5rem;">Weighted Average Score: 87.5/100</li>
-          <li>All founders: underrepresented (Black, immigrant, women-led tech)</li>
+          <li style="margin-bottom: 0.5rem;">Mix spans software, hardware, robotics, and industrial chemistry across four distinct climate verticals</li>
+          <li style="margin-bottom: 0.5rem;">All four companies are led by underrepresented founders, consistent with the Fund thesis</li>
+          <li>Proposed allocation and relative sizing: pending GP recommendation ahead of the IC vote</li>
         </ul>
       </div>
       
       <h3 style="margin-top: 2rem;">IC Decision Guide</h3>
       
-      <div style="background: #e8f5e9; border-left: 4px solid #2e7d32; padding: 1.25rem; border-radius: 4px; margin-top: 1rem;">
-        <p style="margin: 0;"><strong style="color: #1b5e20;">All four companies meet the dual criteria for investment:</strong></p>
+      <div style="background: #fff3e0; border-left: 4px solid #f57f17; padding: 1.25rem; border-radius: 4px; margin-top: 1rem;">
+        <p style="margin: 0;"><strong style="color: #e65100;">For each opportunity, the IC is asked to evaluate:</strong></p>
         <ul style="list-style: none; margin-top: 0.75rem; padding-left: 0;">
-          <li>✓ Thesis alignment: ClimaTech + underrepresented founders + venture-scale opportunity</li>
-          <li>✓ Investment quality: Strong fundamentals, credible execution, founder quality, market proof</li>
+          <li>1. Thesis alignment: ClimateTech/CleanTech + underrepresented founders + venture-scale opportunity</li>
+          <li>2. Investment quality: fundamentals, credible execution, founder quality, market proof</li>
         </ul>
-        <p style="margin-top: 0.75rem; margin-bottom: 0;"><strong>Next step:</strong> IC to vote on aggregate $1.3M deployment and relative sizing (recommend SoilCarbon largest given highest overall score and market potential).</p>
+        <p style="margin-top: 0.75rem; margin-bottom: 0;"><strong>Next step:</strong> IC members to review materials and data rooms, complete scoring input, and contribute recommendations of INVEST / PASS / FURTHER DILIGENCE ahead of the vote.</p>
       </div>
       
       <div class="footer-note">
-        BlackTech Capital | Investment Committee | June 2026
+        BlackTech Capital | BTC Catalyst Fund | Investment Committee | June 2026
       </div>
     </div>
     
