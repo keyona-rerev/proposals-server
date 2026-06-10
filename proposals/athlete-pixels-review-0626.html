@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Athlete Pixel Concepts | Review Draft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0A;
+    --panel: #111111;
+    --panel-2: #161616;
+    --line: #262626;
+    --text: #C9C9C9;
+    --heading: #FFFFFF;
+    --orange: #FF4D00;
+    --orange-soft: rgba(255, 77, 0, 0.12);
+    --green: #2EE07A;
+    --yellow: #FFB020;
+    --red: #FF5C5C;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 72px 72px;
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { color: var(--heading); font-family: var(--sans); }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+  header.page-head { padding: 72px 0 48px; }
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 18px;
+  }
+  header.page-head h1 {
+    font-size: clamp(34px, 5.5vw, 54px); font-weight: 900; line-height: 1.05;
+    letter-spacing: -0.02em; margin-bottom: 20px;
+  }
+  header.page-head h1 .accent { color: var(--orange); }
+  .lede { font-size: 17px; max-width: 660px; }
+  .review-note {
+    margin-top: 28px; padding: 14px 18px;
+    background: var(--orange-soft); border: 1px solid rgba(255,77,0,0.35);
+    border-radius: 4px; font-family: var(--mono); font-size: 12.5px;
+    color: #FFB38C; letter-spacing: 0.01em;
+  }
+
+  .concept { padding: 56px 0; border-top: 1px solid var(--line); }
+  .concept-label {
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin-bottom: 10px;
+  }
+  .concept h2 { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 16px; }
+  .hypothesis {
+    background: var(--panel); border-left: 3px solid var(--orange);
+    padding: 18px 22px; margin-bottom: 30px;
+  }
+  .hypothesis strong { color: var(--heading); }
+  .hypothesis p { font-size: 15px; }
+  .hypothesis p + p { margin-top: 10px; }
+
+  .pixel {
+    position: relative;
+    background: var(--panel); border: 1px solid var(--line);
+    padding: 30px;
+  }
+  /* corner brackets, matching the site's capacity card */
+  .pixel::before, .pixel::after {
+    content: ''; position: absolute; width: 16px; height: 16px;
+    border-color: var(--orange); border-style: solid;
+  }
+  .pixel::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .pixel::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+  .pixel-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+  .pixel-head h3 { font-size: 21px; font-weight: 800; }
+  .pixel-tag {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--orange); border: 1px solid var(--orange);
+    padding: 3px 10px;
+  }
+  .pixel-sub { font-size: 14px; margin-bottom: 24px; }
+
+  .field-row { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 18px; }
+  .field { flex: 1 1 180px; }
+  .field label {
+    display: block; font-family: var(--mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: #8A8A8A; margin-bottom: 7px;
+  }
+  .field select, .field input {
+    width: 100%; padding: 12px 12px; border: 1px solid var(--line); border-radius: 2px;
+    font-family: var(--sans); font-size: 15px; color: var(--heading); background: var(--panel-2);
+  }
+  .field select:focus, .field input:focus { outline: 2px solid var(--orange); border-color: var(--orange); }
+  .field input::placeholder { color: #555; }
+
+  .btn {
+    font-family: var(--mono); font-weight: 700; font-size: 13.5px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: #000; background: var(--orange); border: none; border-radius: 2px;
+    padding: 14px 28px; cursor: pointer; transition: background .12s ease;
+  }
+  .btn::after { content: ' →'; }
+  .btn:hover { background: #FF6A26; }
+  .btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+  .result { margin-top: 26px; display: none; }
+  .result.show { display: block; animation: rise .3s ease; }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .verdict {
+    font-size: 22px; font-weight: 800; color: var(--heading);
+    letter-spacing: -0.01em; margin-bottom: 10px;
+  }
+  .verdict .hl { color: var(--orange); }
+  .result p.explain { font-size: 13px; font-family: var(--mono); color: #777; margin-bottom: 18px; }
+
+  /* division band viz */
+  .band { margin-top: 8px; }
+  .band-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .band-name { width: 56px; font-family: var(--mono); font-size: 12.5px; font-weight: 700; color: var(--heading); }
+  .band-track { flex: 1; height: 18px; background: var(--panel-2); border: 1px solid var(--line); position: relative; overflow: hidden; }
+  .band-fill { height: 100%; background: var(--orange); opacity: .22; }
+  .band-fill.fit { opacity: 1; }
+  .band-status { width: 100px; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: 0.03em; }
+  .s-strong { color: var(--green); } .s-border { color: var(--yellow); } .s-reach { color: var(--red); }
+
+  /* money table */
+  .money-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 14px; }
+  .money-card { background: var(--panel-2); border: 1px solid var(--line); padding: 18px; }
+  .money-card h4 {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: .1em; color: #8A8A8A; margin-bottom: 8px;
+  }
+  .money-card .big { font-size: 23px; font-weight: 800; color: var(--heading); letter-spacing: -0.01em; }
+  .money-card .small { font-size: 12.5px; margin-top: 6px; color: #999; }
+
+  /* timeline */
+  .tl { margin-top: 20px; border-left: 1px solid var(--line); padding-left: 24px; }
+  .tl-item { position: relative; padding-bottom: 20px; }
+  .tl-item::before {
+    content: ''; position: absolute; left: -29px; top: 6px; width: 9px; height: 9px;
+    background: var(--line);
+  }
+  .tl-item.done::before { background: var(--green); }
+  .tl-item.here::before { background: var(--orange); box-shadow: 0 0 0 5px rgba(255,77,0,0.2); }
+  .tl-item.ahead::before { background: #444; }
+  .tl-when { font-family: var(--mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #8A8A8A; }
+  .tl-item.done .tl-when { color: var(--green); }
+  .tl-item.here .tl-when { color: var(--orange); }
+  .tl-what { font-size: 14.5px; }
+  .tl-what strong { color: var(--heading); }
+  .here-chip {
+    display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.08em; color: #000; background: var(--orange);
+    padding: 2px 8px; margin-left: 8px; vertical-align: middle;
+  }
+
+  /* eligibility flags */
+  .flag-list { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+  .flag { display: flex; gap: 14px; align-items: flex-start; background: var(--panel-2); border: 1px solid var(--line); padding: 14px 16px; }
+  .flag .dot { width: 10px; height: 10px; margin-top: 7px; flex-shrink: 0; }
+  .dot.g { background: var(--green); } .dot.y { background: var(--yellow); } .dot.r { background: var(--red); }
+  .flag p { font-size: 14px; } .flag strong { color: var(--heading); }
+
+  .lead-cta {
+    margin-top: 24px; padding: 15px 18px;
+    border: 1px dashed rgba(255,77,0,0.5); background: rgba(255,77,0,0.05);
+    font-size: 13px; color: #B0B0B0;
+  }
+  .lead-cta strong { color: var(--orange); font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* feedback footer */
+  .feedback { padding: 60px 0 90px; border-top: 1px solid var(--line); }
+  .feedback h2 { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+  .feedback h2 .accent { color: var(--orange); }
+  .feedback ol { margin: 16px 0 26px 22px; font-size: 15px; }
+  .feedback li { margin-bottom: 8px; }
+  .feedback a.btn { display: inline-block; text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .money-grid { grid-template-columns: 1fr; }
+    .band-status { width: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .result.show { animation: none; }
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <div class="wrap">
+    <span class="eyebrow">Internal Review // Athlete-Site.com Facebook Campaign</span>
+    <h1>Four Pixel concepts for student athlete <span class="accent">parents.</span></h1>
+    <p class="lede">Each concept below targets the same audience, parents whose end goal is a college athletic scholarship, but pulls a different emotional lever. The ask: pick the one most likely to stop a parent mid-scroll and convert them into a lead. Title, hypothesis, and a working demo for each.</p>
+    <div class="review-note">NOTE: All numbers in these demos are illustrative placeholders for review only. Production versions use verified recruiting standards and NCAA data.</div>
+  </div>
+</header>
+
+<!-- ============ CONCEPT 1 ============ -->
+<section class="concept" id="c1">
+  <div class="wrap">
+    <div class="concept-label">Concept 01</div>
+    <h2>The Competitiveness Benchmarker</h2>
+    <div class="hypothesis">
+      <p><strong>Hypothesis:</strong> The single biggest information gap for these parents is not knowing where their kid objectively stands. They judge by local competition, which is misleading. A tool that takes real measurables and returns "your athlete profiles as D2 strong, D1 borderline" delivers an instant, personal verdict.</p>
+      <p><strong>Why it converts:</strong> Both outcomes drive action. Validation makes parents want to capitalize. A wake-up call makes them want help closing the gap. Either way, the natural next step is talking to us.</p>
+    </div>
+    <div class="pixel">
+      <div class="pixel-head"><h3>Where does your athlete really stand?</h3><span class="pixel-tag">Demo</span></div>
+      <p class="pixel-sub">Enter your athlete's best mark and see how they profile against typical recruited-athlete ranges by division.</p>
+      <div class="field-row">
+        <div class="field">
+          <label for="b-sport">Sport</label>
+          <select id="b-sport" onchange="bUpdateEvents()">
+            <option value="track">Track &amp; Field</option>
+            <option value="swim">Swimming</option>
+            <option value="football">Football</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="b-gender">Athlete</label>
+          <select id="b-gender" onchange="bUpdateEvents()">
+            <option value="boys">Boys / Men</option>
+            <option value="girls">Girls / Women</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="b-event">Event / Measurable</label>
+          <select id="b-event"></select>
+        </div>
+        <div class="field">
+          <label for="b-mark" id="b-mark-label">Best mark (seconds)</label>
+          <input type="number" id="b-mark" step="0.01" placeholder="e.g. 11.40">
+        </div>
+      </div>
+      <button class="btn" onclick="bRun()">See where they stand</button>
+      <div class="result" id="b-result"></div>
+      <div class="lead-cta"><strong>Lead capture moment:</strong> "Get the full division-by-division breakdown plus the 3 things that would move your athlete up a tier" → email gate.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONCEPT 2 ============ -->
+<section class="concept" id="c2">
+  <div class="wrap">
+    <div class="concept-label">Concept 02</div>
+    <h2>The Scholarship Reality Calculator</h2>
+    <div class="hypothesis">
+      <p><strong>Hypothesis:</strong> Most parents picture a full ride. Outside of headcount sports, almost nobody gets one. Showing the real average award by sport and division, next to what academic merit money could deliver, is a jolt of honesty almost no one else in this space will give them.</p>
+      <p><strong>Why it converts:</strong> The honesty positions us as the trustworthy broker in an industry full of hype. Parents who see the gap between expectation and reality immediately want a strategy.</p>
+    </div>
+    <div class="pixel">
+      <div class="pixel-head"><h3>What is the scholarship actually worth?</h3><span class="pixel-tag">Demo</span></div>
+      <p class="pixel-sub">Pick your athlete's sport and add their GPA to compare athletic money against academic merit money.</p>
+      <div class="field-row">
+        <div class="field">
+          <label for="m-sport">Sport</label>
+          <select id="m-sport">
+            <option value="football">Football (headcount)</option>
+            <option value="wbb">Women's Basketball (headcount)</option>
+            <option value="track">Track &amp; Field (equivalency)</option>
+            <option value="soccer">Soccer (equivalency)</option>
+            <option value="baseball">Baseball (equivalency)</option>
+            <option value="volleyball">Volleyball (equivalency)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="m-gpa">Unweighted GPA</label>
+          <input type="number" id="m-gpa" step="0.01" min="0" max="4" placeholder="e.g. 3.7">
+        </div>
+      </div>
+      <button class="btn" onclick="mRun()">Run the numbers</button>
+      <div class="result" id="m-result"></div>
+      <div class="lead-cta"><strong>Lead capture moment:</strong> "Download the funding stack worksheet: how families combine athletic, academic, and need-based money" → email gate.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONCEPT 3 ============ -->
+<section class="concept" id="c3">
+  <div class="wrap">
+    <div class="concept-label">Concept 03</div>
+    <h2>The Recruiting Timeline Checker</h2>
+    <div class="hypothesis">
+      <p><strong>Hypothesis:</strong> "Are we behind?" is the background anxiety of every recruiting parent. A tool that takes only a grad year and instantly drops a "you are here" pin on the recruiting timeline answers that question in five seconds with zero effort.</p>
+      <p><strong>Why it converts:</strong> Lowest friction of the four concepts, one input. Nearly every parent of a 10th or 11th grader who runs it will see at least one milestone flagged behind schedule, and urgency is the strongest conversion trigger in this audience.</p>
+    </div>
+    <div class="pixel">
+      <div class="pixel-head"><h3>Is your athlete on schedule?</h3><span class="pixel-tag">Demo</span></div>
+      <p class="pixel-sub">Select your athlete's graduation year to see what should already be done and what is coming next.</p>
+      <div class="field-row">
+        <div class="field">
+          <label for="t-year">High school graduation year</label>
+          <select id="t-year">
+            <option value="2027">2027 (rising senior)</option>
+            <option value="2028" selected>2028 (rising junior)</option>
+            <option value="2029">2029 (rising sophomore)</option>
+            <option value="2030">2030 (rising freshman)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn" onclick="tRun()">Check the timeline</button>
+      <div class="result" id="t-result"></div>
+      <div class="lead-cta"><strong>Lead capture moment:</strong> "Get the month-by-month recruiting calendar for the class of [year]" → email gate.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONCEPT 4 ============ -->
+<section class="concept" id="c4">
+  <div class="wrap">
+    <div class="concept-label">Concept 04</div>
+    <h2>The Eligibility Quick Screen</h2>
+    <div class="hypothesis">
+      <p><strong>Hypothesis:</strong> Parents are terrified that a paperwork or course-selection mistake will quietly disqualify their kid. The NCAA core course and Eligibility Center rules are confusing enough that a 30-second red/yellow/green screen feels like a safety inspection for their child's future.</p>
+      <p><strong>Why it converts:</strong> Fear of irreversible loss is a stronger motivator than aspiration. A single yellow or red flag turns "we should look into this someday" into "we need to fix this now." Narrowest concept of the four, but highest urgency per user.</p>
+    </div>
+    <div class="pixel">
+      <div class="pixel-head"><h3>Could anything disqualify your athlete?</h3><span class="pixel-tag">Demo</span></div>
+      <p class="pixel-sub">Answer four quick questions and get a flag report on the most common eligibility tripwires.</p>
+      <div class="field-row">
+        <div class="field">
+          <label for="e-gpa">Core course GPA (best estimate)</label>
+          <input type="number" id="e-gpa" step="0.01" min="0" max="4" placeholder="e.g. 3.1">
+        </div>
+        <div class="field">
+          <label for="e-core">On track with NCAA core courses?</label>
+          <select id="e-core">
+            <option value="yes">Yes, we've mapped them</option>
+            <option value="unsure" selected>Not sure</option>
+            <option value="no">No / haven't checked</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="e-reg">Registered with NCAA Eligibility Center?</label>
+          <select id="e-reg">
+            <option value="yes">Yes</option>
+            <option value="no" selected>Not yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="e-grade">Current grade</label>
+          <select id="e-grade">
+            <option value="9">9th</option>
+            <option value="10">10th</option>
+            <option value="11" selected>11th</option>
+            <option value="12">12th</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn" onclick="eRun()">Run the screen</button>
+      <div class="result" id="e-result"></div>
+      <div class="lead-cta"><strong>Lead capture moment:</strong> "Get the full eligibility checklist plus the core course mapping template" → email gate.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEEDBACK ============ -->
+<section class="feedback">
+  <div class="wrap">
+    <h2>Martha, your <span class="accent">call.</span></h2>
+    <p>For the Facebook campaign we will build out one of these as the customizable asset. When you reply, it would help to have:</p>
+    <ol>
+      <li>Your ranking, 1 through 4, by which one best fulfills what this audience actually needs</li>
+      <li>Which one you think stops the scroll on Facebook specifically</li>
+      <li>Anything the consultant has said about their methodology that should shape the winner</li>
+    </ol>
+    <a class="btn" href="mailto:keyona@rerev.io?subject=Athlete%20Pixel%20Review%20-%20My%20Ranking&body=My%20ranking%3A%0A1.%0A2.%0A3.%0A4.%0A%0ABest%20for%20Facebook%3A%0A%0ANotes%3A">Send your ranking</a>
+  </div>
+</section>
+
+<script>
+/* ---------- Concept 1: Benchmarker ---------- */
+const B_DATA = {
+  track: {
+    label: "Best mark (seconds)",
+    events: {
+      "100m": { boys: { d1: 10.7, d2: 11.0, d3: 11.3, naia: 11.2, lower: true },
+                girls:{ d1: 11.9, d2: 12.3, d3: 12.7, naia: 12.5, lower: true } },
+      "400m": { boys: { d1: 48.0, d2: 49.5, d3: 51.0, naia: 50.5, lower: true },
+                girls:{ d1: 55.5, d2: 58.0, d3: 60.0, naia: 59.0, lower: true } },
+      "1600m":{ boys: { d1: 255, d2: 265, d3: 275, naia: 272, lower: true, mmss: true },
+                girls:{ d1: 300, d2: 315, d3: 330, naia: 325, lower: true, mmss: true } }
+    }
+  },
+  swim: {
+    label: "Best time (seconds)",
+    events: {
+      "50 Free":  { boys: { d1: 20.9, d2: 21.6, d3: 22.3, naia: 22.0, lower: true },
+                    girls:{ d1: 23.5, d2: 24.4, d3: 25.2, naia: 24.9, lower: true } },
+      "100 Free": { boys: { d1: 45.5, d2: 47.0, d3: 48.5, naia: 48.0, lower: true },
+                    girls:{ d1: 51.0, d2: 53.0, d3: 55.0, naia: 54.0, lower: true } }
+    }
+  },
+  football: {
+    label: "40-yard dash (seconds)",
+    events: {
+      "WR / DB":  { boys: { d1: 4.5, d2: 4.62, d3: 4.75, naia: 4.7, lower: true }, girls: null },
+      "RB / LB":  { boys: { d1: 4.6, d2: 4.72, d3: 4.85, naia: 4.8, lower: true }, girls: null },
+      "OL / DL":  { boys: { d1: 5.0, d2: 5.15, d3: 5.3, naia: 5.25, lower: true }, girls: null }
+    }
+  }
+};
+
+function bUpdateEvents() {
+  const sport = document.getElementById('b-sport').value;
+  const gender = document.getElementById('b-gender').value;
+  const evSel = document.getElementById('b-event');
+  const data = B_DATA[sport];
+  document.getElementById('b-mark-label').textContent = data.label;
+  evSel.innerHTML = '';
+  Object.keys(data.events).forEach(ev => {
+    if (data.events[ev][gender]) {
+      const o = document.createElement('option');
+      o.value = ev; o.textContent = ev;
+      evSel.appendChild(o);
+    }
+  });
+  if (!evSel.options.length) {
+    const o = document.createElement('option');
+    o.value = ''; o.textContent = 'No demo data for this combo';
+    evSel.appendChild(o);
+  }
+}
+
+function bRun() {
+  const sport = document.getElementById('b-sport').value;
+  const gender = document.getElementById('b-gender').value;
+  const ev = document.getElementById('b-event').value;
+  const mark = parseFloat(document.getElementById('b-mark').value);
+  const box = document.getElementById('b-result');
+  const std = ev && B_DATA[sport].events[ev] ? B_DATA[sport].events[ev][gender] : null;
+  if (!std || isNaN(mark)) {
+    box.innerHTML = '<p class="explain">Enter a mark to see the comparison. (Football demo data is boys only.)</p>';
+    box.classList.add('show'); return;
+  }
+  const divs = [
+    { name: 'D1', t: std.d1 }, { name: 'D2', t: std.d2 },
+    { name: 'NAIA', t: std.naia }, { name: 'D3', t: std.d3 }
+  ];
+  let best = null;
+  const rows = divs.map(d => {
+    const diffPct = (mark - d.t) / d.t;
+    let status, cls, fit = false;
+    if (mark <= d.t) { status = 'Strong fit'; cls = 's-strong'; fit = true; if (!best) best = d.name; }
+    else if (diffPct <= 0.03) { status = 'Borderline'; cls = 's-border'; fit = true; if (!best) best = d.name + ' (borderline)'; }
+    else { status = 'Reach for now'; cls = 's-reach'; }
+    const width = Math.max(12, Math.min(100, 100 - diffPct * 400));
+    return `<div class="band-row">
+      <div class="band-name">${d.name}</div>
+      <div class="band-track"><div class="band-fill ${fit ? 'fit' : ''}" style="width:${width}%"></div></div>
+      <div class="band-status ${cls}">${status}</div>
+    </div>`;
+  }).join('');
+  const headline = best
+    ? `Your athlete profiles as a <span class="hl">${best}</span> level recruit in the ${ev}.`
+    : `Your athlete is building toward recruitable range in the ${ev}.`;
+  box.innerHTML = `<div class="verdict">${headline}</div>
+    <p class="explain">Based on typical recruited ranges. Demo thresholds are illustrative.</p>
+    <div class="band">${rows}</div>`;
+  box.classList.add('show');
+}
+
+/* ---------- Concept 2: Money ---------- */
+const M_DATA = {
+  football:   { type: 'Headcount', avg: 'Full ride (FBS)', note: '85 full scholarships per FBS roster. FCS and below shift to partial.', partial: false },
+  wbb:        { type: 'Headcount', avg: 'Full ride (D1)', note: '15 full scholarships per D1 roster.', partial: false },
+  track:      { type: 'Equivalency', avg: '$8,100 / yr', note: '12.6 scholarships (men) split across rosters of 30 to 50 athletes.', partial: true },
+  soccer:     { type: 'Equivalency', avg: '$11,500 / yr', note: '9.9 scholarships (men) split across rosters of 25 to 30.', partial: true },
+  baseball:   { type: 'Equivalency', avg: '$13,000 / yr', note: '11.7 scholarships split across rosters of 35 plus. 25% minimum per player rule applies.', partial: true },
+  volleyball: { type: 'Equivalency', avg: '$14,800 / yr', note: '12 scholarships (women D1) but rosters of 15 to 18 mean most awards are partial.', partial: true }
+};
+
+function mRun() {
+  const sport = document.getElementById('m-sport').value;
+  const gpa = parseFloat(document.getElementById('m-gpa').value);
+  const d = M_DATA[sport];
+  const box = document.getElementById('m-result');
+  let academic = 'Enter a GPA to compare';
+  let academicNote = '';
+  if (!isNaN(gpa)) {
+    if (gpa >= 3.8) { academic = '$15,000 to $25,000+ / yr'; academicNote = 'Top merit tier at many D2, D3, and NAIA schools. Often beats the athletic offer.'; }
+    else if (gpa >= 3.5) { academic = '$10,000 to $18,000 / yr'; academicNote = 'Strong merit range at most private D3 and NAIA schools.'; }
+    else if (gpa >= 3.0) { academic = '$5,000 to $12,000 / yr'; academicNote = 'Mid merit tier. Raising GPA may be the highest-ROI move on the board.'; }
+    else { academic = 'Limited merit money'; academicNote = 'Below most automatic merit thresholds. Grades are the constraint, not athletics.'; }
+  }
+  const verdict = d.partial
+    ? `In ${document.getElementById('m-sport').selectedOptions[0].text.split(' (')[0]}, the realistic athletic award is <span class="hl">partial</span>.`
+    : `This is a <span class="hl">headcount sport</span>: offers are full rides, but roster spots are scarce.`;
+  box.innerHTML = `<div class="verdict">${verdict}</div>
+    <div class="money-grid">
+      <div class="money-card"><h4>Scholarship type</h4><div class="big">${d.type}</div><div class="small">${d.note}</div></div>
+      <div class="money-card"><h4>Typical athletic award</h4><div class="big">${d.avg}</div><div class="small">Average across D1 equivalency programs. Illustrative.</div></div>
+      <div class="money-card"><h4>Academic merit potential</h4><div class="big">${academic}</div><div class="small">${academicNote}</div></div>
+    </div>`;
+  box.classList.add('show');
+}
+
+/* ---------- Concept 3: Timeline ---------- */
+const NOW = new Date(2026, 5); // June 2026 demo anchor
+const T_MILESTONES = [
+  { offsetYrs: 4.0, when: 'Freshman year', what: '<strong>Build the academic base.</strong> Map NCAA core courses, establish GPA habits.' },
+  { offsetYrs: 3.5, when: 'Freshman spring', what: '<strong>Start the highlight archive.</strong> Save raw footage from every game and meet.' },
+  { offsetYrs: 3.0, when: 'Sophomore year', what: '<strong>Register with the NCAA Eligibility Center</strong> and build a target school list of 20 plus programs.' },
+  { offsetYrs: 2.5, when: 'Sophomore spring', what: '<strong>First coach outreach.</strong> Personalized emails with film, stats, and schedule.' },
+  { offsetYrs: 2.0, when: 'Junior year', what: '<strong>June 15 / Sept 1 contact windows open</strong> for most sports. Coaches can now respond directly.' },
+  { offsetYrs: 1.5, when: 'Junior spring', what: '<strong>Campus visits and camps</strong> at realistic targets. Trim the list to 10 to 12.' },
+  { offsetYrs: 1.0, when: 'Senior fall', what: '<strong>Offers and official visits.</strong> Compare full cost of attendance, not just scholarship percent.' },
+  { offsetYrs: 0.5, when: 'Senior winter', what: '<strong>Signing periods.</strong> National Letter of Intent and financial aid agreements.' }
+];
+
+function tRun() {
+  const gradYear = parseInt(document.getElementById('t-year').value);
+  const gradDate = new Date(gradYear, 4); // May of grad year
+  const box = document.getElementById('t-result');
+  let behindCount = 0, hereSet = false;
+  const items = T_MILESTONES.map(m => {
+    const mDate = new Date(gradDate); mDate.setMonth(mDate.getMonth() - Math.round(m.offsetYrs * 12));
+    let cls = 'ahead';
+    if (mDate < NOW) { cls = 'done'; behindCount++; }
+    if (!hereSet && mDate >= NOW) { cls = 'here'; hereSet = true; }
+    const chip = cls === 'here' ? '<span class="here-chip">You are here</span>' : '';
+    return `<div class="tl-item ${cls}"><div class="tl-when">${m.when}${chip}</div><div class="tl-what">${m.what}</div></div>`;
+  }).join('');
+  const headline = behindCount === 0
+    ? `Class of ${gradYear}: you're <span class="hl">ahead of the curve</span>. Everything below is still in front of you.`
+    : behindCount >= 6
+      ? `Class of ${gradYear}: the window is <span class="hl">closing fast</span>. ${behindCount} milestones should already be done.`
+      : `Class of ${gradYear}: <span class="hl">${behindCount} milestone${behindCount > 1 ? 's' : ''}</span> should already be behind you.`;
+  box.innerHTML = `<div class="verdict">${headline}</div>
+    <p class="explain">Green = should be complete by now. Orange = where you should be focused this season.</p>
+    <div class="tl">${items}</div>`;
+  box.classList.add('show');
+}
+
+/* ---------- Concept 4: Eligibility ---------- */
+function eRun() {
+  const gpa = parseFloat(document.getElementById('e-gpa').value);
+  const core = document.getElementById('e-core').value;
+  const reg = document.getElementById('e-reg').value;
+  const grade = parseInt(document.getElementById('e-grade').value);
+  const box = document.getElementById('e-result');
+  const flags = [];
+
+  if (isNaN(gpa)) flags.push(['y', '<strong>Core GPA unknown.</strong> The NCAA uses core course GPA, not the report card GPA. Most families have never calculated it.']);
+  else if (gpa >= 2.8) flags.push(['g', `<strong>Core GPA ${gpa.toFixed(2)} clears the D1 sliding scale comfortably</strong> at the demo threshold.`]);
+  else if (gpa >= 2.3) flags.push(['y', `<strong>Core GPA ${gpa.toFixed(2)} is above the D1 floor but tight.</strong> One bad semester in a core course changes the math.`]);
+  else flags.push(['r', `<strong>Core GPA ${gpa.toFixed(2)} is below the 2.3 D1 floor.</strong> Immediate academic plan needed; D2 floor is 2.2.`]);
+
+  if (core === 'yes') flags.push(['g', '<strong>Core courses mapped.</strong> Keep verifying each schedule change against the high school\'s approved NCAA course list.']);
+  else if (core === 'unsure') flags.push(['y', '<strong>Core courses unverified.</strong> The 16 core course requirement, with 10 locked before senior year, is the most common silent disqualifier.']);
+  else flags.push(['r', '<strong>Core courses not checked.</strong> If 10 of 16 are not complete before senior year starts, no senior-year fix exists for D1.']);
+
+  if (reg === 'yes') flags.push(['g', '<strong>Eligibility Center registration done.</strong>']);
+  else if (grade >= 11) flags.push(['r', '<strong>Not registered with the Eligibility Center as a junior or senior.</strong> Coaches cannot arrange official visits for unregistered athletes.']);
+  else flags.push(['y', '<strong>Not registered yet.</strong> Fine for now, but sophomore year is the recommended registration point.']);
+
+  const reds = flags.filter(f => f[0] === 'r').length;
+  const yellows = flags.filter(f => f[0] === 'y').length;
+  const headline = reds ? `<span class="hl">${reds} red flag${reds > 1 ? 's' : ''}</span> need attention now.`
+    : yellows ? `No red flags, but <span class="hl">${yellows} item${yellows > 1 ? 's' : ''}</span> to verify.`
+    : `All clear on the <span class="hl">common tripwires</span>.`;
+  box.innerHTML = `<div class="verdict">${headline}</div>
+    <p class="explain">Demo thresholds simplified from NCAA initial-eligibility rules. Production version would mirror the current sliding scale.</p>
+    <div class="flag-list">${flags.map(f => `<div class="flag"><div class="dot ${f[0]}"></div><p>${f[1]}</p></div>`).join('')}</div>`;
+  box.classList.add('show');
+}
+
+bUpdateEvents();
+</script>
+</body>
+</html>
