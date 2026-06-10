@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook Ad Strategy: Athlete Site</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #F0F7F7;
+      --primary: #0D1F2D;
+      --cyan: #1A9E9E;
+      --purple: #7C3AED;
+      --gradient: linear-gradient(90deg, #1A9E9E, #7C3AED);
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    html, body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--primary);
+      scroll-behavior: smooth;
+    }
+
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 80px;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient);
+    }
+
+    /* Title Slide */
+    .slide.title {
+      background: linear-gradient(135deg, var(--primary) 0%, #1a3a4d 100%);
+      color: white;
+      justify-content: space-between;
+    }
+
+    .title h1 {
+      font-family: var(--font-heading);
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .title p {
+      font-size: 20px;
+      opacity: 0.9;
+      margin-bottom: 40px;
+      max-width: 700px;
+    }
+
+    .title-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-top: 60px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .title-ventures {
+      display: flex;
+      gap: 30px;
+    }
+
+    .venture-tag {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: rgba(26, 158, 158, 0.3);
+      padding: 8px 16px;
+      border-radius: 4px;
+      border: 1px solid rgba(26, 158, 158, 0.5);
+    }
+
+    /* Content Slides */
+    .slide.content {
+      background: white;
+    }
+
+    .slide-number {
+      position: absolute;
+      bottom: 40px;
+      right: 80px;
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--cyan);
+    }
+
+    h2 {
+      font-family: var(--font-heading);
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 40px;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    h3 {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      font-weight: 700;
+      margin: 32px 0 16px 0;
+      color: var(--primary);
+    }
+
+    .section-label {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--cyan);
+      margin-bottom: 12px;
+    }
+
+    /* Format Slide */
+    .format-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      margin-top: 30px;
+    }
+
+    .format-card {
+      padding: 24px;
+      border: 2px solid var(--cyan);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(26, 158, 158, 0.05), rgba(124, 58, 237, 0.05));
+    }
+
+    .format-card h4 {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+
+    .format-card p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    /* Venture Slides */
+    .venture-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .venture-badge {
+      background: var(--gradient);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .campaign-framework {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    .framework-item {
+      background: var(--bg);
+      padding: 20px;
+      border-radius: 6px;
+      border-left: 4px solid var(--cyan);
+    }
+
+    .framework-item strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--cyan);
+      margin-bottom: 8px;
+    }
+
+    .framework-item p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--primary);
+    }
+
+    .target-audience {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(26, 158, 158, 0.1));
+      padding: 24px;
+      border-radius: 6px;
+      margin-top: 32px;
+      border: 1px solid rgba(124, 58, 237, 0.3);
+    }
+
+    .target-audience strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--purple);
+      margin-bottom: 8px;
+    }
+
+    .target-audience p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--primary);
+    }
+
+    /* Decisions Slide */
+    .decisions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .decision-item {
+      padding: 20px;
+      background: var(--bg);
+      border-radius: 6px;
+      border-left: 4px solid var(--purple);
+    }
+
+    .decision-item strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .decision-item p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #666;
+      font-style: italic;
+    }
+
+    /* Close Slide */
+    .slide.close {
+      background: linear-gradient(135deg, var(--primary) 0%, #1a3a4d 100%);
+      color: white;
+      justify-content: space-between;
+    }
+
+    .close h2 {
+      color: white;
+      font-size: 48px;
+    }
+
+    .close-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .close-item {
+      padding-left: 28px;
+      position: relative;
+    }
+
+    .close-item::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--cyan);
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .close-item p {
+      font-size: 16px;
+      line-height: 1.6;
+      opacity: 0.95;
+    }
+
+    @media (max-width: 1024px) {
+      .slide {
+        padding: 40px 60px;
+      }
+
+      .format-grid, .campaign-framework {
+        grid-template-columns: 1fr;
+      }
+
+      h2 {
+        font-size: 32px;
+      }
+
+      .title h1 {
+        font-size: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<div class="slide title">
+  <div>
+    <h1>Athlete Site</h1>
+    <p>Facebook Ad Campaign Proposal for Expert Review</p>
+  </div>
+  <div class="title-meta">
+    <div class="title-ventures">
+      <span class="venture-tag">Athlete Site</span>
+    </div>
+    <div style="text-align: right; font-size: 14px; opacity: 0.8;">
+      <div>Expert consultation</div>
+      <div>June 2026</div>
+    </div>
+  </div>
+  <div class="slide-number">1</div>
+</div>
+
+<!-- Slide 2: Standardized Format -->
+<div class="slide content">
+  <h2>Campaign Framework: What's in This Proposal</h2>
+  <div class="format-grid">
+    <div class="format-card">
+      <h4>Ad & Landing Page</h4>
+      <p>Proposed ad creative concept and landing page approach—where traffic lands and what's being asked of the visitor.</p>
+    </div>
+    <div class="format-card">
+      <h4>Call to Action & Data</h4>
+      <p>Explicit CTA (what button does the visitor click) and what information gets collected to understand conversion quality.</p>
+    </div>
+    <div class="format-card">
+      <h4>Campaign Goal</h4>
+      <p>The concrete outcome we're optimizing toward: bookings, enrollments, leads, awareness, or something else.</p>
+    </div>
+    <div class="format-card">
+      <h4>Target Audience</h4>
+      <p>Who we're reaching: demographics, interests, behaviors, and why they're the right fit for this offer.</p>
+    </div>
+  </div>
+  <div class="slide-number">2</div>
+</div>
+
+<!-- Slide 3: Athlete Site Campaign -->
+<div class="slide content">
+  <div class="venture-header">
+    <div class="venture-badge">Athlete Site</div>
+  </div>
+  <h2>Campaign Framework</h2>
+  
+  <div class="campaign-framework">
+    <div class="framework-item">
+      <strong>Ad Creative</strong>
+      <p>Results-driven testimonial from satisfied client—before/after transformation showing successful athlete placement and recruitment outcomes.</p>
+    </div>
+    <div class="framework-item">
+      <strong>Landing Page</strong>
+      <p>Service overview with tier options, success metrics, social proof, and clear pathway to consultation.</p>
+    </div>
+    <div class="framework-item">
+      <strong>Call to Action</strong>
+      <p><strong>Schedule consultation call</strong> — low-friction booking directly on landing page.</p>
+    </div>
+    <div class="framework-item">
+      <strong>Data Collected</strong>
+      <p>Name, email, phone, athlete profile, recruiting timeline, current standing—enough to qualify before sales touches.</p>
+    </div>
+  </div>
+
+  <div class="framework-item" style="grid-column: 1 / -1; margin-top: 24px;">
+    <strong>Campaign Goal</strong>
+    <p>Drive booked consultation calls with parents of prospective student athletes interested in recruiting services.</p>
+  </div>
+
+  <div class="target-audience">
+    <strong>Target Audience</strong>
+    <p><strong>Parents of prospective student athletes</strong> (age 35–55) actively seeking recruitment support for upcoming college applications. Interested in sports, college admissions, athletic scholarships. Behaviors: engaged with recruiting forums, parent sports networks, college prep content.</p>
+  </div>
+
+  <div class="slide-number">3</div>
+</div>
+
+<!-- Slide 4: Athlete Site Decisions -->
+<div class="slide content">
+  <div class="venture-header">
+    <div class="venture-badge" style="background: var(--purple);">Athlete Site</div>
+  </div>
+  <h2>Open Decisions</h2>
+  
+  <div class="decisions-list">
+    <div class="decision-item">
+      <strong>Conversion Event: Direct Purchase or Two-Step?</strong>
+      <p>Push straight to booking a call, or run two-step flow (lead magnet → nurture → call) given the considered, parent-driven nature of the buying decision and the service price point?</p>
+    </div>
+    <div class="decision-item">
+      <strong>Geography: National or Recruiting-Heavy States?</strong>
+      <p>Run broad national targeting, or concentrate on recruiting-heavy states (TX, GA, FL, AL, CA) for a cleaner first read and better CAC?</p>
+    </div>
+    <div class="decision-item">
+      <strong>Proof Problem: Placeholder Names or Wait for Real Testimonial?</strong>
+      <p>The site currently uses placeholder athlete names and outcomes. Test testimonial creative anyway, or wait for one real, named commitment before running it?</p>
+    </div>
+    <div class="decision-item">
+      <strong>Seasonality & Setup: When to Run and Prerequisites?</strong>
+      <p>How much should recruiting and signing calendar dictate launch timing? And before any spend, confirm Pixel and conversions API are live and properly configured.</p>
+    </div>
+  </div>
+
+  <div class="slide-number">4</div>
+</div>
+
+<!-- Slide 5: Close -->
+<div class="slide close">
+  <div>
+    <h2>What We Need From This Conversation</h2>
+    <div class="close-content">
+      <div class="close-item">
+        <p>Direct feedback on campaign structure and execution logic, especially from the customer's point of view.</p>
+      </div>
+      <div class="close-item">
+        <p>Guidance on the open decisions above, especially conversion event choice and geography targeting.</p>
+      </div>
+      <div class="close-item">
+        <p>Brutal honesty about whether Facebook is the right channel for this offer given the buyer profile and price point.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">5</div>
+</div>
+
+</body>
+</html>
