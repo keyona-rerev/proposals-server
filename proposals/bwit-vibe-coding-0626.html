@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe Coding · A Talk &amp; Workshop for Birmingham Women in Tech</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F0F7F7;
+    --primary: #0D1F2D;
+    --body-text: #3D5166;
+    --cyan: #1A9E9E;
+    --purple: #7C3AED;
+    --gradient: linear-gradient(90deg, #1A9E9E, #7C3AED);
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--primary); overflow-x: hidden; }
+
+  .slide { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 80px 10vw; position: relative; border-bottom: 1px solid rgba(13,31,45,0.08); }
+  .slide-number { font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan); margin-bottom: 32px; }
+
+  .slide-dark { background: var(--primary); color: white; }
+  .slide-dark h1, .slide-dark h2 { color: white; }
+  .slide-dark .subtitle, .slide-dark p { color: rgba(255,255,255,0.6); }
+  .gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .title-bg-accent { position: absolute; right: -100px; top: 50%; transform: translateY(-50%); width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(26,158,158,0.15) 0%, transparent 70%); pointer-events: none; }
+
+  .eyebrow { font-family: var(--font-heading); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 24px; }
+
+  h1 { font-family: var(--font-heading); font-size: clamp(48px, 7vw, 96px); font-weight: 800; line-height: 1.0; margin-bottom: 32px; letter-spacing: -0.02em; }
+  h2 { font-family: var(--font-heading); font-size: clamp(28px, 3.5vw, 48px); font-weight: 700; margin-bottom: 40px; }
+  h3 { font-family: var(--font-heading); font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+  .subtitle { font-family: var(--font-body); font-size: clamp(16px, 2vw, 20px); font-weight: 300; max-width: 600px; line-height: 1.6; }
+
+  .big-statement { font-family: var(--font-heading); font-size: clamp(20px, 2.5vw, 32px); font-weight: 600; line-height: 1.4; max-width: 760px; margin-bottom: 40px; color: var(--body-text); }
+  .big-statement strong { color: var(--primary); }
+  .use-case-grid { display: flex; flex-wrap: wrap; gap: 12px; max-width: 700px; }
+  .use-case-tag { font-family: var(--font-heading); font-size: 14px; font-weight: 600; padding: 8px 18px; border-radius: 100px; background: rgba(26,158,158,0.1); color: #0D7E7E; border: 1px solid rgba(26,158,158,0.2); }
+
+  .steps { display: flex; flex-direction: column; gap: 0; max-width: 740px; position: relative; }
+  .steps::before { content: ''; position: absolute; left: 20px; top: 40px; bottom: 40px; width: 2px; background: linear-gradient(180deg, var(--cyan), var(--purple)); }
+  .step { display: flex; gap: 32px; align-items: flex-start; padding: 18px 0; position: relative; }
+  .step-dot { width: 42px; height: 42px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: white; flex-shrink: 0; position: relative; z-index: 1; }
+  .step-dot.cyan { background: var(--cyan); }
+  .step-dot.purple { background: var(--purple); }
+  .step-content p { font-size: 15px; color: var(--body-text); line-height: 1.5; }
+
+  .pieces-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 920px; }
+  .piece-card { background: white; border-radius: 16px; padding: 32px 28px; border: 1px solid rgba(13,31,45,0.08); position: relative; overflow: hidden; }
+  .piece-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .piece-card.accent-cyan::before { background: var(--gradient); }
+  .piece-card.accent-dark::before { background: var(--primary); }
+  .piece-card.accent-purple::before { background: var(--purple); }
+  .piece-label { font-family: var(--font-heading); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
+  .piece-card p { font-size: 14px; color: var(--body-text); line-height: 1.6; }
+  .piece-card h3 { color: var(--primary); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 920px; }
+  .concept-card { background: white; border-radius: 16px; padding: 32px; border: 1px solid rgba(13,31,45,0.08); }
+  .concept-card.tinted { background: rgba(26,158,158,0.06); border-color: rgba(26,158,158,0.2); }
+  .concept-card.tinted-purple { background: rgba(124,58,237,0.06); border-color: rgba(124,58,237,0.2); }
+  .concept-card .piece-label { color: var(--purple); }
+  .concept-card p { font-size: 15px; color: var(--body-text); line-height: 1.6; }
+
+  .demo-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(26,158,158,0.2); border: 1px solid rgba(26,158,158,0.4); border-radius: 100px; padding: 8px 20px; font-family: var(--font-heading); font-size: 13px; font-weight: 600; color: var(--cyan); letter-spacing: 0.05em; margin-bottom: 32px; }
+  .demo-badge::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+
+  .setup-intro-sub { font-size: 20px; color: var(--body-text); margin-bottom: 56px; max-width: 660px; }
+  .setup-overview { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .overview-item { background: white; border-radius: 14px; padding: 24px 28px; border: 1px solid rgba(13,31,45,0.08); min-width: 220px; }
+  .overview-num { font-family: var(--font-heading); font-size: 28px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+  .overview-label { font-family: var(--font-heading); font-size: 14px; font-weight: 600; color: var(--primary); }
+  .overview-sub { font-size: 13px; color: var(--body-text); margin-top: 6px; line-height: 1.4; }
+  .overview-arrow { font-size: 24px; color: var(--cyan); font-weight: 300; }
+
+  .doc-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 40px; font-family: var(--font-heading); font-size: 15px; font-weight: 600; color: white; text-decoration: none; background: var(--primary); padding: 14px 26px; border-radius: 100px; transition: all 0.18s; border: 1px solid var(--primary); }
+  .doc-link:hover { background: var(--cyan); border-color: var(--cyan); transform: translateY(-1px); }
+  .doc-link .doc-arrow { font-size: 13px; }
+  .doc-link-sm { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-family: var(--font-heading); font-size: 13px; font-weight: 600; color: #0D7E7E; text-decoration: none; background: rgba(26,158,158,0.1); border: 1px solid rgba(26,158,158,0.3); padding: 9px 16px; border-radius: 100px; transition: all 0.15s; }
+  .doc-link-sm:hover { background: rgba(26,158,158,0.2); }
+
+  .step-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .instruction-list { display: flex; flex-direction: column; gap: 20px; }
+  .instruction-item { display: flex; gap: 16px; align-items: flex-start; font-size: 15px; color: var(--body-text); line-height: 1.6; }
+  .instruction-item strong { color: var(--primary); }
+  .instruction-num { width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: white; font-family: var(--font-heading); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+
+  .screenshot-placeholder { background: white; border-radius: 16px; border: 1px solid rgba(13,31,45,0.1); overflow: hidden; box-shadow: 0 8px 32px rgba(13,31,45,0.08); }
+  .screenshot-label { background: var(--primary); color: rgba(255,255,255,0.6); font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 20px; }
+  .screenshot-fields { padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .mock-field { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--bg); border-radius: 8px; border: 1px solid rgba(13,31,45,0.08); }
+  .mock-label { font-family: var(--font-heading); font-size: 12px; font-weight: 600; color: var(--body-text); }
+  .mock-value { font-family: var(--font-heading); font-size: 13px; font-weight: 600; color: var(--primary); }
+  .mock-line { font-size: 13px; color: var(--body-text); line-height: 1.55; padding: 2px 0; }
+  .mock-line strong { color: var(--primary); }
+  .mock-btn { background: var(--primary); color: white; font-family: var(--font-heading); font-size: 13px; font-weight: 600; padding: 10px 20px; border-radius: 8px; text-align: center; margin-top: 4px; }
+  .mock-pause { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--body-text); padding: 10px 14px; background: rgba(124,58,237,0.06); border-radius: 8px; border: 1px solid rgba(124,58,237,0.2); }
+
+  .toggle-block { margin-top: 20px; border-radius: 12px; border: 1px solid rgba(26,158,158,0.25); overflow: hidden; }
+  .toggle-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; background: rgba(26,158,158,0.08); cursor: pointer; user-select: none; gap: 12px; }
+  .toggle-header:hover { background: rgba(26,158,158,0.14); }
+  .toggle-label { font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0D7E7E; display: flex; align-items: center; gap: 8px; }
+  .toggle-label .tag { background: rgba(26,158,158,0.15); border: 1px solid rgba(26,158,158,0.3); border-radius: 4px; padding: 2px 8px; font-size: 10px; }
+  .toggle-arrow { font-size: 12px; color: var(--cyan); transition: transform 0.2s; flex-shrink: 0; }
+  .toggle-block.open .toggle-arrow { transform: rotate(180deg); }
+  .toggle-body { display: none; background: var(--primary); padding: 0; }
+  .toggle-block.open .toggle-body { display: block; }
+  .toggle-copy-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 18px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .toggle-copy-bar span { font-family: var(--font-heading); font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.05em; }
+  .copy-btn { font-family: var(--font-heading); font-size: 11px; font-weight: 600; color: var(--cyan); background: rgba(26,158,158,0.15); border: 1px solid rgba(26,158,158,0.3); border-radius: 6px; padding: 4px 12px; cursor: pointer; letter-spacing: 0.05em; transition: all 0.15s; }
+  .copy-btn:hover { background: rgba(26,158,158,0.25); }
+  .copy-btn.copied { color: #4ade80; border-color: #4ade80; background: rgba(74,222,128,0.1); }
+  .toggle-code { padding: 16px 18px; font-family: monospace; font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.85); white-space: pre-wrap; word-break: break-word; overflow-x: auto; }
+  .toggle-code .placeholder { color: #f59e0b; font-weight: 700; }
+  .toggle-code .comment { color: rgba(255,255,255,0.3); }
+
+  .pause-callout { margin-top: 24px; padding: 16px 20px; background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2); border-radius: 12px; display: flex; align-items: flex-start; gap: 12px; max-width: 660px; }
+  .pause-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .pause-callout p { font-size: 13px; color: var(--body-text); line-height: 1.5; }
+  .pause-callout strong { color: var(--purple); }
+
+  .slide-ship { align-items: center; text-align: center; }
+  .slide-ship h2 { font-family: var(--font-heading); font-size: clamp(56px, 10vw, 128px); font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin-bottom: 24px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .slide-ship p { font-size: 20px; color: rgba(255,255,255,0.5); font-weight: 300; }
+
+  .callback { margin-top: 28px; padding: 18px 22px; background: rgba(26,158,158,0.07); border-left: 3px solid var(--cyan); border-radius: 0 10px 10px 0; max-width: 740px; }
+  .callback p { font-size: 15px; color: var(--body-text); line-height: 1.55; }
+  .callback strong { color: var(--primary); }
+
+  .quote-line { font-family: var(--font-heading); font-size: clamp(24px, 3vw, 38px); font-weight: 700; line-height: 1.25; max-width: 840px; letter-spacing: -0.01em; }
+  .quote-line .gradient-text { font-weight: 800; }
+  .sub-note { font-size: 16px; color: var(--body-text); line-height: 1.6; max-width: 640px; margin-top: 28px; }
+  .sub-note.on-dark { color: rgba(255,255,255,0.6); }
+
+  .half-marker { font-family: var(--font-heading); font-size: 14px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 28px; display: flex; align-items: center; gap: 14px; }
+  .half-marker .bar { width: 48px; height: 2px; background: var(--gradient); }
+
+  .nav { position: fixed; right: 28px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 100; }
+  .nav a { width: 8px; height: 8px; border-radius: 50%; background: rgba(13,31,45,0.2); display: block; transition: all 0.2s; }
+  .nav a:hover, .nav a.active { background: var(--cyan); transform: scale(1.4); }
+
+  .brandmark { position: absolute; top: 36px; left: 10vw; font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: var(--cyan); }
+
+  @media (max-width: 768px) {
+    .slide { padding: 60px 7vw; }
+    .pieces-grid { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .step-layout { grid-template-columns: 1fr; }
+    .setup-overview { flex-direction: column; align-items: stretch; }
+    .overview-arrow { transform: rotate(90deg); }
+    .nav { display: none; }
+    .brandmark { left: 7vw; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#s1"></a><a href="#s2"></a><a href="#s3"></a><a href="#s4"></a><a href="#s5"></a>
+  <a href="#s6"></a><a href="#s7"></a><a href="#s8"></a><a href="#s9"></a><a href="#s10"></a>
+  <a href="#s11"></a><a href="#s12"></a><a href="#s13"></a><a href="#s14"></a><a href="#s15"></a>
+  <a href="#s16"></a><a href="#s17"></a><a href="#s18"></a><a href="#s19"></a><a href="#s20"></a>
+  <a href="#s21"></a><a href="#s22"></a><a href="#s23"></a><a href="#s24"></a><a href="#s25"></a>
+  <a href="#s26"></a><a href="#s27"></a><a href="#s28"></a><a href="#s29"></a><a href="#s30"></a>
+</nav>
+
+<!-- 1. TITLE -->
+<section class="slide slide-dark" id="s1">
+  <div class="title-bg-accent"></div>
+  <div class="brandmark">ReRev Labs</div>
+  <div class="eyebrow">Birmingham Women in Tech</div>
+  <h1>Vibe<br><span class="gradient-text">Coding</span></h1>
+  <p class="subtitle">You are already qualified to do this. You just may not know it yet. Four years of building with AI, and one thing you will build and walk out with today.</p>
+</section>
+
+<!-- 2. WHAT THIS IS -->
+<section class="slide" id="s2">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">01 · What this is</div>
+  <h2>Half talk, half workshop.</h2>
+  <p class="big-statement">I am going to share the lessons that took me four years to learn, and <strong>you are going to build something real</strong> alongside me, on your own device, and take it home.</p>
+  <div class="use-case-grid">
+    <span class="use-case-tag">Bring a laptop</span>
+    <span class="use-case-tag">Any LLM you already use</span>
+    <span class="use-case-tag">No coding background required</span>
+  </div>
+</section>
+
+<!-- 3. CODE LITERACY -->
+<section class="slide" id="s3">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">02 · Code literacy</div>
+  <h2>You do not have to be a coder<br>to be code literate.</h2>
+  <p class="big-statement">Think about language literacy. It is not just knowing what the words mean. It is knowing what they mean to other people, and how the pieces fit together. <strong>Code literacy works the same way, and it is dimensional.</strong> The level you have is what decides how far you can go.</p>
+</section>
+
+<!-- 4. HELLO WORLD -->
+<section class="slide" id="s4">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">02 · The threshold</div>
+  <h2>If you have ever written<br>"Hello, World," you are in.</h2>
+  <p class="big-statement">That is the bar. Not a computer science degree. If you have done a single Hello World exercise, you are already code literate enough to go <strong>very far</strong> building alongside an LLM. The rest is curiosity, not credentials.</p>
+</section>
+
+<!-- 5. BUILDING BLOCKS -->
+<section class="slide" id="s5">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">02 · The building blocks</div>
+  <h2>Four pieces run almost<br>everything you touch.</h2>
+  <div class="pieces-grid">
+    <div class="piece-card accent-cyan">
+      <div class="piece-label">Front end</div>
+      <h3>HTML, CSS, JS</h3>
+      <p>The layer that runs in your browser. HTML structures the page, CSS styles it, and JavaScript makes it do things. Everything you see rendered on a website is built on these three.</p>
+    </div>
+    <div class="piece-card accent-purple">
+      <div class="piece-label">Back end</div>
+      <h3>Python</h3>
+      <p>Behind the front end sits the server side: the logic and the data. That is where a general purpose language like Python usually lives. Different layer, different job.</p>
+    </div>
+    <div class="piece-card accent-dark">
+      <div class="piece-label">Why it matters</div>
+      <h3>The model's home turf</h3>
+      <p>Because these are everywhere on the web and on GitHub, they are exactly what LLMs have the most training data on. That is why the models are so strong here. For most of what you build, this is all you need.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6. CURIOSITY -->
+<section class="slide" id="s6">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">02 · The entry skill</div>
+  <h2>Curiosity is the first skill,<br>not knowledge.</h2>
+  <p class="big-statement">You do not need to understand Python at its deepest levels to build something with it. You need to let your unknowns <strong>become new lines of inquiry</strong> instead of stop signs. The question "I wonder if I could" is worth more than any syntax you have memorized.</p>
+</section>
+
+<!-- 7. CLARITY -->
+<section class="slide" id="s7">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">03 · The real unlock</div>
+  <p class="quote-line">Curiosity gets you in the door. <span class="gradient-text">Clarity is what gets you anywhere.</span></p>
+  <p class="sub-note">The thing vibe coding actually forces you to do is get clear about what you are really trying to build. Most of the work is not the code. It is knowing precisely what you want before you ask for it.</p>
+</section>
+
+<!-- 8. THE FORK -->
+<section class="slide" id="s8">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">03 · The map for today</div>
+  <h2>Clarity's first question:<br>who is this for?</h2>
+  <p class="big-statement" style="margin-bottom:32px;">Every build splits here, and this fork is the map for the rest of our hour. We are going to do both, in order.</p>
+  <div class="two-col">
+    <div class="concept-card tinted">
+      <div class="piece-label" style="color:#0D7E7E;">First half</div>
+      <h3>Build for yourself</h3>
+      <p>Internal output. Something you will use to get a job done. The only audience is you, and the only goal is to get clear. Aim for the minimum viable version that actually works.</p>
+    </div>
+    <div class="concept-card tinted-purple">
+      <div class="piece-label">Second half</div>
+      <h3>Build for others</h3>
+      <p>Commercial output. Something for the widest audience you can reach. The bar is higher and the rules change. We get there once you have built the first kind with your own hands.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9. POLISH VS MEANING -->
+<section class="slide" id="s9">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">03 · What actually has value</div>
+  <p class="quote-line">Polish is cheap now.<br><span class="gradient-text">Meaning is hard.</span></p>
+  <p class="sub-note">We have all seen the polished AI output that says nothing. Polish is easy to generate, so it is no longer the marker of value. The real marker is material value: how well the thing solves the problem of its audience. A business is a solution to a problem that a qualified audience has, and qualified means they can pay for it.</p>
+</section>
+
+<!-- 10. BRAIN REFRAME -->
+<section class="slide" id="s10">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">04 · A reframe</div>
+  <h2>How much false information<br>is already in your head?</h2>
+  <p class="big-statement">People say AI can be inaccurate, that it hallucinates. True. So sit with this: if we dumped out everything you "know" and fact checked all of it, how clean would it be? Your relationship with your own brain has taken years to build. You have learned <strong>which parts of your own intelligence to trust.</strong></p>
+</section>
+
+<!-- 11. EXTENSION NOT AUTHORITY -->
+<section class="slide" id="s11">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">04 · The core stance</div>
+  <p class="quote-line">Treat it as an extension of your brain. <span class="gradient-text">Not as an authority.</span></p>
+  <p class="sub-note">You do not trust yourself to know everything. So why would you treat an LLM as if it did? Use it the way you use the rest of your mind: powerful, fast, and worth double checking. The same faults you forgive in yourself will show up here too.</p>
+</section>
+
+<!-- 12. LOGIC GROWS -->
+<section class="slide" id="s12">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">04 · The skill that should grow</div>
+  <h2>Your reasoning should get<br>sharper, not softer.</h2>
+  <p class="big-statement">Now that you can send something off to gather answers and frame information for you, the skill to develop is <strong>your own logic and reasoning.</strong> It should be increasing, not atrophying. You are the one directing it.</p>
+  <div class="callback">
+    <p>Same footage, different director. <strong>High School Musical directed by Christopher Nolan</strong> is a completely different film than the one Kenny Ortega made. The information is raw material. Your perspective, your reasoning, and what you choose to pull out of it is where the value is formed.</p>
+  </div>
+</section>
+
+<!-- 13. CATEGORIES OF USE -->
+<section class="slide" id="s13">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">04 · Three kinds of use</div>
+  <h2>Naming the categories,<br>without ranking them.</h2>
+  <p class="big-statement" style="margin-bottom:32px;">There is a lot of noise online that blurs capability, use, and intent. We are not relitigating whether to use this technology. You are here. What is useful is just seeing these as <strong>distinct categories</strong>, with no judgment between them.</p>
+  <div class="use-case-grid">
+    <span class="use-case-tag">Commercial use</span>
+    <span class="use-case-tag">Assistive use</span>
+    <span class="use-case-tag">Philosophical use</span>
+  </div>
+  <div class="callback"><p>Hold onto <strong>assistive</strong>. For some of us it is not abstract at all, and we come back to it at the very end.</p></div>
+</section>
+
+<!-- 14. PERSPECTIVE + SPECIFICITY -->
+<section class="slide" id="s14">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">04 · How it works best</div>
+  <h2>Your perspective in.<br>Specificity in. Better out.</h2>
+  <p class="big-statement">The model is trained only on what existed up to its cutoff, the same way your brain is trained only on what you have lived. So bring outside sources the way you would consult a friend, an article, a video. <strong>When it matters, go grab the information yourself and paste it straight into the conversation.</strong> Do not assume it will fetch and interpret things the way you would.</p>
+</section>
+
+<!-- 15. DIVIDER: BUILD FOR YOURSELF -->
+<section class="slide slide-dark" id="s15">
+  <div class="title-bg-accent"></div>
+  <div class="brandmark">ReRev Labs</div>
+  <div class="eyebrow">Half one of the fork</div>
+  <h1>Build for<br><span class="gradient-text">yourself.</span></h1>
+  <p class="subtitle">Internal output. The only audience is you, and the only goal is to get clear. This is where we pick up our hands and make something.</p>
+</section>
+
+<!-- 16. TAPESTRY -->
+<section class="slide" id="s16">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="half-marker"><span class="bar"></span>Building for yourself</div>
+  <div class="slide-number">05 · What clarity looks like, finished</div>
+  <div class="step-layout">
+    <div>
+      <p class="big-statement" style="margin-bottom:24px;">This is my Tapestry Tool. I built it to get honest with myself about three things: where my 40 hours actually go, which service is a credible lead offer for which audience, and where my revenue really comes from.</p>
+      <p class="sub-note" style="margin-top:0;">It is not a CRM and not a tracker. It is a pressure test that sits above all of that. Pure internal output: a tool whose only job is to make me clearer about my own work.</p>
+    </div>
+    <div class="screenshot-placeholder">
+      <div class="screenshot-label">Tapestry Tool → Strategic pressure test</div>
+      <div class="screenshot-fields">
+        <div class="mock-field"><span class="mock-label">The week</span><span class="mock-value">40 hrs, allocated</span></div>
+        <div class="mock-field"><span class="mock-label">ICP fit grid</span><span class="mock-value">Not pitching → Strongest</span></div>
+        <div class="mock-field"><span class="mock-label">Revenue mix</span><span class="mock-value">Lines vs target</span></div>
+        <div class="mock-pause">The bars make it impossible to pretend there is infinite capacity for new work.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 17. BRIDGE: GRID + REPORT CARD -->
+<section class="slide" id="s17">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="half-marker"><span class="bar"></span>Building for yourself</div>
+  <div class="slide-number">06 · Now your turn</div>
+  <div class="step-layout">
+    <div>
+      <p class="big-statement" style="margin-bottom:24px;">Here is the same idea, one layer out: my Offerings grid. It sorts everything I sell into three tiers and traces how each kind of client <strong>actually</strong> travels through them, gaps and all.</p>
+      <div class="callback">
+        <p>See the top tier? It names my <strong>Online Presence Report Card</strong> as the free diagnostic that shows how I think. Hold onto that. We come back to it in the second half.</p>
+      </div>
+    </div>
+    <div class="screenshot-placeholder">
+      <div class="screenshot-label">Offerings × Journeys → Live grid</div>
+      <div class="screenshot-fields">
+        <div class="mock-line"><strong>Attraction</strong> · free to $99 → Report Card, public tools</div>
+        <div class="mock-line"><strong>Core</strong> · $50 to $500 → sessions, workshops</div>
+        <div class="mock-line"><strong>High-ticket</strong> · $1.5k to $5k+ → builds, fractional roles</div>
+        <div class="mock-pause">The column paying rent today skipped every rung. An empty cell that is true beats a full one that is fiction.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 18. ACTIVITY INTRO -->
+<section class="slide" id="s18">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="half-marker"><span class="bar"></span>Building for yourself</div>
+  <div class="slide-number">06 · The activity</div>
+  <h2>One build, two parts.</h2>
+  <p class="setup-intro-sub">First you make the meaning. Then you make it beautiful. You will feel the difference between the two in your own hands.</p>
+  <div class="setup-overview">
+    <div class="overview-item">
+      <div class="overview-num">01</div>
+      <div class="overview-label">The cake</div>
+      <div class="overview-sub">Run the calibration. Get an honest read on your own business.</div>
+    </div>
+    <div class="overview-arrow">→</div>
+    <div class="overview-item">
+      <div class="overview-num">02</div>
+      <div class="overview-label">The icing</div>
+      <div class="overview-sub">One pasted prompt turns it into a polished report you download.</div>
+    </div>
+  </div>
+  <a class="doc-link" href="https://docs.google.com/document/d/1a_TC9xe7UdLdphPTTQPGTEX2hgbjHo-qT5-LnG5wlO0/edit" target="_blank" rel="noopener">Open the full exercise doc <span class="doc-arrow">↗</span></a>
+</section>
+
+<!-- 19. ACTIVITY PART 1 -->
+<section class="slide slide-step" id="s19">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">Part 01 · Run the calibration (the cake)</div>
+  <h2>Build your Offerings grid.</h2>
+  <div class="step-layout">
+    <div class="step-instructions">
+      <div class="instruction-list">
+        <div class="instruction-item"><div class="instruction-num">1</div><div>Open the LLM you use most. <strong>Claude works best</strong> here, but any will do.</div></div>
+        <div class="instruction-item"><div class="instruction-num">2</div><div>If it does not know your work yet, paste in a quick overview, your site, or an offerings note <strong>first</strong>.</div></div>
+        <div class="instruction-item"><div class="instruction-num">3</div><div>Paste the prompt below and go <strong>one stage at a time</strong>. It proposes, you correct. Never start from a blank page.</div></div>
+      </div>
+      <div class="pause-callout">
+        <div class="pause-icon">⏸</div>
+        <p><strong>Pause here.</strong> The value is in the back and forth. Do not let it dump the whole thing at once. Be honest about your gaps, an empty cell that is true is the point.</p>
+      </div>
+      <div class="toggle-block" id="toggle-part1">
+        <div class="toggle-header" onclick="toggleBlock('toggle-part1')">
+          <div class="toggle-label"><span>Offerings × Journeys</span><span class="tag">paste into Claude</span></div>
+          <span class="toggle-arrow">▼</span>
+        </div>
+        <div class="toggle-body">
+          <div class="toggle-copy-bar"><span>Calibration prompt, capped at the read-back</span><button class="copy-btn" onclick="copyToggle('toggle-part1', this)">Copy</button></div>
+          <div class="toggle-code" id="toggle-part1-code">I want you to walk me through building an "Offerings x Journeys" grid for my business. It is a calibration exercise: we sort every offer I have into three revenue tiers, then map how each kind of customer actually travels through them.
+
+How I want you to run this, and this part matters most. Do not interview me with a blank list of questions. Assume you already know a fair amount about my business from what I have shared with you. At every stage, lead with YOUR best interpretation first, your read of my offers, my buyers, my pricing, my real path to revenue, and then ask me to correct it. I will either confirm it or say "actually, no, it is like this." Reacting to a draft is far easier for me than starting from nothing, so always propose first and never hand me an empty prompt. If you genuinely do not have enough context about me yet, ask me once for a short overview or a document, then switch straight back into this propose-and-correct mode.
+
+Work through these stages one at a time. After each one, stop and get my reaction before moving on.
+
+1) THE MODEL. Explain the three tiers in plain terms. Attraction (free to about $99: builds trust and earns the first yes, does not pay bills), Core (about $50 to $500: productized and repeatable, the easy middle door most people are missing), and High-ticket (about $1,500 to $5,000 and up: done-for-you, one to one, priced as real work, this is what pays the bills). Then check one thing before we go further: does this lens even fit my business? It fits if I sell expertise or services directly. It does NOT fit a fund or enterprise infrastructure sold as one large contract. If I am one of those, say so, and we either stop or reframe around entry point versus full engagement instead.
+
+2) MY OFFERS, SORTED. Present your best guess at every offer I have, sorted into the three tiers. Make the high-ticket bucket explicit, name each distinct offering inside it. I will correct anything misfiled or missing.
+
+3) MY BUYERS. Propose the distinct customer types I sell to. For each one, mark it Live (paying me today) or Target (I want them, but have not proven it). Push me to be honest here.
+
+4) HOW THEY ENTER. For each buyer, tell me how you think they actually arrive: warm, through my network or a referral, or cold, through a funnel I have built. Then let me correct it.
+
+5) THE JOURNEY, HONESTLY. For each buyer, map their path down the three tiers, what attracts them, what they buy first, where they land. Where a buyer skipped a rung, or where I have no built path, SHOW THAT AS A GAP. Do not invent a clean funnel. An empty cell that is true is worth more than a full one that is fiction.
+
+6) THE STRUCTURAL LAYERS. Tag each high-ticket offer by its shape: project (one-time), retainer (recurring), or cohort (per-program). Keep the entry marker (warm or cold) visible on each buyer.
+
+7) READ IT BACK TO ME. With the map filled in, tell me what it reveals: where does my revenue actually come from versus where have I built the funnel? Where is the gap between my proven buyers and my built paths? Name the single build that would matter most.
+
+Start with the model, and remember, propose first, then let me correct.</div>
+        </div>
+      </div>
+      <a class="doc-link-sm" href="https://docs.google.com/document/d/1a_TC9xe7UdLdphPTTQPGTEX2hgbjHo-qT5-LnG5wlO0/edit" target="_blank" rel="noopener">Full exercise doc ↗</a>
+    </div>
+    <div class="step-screenshot">
+      <div class="screenshot-placeholder">
+        <div class="screenshot-label">What you should see</div>
+        <div class="screenshot-fields">
+          <div class="mock-line"><strong>Stage 1 of 7.</strong> The model. "Here is how I read your three tiers. Does this lens fit your business?"</div>
+          <div class="mock-pause">It proposes. You correct. It waits for you before moving to stage 2.</div>
+          <div class="mock-line"><strong>Stage 7.</strong> The read-back: where your revenue really comes from, and the one build that matters most.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 20. ACTIVITY PART 2 -->
+<section class="slide slide-step" id="s20">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">Part 02 · Make it beautiful (the icing)</div>
+  <h2>Turn the read-back<br>into a report you keep.</h2>
+  <div class="step-layout">
+    <div class="step-instructions">
+      <div class="instruction-list">
+        <div class="instruction-item"><div class="instruction-num">1</div><div>In the <strong>same conversation</strong>, once you are happy with the read-back, paste the prompt below.</div></div>
+        <div class="instruction-item"><div class="instruction-num">2</div><div><strong>In Claude:</strong> it appears as an artifact on the right with a download button. <strong>In other tools:</strong> you may get a code block instead.</div></div>
+        <div class="instruction-item"><div class="instruction-num">3</div><div>If you got a code block: copy all of it, paste into a plain text file, save it as <strong>report.html</strong>, then double click to open it in your browser.</div></div>
+      </div>
+      <div class="pause-callout">
+        <div class="pause-icon">⏸</div>
+        <p><strong>This is the whole point.</strong> You built the meaning first. This step just dresses it. Notice how fast the polish comes once the thinking is already done.</p>
+      </div>
+      <div class="toggle-block" id="toggle-part2">
+        <div class="toggle-header" onclick="toggleBlock('toggle-part2')">
+          <div class="toggle-label"><span>The download prompt</span><span class="tag">paste into Claude</span></div>
+          <span class="toggle-arrow">▼</span>
+        </div>
+        <div class="toggle-body">
+          <div class="toggle-copy-bar"><span>Works in any LLM, save instructions on the left</span><button class="copy-btn" onclick="copyToggle('toggle-part2', this)">Copy</button></div>
+          <div class="toggle-code" id="toggle-part2-code">Take everything we just mapped, the full Offerings x Journeys diagnostic above, and turn it into one polished, self-contained report.
+
+Build it as a single HTML file with all of the CSS inline in that same file. No external links, no dependencies, nothing that has to load from somewhere else.
+
+Make it look clean and professional: a clear title at the top, the three tier definitions down a left rail, one column per buyer tracing their journey from top to bottom, any gaps shown honestly rather than hidden, and the read-back as a short diagnostic at the bottom. Use a calm, modern color palette and generous spacing.
+
+Give it to me as a complete HTML file I can download and open in my browser.</div>
+        </div>
+      </div>
+      <a class="doc-link-sm" href="https://docs.google.com/document/d/1a_TC9xe7UdLdphPTTQPGTEX2hgbjHo-qT5-LnG5wlO0/edit" target="_blank" rel="noopener">Full exercise doc ↗</a>
+    </div>
+    <div class="step-screenshot">
+      <div class="screenshot-placeholder">
+        <div class="screenshot-label">What you walk out with</div>
+        <div class="screenshot-fields">
+          <div class="mock-line"><strong>Offerings × Journeys</strong></div>
+          <div class="mock-line">Three tiers down the side, your buyers across the top, your real gaps in plain sight.</div>
+          <div class="mock-btn">⬇ Download report.html</div>
+          <div class="mock-pause">A living document. Re-run it whenever your offers or buyers shift.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 21. HOW I WORK (live craft) -->
+<section class="slide" id="s21">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="half-marker"><span class="bar"></span>While you build</div>
+  <div class="slide-number">06 · How I actually work</div>
+  <h2>Go deep, and keep<br>a second opinion open.</h2>
+  <div class="two-col">
+    <div class="concept-card tinted">
+      <div class="piece-label" style="color:#0D7E7E;">Depth over breadth</div>
+      <h3>Go deep with few tools</h3>
+      <p>I have shrunk my stack on purpose. Mostly Claude plus Google Workspace. Depth in a few tools beats scattering across many. How much you put in is your call: that word, discernment, is the whole point. I am not handling confidential work, so I am wide open. Yours may be different.</p>
+    </div>
+    <div class="concept-card tinted-purple">
+      <div class="piece-label">The two-tab method</div>
+      <h3>One build, one consultant</h3>
+      <p>Primary tab: a Claude chat where I keep a heavy hand on the build. Second tab: ChatGPT or DeepSeek as a second opinion. The same way you do not know everything, no single model does either. A second set of eyes catches what the first was sure about.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 22. WHEN IT BREAKS -->
+<section class="slide" id="s22">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="half-marker"><span class="bar"></span>While you build</div>
+  <div class="slide-number">06 · When it breaks (and it will)</div>
+  <h2>Do not trust the first story.</h2>
+  <div class="two-col">
+    <div class="concept-card">
+      <div class="piece-label" style="color:#0D7E7E;">The trap</div>
+      <h3>"Oh, I see the problem"</h3>
+      <p>Several times a day a model will confidently announce the cause and dive in before it actually knows. Your move: pause it. "Who told you that? Where did you get this? Did you just make that up?"</p>
+    </div>
+    <div class="concept-card tinted">
+      <div class="piece-label" style="color:#0D7E7E;">The discipline</div>
+      <h3>Go to the logs</h3>
+      <p>Right click, Inspect, read the actual diagnostic information. You cannot diagnose without data. When it gets really sticky, ask the model to write a briefing for another conversation, paste that into the second tab, then bring the answer back: "here is what the other model said, evaluate what fits."</p>
+    </div>
+  </div>
+  <div class="callback"><p>This is experimentation, and it is the whole advantage: you get to <strong>try and fail faster, more focused, and higher quality</strong> than ever. But only if you stay engaged. It runs on your attention, not the model's.</p></div>
+</section>
+
+<!-- 23. RETROSPECTIVES -->
+<section class="slide" id="s23">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="half-marker"><span class="bar"></span>While you build</div>
+  <div class="slide-number">06 · The habit that compounds</div>
+  <h2>End every session<br>with a retrospective.</h2>
+  <p class="big-statement">At the end of a build, I have the system write down what worked, what broke, and what to do differently. <strong>It is how my systems get smarter, faster, and stop repeating the same mistakes.</strong> When you are truly in tune with your tools, you get higher quality and higher pace at once, with less tax on your mind. Hold that thought. It is where we land at the end.</p>
+</section>
+
+<!-- 24. DIVIDER: BUILD FOR OTHERS -->
+<section class="slide slide-dark" id="s24">
+  <div class="title-bg-accent"></div>
+  <div class="brandmark">ReRev Labs</div>
+  <div class="eyebrow">Half two of the fork</div>
+  <h1>Build for<br><span class="gradient-text">others.</span></h1>
+  <p class="subtitle">Commercial output. You just built for an audience of one. Now the audience is everyone, and the bar moves.</p>
+</section>
+
+<!-- 25. DISTRIBUTION -->
+<section class="slide" id="s25">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="half-marker"><span class="bar"></span>Building for others</div>
+  <div class="slide-number">07 · The thing nobody tells you</div>
+  <h2>The answer is distribution,<br>distribution, distribution.</h2>
+  <p class="big-statement">In an era where everybody can build anything, the edge is not the build. It is getting it in front of people. And here is the hard truth: <strong>you are not entitled to anyone's attention.</strong> You do not deserve it. You earn it, by configuring your communication to actually reach them.</p>
+</section>
+
+<!-- 26. HUMANITY (doorway) -->
+<section class="slide" id="s26">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="half-marker"><span class="bar"></span>Building for others</div>
+  <div class="slide-number">07 · What only you bring</div>
+  <p class="quote-line">The machine can extend your thought. <span class="gradient-text">It cannot bring your humanity.</span></p>
+  <p class="sub-note">When everyone has the same tools, the thing that separates your work is your unique insight and your perspective. That is not a soft, philosophical point. It is the most concrete advantage you have. And for me, the most human part of this story is the one I have been saving for last.</p>
+</section>
+
+<!-- 27. ASSISTIVE TECH -->
+<section class="slide slide-dark" id="s27">
+  <div class="title-bg-accent"></div>
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">08 · The honest part</div>
+  <h2>This is also<br>assistive technology.</h2>
+  <p class="subtitle" style="max-width:700px;">I am not diagnosed with ADHD, but as my family puts it, "she is not diagnosed, but we are all pretty sure." Having an offload site, my Claude conversations, changed my ability to run my life. The task gets less daunting because I have backup and extra cognition on hand.</p>
+  <p class="sub-note on-dark" style="max-width:700px;">The real unlock is not productivity. It is that I do not get stuck in the shame cycle anymore. I have a buddy who helps me move through the shame and actually finish the thing that was carrying it.</p>
+</section>
+
+<!-- 28. MORE IN YOUR TANK -->
+<section class="slide" id="s28">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">08 · Where this all lands</div>
+  <p class="quote-line">Configure your AI so you have <span class="gradient-text">more left in your tank</span> for your life.</p>
+  <p class="sub-note">Whether you are building for yourself, professionally, or on behalf of someone else, that is the mindset. Expand what you are capable of, expand your capacity, and still have more of you left at the end of the day. For you, and for the people you love.</p>
+</section>
+
+<!-- 29. THE CANDY -->
+<section class="slide" id="s29">
+  <div class="brandmark">ReRev Labs</div>
+  <div class="slide-number">09 · Your parting gift</div>
+  <h2>Everybody leaves<br>with something.</h2>
+  <p class="big-statement">As we went, you probably hit a few moments of "I want more of that." Good. <strong>Note them.</strong> Tell me which concepts you want to go deeper on, and I will send you the matching skill or exercise to take it further on your own.</p>
+  <div class="pause-callout">
+    <div class="pause-icon">🍬</div>
+    <p><strong>Pick your candy.</strong> A quick form at the end, multi select. Choose what you want, and it comes to your inbox.</p>
+  </div>
+</section>
+
+<!-- 30. SHIP IT -->
+<section class="slide slide-dark slide-ship" id="s30">
+  <div class="title-bg-accent"></div>
+  <h2>Go build.</h2>
+  <p>You are already code literate enough. The rest is curiosity and clarity.</p>
+</section>
+
+<script>
+  function toggleBlock(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  function copyToggle(id, btn) {
+    const text = document.getElementById(id + '-code').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.nav a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const index = Array.from(slides).findIndex(s => s.id === entry.target.id);
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+      }
+    });
+  }, { threshold: 0.5 });
+  slides.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
