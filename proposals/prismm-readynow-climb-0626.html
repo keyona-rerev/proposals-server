@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prismm — The climb to ready-now</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral:#f9655b;--purple:#6658ea;--yellow:#f5c070;--navy:#1b2b45;
+    --paper:#f4f1ea;--white:#ffffff;
+    --display:"Bricolage Grotesque",sans-serif;--body:"Hanken Grotesk",sans-serif;
+    --line:rgba(255,255,255,0.1);--soft:rgba(255,255,255,0.7);--soft-2:rgba(255,255,255,0.5);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--body);background:var(--navy);color:var(--white);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .glow{position:fixed;border-radius:50%;filter:blur(90px);z-index:0;pointer-events:none;}
+  .glow.p{top:-160px;right:-120px;width:480px;height:480px;background:var(--purple);opacity:0.22;}
+  .glow.c{bottom:-200px;left:-140px;width:520px;height:520px;background:var(--coral);opacity:0.16;}
+  .stage{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:64px 36px 80px;}
+
+  .eyebrow{font-size:12px;letter-spacing:0.24em;text-transform:uppercase;color:var(--yellow);font-weight:600;margin-bottom:22px;}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,5.4vw,60px);line-height:0.98;letter-spacing:-0.02em;max-width:16ch;}
+  .thesis{font-size:18px;color:var(--soft);max-width:64ch;margin-top:22px;}
+  .thesis b{color:var(--white);font-weight:600;}
+
+  .climb{display:flex;gap:20px;margin-top:48px;align-items:stretch;}
+  .rail{flex:0 0 44px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px 0;}
+  .rail .track{position:absolute;top:30px;bottom:30px;left:50%;transform:translateX(-50%);width:3px;border-radius:3px;background:linear-gradient(to top,var(--paper),var(--purple) 48%,var(--coral) 82%,var(--yellow));opacity:0.85;}
+  .rail .cap{position:relative;z-index:2;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft-2);background:var(--navy);padding:6px 0;}
+  .rail .word{position:relative;z-index:2;writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--display);font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--soft-2);background:var(--navy);padding:14px 0;}
+  .stack{flex:1;min-width:0;display:flex;flex-direction:column;gap:16px;}
+
+  .apex{background:var(--yellow);color:var(--navy);border-radius:16px;padding:22px 30px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+  .apex .lead{font-family:var(--display);font-weight:800;font-size:25px;letter-spacing:-0.01em;}
+  .apex .sub{font-size:15px;color:rgba(27,43,69,0.82);font-weight:500;max-width:60ch;}
+  .apex .chev{margin-left:auto;font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(27,43,69,0.66);}
+
+  .tabhint{font-size:12.5px;letter-spacing:0.04em;color:var(--soft-2);text-transform:uppercase;font-weight:600;}
+  .tabs{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;}
+  .tab{border:1px solid var(--line);border-radius:12px;padding:15px 20px;background:rgba(255,255,255,0.03);cursor:pointer;text-align:left;color:var(--white);font-family:inherit;opacity:0.42;transition:opacity .15s,border-color .15s,background .15s;}
+  .tab .name{font-family:var(--display);font-weight:700;font-size:19px;}
+  .tab .kind{font-size:13px;color:var(--soft);margin-top:3px;}
+  .tab .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:9px;vertical-align:middle;}
+  .tab.cb .dot{background:var(--coral);}
+  .tab.cu .dot{background:var(--purple);}
+  .tab .wedge{display:inline-block;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;color:var(--navy);background:var(--yellow);padding:3px 8px;border-radius:999px;margin-left:9px;vertical-align:middle;}
+  [data-view="cb"] .tab.cb{opacity:1;border-color:rgba(249,101,91,0.6);background:rgba(249,101,91,0.1);}
+  [data-view="cu"] .tab.cu{opacity:1;border-color:rgba(102,88,234,0.6);background:rgba(102,88,234,0.1);}
+  .tab:focus-visible{outline:2px solid var(--yellow);outline-offset:2px;}
+
+  .minitabs{display:inline-flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap;}
+  .minitabs .ml{font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--soft-2);font-weight:600;margin-right:4px;}
+  .minitab{font-family:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:rgba(255,255,255,0.03);color:var(--soft);border-radius:999px;padding:7px 15px;cursor:pointer;opacity:0.62;transition:opacity .15s,border-color .15s,background .15s,color .15s;}
+  .minitab .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;vertical-align:middle;}
+  .minitab.cb .dot{background:var(--coral);}
+  .minitab.cu .dot{background:var(--purple);}
+  .minitab:focus-visible{outline:2px solid var(--yellow);outline-offset:2px;}
+  [data-view="cb"] .minitab.cb{opacity:1;color:var(--white);border-color:rgba(249,101,91,0.6);background:rgba(249,101,91,0.12);}
+  [data-view="cu"] .minitab.cu{opacity:1;color:var(--white);border-color:rgba(102,88,234,0.6);background:rgba(102,88,234,0.12);}
+
+  .drivers{border:1px solid var(--line);border-radius:16px;padding:16px 20px;background:rgba(255,255,255,0.03);}
+  .drivers-label{font-family:var(--display);font-weight:700;font-size:13px;color:var(--yellow);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+  .chain{display:flex;align-items:stretch;flex-wrap:nowrap;}
+  .step{flex:1;min-width:0;padding:2px 10px;}
+  .step .k{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--soft-2);font-weight:600;margin-bottom:6px;}
+  .step .v{font-size:14px;color:rgba(255,255,255,0.92);line-height:1.32;font-weight:500;}
+  .step .vt{display:block;font-size:12px;color:var(--soft-2);margin-top:3px;font-weight:400;line-height:1.32;}
+  .step.hook .v{color:var(--yellow);}
+  .arrowcol{display:flex;align-items:center;color:var(--soft-2);font-size:15px;flex:0 0 auto;}
+
+  .layer{border-radius:16px;padding:20px;}
+  .layer.momentary{background:rgba(249,101,91,0.12);border:1px solid rgba(249,101,91,0.42);}
+  .layer.statics{background:rgba(102,88,234,0.13);border:1px solid rgba(102,88,234,0.42);}
+  .layer-bar{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:16px;}
+  .layer-bar .title{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-0.01em;}
+  .layer.momentary .title{color:var(--coral);}
+  .layer.statics .title{color:#a99ffb;}
+  .layer-bar .desc{font-size:14px;color:var(--soft);}
+  .layer-bar .flag{margin-left:auto;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;}
+  .layer.momentary .flag{background:var(--coral);color:var(--navy);}
+  .layer.statics .flag{background:rgba(102,88,234,0.3);color:#cfc8ff;}
+
+  .siglist{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .sig{background:rgba(27,43,69,0.42);border-radius:10px;padding:12px 16px 12px 38px;position:relative;}
+  .sig .h{font-size:14.5px;color:rgba(255,255,255,0.9);line-height:1.35;}
+  .sig .tag{display:block;font-size:12.5px;color:var(--soft-2);margin-top:3px;line-height:1.35;}
+  .sig::before{position:absolute;left:15px;top:13px;font-size:13px;font-weight:700;}
+  .layer.momentary .sig::before{content:"\2192";color:var(--coral);}
+  .layer.statics .sig::before{content:"+";color:#a99ffb;}
+
+  .note{margin-top:14px;border-left:3px solid var(--yellow);border-radius:0;background:rgba(245,192,112,0.08);padding:13px 18px;font-size:13.5px;color:var(--soft);}
+  .note b{color:var(--white);font-weight:600;}
+
+  .only-cb,.only-cu{display:none;}
+  [data-view="cb"] .only-cb{display:block;}
+  [data-view="cu"] .only-cu{display:block;}
+
+  .foundation{background:var(--paper);color:var(--navy);border-radius:16px;padding:24px 26px;}
+  .foundation .fbar{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px;}
+  .foundation .ftitle{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-0.01em;}
+  .foundation .fdesc{font-size:14px;color:rgba(27,43,69,0.72);font-weight:500;}
+  .foundation .gate{margin-left:auto;font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--coral);}
+  .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px;margin-top:14px;}
+  .fgrid div{font-size:14.5px;color:rgba(27,43,69,0.88);padding:10px 0 10px 26px;position:relative;border-top:1px solid rgba(27,43,69,0.12);}
+  .fgrid div::before{content:"";position:absolute;left:4px;top:18px;width:9px;height:9px;border-radius:2px;background:var(--navy);}
+  .fnuance{margin-top:16px;font-size:13.5px;color:rgba(27,43,69,0.7);border-top:1px solid rgba(27,43,69,0.14);padding-top:14px;}
+  .fnuance b{color:var(--navy);font-weight:700;}
+
+  .channel{margin-top:30px;border:1px dashed rgba(245,192,112,0.5);border-radius:14px;padding:20px 24px;background:rgba(245,192,112,0.06);}
+  .channel .h{font-family:var(--display);font-weight:700;font-size:15px;color:var(--yellow);margin-bottom:8px;}
+  .channel p{font-size:14.5px;color:var(--soft);max-width:84ch;}
+  .channel p b{color:var(--white);font-weight:600;}
+  .order{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--soft-2);}
+  .order span{font-family:var(--display);font-weight:700;color:var(--soft);}
+  .order .ar{color:var(--yellow);}
+
+  .compass{margin-top:50px;padding-top:42px;border-top:1px solid var(--line);}
+  .ctitle{font-family:var(--display);font-weight:800;font-size:clamp(26px,4vw,38px);letter-spacing:-0.015em;margin-top:6px;}
+  .clede{font-size:16px;color:var(--soft);max-width:72ch;margin-top:14px;}
+  .sub-h{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--soft-2);margin:34px 0 16px;}
+
+  .cmap{margin-top:4px;}
+  .cgrp{position:relative;padding-left:38px;}
+  .cgrp::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:3px;background:var(--cc);}
+  .cgrp:first-child::before{top:14px;}
+  .cgrp:last-child::before{bottom:auto;height:30px;}
+  .cgrp-dot{position:absolute;left:1px;top:18px;width:17px;height:17px;border-radius:50%;background:var(--cc);border:3px solid var(--navy);}
+  .cgrp-head{width:100%;text-align:left;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;padding:13px 16px;cursor:pointer;color:var(--white);font-family:inherit;display:flex;align-items:center;gap:12px;transition:background .15s;}
+  .cgrp-head:hover{background:rgba(255,255,255,0.06);}
+  .cgrp-head:focus-visible{outline:2px solid var(--yellow);outline-offset:2px;}
+  .cgrp-titles{flex:1;min-width:0;}
+  .cgrp-title{font-family:var(--display);font-weight:700;font-size:16px;display:block;}
+  .cgrp-sub{font-size:12.5px;color:var(--soft);margin-top:2px;display:block;}
+  .cflag{display:inline-block;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;font-weight:700;color:var(--navy);background:var(--yellow);border-radius:999px;padding:2px 8px;margin-left:8px;vertical-align:middle;}
+  .cgrp-chev{flex:0 0 auto;color:var(--soft-2);font-size:13px;transition:transform .2s;}
+  .cgrp-head[aria-expanded="true"] .cgrp-chev{transform:rotate(90deg);}
+  .cgrp-body{padding:4px 0 16px;}
+  .crow{display:grid;grid-template-columns:210px 1fr;gap:18px;padding:11px 4px 11px 2px;border-bottom:1px solid var(--line);}
+  .crow:last-child{border-bottom:none;}
+  .cname{font-size:14px;font-weight:600;color:var(--white);line-height:1.35;}
+  .cname a{display:inline-block;margin-top:5px;font-size:11.5px;font-weight:500;color:var(--yellow);text-decoration:none;border-bottom:1px solid rgba(245,192,112,0.4);}
+  .cwhy{font-size:13px;color:var(--soft);line-height:1.46;}
+  .cgrp.int .cgrp-head{border-style:dashed;border-color:rgba(245,192,112,0.5);}
+
+  footer{margin-top:38px;font-size:12.5px;color:var(--soft-2);}
+
+  .prompts{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .prompt-card{border:1px solid var(--line);border-radius:14px;padding:18px 20px;background:rgba(255,255,255,0.03);display:flex;flex-direction:column;}
+  .pc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+  .pc-title{font-family:var(--display);font-weight:700;font-size:17px;}
+  .pc-purpose{font-size:13px;color:var(--soft);margin:7px 0 14px;line-height:1.45;}
+  .copybtn{flex:0 0 auto;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--navy);background:var(--yellow);border:none;border-radius:999px;padding:7px 15px;cursor:pointer;letter-spacing:0.02em;transition:background .15s;}
+  .copybtn:hover{background:#ffd98a;}
+  .copybtn.ok{background:#9fe1cb;}
+  .prompt-card pre{background:rgba(0,0,0,0.22);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-family:var(--body);font-size:12.8px;line-height:1.52;color:rgba(255,255,255,0.84);white-space:pre-wrap;overflow:auto;}
+  .pc-foot{font-size:12px;color:var(--soft-2);margin-top:11px;}
+
+  @media(max-width:760px){
+    .stage{padding:44px 20px 60px;}
+    .climb{gap:12px;}
+    .rail{flex:0 0 30px;}
+    .rail .word{display:none;}
+    .tabs,.siglist,.fgrid,.prompts{grid-template-columns:1fr;}
+    .crow{grid-template-columns:1fr;gap:3px;}
+    .chain{flex-direction:column;gap:12px;}
+    .arrowcol{transform:rotate(90deg);padding:2px 0;}
+    .apex .chev{display:none;}
+  }
+</style>
+</head>
+<body>
+  <div class="glow p"></div>
+  <div class="glow c"></div>
+
+  <main class="stage" data-view="cu">
+    <header>
+      <div class="eyebrow">Prismm go-to-market</div>
+      <h1>The climb to a ready-now buyer.</h1>
+      <p class="thesis"><b>Standard fit is the gate.</b> If you are not this, we are not talking. <b>Static signals</b> tell us who is already receptive. <b>Momentary signals</b> tell us whose buying window is open now. Both lanes climb the same stack, and <b>credit unions are the initial wedge.</b> Tap a lane to compare. The lane you pick drives the whole page, including the prompts at the bottom.</p>
+    </header>
+
+    <div class="climb">
+      <div class="rail">
+        <span class="cap">Spear</span>
+        <span class="word">Selectivity</span>
+        <span class="cap">Pool</span>
+        <div class="track"></div>
+      </div>
+
+      <div class="stack">
+
+        <div class="apex">
+          <div>
+            <div class="lead">Ready-now buyer</div>
+            <div class="sub">Fit, signaled, and triggered, reached through a partner. This is who wins the race.</div>
+          </div>
+          <div class="chev">&#9650; both lanes converge</div>
+        </div>
+
+        <div><span class="tabhint">Lead with credit unions</span></div>
+        <div class="tabs" role="tablist" aria-label="Institution type">
+          <button class="tab cb" role="tab" aria-selected="false" onclick="setView('cb')">
+            <div class="name"><span class="dot"></span>Community banks</div>
+            <div class="kind">The economic lane. Strong second segment.</div>
+          </button>
+          <button class="tab cu" role="tab" aria-selected="true" onclick="setView('cu')">
+            <div class="name"><span class="dot"></span>Credit unions<span class="wedge">Initial wedge</span></div>
+            <div class="kind">The relationship lane. Next-gen deposit retention.</div>
+          </button>
+        </div>
+
+        <div class="drivers">
+          <div class="drivers-label">What drives this buyer</div>
+          <div class="only-cb"><div class="chain">
+            <div class="step"><div class="k">Answers to</div><div class="v">Outside shareholders<span class="vt">they want return on equity</span></div></div>
+            <div class="arrowcol">&#8594;</div>
+            <div class="step"><div class="k">Paid on</div><div class="v">Deposits, ROA, efficiency<span class="vt">and a clean M&amp;A book</span></div></div>
+            <div class="arrowcol">&#8594;</div>
+            <div class="step"><div class="k">Acts on</div><div class="v">Fund, cut cost, de-risk<span class="vt">fund the book, lower the cost line</span></div></div>
+            <div class="arrowcol">&#8594;</div>
+            <div class="step hook"><div class="k">Our hook</div><div class="v">A balance-sheet and liability number<span class="vt">the economic pitch</span></div></div>
+          </div></div>
+          <div class="only-cu"><div class="chain">
+            <div class="step"><div class="k">Answers to</div><div class="v">Members are the owners<span class="vt">and younger members aren't joining</span></div></div>
+            <div class="arrowcol">&#8594;</div>
+            <div class="step"><div class="k">Paid on</div><div class="v">Member growth and net worth<span class="vt">plus member-experience spend</span></div></div>
+            <div class="arrowcol">&#8594;</div>
+            <div class="step"><div class="k">Acts on</div><div class="v">Win and keep members<span class="vt">own the high-stakes moments</span></div></div>
+            <div class="arrowcol">&#8594;</div>
+            <div class="step hook"><div class="k">Our hook</div><div class="v">Next-generation deposit retention<span class="vt">a growth-strategy budget, not an ops line</span></div></div>
+          </div></div>
+        </div>
+
+        <div class="layer momentary">
+          <div class="layer-bar">
+            <span class="title">Momentary signals</span>
+            <span class="desc">Open windows. Who to call this week.</span>
+            <span class="flag">Where we narrow</span>
+          </div>
+
+          <div class="only-cb">
+            <div class="siglist">
+              <div class="sig"><div class="h">M&amp;A announced or in diligence</div><span class="tag">Deceased and dormant accounts get exhumed, runoff becomes a named liability</span></div>
+              <div class="sig"><div class="h">Core conversion in progress</div><span class="tag">Every cutover surfaces unclaimed-property and deceased-account records</span></div>
+              <div class="sig"><div class="h">Escheatment enforcement window</div><span class="tag">State treasurer outreach and audit waves run on a calendar you can time</span></div>
+              <div class="sig"><div class="h">Approaching or crossing ten billion</div><span class="tag">CFPB and Durbin scrutiny, deposit economics under fresh review</span></div>
+              <div class="sig"><div class="h">Capital or liquidity distress</div><span class="tag">Regulatory pressure forces action, target mid-curve, not the ones already failing</span></div>
+              <div class="sig"><div class="h">New CEO, deposit, or wealth leader</div><span class="tag">A mandate window of six to twelve months</span></div>
+            </div>
+            <div class="note"><b>The bank wedge is liability, not just runoff.</b> Death attrition is also escheatment exposure, which maps to a risk they already have to manage and a number a CFO can put on a page.</div>
+          </div>
+
+          <div class="only-cu">
+            <div class="siglist">
+              <div class="sig"><div class="h">New CEO or leadership change</div><span class="tag">Fresh mandate, and often succession-driven</span></div>
+              <div class="sig"><div class="h">Merger announced</div><span class="tag">Subscale economics and no successor drive it, a core migration follows</span></div>
+              <div class="sig"><div class="h">Acquiring a bank</div><span class="tag">Credit union bank buys are at a four-year high, each one a core and deposit merge</span></div>
+              <div class="sig"><div class="h">Consent order on deposit ops or dormant accounts</div><span class="tag">A remediation mandate with budget already allocated, public at the NCUA</span></div>
+              <div class="sig"><div class="h">New wealth or investment services stood up</div><span class="tag">They just decided to care about retention</span></div>
+              <div class="sig"><div class="h">Digital or core transformation launched</div><span class="tag">A public commitment to modernize</span></div>
+            </div>
+            <div class="note"><b>The initial wedge: the large credit union.</b> Younger-member acquisition is its defining anxiety, it holds most of the segment's budget, and credit unions buy by watching their league peers, so one reference logo lights up a cluster.</div>
+          </div>
+        </div>
+
+        <div class="layer statics">
+          <div class="layer-bar">
+            <span class="title">Static signals</span>
+            <span class="desc">Standing acuity. Who is already receptive.</span>
+            <span class="flag">Who gets it</span>
+          </div>
+
+          <div class="only-cb">
+            <div class="siglist">
+              <div class="sig"><div class="h">Leader vocal on deposit growth or wealth transfer</div><span class="tag">Public statements within the last ninety days</span></div>
+              <div class="sig"><div class="h">Has a wealth management or trust division</div><span class="tag">They pay to retain, and hold affluent balances</span></div>
+              <div class="sig"><div class="h">On Jack Henry Silverlake core</div><span class="tag">Legitimacy and a warmer path in</span></div>
+              <div class="sig"><div class="h">Earnings language frames deposit growth and household deepening</div><span class="tag">Pre-wired to hear the pitch in their own words</span></div>
+              <div class="sig"><div class="h">Visible where deposit retention is topic one</div><span class="tag">Panels, podcasts, the conference circuit</span></div>
+            </div>
+          </div>
+
+          <div class="only-cu">
+            <div class="siglist">
+              <div class="sig"><div class="h">Leader vocal on member growth or generational continuity</div><span class="tag">The younger-member story is already theirs</span></div>
+              <div class="sig"><div class="h">Runs wealth services or a CUSO investment arm</div><span class="tag">Investment in keeping assets in house</span></div>
+              <div class="sig"><div class="h">On Jack Henry Symitar core</div><span class="tag">Legitimacy and a warmer path in</span></div>
+              <div class="sig"><div class="h">Member experience and family loyalty stated as the ethos</div><span class="tag">Our value prop is their founding value</span></div>
+              <div class="sig"><div class="h">Active in league and association advocacy</div><span class="tag">Networked, peer-influenced, and the route to the cluster</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="foundation">
+          <div class="fbar">
+            <span class="ftitle">Standard fit</span>
+            <span class="fdesc">Core ICP. The gate underneath both lanes.</span>
+            <span class="gate">If not this, no conversation</span>
+          </div>
+          <div class="fgrid">
+            <div>Sub ten billion in assets, with the one billion plus tier holding the budget</div>
+            <div>Aging depositor base, elder-dense footprint</div>
+            <div>Deposit-funded balance sheet, real exposure to death runoff</div>
+            <div>Community or regional, not a top fifty institution</div>
+          </div>
+          <div class="fnuance"><b>The lane split lives here.</b> Banks count customers and DDA, and feel the problem as deposit economics and escheatment liability. Credit unions count members and shares, and feel it as younger-member growth and family loyalty. Same product, two pain stories.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="channel">
+      <div class="h">The partner channel is not a layer.</div>
+      <p>Jack Henry does not sit in the stack. It is a core relationship that reads as legitimacy to a bank or credit union, and it runs alongside the whole climb to pull a qualified target to the front of the line. <b>A warm intro does not change who fits, it changes who we reach first.</b></p>
+    </div>
+
+    <div class="order">
+      <span>Read it bottom up:</span> Fit qualifies the pool <span class="ar">&#8594;</span> Static signals rank receptivity <span class="ar">&#8594;</span> Momentary signals time the call <span class="ar">&#8594;</span> A partner core jumps the queue
+    </div>
+
+    <section class="compass">
+      <div class="eyebrow">Operate it</div>
+      <h2 class="ctitle">The compass</h2>
+      <p class="clede">The climb tells you who and when. The compass tells you where each signal lives and why it sharpens the buyer definition. Expand a group to see its sources. Nothing here is either-or, every source stacks on the others to make the picture more acute.</p>
+
+      <div class="sub-h">Where each signal lives</div>
+      <div class="cmap">
+
+        <div class="cgrp" style="--cc:#f9655b;">
+          <span class="cgrp-dot"></span>
+          <button class="cgrp-head" aria-expanded="true" onclick="toggleGrp(this)">
+            <span class="cgrp-titles"><span class="cgrp-title">Official records</span><span class="cgrp-sub">Public, free, citable. The third-party authorities.</span></span>
+            <span class="cgrp-chev">&#9656;</span>
+          </button>
+          <div class="cgrp-body" style="display:block;">
+            <div class="crow"><div class="cname">CFPB complaints <a href="https://www.consumerfinance.gov/data-research/consumer-complaints/search/">open</a></div><div class="cwhy">Deceased-account and estate complaints are dated, public admissions of the exact pain. Density ranks institutions by felt pain, the sharpest acute signal you can pull without a conversation.</div></div>
+            <div class="crow"><div class="cname">NCUA and FDIC orders <a href="https://ncua.gov/news/enforcement-actions/administrative-orders">open</a></div><div class="cwhy">A consent order touching deposit operations or dormant accounts means a remediation mandate with budget already attached. That is a live trigger, not a maybe.</div></div>
+            <div class="crow"><div class="cname">Merger approvals</div><div class="cwhy">A pending or approved merger means a core migration and a deposit-book merge, which is the moment deceased-account backlogs get exhumed in diligence.</div></div>
+            <div class="crow"><div class="cname">Call reports</div><div class="cwhy">NCUA and FFIEC filings give the deposit base, the member-age proxy, and the net-worth trajectory. The raw inputs for the exposure score and for fit itself.</div></div>
+            <div class="crow"><div class="cname">Census age data</div><div class="cwhy">Where depositors skew old, which is the demographic spine of standard fit and of who hits the death wave first and hardest.</div></div>
+          </div>
+        </div>
+
+        <div class="cgrp" style="--cc:#6658ea;">
+          <span class="cgrp-dot"></span>
+          <button class="cgrp-head" aria-expanded="false" onclick="toggleGrp(this)">
+            <span class="cgrp-titles"><span class="cgrp-title">Open web and trade</span><span class="cgrp-sub">Public, but you have to read it.</span></span>
+            <span class="cgrp-chev">&#9656;</span>
+          </button>
+          <div class="cgrp-body" style="display:none;">
+            <div class="crow"><div class="cname">LinkedIn</div><div class="cwhy">A new CEO, COO, or experience leader, in real time. That is the mandate window, a six-to-twelve-month opening where someone is buying things to make a mark.</div></div>
+            <div class="crow"><div class="cname">Banking trade press</div><div class="cwhy">American Banker and The Financial Brand carry mergers, leadership moves, and strategy, often before a trigger shows up in anything structured.</div></div>
+            <div class="crow"><div class="cname">Podcasts and agendas</div><div class="cwhy">Conference agendas, podcast appearances, and shareholder letters reveal who is publicly vocal on deposit growth and wealth transfer. That is the standing-acuity signal that they already get it.</div></div>
+          </div>
+        </div>
+
+        <div class="cgrp" style="--cc:#f5c070;">
+          <span class="cgrp-dot"></span>
+          <button class="cgrp-head" aria-expanded="false" onclick="toggleGrp(this)">
+            <span class="cgrp-titles"><span class="cgrp-title">Commercial tools</span><span class="cgrp-sub">Paid and structured. Run through Claude.</span></span>
+            <span class="cgrp-chev">&#9656;</span>
+          </button>
+          <div class="cgrp-body" style="display:none;">
+            <div class="crow"><div class="cname">Apollo</div><div class="cwhy">The named people at a fit institution, both the economic buyer and the likely champion, with contact fields. The bridge from a target list to an actual outreach list.</div></div>
+            <div class="crow"><div class="cname">Core-vendor lists</div><div class="cwhy">Who runs Silverlake or Symitar, which is both a legitimacy and warm-path signal and the seed of the peer cluster you can sequence through.</div></div>
+          </div>
+        </div>
+
+        <div class="cgrp" style="--cc:#f9655b;">
+          <span class="cgrp-dot"></span>
+          <button class="cgrp-head" aria-expanded="false" onclick="toggleGrp(this)">
+            <span class="cgrp-titles"><span class="cgrp-title">Build your own</span><span class="cgrp-sub">You construct it, you do not pull it.</span></span>
+            <span class="cgrp-chev">&#9656;</span>
+          </button>
+          <div class="cgrp-body" style="display:none;">
+            <div class="crow"><div class="cname">Exposure score</div><div class="cwhy">Depositor-age proxy times digital-maturity gap. Turns fit from a yes or no into a ranking, so you can sort the whole universe by who sits on the wave first.</div></div>
+            <div class="crow"><div class="cname">Core-contract clock</div><div class="cwhy">Core contracts run five to seven years. Year five or six is a re-evaluation window you can predict a year ahead and arrive early on.</div></div>
+            <div class="crow"><div class="cname">Seasonal calendar</div><div class="cwhy">Deaths peak in winter and the escheatment deadline is fixed, so felt pain and compliance pressure spike on a calendar you can time outreach against.</div></div>
+          </div>
+        </div>
+
+        <div class="cgrp int" style="--cc:#6658ea;">
+          <span class="cgrp-dot"></span>
+          <button class="cgrp-head" aria-expanded="false" onclick="toggleGrp(this)">
+            <span class="cgrp-titles"><span class="cgrp-title">Only from interviews<span class="cflag">We don't have this yet</span></span><span class="cgrp-sub">Primary discovery. No database holds it, and it compounds everything above.</span></span>
+            <span class="cgrp-chev">&#9656;</span>
+          </button>
+          <div class="cgrp-body" style="display:none;">
+            <div class="crow"><div class="cname">Orphaned-owner map</div><div class="cwhy">Who actually owns a customer death inside the institution. Usually nobody cleanly, which is exactly why the pain has a champion but no fix, and the vacuum becomes the wedge.</div></div>
+            <div class="crow"><div class="cname">Champion language</div><div class="cwhy">The precise words your champion uses for this problem. It is what makes outreach land, and it exists nowhere you can query.</div></div>
+            <div class="crow"><div class="cname">The breaking point</div><div class="cwhy">The specific failure that converts a non-buyer, a family escalation, a lawsuit, a missed escheat deadline. The incident to listen for so you arrive right after it.</div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sub-h">Run it with Claude</div>
+      <div class="minitabs" role="tablist" aria-label="Prompt lane">
+        <span class="ml">Prompts for</span>
+        <button class="minitab cb" role="tab" aria-selected="false" onclick="setView('cb')"><span class="dot"></span>Community banks</button>
+        <button class="minitab cu" role="tab" aria-selected="true" onclick="setView('cu')"><span class="dot"></span>Credit unions</button>
+      </div>
+
+      <div class="only-cu">
+        <div class="prompts">
+          <div class="prompt-card">
+            <div class="pc-top">
+              <div class="pc-title">Find the people, with Apollo</div>
+              <button class="copybtn" onclick="copyPrompt('p-apollo-cu', this)">Copy</button>
+            </div>
+            <div class="pc-purpose">Run in Claude with the Apollo connector on. Builds a ranked list of fit credit unions and the named people to reach at each.</div>
+            <pre id="p-apollo-cu">You have access to Apollo. I run go-to-market for Prismm, which is inheritance and death-attrition infrastructure for community banks and credit unions. Our initial wedge is large credit unions, one billion to ten billion in assets, in elder-dense markets, ideally on the Jack Henry Symitar core, that show a recent trigger such as a new CEO, a merger, a consent order on deposit operations, or a newly launched wealth or investment service.
+
+Using Apollo, build a target list of credit unions that fit this profile. For each institution, pull the two people I need: the economic buyer, meaning the CEO, President, or Chief Strategy or Growth Officer, and the likely champion, meaning the head of member experience, retail or deposit operations, BSA, or trust. Return institution name, asset size, state, the named people with titles and the contact fields Apollo has, and any trigger you can confirm. Rank the list by how many of our signals stack on each institution, and flag any where a Jack Henry relationship gives us a warm path. Frame the opportunity as next-generation member and deposit retention. Ask me before pulling more than fifty contacts.</pre>
+            <div class="pc-foot">Assumes the Apollo connector is enabled in Claude.</div>
+          </div>
+
+          <div class="prompt-card">
+            <div class="pc-top">
+              <div class="pc-title">Find the warm path, from your network</div>
+              <button class="copybtn" onclick="copyPrompt('p-linkedin-cu', this)">Copy</button>
+            </div>
+            <div class="pc-purpose">Export your LinkedIn connections, upload them, and Claude maps who can introduce you and who to prioritize.</div>
+            <pre id="p-linkedin-cu">I am going to give you my LinkedIn connections. You can read them from the export I upload, or I will paste a list. I run go-to-market for Prismm, inheritance and death-attrition infrastructure, and our initial wedge is large credit unions, one billion to ten billion in assets, in elder-dense markets, especially on Jack Henry Symitar, showing triggers like a new CEO, a recent merger, or a new wealth service.
+
+From my connections, do three things. First, surface anyone who is a decision-maker or champion at a credit union that fits the wedge, so I can reach them directly. Second, surface the connectors, people who could make a warm introduction into a fit credit union even if they do not work at one, such as consultants, league or association staff, core-vendor contacts, or shared board members. Third, give me a prioritized shortlist that names who to contact, why they fit the model, and the exact introduction path. If I have not given you the file yet, ask me for it.</pre>
+            <div class="pc-foot">Export connections from LinkedIn, Settings, Data privacy, Get a copy of your data.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="only-cb">
+        <div class="prompts">
+          <div class="prompt-card">
+            <div class="pc-top">
+              <div class="pc-title">Find the people, with Apollo</div>
+              <button class="copybtn" onclick="copyPrompt('p-apollo-cb', this)">Copy</button>
+            </div>
+            <div class="pc-purpose">Run in Claude with the Apollo connector on. Builds a ranked list of fit community banks and the named people to reach at each.</div>
+            <pre id="p-apollo-cb">You have access to Apollo. I run go-to-market for Prismm, which is inheritance and death-attrition infrastructure for community banks and credit unions. For this list, target community banks, sub ten billion in assets, in elder-dense markets, ideally on the Jack Henry Silverlake core, that show a recent trigger such as an announced merger or acquisition, a core conversion, a consent order touching deposit operations or dormant accounts, approaching the ten billion threshold, or a new deposit or wealth leader.
+
+Using Apollo, build a target list of community banks that fit. For each institution, pull the two people I need: the economic buyer, meaning the CEO, President, CFO, or Chief Deposit or Strategy Officer, and the likely champion, meaning the head of deposit or retail operations, BSA, compliance, legal, or trust. Return institution name, asset size, state, the named people with titles and the contact fields Apollo has, and any trigger you can confirm. Rank by how many of our signals stack on each, and flag any where a Jack Henry relationship gives us a warm path. Frame the opportunity as escheatment and deposit liability, a number a CFO can put on a page. Ask me before pulling more than fifty contacts.</pre>
+            <div class="pc-foot">Assumes the Apollo connector is enabled in Claude.</div>
+          </div>
+
+          <div class="prompt-card">
+            <div class="pc-top">
+              <div class="pc-title">Find the warm path, from your network</div>
+              <button class="copybtn" onclick="copyPrompt('p-linkedin-cb', this)">Copy</button>
+            </div>
+            <div class="pc-purpose">Export your LinkedIn connections, upload them, and Claude maps who can introduce you and who to prioritize.</div>
+            <pre id="p-linkedin-cb">I am going to give you my LinkedIn connections. You can read them from the export I upload, or I will paste a list. I run go-to-market for Prismm, inheritance and death-attrition infrastructure, and for this pass the target is community banks, sub ten billion in assets, in elder-dense markets, especially on Jack Henry Silverlake, showing triggers like an announced merger, a core conversion, or a new deposit or wealth leader.
+
+From my connections, do three things. First, surface anyone who is a decision-maker or champion at a community bank that fits, so I can reach them directly. Second, surface the connectors who could make a warm introduction into a fit community bank even if they do not work at one, such as consultants, bankers association staff, core-vendor contacts, or shared board members. Third, give me a prioritized shortlist that names who to contact, why they fit, and the exact introduction path. If I have not given you the file yet, ask me for it.</pre>
+            <div class="pc-foot">Export connections from LinkedIn, Settings, Data privacy, Get a copy of your data.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>Prismm ready-now buyer model. Credit unions are the initial wedge. The trigger layer is the unclaimed high-leverage real estate, and most of it is public.</footer>
+  </main>
+
+  <script>
+    function setView(v){
+      document.querySelector('.stage').dataset.view=v;
+      document.querySelectorAll('.tab,.minitab').forEach(function(t){
+        t.setAttribute('aria-selected', t.classList.contains(v) ? 'true' : 'false');
+      });
+    }
+    function toggleGrp(btn){
+      var body=btn.nextElementSibling;
+      var open=btn.getAttribute('aria-expanded')==='true';
+      btn.setAttribute('aria-expanded', String(!open));
+      body.style.display = open ? 'none' : 'block';
+    }
+    function copyPrompt(id, btn){
+      var el=document.getElementById(id);
+      if(!el) return;
+      var text=el.innerText;
+      function ok(){var t=btn.textContent;btn.textContent='Copied';btn.classList.add('ok');setTimeout(function(){btn.textContent=t;btn.classList.remove('ok');},1600);}
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(ok, function(){fb(text, ok);});
+      } else { fb(text, ok); }
+    }
+    function fb(text, ok){
+      var ta=document.createElement('textarea');
+      ta.value=text; ta.style.position='fixed'; ta.style.top='-1000px'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      try{ document.execCommand('copy'); ok(); }catch(e){}
+      document.body.removeChild(ta);
+    }
+  </script>
+</body>
+</html>
