@@ -158,6 +158,13 @@
   .prompt-card pre{background:rgba(0,0,0,0.22);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-family:var(--body);font-size:12.8px;line-height:1.52;color:rgba(255,255,255,0.84);white-space:pre-wrap;overflow:auto;}
   .pc-foot{font-size:12px;color:var(--soft-2);margin-top:11px;}
 
+  .deal-economics{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);}
+  .deal-row{display:flex;gap:16px;}
+  .deal-field{flex:1;background:rgba(245,192,112,0.07);border:1px dashed rgba(245,192,112,0.35);border-radius:10px;padding:12px 16px;}
+  .deal-k{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--yellow);font-weight:600;margin-bottom:6px;}
+  .deal-v{font-family:var(--display);font-weight:700;font-size:20px;color:var(--white);letter-spacing:-0.01em;}
+  .deal-note{font-size:12px;color:var(--soft-2);margin-top:6px;line-height:1.4;}
+
   @media(max-width:760px){
     .stage{padding:44px 20px 60px;}
     .climb{gap:12px;}
@@ -168,6 +175,7 @@
     .chain{flex-direction:column;gap:12px;}
     .arrowcol{transform:rotate(90deg);padding:2px 0;}
     .apex .chev{display:none;}
+    .deal-row{flex-direction:column;}
   }
 </style>
 </head>
@@ -175,11 +183,11 @@
   <div class="glow p"></div>
   <div class="glow c"></div>
 
-  <main class="stage" data-view="cu">
+  <main class="stage" data-view="cb">
     <header>
       <div class="eyebrow">Prismm go-to-market</div>
       <h1>The climb to a ready-now buyer.</h1>
-      <p class="thesis"><b>Standard fit is the gate.</b> If you are not this, we are not talking. <b>Static signals</b> tell us who is already receptive. <b>Momentary signals</b> tell us whose buying window is open now. Both lanes climb the same stack, and <b>credit unions are the initial wedge.</b> Tap a lane to compare. The lane you pick drives the whole page, including the prompts at the bottom.</p>
+      <p class="thesis"><b>Standard fit is the gate.</b> If you are not this, we are not talking. <b>Static signals</b> tell us who is already receptive. <b>Momentary signals</b> tell us whose buying window is open now. Both lanes climb the same stack, and <b>community banks are the initial wedge.</b> Tap a lane to compare. The lane you pick drives the whole page, including the prompts at the bottom.</p>
     </header>
 
     <div class="climb">
@@ -200,15 +208,15 @@
           <div class="chev">&#9650; both lanes converge</div>
         </div>
 
-        <div><span class="tabhint">Lead with credit unions</span></div>
+        <div><span class="tabhint">Lead with community banks</span></div>
         <div class="tabs" role="tablist" aria-label="Institution type">
-          <button class="tab cb" role="tab" aria-selected="false" onclick="setView('cb')">
-            <div class="name"><span class="dot"></span>Community banks</div>
-            <div class="kind">The economic lane. Strong second segment.</div>
+          <button class="tab cb" role="tab" aria-selected="true" onclick="setView('cb')">
+            <div class="name"><span class="dot"></span>Community banks<span class="wedge">Initial wedge</span></div>
+            <div class="kind">The economic lane. Lead segment.</div>
           </button>
-          <button class="tab cu" role="tab" aria-selected="true" onclick="setView('cu')">
-            <div class="name"><span class="dot"></span>Credit unions<span class="wedge">Initial wedge</span></div>
-            <div class="kind">The relationship lane. Next-gen deposit retention.</div>
+          <button class="tab cu" role="tab" aria-selected="false" onclick="setView('cu')">
+            <div class="name"><span class="dot"></span>Credit unions</div>
+            <div class="kind">The relationship lane. Strong second segment.</div>
           </button>
         </div>
 
@@ -217,7 +225,7 @@
           <div class="only-cb"><div class="chain">
             <div class="step"><div class="k">Answers to</div><div class="v">Outside shareholders<span class="vt">they want return on equity</span></div></div>
             <div class="arrowcol">&#8594;</div>
-            <div class="step"><div class="k">Paid on</div><div class="v">Deposits, ROA, efficiency<span class="vt">deposit growth rate &amp; retention, net new accounts, franchise asset growth, clean M&amp;A book</span></div></div>
+            <div class="step"><div class="k">Paid on</div><div class="v">Deposits, ROA, efficiency<span class="vt">and a clean M&amp;A book</span></div></div>
             <div class="arrowcol">&#8594;</div>
             <div class="step"><div class="k">Acts on</div><div class="v">Fund, cut cost, de-risk<span class="vt">fund the book, lower the cost line</span></div></div>
             <div class="arrowcol">&#8594;</div>
@@ -226,12 +234,40 @@
           <div class="only-cu"><div class="chain">
             <div class="step"><div class="k">Answers to</div><div class="v">Members are the owners<span class="vt">and younger members aren't joining</span></div></div>
             <div class="arrowcol">&#8594;</div>
-            <div class="step"><div class="k">Paid on</div><div class="v">Member growth and net worth<span class="vt">member growth rate, account retention, net new members, member experience scores</span></div></div>
+            <div class="step"><div class="k">Paid on</div><div class="v">Member growth and net worth<span class="vt">plus member-experience spend</span></div></div>
             <div class="arrowcol">&#8594;</div>
             <div class="step"><div class="k">Acts on</div><div class="v">Win and keep members<span class="vt">own the high-stakes moments</span></div></div>
             <div class="arrowcol">&#8594;</div>
             <div class="step hook"><div class="k">Our hook</div><div class="v">Next-generation deposit retention<span class="vt">a growth-strategy budget, not an ops line</span></div></div>
           </div></div>
+          <div class="deal-economics only-cb">
+            <div class="deal-row">
+              <div class="deal-field">
+                <div class="deal-k">Est. contract value</div>
+                <div class="deal-v">$40K&#8211;$80K ARR</div>
+                <div class="deal-note">Working hypothesis. Scales with asset size and seat count. Pending first non-Renasant close.</div>
+              </div>
+              <div class="deal-field">
+                <div class="deal-k">Est. sales cycle</div>
+                <div class="deal-v">4&#8211;7 months</div>
+                <div class="deal-note">Working hypothesis. Procurement and legal review extend timeline; triggered buys run faster.</div>
+              </div>
+            </div>
+          </div>
+          <div class="deal-economics only-cu">
+            <div class="deal-row">
+              <div class="deal-field">
+                <div class="deal-k">Est. contract value</div>
+                <div class="deal-v">$30K&#8211;$60K ARR</div>
+                <div class="deal-note">Working hypothesis. Peer-network dynamics may compress price; league endorsement could lift it.</div>
+              </div>
+              <div class="deal-field">
+                <div class="deal-k">Est. sales cycle</div>
+                <div class="deal-v">3&#8211;6 months</div>
+                <div class="deal-note">Working hypothesis. Board approval cadence is the wildcard; consent-order buys can move in weeks.</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="layer momentary">
@@ -262,7 +298,7 @@
               <div class="sig"><div class="h">New wealth or investment services stood up</div><span class="tag">They just decided to care about retention</span></div>
               <div class="sig"><div class="h">Digital or core transformation launched</div><span class="tag">A public commitment to modernize</span></div>
             </div>
-            <div class="note"><b>The initial wedge: the large credit union.</b> Younger-member acquisition is its defining anxiety, it holds most of the segment's budget, and credit unions buy by watching their league peers, so one reference logo lights up a cluster.</div>
+            <div class="note"><b>The credit union opportunity: the large institution.</b> Younger-member acquisition is its defining anxiety, it holds most of the segment's budget, and credit unions buy by watching their league peers, so one reference logo lights up a cluster.</div>
           </div>
         </div>
 
@@ -400,8 +436,8 @@
       <div class="sub-h">Run it with Claude</div>
       <div class="minitabs" role="tablist" aria-label="Prompt lane">
         <span class="ml">Prompts for</span>
-        <button class="minitab cb" role="tab" aria-selected="false" onclick="setView('cb')"><span class="dot"></span>Community banks</button>
-        <button class="minitab cu" role="tab" aria-selected="true" onclick="setView('cu')"><span class="dot"></span>Credit unions</button>
+        <button class="minitab cb" role="tab" aria-selected="true" onclick="setView('cb')"><span class="dot"></span>Community banks</button>
+        <button class="minitab cu" role="tab" aria-selected="false" onclick="setView('cu')"><span class="dot"></span>Credit unions</button>
       </div>
 
       <div class="only-cu">
@@ -412,7 +448,7 @@
               <button class="copybtn" onclick="copyPrompt('p-apollo-cu', this)">Copy</button>
             </div>
             <div class="pc-purpose">Run in Claude with the Apollo connector on. Builds a ranked list of fit credit unions and the named people to reach at each.</div>
-            <pre id="p-apollo-cu">You have access to Apollo. I run go-to-market for Prismm, which is inheritance and death-attrition infrastructure for community banks and credit unions. Our initial wedge is large credit unions, one billion to ten billion in assets, in elder-dense markets, ideally on the Jack Henry Symitar core, that show a recent trigger such as a new CEO, a merger, a consent order on deposit operations, or a newly launched wealth or investment service.
+            <pre id="p-apollo-cu">You have access to Apollo. I run go-to-market for Prismm, which is inheritance and death-attrition infrastructure for community banks and credit unions. Our second segment is large credit unions, one billion to ten billion in assets, in elder-dense markets, ideally on the Jack Henry Symitar core, that show a recent trigger such as a new CEO, a merger, a consent order on deposit operations, or a newly launched wealth or investment service.
 
 Using Apollo, build a target list of credit unions that fit this profile. For each institution, pull the two people I need: the economic buyer, meaning the CEO, President, or Chief Strategy or Growth Officer, and the likely champion, meaning the head of member experience, retail or deposit operations, BSA, or trust. Return institution name, asset size, state, the named people with titles and the contact fields Apollo has, and any trigger you can confirm. Rank the list by how many of our signals stack on each institution, and flag any where a Jack Henry relationship gives us a warm path. Frame the opportunity as next-generation member and deposit retention. Ask me before pulling more than fifty contacts.</pre>
             <div class="pc-foot">Assumes the Apollo connector is enabled in Claude.</div>
@@ -424,9 +460,9 @@ Using Apollo, build a target list of credit unions that fit this profile. For ea
               <button class="copybtn" onclick="copyPrompt('p-linkedin-cu', this)">Copy</button>
             </div>
             <div class="pc-purpose">Export your LinkedIn connections, upload them, and Claude maps who can introduce you and who to prioritize.</div>
-            <pre id="p-linkedin-cu">I am going to give you my LinkedIn connections. You can read them from the export I upload, or I will paste a list. I run go-to-market for Prismm, inheritance and death-attrition infrastructure, and our initial wedge is large credit unions, one billion to ten billion in assets, in elder-dense markets, especially on Jack Henry Symitar, showing triggers like a new CEO, a recent merger, or a new wealth service.
+            <pre id="p-linkedin-cu">I am going to give you my LinkedIn connections. You can read them from the export I upload, or I will paste a list. I run go-to-market for Prismm, inheritance and death-attrition infrastructure, and our second segment is large credit unions, one billion to ten billion in assets, in elder-dense markets, especially on Jack Henry Symitar, showing triggers like a new CEO, a recent merger, or a new wealth service.
 
-From my connections, do three things. First, surface anyone who is a decision-maker or champion at a credit union that fits the wedge, so I can reach them directly. Second, surface the connectors, people who could make a warm introduction into a fit credit union even if they do not work at one, such as consultants, league or association staff, core-vendor contacts, or shared board members. Third, give me a prioritized shortlist that names who to contact, why they fit the model, and the exact introduction path. If I have not given you the file yet, ask me for it.</pre>
+From my connections, do three things. First, surface anyone who is a decision-maker or champion at a credit union that fits, so I can reach them directly. Second, surface the connectors, people who could make a warm introduction into a fit credit union even if they do not work at one, such as consultants, league or association staff, core-vendor contacts, or shared board members. Third, give me a prioritized shortlist that names who to contact, why they fit the model, and the exact introduction path. If I have not given you the file yet, ask me for it.</pre>
             <div class="pc-foot">Export connections from LinkedIn, Settings, Data privacy, Get a copy of your data.</div>
           </div>
         </div>
@@ -452,7 +488,7 @@ Using Apollo, build a target list of community banks that fit. For each institut
               <button class="copybtn" onclick="copyPrompt('p-linkedin-cb', this)">Copy</button>
             </div>
             <div class="pc-purpose">Export your LinkedIn connections, upload them, and Claude maps who can introduce you and who to prioritize.</div>
-            <pre id="p-linkedin-cb">I am going to give you my LinkedIn connections. You can read them from the export I upload, or I will paste a list. I run go-to-market for Prismm, inheritance and death-attrition infrastructure, and for this pass the target is community banks, sub ten billion in assets, in elder-dense markets, especially on Jack Henry Silverlake, showing triggers like an announced merger, a core conversion, or a new deposit or wealth leader.
+            <pre id="p-linkedin-cb">I am going to give you my LinkedIn connections. You can read them from the export I upload, or I will paste a list. I run go-to-market for Prismm, inheritance and death-attrition infrastructure, and the initial wedge is community banks, sub ten billion in assets, in elder-dense markets, especially on Jack Henry Silverlake, showing triggers like an announced merger, a core conversion, or a new deposit or wealth leader.
 
 From my connections, do three things. First, surface anyone who is a decision-maker or champion at a community bank that fits, so I can reach them directly. Second, surface the connectors who could make a warm introduction into a fit community bank even if they do not work at one, such as consultants, bankers association staff, core-vendor contacts, or shared board members. Third, give me a prioritized shortlist that names who to contact, why they fit, and the exact introduction path. If I have not given you the file yet, ask me for it.</pre>
             <div class="pc-foot">Export connections from LinkedIn, Settings, Data privacy, Get a copy of your data.</div>
@@ -461,7 +497,7 @@ From my connections, do three things. First, surface anyone who is a decision-ma
       </div>
     </section>
 
-    <footer>Prismm ready-now buyer model. Credit unions are the initial wedge. The trigger layer is the unclaimed high-leverage real estate, and most of it is public.</footer>
+    <footer>Prismm ready-now buyer model. Community banks are the initial wedge. The trigger layer is the unclaimed high-leverage real estate, and most of it is public.</footer>
   </main>
 
   <script>
