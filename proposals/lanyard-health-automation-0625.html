@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice & Contract — Lanyard Health × ReRev Labs</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --lh-dark: #083C2F;
+    --lh-lime: #C9F269;
+    --lh-sky: #5CC7F4;
+    --lh-text: #171A1F;
+    --lh-muted: #3B4A46;
+    --lh-bg: #F0F5F4;
+    --lh-border: #E0E6E4;
+    --lh-white: #ffffff;
+    --radius: 12px;
+    --radius-sm: 6px;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--lh-bg);
+    color: var(--lh-text);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+  .page-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+  .wordmark {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--lh-dark);
+  }
+  .wordmark span {
+    color: var(--lh-muted);
+    font-weight: 400;
+    font-size: 14px;
+    margin-left: 8px;
+  }
+  .powered-by {
+    font-size: 12px;
+    color: var(--lh-muted);
+  }
+  .doc-card {
+    background: var(--lh-white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(8,60,47,0.08);
+    margin-bottom: 2rem;
+  }
+  .doc-header {
+    background: var(--lh-dark);
+    padding: 2rem 2.5rem 1.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .doc-header-left .co-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .doc-header-left .co-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 3px;
+  }
+  .doc-badge {
+    background: var(--lh-lime);
+    color: var(--lh-dark);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 5px 12px;
+    border-radius: var(--radius-sm);
+  }
+  .doc-num {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    text-align: right;
+    margin-top: 6px;
+  }
+
+  /* TAB NAV */
+  .tab-nav {
+    display: flex;
+    border-bottom: 1px solid var(--lh-border);
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 1rem;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--lh-muted);
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .tab-btn.active {
+    color: var(--lh-dark);
+    border-bottom-color: var(--lh-lime);
+    background: var(--lh-bg);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* INVOICE BODY */
+  .inv-body { padding: 2.5rem; }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .field-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--lh-muted);
+    margin-bottom: 6px;
+  }
+  .field-val {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--lh-text);
+  }
+  .field-val strong {
+    font-weight: 500;
+    display: block;
+    font-size: 15px;
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid var(--lh-border);
+    margin: 1.5rem 0;
+  }
+  .line-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .line-table th {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--lh-muted);
+    padding: 0 0 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--lh-border);
+  }
+  .line-table th:last-child { text-align: right; }
+  .line-table td {
+    padding: 1.25rem 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--lh-border);
+    vertical-align: top;
+  }
+  .line-table td:last-child {
+    text-align: right;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .svc-name { font-weight: 500; margin-bottom: 5px; }
+  .svc-desc { font-size: 13px; color: var(--lh-muted); line-height: 1.6; }
+  .totals-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    margin: 1.5rem 0 0;
+  }
+  .t-row { display: flex; gap: 3rem; font-size: 14px; }
+  .t-lbl { color: var(--lh-muted); }
+  .t-val { font-weight: 500; min-width: 80px; text-align: right; }
+  .grand-row {
+    display: flex;
+    gap: 3rem;
+    align-items: baseline;
+    padding-top: 12px;
+    margin-top: 4px;
+    border-top: 2px solid var(--lh-dark);
+  }
+  .grand-lbl { font-size: 16px; font-weight: 500; color: var(--lh-dark); }
+  .grand-val { font-size: 24px; font-weight: 600; color: var(--lh-dark); min-width: 80px; text-align: right; font-family: 'Outfit', sans-serif; }
+  .pay-box {
+    background: var(--lh-bg);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem 1.5rem;
+    margin-top: 2rem;
+    border-left: 4px solid var(--lh-lime);
+  }
+  .pay-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lh-dark);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .pay-cta {
+    display: inline-block;
+    background: var(--lh-dark);
+    color: var(--lh-lime);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    margin-top: 6px;
+    transition: opacity 0.15s;
+  }
+  .pay-cta:hover { opacity: 0.85; }
+  .inv-footer {
+    background: var(--lh-bg);
+    padding: 1rem 2.5rem;
+    font-size: 12px;
+    color: var(--lh-muted);
+    text-align: center;
+    border-top: 1px solid var(--lh-border);
+  }
+
+  /* CONTRACT */
+  .contract-body {
+    padding: 2.5rem;
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--lh-text);
+  }
+  .contract-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--lh-dark);
+    margin-bottom: 4px;
+  }
+  .contract-sub {
+    font-size: 13px;
+    color: var(--lh-muted);
+    margin-bottom: 2rem;
+  }
+  .clause-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--lh-muted);
+    margin: 2rem 0 0.5rem;
+  }
+  .clause-label:first-of-type { margin-top: 0; }
+  .contract-body p { margin-bottom: 0.75rem; }
+  .contract-body ul { margin: 0 0 0.75rem 1.25rem; }
+  .contract-body li { margin-bottom: 0.3rem; }
+  .sig-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--lh-border);
+  }
+  .sig-block { font-size: 13px; }
+  .sig-party { font-weight: 600; color: var(--lh-dark); margin-bottom: 1.5rem; }
+  .sig-line {
+    border-top: 1px solid var(--lh-border);
+    padding-top: 8px;
+    color: var(--lh-muted);
+    font-size: 12px;
+  }
+  @media (max-width: 560px) {
+    .meta-grid, .sig-grid { grid-template-columns: 1fr; }
+    .doc-header { flex-direction: column; gap: 1rem; }
+    .inv-body, .contract-body { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="top-bar">
+    <div class="wordmark">Lanyard Health <span>× ReRev Labs</span></div>
+    <div class="powered-by">Confidential · June 2025</div>
+  </div>
+
+  <div class="doc-card">
+
+    <!-- SHARED HEADER -->
+    <div class="doc-header">
+      <div class="doc-header-left">
+        <div class="co-name">Lanyard Health</div>
+        <div class="co-sub">AI-Powered Credentialing & Enrollment</div>
+      </div>
+      <div>
+        <div class="doc-badge" id="header-badge">INVOICE</div>
+        <div class="doc-num" id="header-num">#LH-001</div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab('invoice', this)">Invoice</button>
+      <button class="tab-btn" onclick="switchTab('contract', this)">Contract</button>
+    </div>
+
+    <!-- INVOICE -->
+    <div id="tab-invoice" class="tab-panel active">
+      <div class="inv-body">
+        <div class="meta-grid">
+          <div>
+            <div class="field-label">From</div>
+            <div class="field-val"><strong>ReRev Labs</strong>Keyona Meeks<br>Birmingham, AL</div>
+          </div>
+          <div>
+            <div class="field-label">Bill to</div>
+            <div class="field-val"><strong>Lanyard Health</strong></div>
+          </div>
+        </div>
+        <div class="meta-grid" style="margin-top: -0.75rem;">
+          <div>
+            <div class="field-label">Issue date</div>
+            <div class="field-val">June 24, 2025</div>
+          </div>
+          <div>
+            <div class="field-label">Due date</div>
+            <div class="field-val">July 7, 2025</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <table class="line-table">
+          <thead>
+            <tr>
+              <th style="width:65%">Service</th>
+              <th style="text-align:center">Qty</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="svc-name">Deep Automation Audit & Implementation</div>
+                <div class="svc-desc">Comprehensive audit of existing workflows and operations, identification of automation opportunities, and hands-on implementation of prioritized automations across the organization.</div>
+              </td>
+              <td style="text-align:center">1</td>
+              <td>$2,500.00</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="totals-block">
+          <div class="t-row"><span class="t-lbl">Subtotal</span><span class="t-val">$2,500.00</span></div>
+          <div class="t-row"><span class="t-lbl">Tax</span><span class="t-val">$0.00</span></div>
+          <div class="grand-row"><span class="grand-lbl">Total due</span><span class="grand-val">$2,500.00</span></div>
+        </div>
+
+        <div class="pay-box">
+          <div class="pay-title">Pay via Stripe</div>
+          <a class="pay-cta" href="https://buy.stripe.com/bJe3cv9b5aTC2hs2WygUM03" target="_blank">Pay $2,500.00 →</a>
+        </div>
+      </div>
+      <div class="inv-footer">Thank you for choosing ReRev Labs &nbsp;·&nbsp; Questions? Reach out at your convenience.</div>
+    </div>
+
+    <!-- CONTRACT -->
+    <div id="tab-contract" class="tab-panel">
+      <div class="contract-body">
+        <div class="contract-title">Automation Consulting Agreement</div>
+        <div class="contract-sub">Between ReRev Labs (Keyona Meeks) and Lanyard Health · Effective June 24, 2025</div>
+
+        <div class="clause-label">1. Parties</div>
+        <p>This Agreement is entered into as of June 24, 2025 between <strong>ReRev Labs</strong>, operated by Keyona Meeks, Birmingham, AL ("Consultant") and <strong>Lanyard Health</strong> ("Client").</p>
+
+        <div class="clause-label">2. Scope of services</div>
+        <p>Consultant will perform a <strong>Deep Automation Audit & Implementation</strong>, which includes:</p>
+        <ul>
+          <li>Discovery and mapping of the Client's existing operational workflows</li>
+          <li>Identification and prioritization of automation opportunities</li>
+          <li>Hands-on implementation of agreed-upon automations</li>
+          <li>Documentation of implemented systems and recommendations for future improvements</li>
+        </ul>
+
+        <div class="clause-label">3. Fees & payment</div>
+        <p>Client agrees to pay a flat fee of <strong>$2,500.00 USD</strong>, due upon receipt of Invoice #LH-001. Payment is processed via Stripe. Work begins upon receipt of payment.</p>
+
+        <div class="clause-label">4. Timeline</div>
+        <p>Consultant will begin work within 3 business days of payment receipt. Project duration and milestones will be agreed upon during the discovery phase.</p>
+
+        <div class="clause-label">5. Intellectual property</div>
+        <p>Upon receipt of full payment, Client owns all deliverables produced specifically for this engagement. Consultant retains the right to reuse any pre-existing tools, frameworks, or methods used in the work.</p>
+
+        <div class="clause-label">6. Confidentiality</div>
+        <p>Both parties agree to keep the other's confidential business information private and not to disclose it to third parties without written consent, except as required by law.</p>
+
+        <div class="clause-label">7. Independent contractor</div>
+        <p>Consultant is an independent contractor, not an employee of Client. Consultant is responsible for all applicable taxes and has no claim to employee benefits.</p>
+
+        <div class="clause-label">8. Limitation of liability</div>
+        <p>Consultant's total liability for any claims arising from this Agreement shall not exceed the total fees paid under this Agreement. Neither party is liable for indirect or consequential damages.</p>
+
+        <div class="clause-label">9. Termination</div>
+        <p>Either party may terminate this Agreement with 5 business days written notice. Fees paid prior to termination are non-refundable. Any work completed up to the termination date is owed and billable.</p>
+
+        <div class="clause-label">10. Governing law</div>
+        <p>This Agreement is governed by the laws of the State of Alabama.</p>
+
+        <div class="sig-grid">
+          <div class="sig-block">
+            <div class="sig-party">ReRev Labs (Consultant)</div>
+            <div class="sig-line">Keyona Meeks &nbsp;·&nbsp; Date: __________</div>
+          </div>
+          <div class="sig-block">
+            <div class="sig-party">Lanyard Health (Client)</div>
+            <div class="sig-line">Signature &nbsp;·&nbsp; Date: __________</div>
+          </div>
+        </div>
+      </div>
+      <div class="inv-footer">ReRev Labs &nbsp;·&nbsp; Birmingham, AL &nbsp;·&nbsp; Confidential</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+    document.getElementById('header-badge').textContent = id === 'invoice' ? 'INVOICE' : 'CONTRACT';
+    document.getElementById('header-num').textContent = id === 'invoice' ? '#LH-001' : 'Effective June 24, 2025';
+  }
+</script>
+</body>
+</html>
