@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prismm x Advintro — Partnership Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Hanken Grotesk', sans-serif;
+  background: #0f1824;
+  color: #e8edf2;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.page {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 64px 48px;
+}
+
+.eyebrow {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f9655b;
+  margin-bottom: 24px;
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 56px;
+}
+
+.logo-pill {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #e8edf2;
+  letter-spacing: -0.01em;
+}
+
+.plus-sign {
+  font-size: 18px;
+  color: rgba(255,255,255,0.25);
+  font-weight: 300;
+}
+
+.hero-headline {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.hero-headline em {
+  font-style: normal;
+  color: #f9655b;
+}
+
+.hero-sub {
+  font-size: 17px;
+  line-height: 1.65;
+  color: rgba(232,237,242,0.65);
+  max-width: 560px;
+  margin-bottom: 56px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  margin: 48px 0;
+}
+
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(232,237,242,0.35);
+  margin-bottom: 28px;
+}
+
+.context-block {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-left: 3px solid #f9655b;
+  border-radius: 0 8px 8px 0;
+  padding: 24px 28px;
+  margin-bottom: 40px;
+}
+
+.context-block p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(232,237,242,0.8);
+}
+
+.context-block p + p {
+  margin-top: 14px;
+}
+
+.terms-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.term-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.term-card.featured {
+  border-color: rgba(249, 101, 91, 0.4);
+  background: rgba(249, 101, 91, 0.06);
+  grid-column: 1 / -1;
+}
+
+.term-number {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #f9655b;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.term-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(232,237,242,0.9);
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
+}
+
+.term-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(232,237,242,0.5);
+}
+
+.term-card.featured .term-number {
+  font-size: 56px;
+}
+
+.ask-block {
+  background: rgba(249, 101, 91, 0.08);
+  border: 1px solid rgba(249, 101, 91, 0.2);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 40px;
+}
+
+.ask-block h3 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.ask-block p {
+  font-size: 15px;
+  line-height: 1.72;
+  color: rgba(232,237,242,0.75);
+}
+
+.ask-block p + p {
+  margin-top: 14px;
+}
+
+.ask-block strong {
+  color: #f9655b;
+  font-weight: 600;
+}
+
+.prismm-value {
+  margin-bottom: 40px;
+}
+
+.value-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.value-row:last-child { border-bottom: none; }
+
+.value-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(102, 88, 234, 0.12);
+  border: 1px solid rgba(102, 88, 234, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.value-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: #6658ea;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.value-text strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #e8edf2;
+  margin-bottom: 4px;
+}
+
+.value-text span {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(232,237,242,0.5);
+}
+
+.closing-note {
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(232,237,242,0.6);
+  padding-top: 8px;
+}
+
+.closing-note strong {
+  color: #e8edf2;
+  font-weight: 500;
+}
+
+.cta-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.cta-primary {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f1824;
+  background: #f9655b;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: opacity 0.15s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.cta-primary:hover { opacity: 0.88; }
+
+.cta-contact {
+  font-size: 13px;
+  color: rgba(232,237,242,0.45);
+}
+
+.footer-logos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-logo {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(232,237,242,0.3);
+}
+
+.footer-sep {
+  width: 1px;
+  height: 14px;
+  background: rgba(255,255,255,0.1);
+}
+
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: rgba(249, 101, 91, 0.15);
+  color: #f9655b;
+  border: 1px solid rgba(249, 101, 91, 0.25);
+  margin-bottom: 16px;
+}
+
+@media (max-width: 600px) {
+  .page { padding: 40px 24px; }
+  .hero-headline { font-size: 34px; }
+  .terms-grid { grid-template-columns: 1fr; }
+  .term-card.featured { grid-column: 1; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="eyebrow">Partnership Proposal — Confidential</div>
+
+  <div class="logo-row">
+    <div class="logo-pill">Prismm</div>
+    <span class="plus-sign">+</span>
+    <div class="logo-pill">Advintro</div>
+  </div>
+
+  <h1 class="hero-headline">
+    A first-mover deal<br>built for <em>what's next</em>.
+  </h1>
+
+  <p class="hero-sub">
+    Prismm is opening a single distribution partnership in the wealth management and financial services space — and we want to build it with Advintro.
+  </p>
+
+  <div class="divider"></div>
+
+  <div class="section-label">The opportunity</div>
+
+  <div class="context-block">
+    <p>
+      Community banks and credit unions are managing the largest intergenerational wealth transfer in American history without the infrastructure to handle it. Prismm is the inheritance platform built specifically for that gap — helping institutions retain assets, deepen member relationships, and turn the estate transition moment into a long-term trust event.
+    </p>
+    <p>
+      The sales motion is relationship-heavy and senior-executive driven. That's where Advintro has spent decades. This is a natural fit — and we want Advintro to be the firm that gets there first.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">The proposed terms</div>
+
+  <div class="badge">Founding Partner Structure</div>
+
+  <div class="terms-grid">
+
+    <div class="term-card featured">
+      <div class="term-number">60%</div>
+      <div class="term-label">Revenue share on the first three closed deals</div>
+      <div class="term-desc">Advintro earns 60% of net contract value on each of the first three institution-level deals sourced and closed through the partnership. Paid at contract execution — not on a timeline.</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-number">3</div>
+      <div class="term-label">Deal threshold, then we renegotiate</div>
+      <div class="term-desc">After the first three closings, both parties enter a formal renegotiation based on real deal velocity and terms that reflect the full partnership value.</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-number">0</div>
+      <div class="term-label">Upfront retainer or monthly fee</div>
+      <div class="term-desc">No cash commitment from Prismm until a deal closes. Advintro's risk is covered by the outsized share — not papered over with a monthly draw.</div>
+    </div>
+
+  </div>
+
+  <div class="ask-block">
+    <h3>Why 60%? Here's the honest framing.</h3>
+    <p>
+      Prismm is mid-raise. We are closing a round, and we are building distribution in parallel — because the institutions Advintro has access to are exactly the proof points that make that round compelling. We're not asking Advintro to take a leap on faith. We're <strong>offering an economics structure that reflects that we're asking for their network before we can offer standard cash terms.</strong>
+    </p>
+    <p>
+      The 60% figure exists because it's the number that makes this real for Advintro — not a symbolic gesture or a "we'll circle back." When a deal closes, Advintro gets paid at a rate that reflects founder-level risk and relationship-level contribution. <strong>That's the trade.</strong>
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">What Advintro is working with</div>
+
+  <div class="prismm-value">
+    <div class="value-row">
+      <div class="value-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
+      </div>
+      <div class="value-text">
+        <strong>A defined ICP — no prospecting from scratch</strong>
+        <span>Prismm is purpose-built for community banks and credit unions managing $250M–$5B AUM. The target list is narrow, specific, and sourced. Advintro brings the relationships; Prismm brings the map.</span>
+      </div>
+    </div>
+
+    <div class="value-row">
+      <div class="value-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="value-text">
+        <strong>A product with no real competitor in this vertical</strong>
+        <span>No other platform is specifically built for inheritance infrastructure at the community institution level. Advintro won't be selling against an incumbent — they'll be creating a category conversation.</span>
+      </div>
+    </div>
+
+    <div class="value-row">
+      <div class="value-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+      </div>
+      <div class="value-text">
+        <strong>Founder access and co-sell support</strong>
+        <span>Martha Underwood (CEO) and the Prismm team are available for every intro conversation, demo, and close. Advintro opens the door; we walk through it together.</span>
+      </div>
+    </div>
+
+    <div class="value-row">
+      <div class="value-icon">
+        <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      </div>
+      <div class="value-text">
+        <strong>First-mover co-branding and reference rights</strong>
+        <span>Advintro would be publicly named as Prismm's founding distribution partner — with mutual reference rights, press positioning, and the ability to cite the relationship in their own portfolio and client conversations.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <p class="closing-note">
+    We're not offering this structure to everyone. We're offering it to Advintro because <strong>the network depth, the financial services relationships, and the ability to move at the executive level</strong> are exactly what this moment requires. If the first three deals close the way we believe they will, Advintro will have helped define how a category-creating product found its market — and they'll have the economics to show for it.
+  </p>
+  <p class="closing-note" style="margin-top:14px;">
+    We'd love to find thirty minutes to walk through the product, the target list, and what this partnership could look like in practice.
+  </p>
+
+  <div class="cta-row">
+    <a class="cta-primary" href="mailto:martha@getprismm.com?subject=Prismm%20x%20Advintro%20%E2%80%94%20Partnership%20Conversation">Schedule a conversation →</a>
+    <span class="cta-contact">martha@getprismm.com</span>
+  </div>
+
+  <div class="footer-logos">
+    <span class="footer-logo">Prismm</span>
+    <div class="footer-sep"></div>
+    <span class="footer-logo">Advintro</span>
+    <div class="footer-sep"></div>
+    <span class="footer-logo" style="font-weight:400;">Confidential — Not for Distribution</span>
+  </div>
+
+</div>
+</body>
+</html>
