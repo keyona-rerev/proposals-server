@@ -69,15 +69,41 @@
   .pay-cta:hover { opacity: 0.85; }
   .inv-footer { background: var(--lh-bg); padding: 1rem 2.5rem; font-size: 12px; color: var(--lh-muted); text-align: center; border-top: 1px solid var(--lh-border); }
 
-  /* CONTRACT IFRAME */
-  .contract-frame-wrap { width: 100%; height: 880px; }
-  .contract-frame-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+  /* REFERENCE BANNER */
+  .ref-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #FFF8E7;
+    border-left: 4px solid #EF9F27;
+    padding: 12px 1.5rem;
+    font-size: 13px;
+    color: #633806;
+    line-height: 1.5;
+  }
+  .ref-banner-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* CONTRACT BODY */
+  .contract-body { padding: 2.5rem; font-size: 14px; line-height: 1.85; color: var(--lh-text); }
+  .contract-co { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 600; color: var(--lh-dark); margin-bottom: 4px; }
+  .contract-title { font-size: 15px; color: var(--lh-muted); margin-bottom: 2rem; }
+  .contract-body p { margin-bottom: 0.9rem; }
+  .contract-body ul { margin: 0.5rem 0 0.9rem 1.5rem; }
+  .contract-body li { margin-bottom: 0.35rem; }
+  .clause-head { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--lh-dark); margin: 2rem 0 0.5rem; padding-bottom: 6px; border-bottom: 2px solid var(--lh-lime); }
+  .effective { font-size: 13px; font-weight: 600; color: var(--lh-text); margin-bottom: 1.5rem; }
+  .effective span { color: var(--lh-muted); font-weight: 400; }
+  .address-field { display: inline-block; border-bottom: 1px solid var(--lh-border); min-width: 220px; margin: 0 4px; color: var(--lh-muted); font-style: italic; font-size: 13px; }
+  .sig-section { margin-top: 2.5rem; padding-top: 2rem; border-top: 2px solid var(--lh-lime); }
+  .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 1rem; }
+  .sig-block { font-size: 13px; }
+  .sig-party { font-weight: 600; color: var(--lh-dark); font-size: 14px; margin-bottom: 2rem; }
+  .sig-line { border-top: 1px solid var(--lh-border); padding-top: 8px; color: var(--lh-muted); margin-bottom: 1.5rem; }
 
   @media (max-width: 560px) {
-    .meta-grid { grid-template-columns: 1fr; }
+    .meta-grid, .sig-grid { grid-template-columns: 1fr; }
     .doc-header { flex-direction: column; gap: 1rem; }
-    .inv-body { padding: 1.5rem; }
-    .contract-frame-wrap { height: 600px; }
+    .inv-body, .contract-body { padding: 1.5rem; }
   }
 </style>
 </head>
@@ -163,15 +189,81 @@
       <div class="inv-footer">Thank you for choosing ReRev Labs &nbsp;&middot;&nbsp; Questions? Reach out at your convenience.</div>
     </div>
 
-    <!-- CONTRACT TAB — live Google Doc embed -->
+    <!-- CONTRACT TAB -->
     <div id="tab-contract" class="tab-panel">
-      <div class="contract-frame-wrap">
-        <iframe
-          src="https://docs.google.com/document/d/1hIO-KOYMU6JwPiie7G2LETmGf8NPJYgB8wcLqp1_tso/preview"
-          allow="autoplay"
-          title="Lanyard Health Automation Consulting Agreement">
-        </iframe>
+
+      <div class="ref-banner">
+        <span class="ref-banner-icon">&#9432;</span>
+        <span>This is a <strong>reference copy only.</strong> Please refer to the contract sent to your email for the version available for e-signature.</span>
       </div>
+
+      <div class="contract-body">
+        <div class="contract-co">ReRev Labs</div>
+        <div class="contract-title">Automation Consulting Agreement</div>
+
+        <p>Keyona Meeks of ReRev Labs, located at <span class="address-field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> (also known as &ldquo;Contractor&rdquo;) will provide Lanyard Health, located at <span class="address-field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> (also known as &ldquo;Client&rdquo;) with a deep automation audit and implementation engagement covering workflow discovery, automation opportunity identification, and hands-on implementation, as to the specifications detailed in the Terms and Conditions below.</p>
+
+        <p class="effective"><strong>Contract in effect beginning:</strong> <span>June 29, 2026, or upon receipt of payment &mdash; whichever occurs later</span></p>
+
+        <div class="clause-head">Terms and Conditions</div>
+        <p>The following rates and terms apply:</p>
+        <p>This is a 3-month retainer engagement with a total contract value of $7,500.00, billed at $2,500.00 per month. The first payment is due upon signing of this agreement. Work will not begin until payment is received and confirmed. Each subsequent monthly payment is due 30 days from the date the prior payment was received. All payments are made to Contractor via Stripe. Payments not received within 10 days of the due date will incur a late fee of $100.00, and Contractor reserves the right to pause work until the account is brought current.</p>
+        <p>Contractor will provide the following as per deliverable dates and content topics mutually agreed upon:</p>
+        <ul>
+          <li>Comprehensive discovery and mapping of existing operational workflows</li>
+          <li>Identification and prioritization of automation opportunities</li>
+          <li>Hands-on implementation of agreed-upon automations</li>
+          <li>Documentation of implemented systems and recommendations for future improvements</li>
+        </ul>
+
+        <div class="clause-head">Scope of Project</div>
+        <p>Contractor is providing automation consulting services including audit, strategy, and implementation for Client over a 3-month engagement period. The engagement runs from the contract start date through the end of the third billing month. The Contractor agrees to perform services as outlined in this agreement for the full engagement period. Any work beyond the agreed scope will be subject to a separate estimate.</p>
+
+        <div class="clause-head">Changes and Revisions</div>
+        <p>The price at the beginning of this contract is based on the time investment estimated to accomplish the deep automation audit and implementation as described. If Client requests additional work, expanded scope, or supplementary deliverables beyond what is outlined, Contractor will provide a separate estimate for that additional work.</p>
+
+        <div class="clause-head">Cancellation Policy</div>
+        <ul>
+          <li>If Contractor must cancel due to an emergency, illness, or act of God, the Client will receive a full refund or engagement will be rescheduled at no additional cost.</li>
+          <li>If Client cancels prior to or during the engagement, a $500.00 cancellation fee applies in addition to any fees already paid. Fees paid prior to cancellation are non-refundable.</li>
+        </ul>
+
+        <div class="clause-head">Legal</div>
+        <p>Contractor cannot guarantee that the work will be completely error-free and so cannot be liable to Client or any third-party for damages, including lost profits, lost savings or other incidental, consequential or special damages, even if Client has advised Contractor of them. If any provision of this contract shall be unlawful, void, or for any reason unenforceable, then that provision shall be deemed severable from this contract and shall not affect the validity and enforceability of any remaining provisions.</p>
+
+        <div class="clause-head">Intellectual Property</div>
+        <p>Upon receipt of full payment, Client will own the copyright for all deliverables created specifically under this agreement for their internal use at Lanyard Health. Contractor retains the right to reuse any pre-existing tools, frameworks, or methodologies used in the work, and may showcase the general nature of the engagement as a portfolio reference unless Client requests otherwise in writing.</p>
+
+        <div class="clause-head">Confidentiality</div>
+        <p>Both parties agree to keep the other&rsquo;s confidential business information, systems, processes, and data private and not to disclose it to third parties without written consent, except as required by law. This obligation survives the termination of this Agreement.</p>
+
+        <div class="clause-head">Independent Contractor</div>
+        <p>Contractor is an independent contractor, not an employee of Client. Contractor is solely responsible for all applicable federal, state, and local taxes and has no claim to employee benefits.</p>
+
+        <div class="clause-head">Termination</div>
+        <p>Either party may terminate this agreement with written notice. If termination occurs prior to the engagement start date, Client must provide at least 5 business days&rsquo; written notice. If termination occurs during an active billing month, Client owes a pro-rata portion of that month&rsquo;s fee based on the number of days worked. For example, if Client terminates 15 days into a 30-day billing month, Client owes $1,250.00 (50% of $2,500.00) for that month. All fees already paid prior to termination remain non-refundable. Any outstanding pro-rata balance is due within 5 business days of the termination date.</p>
+
+        <div class="clause-head">Governing Law</div>
+        <p>This Agreement shall be governed by and construed in accordance with the laws of the State of Alabama.</p>
+
+        <div class="sig-section">
+          <div class="sig-grid">
+            <div class="sig-block">
+              <div class="sig-party">Client &mdash; Lanyard Health</div>
+              <div class="sig-line">Signature</div>
+              <div class="sig-line">Full Name &amp; Title</div>
+              <div class="sig-line">Date</div>
+            </div>
+            <div class="sig-block">
+              <div class="sig-party">Contractor &mdash; ReRev Labs</div>
+              <div class="sig-line">Signature</div>
+              <div class="sig-line">Keyona Meeks, CEO of ReRev Labs</div>
+              <div class="sig-line">Date</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="inv-footer">ReRev Labs &nbsp;&middot;&nbsp; Birmingham, AL &nbsp;&middot;&nbsp; Confidential</div>
     </div>
 
   </div>
