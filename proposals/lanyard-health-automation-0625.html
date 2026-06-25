@@ -26,263 +26,65 @@
     min-height: 100vh;
     padding: 2rem 1rem 4rem;
   }
-  .page-wrap {
-    max-width: 720px;
-    margin: 0 auto;
-  }
-  .top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-  }
-  .wordmark {
-    font-family: 'Outfit', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--lh-dark);
-  }
-  .wordmark span {
-    color: var(--lh-muted);
-    font-weight: 400;
-    font-size: 14px;
-    margin-left: 8px;
-  }
-  .powered-by {
-    font-size: 12px;
-    color: var(--lh-muted);
-  }
-  .doc-card {
-    background: var(--lh-white);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: 0 2px 16px rgba(8,60,47,0.08);
-    margin-bottom: 2rem;
-  }
-  .doc-header {
-    background: var(--lh-dark);
-    padding: 2rem 2.5rem 1.75rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-  .doc-header-left .co-name {
-    font-family: 'Outfit', sans-serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: #fff;
-    letter-spacing: -0.01em;
-  }
-  .doc-header-left .co-sub {
-    font-size: 12px;
-    color: rgba(255,255,255,0.45);
-    margin-top: 3px;
-  }
-  .doc-badge {
-    background: var(--lh-lime);
-    color: var(--lh-dark);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    padding: 5px 12px;
-    border-radius: var(--radius-sm);
-  }
-  .doc-num {
-    font-size: 12px;
-    color: rgba(255,255,255,0.45);
-    text-align: right;
-    margin-top: 6px;
-  }
-
-  /* TAB NAV */
-  .tab-nav {
-    display: flex;
-    border-bottom: 1px solid var(--lh-border);
-  }
-  .tab-btn {
-    flex: 1;
-    padding: 1rem;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    color: var(--lh-muted);
-    border-bottom: 2px solid transparent;
-    transition: all 0.15s;
-  }
-  .tab-btn.active {
-    color: var(--lh-dark);
-    border-bottom-color: var(--lh-lime);
-    background: var(--lh-bg);
-  }
+  .page-wrap { max-width: 720px; margin: 0 auto; }
+  .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
+  .wordmark { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 600; color: var(--lh-dark); }
+  .wordmark span { color: var(--lh-muted); font-weight: 400; font-size: 14px; margin-left: 8px; }
+  .powered-by { font-size: 12px; color: var(--lh-muted); }
+  .doc-card { background: var(--lh-white); border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 16px rgba(8,60,47,0.08); margin-bottom: 2rem; }
+  .doc-header { background: var(--lh-dark); padding: 2rem 2.5rem 1.75rem; display: flex; justify-content: space-between; align-items: flex-start; }
+  .doc-header-left .co-name { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 600; color: #fff; letter-spacing: -0.01em; }
+  .doc-header-left .co-sub { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 3px; }
+  .doc-badge { background: var(--lh-lime); color: var(--lh-dark); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; padding: 5px 12px; border-radius: var(--radius-sm); }
+  .doc-num { font-size: 12px; color: rgba(255,255,255,0.45); text-align: right; margin-top: 6px; }
+  .tab-nav { display: flex; border-bottom: 1px solid var(--lh-border); }
+  .tab-btn { flex: 1; padding: 1rem; font-size: 14px; font-weight: 500; font-family: 'Inter', sans-serif; cursor: pointer; border: none; background: transparent; color: var(--lh-muted); border-bottom: 2px solid transparent; transition: all 0.15s; }
+  .tab-btn.active { color: var(--lh-dark); border-bottom-color: var(--lh-lime); background: var(--lh-bg); }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
-
-  /* INVOICE BODY */
   .inv-body { padding: 2.5rem; }
-  .meta-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-bottom: 2rem;
-  }
-  .field-label {
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--lh-muted);
-    margin-bottom: 6px;
-  }
-  .field-val {
-    font-size: 14px;
-    line-height: 1.7;
-    color: var(--lh-text);
-  }
-  .field-val strong {
-    font-weight: 500;
-    display: block;
-    font-size: 15px;
-  }
-  .divider {
-    border: none;
-    border-top: 1px solid var(--lh-border);
-    margin: 1.5rem 0;
-  }
-  .line-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  .line-table th {
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--lh-muted);
-    padding: 0 0 10px;
-    text-align: left;
-    border-bottom: 1px solid var(--lh-border);
-  }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+  .field-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--lh-muted); margin-bottom: 6px; }
+  .field-val { font-size: 14px; line-height: 1.7; color: var(--lh-text); }
+  .field-val strong { font-weight: 500; display: block; font-size: 15px; }
+  .divider { border: none; border-top: 1px solid var(--lh-border); margin: 1.5rem 0; }
+  .line-table { width: 100%; border-collapse: collapse; }
+  .line-table th { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--lh-muted); padding: 0 0 10px; text-align: left; border-bottom: 1px solid var(--lh-border); }
   .line-table th:last-child { text-align: right; }
-  .line-table td {
-    padding: 1.25rem 0;
-    font-size: 14px;
-    border-bottom: 1px solid var(--lh-border);
-    vertical-align: top;
-  }
-  .line-table td:last-child {
-    text-align: right;
-    font-weight: 500;
-    white-space: nowrap;
-  }
+  .line-table td { padding: 1.25rem 0; font-size: 14px; border-bottom: 1px solid var(--lh-border); vertical-align: top; }
+  .line-table td:last-child { text-align: right; font-weight: 500; white-space: nowrap; }
   .svc-name { font-weight: 500; margin-bottom: 5px; }
   .svc-desc { font-size: 13px; color: var(--lh-muted); line-height: 1.6; }
-  .totals-block {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
-    margin: 1.5rem 0 0;
-  }
+  .totals-block { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; margin: 1.5rem 0 0; }
   .t-row { display: flex; gap: 3rem; font-size: 14px; }
   .t-lbl { color: var(--lh-muted); }
   .t-val { font-weight: 500; min-width: 80px; text-align: right; }
-  .grand-row {
-    display: flex;
-    gap: 3rem;
-    align-items: baseline;
-    padding-top: 12px;
-    margin-top: 4px;
-    border-top: 2px solid var(--lh-dark);
-  }
+  .grand-row { display: flex; gap: 3rem; align-items: baseline; padding-top: 12px; margin-top: 4px; border-top: 2px solid var(--lh-dark); }
   .grand-lbl { font-size: 16px; font-weight: 500; color: var(--lh-dark); }
   .grand-val { font-size: 24px; font-weight: 600; color: var(--lh-dark); min-width: 80px; text-align: right; font-family: 'Outfit', sans-serif; }
-  .pay-box {
-    background: var(--lh-bg);
-    border-radius: var(--radius-sm);
-    padding: 1.25rem 1.5rem;
-    margin-top: 2rem;
-    border-left: 4px solid var(--lh-lime);
-  }
-  .pay-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--lh-dark);
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .pay-cta {
-    display: inline-block;
-    background: var(--lh-dark);
-    color: var(--lh-lime);
-    font-size: 14px;
-    font-weight: 500;
-    padding: 10px 20px;
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    margin-top: 6px;
-    transition: opacity 0.15s;
-  }
+  .pay-box { background: var(--lh-bg); border-radius: var(--radius-sm); padding: 1.25rem 1.5rem; margin-top: 2rem; border-left: 4px solid var(--lh-lime); }
+  .pay-title { font-size: 13px; font-weight: 600; color: var(--lh-dark); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .pay-cta { display: inline-block; background: var(--lh-dark); color: var(--lh-lime); font-size: 14px; font-weight: 500; padding: 10px 20px; border-radius: var(--radius-sm); text-decoration: none; margin-top: 6px; transition: opacity 0.15s; }
   .pay-cta:hover { opacity: 0.85; }
-  .inv-footer {
-    background: var(--lh-bg);
-    padding: 1rem 2.5rem;
-    font-size: 12px;
-    color: var(--lh-muted);
-    text-align: center;
-    border-top: 1px solid var(--lh-border);
-  }
+  .inv-footer { background: var(--lh-bg); padding: 1rem 2.5rem; font-size: 12px; color: var(--lh-muted); text-align: center; border-top: 1px solid var(--lh-border); }
 
-  /* CONTRACT */
-  .contract-body {
-    padding: 2.5rem;
-    font-size: 14px;
-    line-height: 1.85;
-    color: var(--lh-text);
-  }
-  .contract-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--lh-dark);
-    margin-bottom: 4px;
-  }
-  .contract-sub {
-    font-size: 13px;
-    color: var(--lh-muted);
-    margin-bottom: 2rem;
-  }
-  .clause-label {
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--lh-muted);
-    margin: 2rem 0 0.5rem;
-  }
-  .clause-label:first-of-type { margin-top: 0; }
-  .contract-body p { margin-bottom: 0.75rem; }
-  .contract-body ul { margin: 0 0 0.75rem 1.25rem; }
-  .contract-body li { margin-bottom: 0.3rem; }
-  .sig-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-top: 2.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--lh-border);
-  }
+  /* CONTRACT STYLES */
+  .contract-body { padding: 2.5rem; font-size: 14px; line-height: 1.85; color: var(--lh-text); }
+  .contract-co { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 600; color: var(--lh-dark); margin-bottom: 4px; }
+  .contract-title { font-size: 15px; color: var(--lh-muted); margin-bottom: 2rem; }
+  .contract-body p { margin-bottom: 0.9rem; }
+  .contract-body ul { margin: 0.5rem 0 0.9rem 1.5rem; }
+  .contract-body li { margin-bottom: 0.35rem; }
+  .clause-head { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--lh-dark); margin: 2rem 0 0.5rem; padding-bottom: 6px; border-bottom: 2px solid var(--lh-lime); }
+  .effective { font-size: 13px; font-weight: 600; color: var(--lh-text); margin-bottom: 1.5rem; }
+  .effective span { color: var(--lh-muted); font-weight: 400; }
+  .address-field { display: inline-block; border-bottom: 1px solid var(--lh-border); min-width: 220px; margin: 0 4px; color: var(--lh-muted); font-style: italic; font-size: 13px; }
+  .sig-section { margin-top: 2.5rem; padding-top: 2rem; border-top: 2px solid var(--lh-lime); }
+  .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 1rem; }
   .sig-block { font-size: 13px; }
-  .sig-party { font-weight: 600; color: var(--lh-dark); margin-bottom: 1.5rem; }
-  .sig-line {
-    border-top: 1px solid var(--lh-border);
-    padding-top: 8px;
-    color: var(--lh-muted);
-    font-size: 12px;
-  }
+  .sig-party { font-weight: 600; color: var(--lh-dark); font-size: 14px; margin-bottom: 2rem; }
+  .sig-line { border-top: 1px solid var(--lh-border); padding-top: 8px; color: var(--lh-muted); margin-bottom: 1.5rem; }
+
   @media (max-width: 560px) {
     .meta-grid, .sig-grid { grid-template-columns: 1fr; }
     .doc-header { flex-direction: column; gap: 1rem; }
@@ -294,17 +96,16 @@
 <div class="page-wrap">
 
   <div class="top-bar">
-    <div class="wordmark">Lanyard Health <span>× ReRev Labs</span></div>
-    <div class="powered-by">Confidential · June 2025</div>
+    <div class="wordmark">Lanyard Health <span>&times; ReRev Labs</span></div>
+    <div class="powered-by">Confidential &nbsp;&middot;&nbsp; June 2026</div>
   </div>
 
   <div class="doc-card">
 
-    <!-- SHARED HEADER -->
     <div class="doc-header">
       <div class="doc-header-left">
         <div class="co-name">Lanyard Health</div>
-        <div class="co-sub">AI-Powered Credentialing & Enrollment</div>
+        <div class="co-sub">AI-Powered Credentialing &amp; Enrollment</div>
       </div>
       <div>
         <div class="doc-badge" id="header-badge">INVOICE</div>
@@ -312,13 +113,12 @@
       </div>
     </div>
 
-    <!-- TABS -->
     <div class="tab-nav">
       <button class="tab-btn active" onclick="switchTab('invoice', this)">Invoice</button>
       <button class="tab-btn" onclick="switchTab('contract', this)">Contract</button>
     </div>
 
-    <!-- INVOICE -->
+    <!-- INVOICE TAB -->
     <div id="tab-invoice" class="tab-panel active">
       <div class="inv-body">
         <div class="meta-grid">
@@ -331,19 +131,17 @@
             <div class="field-val"><strong>Lanyard Health</strong></div>
           </div>
         </div>
-        <div class="meta-grid" style="margin-top: -0.75rem;">
+        <div class="meta-grid" style="margin-top:-0.75rem;">
           <div>
             <div class="field-label">Issue date</div>
-            <div class="field-val">June 24, 2025</div>
+            <div class="field-val">June 24, 2026</div>
           </div>
           <div>
-            <div class="field-label">Due date</div>
-            <div class="field-val">July 7, 2025</div>
+            <div class="field-label">Due on</div>
+            <div class="field-val">Upon receipt of payment</div>
           </div>
         </div>
-
         <div class="divider"></div>
-
         <table class="line-table">
           <thead>
             <tr>
@@ -355,7 +153,7 @@
           <tbody>
             <tr>
               <td>
-                <div class="svc-name">Deep Automation Audit & Implementation</div>
+                <div class="svc-name">Deep Automation Audit &amp; Implementation</div>
                 <div class="svc-desc">Comprehensive audit of existing workflows and operations, identification of automation opportunities, and hands-on implementation of prioritized automations across the organization.</div>
               </td>
               <td style="text-align:center">1</td>
@@ -363,75 +161,88 @@
             </tr>
           </tbody>
         </table>
-
         <div class="totals-block">
           <div class="t-row"><span class="t-lbl">Subtotal</span><span class="t-val">$2,500.00</span></div>
           <div class="t-row"><span class="t-lbl">Tax</span><span class="t-val">$0.00</span></div>
           <div class="grand-row"><span class="grand-lbl">Total due</span><span class="grand-val">$2,500.00</span></div>
         </div>
-
         <div class="pay-box">
           <div class="pay-title">Pay via Stripe</div>
-          <a class="pay-cta" href="https://buy.stripe.com/bJe3cv9b5aTC2hs2WygUM03" target="_blank">Pay $2,500.00 →</a>
+          <a class="pay-cta" href="https://buy.stripe.com/bJe3cv9b5aTC2hs2WygUM03" target="_blank">Pay $2,500.00 &rarr;</a>
         </div>
       </div>
-      <div class="inv-footer">Thank you for choosing ReRev Labs &nbsp;·&nbsp; Questions? Reach out at your convenience.</div>
+      <div class="inv-footer">Thank you for choosing ReRev Labs &nbsp;&middot;&nbsp; Questions? Reach out at your convenience.</div>
     </div>
 
-    <!-- CONTRACT -->
+    <!-- CONTRACT TAB -->
     <div id="tab-contract" class="tab-panel">
       <div class="contract-body">
+        <div class="contract-co">ReRev Labs</div>
         <div class="contract-title">Automation Consulting Agreement</div>
-        <div class="contract-sub">Between ReRev Labs (Keyona Meeks) and Lanyard Health · Effective June 24, 2025</div>
 
-        <div class="clause-label">1. Parties</div>
-        <p>This Agreement is entered into as of June 24, 2025 between <strong>ReRev Labs</strong>, operated by Keyona Meeks, Birmingham, AL ("Consultant") and <strong>Lanyard Health</strong> ("Client").</p>
+        <p>Keyona Meeks of ReRev Labs, located at <span class="address-field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> (also known as &ldquo;Contractor&rdquo;) will provide Lanyard Health, located at <span class="address-field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> (also known as &ldquo;Client&rdquo;) with a deep automation audit and implementation engagement covering workflow discovery, automation opportunity identification, and hands-on implementation, as to the specifications detailed in the Terms and Conditions below.</p>
 
-        <div class="clause-label">2. Scope of services</div>
-        <p>Consultant will perform a <strong>Deep Automation Audit & Implementation</strong>, which includes:</p>
+        <p class="effective"><strong>Contract in effect beginning:</strong> <span>June 29, 2026, or upon receipt of payment &mdash; whichever occurs later</span></p>
+
+        <div class="clause-head">Terms and Conditions</div>
+        <p>The following rates and terms apply:</p>
+        <p>This is a 3-month retainer engagement with a total contract value of $7,500.00, billed at $2,500.00 per month. The first payment is due upon signing of this agreement. Work will not begin until payment is received and confirmed. Each subsequent monthly payment is due 30 days from the date the prior payment was received. All payments are made to Contractor via Stripe. Payments not received within 10 days of the due date will incur a late fee of $100.00, and Contractor reserves the right to pause work until the account is brought current.</p>
+        <p>Contractor will provide the following as per deliverable dates and content topics mutually agreed upon:</p>
         <ul>
-          <li>Discovery and mapping of the Client's existing operational workflows</li>
+          <li>Comprehensive discovery and mapping of existing operational workflows</li>
           <li>Identification and prioritization of automation opportunities</li>
           <li>Hands-on implementation of agreed-upon automations</li>
           <li>Documentation of implemented systems and recommendations for future improvements</li>
         </ul>
 
-        <div class="clause-label">3. Fees & payment</div>
-        <p>Client agrees to pay a flat fee of <strong>$2,500.00 USD</strong>, due upon receipt of Invoice #LH-001. Payment is processed via Stripe. Work begins upon receipt of payment.</p>
+        <div class="clause-head">Scope of Project</div>
+        <p>Contractor is providing automation consulting services including audit, strategy, and implementation for Client over a 3-month engagement period. The engagement runs from the contract start date through the end of the third billing month. The Contractor agrees to perform services as outlined in this agreement for the full engagement period. Any work beyond the agreed scope will be subject to a separate estimate.</p>
 
-        <div class="clause-label">4. Timeline</div>
-        <p>Consultant will begin work within 3 business days of payment receipt. Project duration and milestones will be agreed upon during the discovery phase.</p>
+        <div class="clause-head">Changes and Revisions</div>
+        <p>The price at the beginning of this contract is based on the time investment estimated to accomplish the deep automation audit and implementation as described. If Client requests additional work, expanded scope, or supplementary deliverables beyond what is outlined, Contractor will provide a separate estimate for that additional work.</p>
 
-        <div class="clause-label">5. Intellectual property</div>
-        <p>Upon receipt of full payment, Client owns all deliverables produced specifically for this engagement. Consultant retains the right to reuse any pre-existing tools, frameworks, or methods used in the work.</p>
+        <div class="clause-head">Cancellation Policy</div>
+        <ul>
+          <li>If Contractor must cancel due to an emergency, illness, or act of God, the Client will receive a full refund or engagement will be rescheduled at no additional cost.</li>
+          <li>If Client cancels prior to or during the engagement, a $500.00 cancellation fee applies in addition to any fees already paid. Fees paid prior to cancellation are non-refundable.</li>
+        </ul>
 
-        <div class="clause-label">6. Confidentiality</div>
-        <p>Both parties agree to keep the other's confidential business information private and not to disclose it to third parties without written consent, except as required by law.</p>
+        <div class="clause-head">Legal</div>
+        <p>Contractor cannot guarantee that the work will be completely error-free and so cannot be liable to Client or any third-party for damages, including lost profits, lost savings or other incidental, consequential or special damages, even if Client has advised Contractor of them. If any provision of this contract shall be unlawful, void, or for any reason unenforceable, then that provision shall be deemed severable from this contract and shall not affect the validity and enforceability of any remaining provisions.</p>
 
-        <div class="clause-label">7. Independent contractor</div>
-        <p>Consultant is an independent contractor, not an employee of Client. Consultant is responsible for all applicable taxes and has no claim to employee benefits.</p>
+        <div class="clause-head">Intellectual Property</div>
+        <p>Upon receipt of full payment, Client will own the copyright for all deliverables created specifically under this agreement for their internal use at Lanyard Health. Contractor retains the right to reuse any pre-existing tools, frameworks, or methodologies used in the work, and may showcase the general nature of the engagement as a portfolio reference unless Client requests otherwise in writing.</p>
 
-        <div class="clause-label">8. Limitation of liability</div>
-        <p>Consultant's total liability for any claims arising from this Agreement shall not exceed the total fees paid under this Agreement. Neither party is liable for indirect or consequential damages.</p>
+        <div class="clause-head">Confidentiality</div>
+        <p>Both parties agree to keep the other&rsquo;s confidential business information, systems, processes, and data private and not to disclose it to third parties without written consent, except as required by law. This obligation survives the termination of this Agreement.</p>
 
-        <div class="clause-label">9. Termination</div>
-        <p>Either party may terminate this Agreement with 5 business days written notice. Fees paid prior to termination are non-refundable. Any work completed up to the termination date is owed and billable.</p>
+        <div class="clause-head">Independent Contractor</div>
+        <p>Contractor is an independent contractor, not an employee of Client. Contractor is solely responsible for all applicable federal, state, and local taxes and has no claim to employee benefits.</p>
 
-        <div class="clause-label">10. Governing law</div>
-        <p>This Agreement is governed by the laws of the State of Alabama.</p>
+        <div class="clause-head">Termination</div>
+        <p>Either party may terminate this agreement with written notice. If termination occurs prior to the engagement start date, Client must provide at least 5 business days&rsquo; written notice. If termination occurs during an active billing month, Client owes a pro-rata portion of that month&rsquo;s fee based on the number of days worked. For example, if Client terminates 15 days into a 30-day billing month, Client owes $1,250.00 (50% of $2,500.00) for that month. All fees already paid prior to termination remain non-refundable. Any outstanding pro-rata balance is due within 5 business days of the termination date.</p>
 
-        <div class="sig-grid">
-          <div class="sig-block">
-            <div class="sig-party">ReRev Labs (Consultant)</div>
-            <div class="sig-line">Keyona Meeks &nbsp;·&nbsp; Date: __________</div>
-          </div>
-          <div class="sig-block">
-            <div class="sig-party">Lanyard Health (Client)</div>
-            <div class="sig-line">Signature &nbsp;·&nbsp; Date: __________</div>
+        <div class="clause-head">Governing Law</div>
+        <p>This Agreement shall be governed by and construed in accordance with the laws of the State of Alabama.</p>
+
+        <div class="sig-section">
+          <div class="sig-grid">
+            <div class="sig-block">
+              <div class="sig-party">Client &mdash; Lanyard Health</div>
+              <div class="sig-line">Signature</div>
+              <div class="sig-line">Full Name &amp; Title</div>
+              <div class="sig-line">Date</div>
+            </div>
+            <div class="sig-block">
+              <div class="sig-party">Contractor &mdash; ReRev Labs</div>
+              <div class="sig-line">Signature</div>
+              <div class="sig-line">Keyona Meeks, CEO of ReRev Labs</div>
+              <div class="sig-line">Date</div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="inv-footer">ReRev Labs &nbsp;·&nbsp; Birmingham, AL &nbsp;·&nbsp; Confidential</div>
+      <div class="inv-footer">ReRev Labs &nbsp;&middot;&nbsp; Birmingham, AL &nbsp;&middot;&nbsp; Confidential</div>
     </div>
 
   </div>
@@ -444,7 +255,7 @@
     document.getElementById('tab-' + id).classList.add('active');
     btn.classList.add('active');
     document.getElementById('header-badge').textContent = id === 'invoice' ? 'INVOICE' : 'CONTRACT';
-    document.getElementById('header-num').textContent = id === 'invoice' ? '#LH-001' : 'Effective June 24, 2025';
+    document.getElementById('header-num').textContent = id === 'invoice' ? '#LH-001' : 'Effective June 29, 2026';
   }
 </script>
 </body>
