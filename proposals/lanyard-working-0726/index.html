@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lanyard × ReRev — Working Session</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#F0F7F7;
+    --primary:#0D1F2D;
+    --cyan:#1A9E9E;
+    --purple:#7C3AED;
+    --gradient:linear-gradient(90deg,#1A9E9E,#7C3AED);
+    --ink:#0D1F2D;
+    --muted:#5b6b73;
+    --line:rgba(13,31,45,.12);
+    --card:#ffffff;
+    --font-heading:'Outfit',sans-serif;
+    --font-body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- stage ---------- */
+  #stage{
+    position:fixed;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    padding:clamp(28px,5vw,80px);
+    cursor:default;
+  }
+  #stage.can-advance{cursor:pointer}
+  .slidewrap{width:min(1120px,100%);max-height:100%}
+
+  /* fade/slide-in */
+  @keyframes enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .slidewrap>.slide{animation:enter .26s cubic-bezier(.2,.7,.2,1) both}
+  @media (prefers-reduced-motion:reduce){.slidewrap>.slide{animation:none}}
+
+  /* dark slide skin (cover + dividers) */
+  body.theme-dark{background:var(--primary)}
+  body.theme-dark #chrome .cnt,body.theme-dark #chrome .ttl{color:#dfeceb}
+  body.theme-dark #chrome .rail{background:rgba(255,255,255,.14)}
+  body.theme-dark .navbtn{border-color:rgba(255,255,255,.22);color:#dfeceb}
+  body.theme-dark .navbtn:hover{background:rgba(255,255,255,.08)}
+  body.theme-dark .wordmark{color:rgba(255,255,255,.65)}
+  body.theme-dark .hint{color:rgba(255,255,255,.45)}
+
+  /* ---------- chrome ---------- */
+  #chrome{position:fixed;left:0;right:0;bottom:0;z-index:30;
+    padding:14px clamp(20px,4vw,44px);
+    display:flex;align-items:center;gap:20px;
+    pointer-events:none;}
+  #chrome>*{pointer-events:auto}
+  .cnt{font-family:var(--font-heading);font-weight:700;font-size:14px;letter-spacing:.06em;
+    color:var(--primary);white-space:nowrap;}
+  .cnt b{background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .railwrap{flex:1;height:4px;border-radius:99px;background:rgba(13,31,45,.1);overflow:hidden}
+  .rail{height:100%;width:0;background:var(--gradient);transition:width .3s cubic-bezier(.2,.7,.2,1)}
+  .ttl{font-size:12.5px;color:var(--muted);max-width:34ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .navbtns{display:flex;gap:8px}
+  .navbtn{width:34px;height:34px;border:1px solid var(--line);background:transparent;border-radius:9px;
+    display:grid;place-items:center;cursor:pointer;color:var(--primary);transition:.15s}
+  .navbtn:hover{background:rgba(13,31,45,.05)}
+  .navbtn:disabled{opacity:.3;cursor:default}
+  .navbtn svg{width:16px;height:16px}
+
+  /* top-right meta */
+  #topbar{position:fixed;top:16px;right:clamp(20px,4vw,44px);z-index:30;text-align:right;
+    display:flex;flex-direction:column;gap:3px;align-items:flex-end;pointer-events:none}
+  .wordmark{font-family:var(--font-heading);font-weight:700;font-size:12px;letter-spacing:.08em;color:var(--muted)}
+  .hint{font-size:10.5px;color:var(--muted);opacity:.9;transition:opacity .4s}
+  #deck.idle .hint{opacity:0}
+
+  /* ---------- overview / jump menu ---------- */
+  #overview{position:fixed;inset:0;z-index:40;background:rgba(13,31,45,.55);backdrop-filter:blur(6px);
+    display:none;align-items:center;justify-content:center;padding:6vh 5vw}
+  #overview.open{display:flex}
+  .ovcard{width:min(720px,100%);max-height:88vh;overflow:auto;background:var(--card);border-radius:18px;
+    padding:30px;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+  .ovcard h3{font-family:var(--font-heading);margin:0 0 4px;font-size:18px;color:var(--primary)}
+  .ovcard p{margin:0 0 18px;color:var(--muted);font-size:13px}
+  .ovlist{display:grid;gap:6px}
+  .ovrow{display:flex;gap:14px;align-items:center;padding:11px 14px;border:1px solid var(--line);
+    border-radius:11px;cursor:pointer;transition:.14s;background:#fff}
+  .ovrow:hover{border-color:var(--cyan);background:#f3fbfb}
+  .ovrow.active{border-color:transparent;background:linear-gradient(90deg,rgba(26,158,158,.12),rgba(124,58,237,.1))}
+  .ovnum{font-family:var(--font-heading);font-weight:700;font-size:13px;letter-spacing:.05em;color:var(--cyan);min-width:26px}
+  .ovttl{font-size:14px;color:var(--primary);font-weight:500}
+
+  /* ---------- loading / error ---------- */
+  #boot{position:fixed;inset:0;display:grid;place-items:center;z-index:50;background:var(--bg)}
+  .boot-dot{width:40px;height:40px;border-radius:50%;background:var(--gradient);
+    animation:pulse 1s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(.7);opacity:.6}50%{transform:scale(1);opacity:1}}
+  .err{max-width:520px;font-family:var(--font-body);color:var(--primary);padding:30px;text-align:center}
+  .err code{background:#fff;padding:2px 6px;border-radius:5px;font-size:12px}
+
+  /* =====================================================
+     SHARED SLIDE PRIMITIVES  (fragments compose with these)
+     ===================================================== */
+  .slide{width:100%}
+  .slide .eyebrow{font-family:var(--font-heading);font-weight:700;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--cyan);margin:0 0 18px;display:flex;align-items:center;gap:10px}
+  .slide .eyebrow::before{content:"";width:26px;height:2px;background:var(--gradient);border-radius:2px}
+  .slide h1{font-family:var(--font-heading);font-weight:800;line-height:1.04;letter-spacing:-.02em;
+    font-size:clamp(34px,5.4vw,64px);margin:0 0 20px;color:var(--primary)}
+  .slide h2{font-family:var(--font-heading);font-weight:700;line-height:1.08;letter-spacing:-.01em;
+    font-size:clamp(26px,3.8vw,44px);margin:0 0 16px;color:var(--primary)}
+  .slide .lead{font-size:clamp(16px,1.7vw,20px);line-height:1.5;color:var(--muted);max-width:64ch;margin:0 0 8px}
+  .slide .lead.big{font-size:clamp(18px,2.1vw,26px);color:var(--primary)}
+  .slide strong{color:var(--primary);font-weight:600}
+  .slide em{font-style:normal;background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:600}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:26px}
+  .cols.c3{grid-template-columns:repeat(3,1fr)}
+  @media (max-width:820px){.cols,.cols.c3{grid-template-columns:1fr}}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 24px 22px;
+    box-shadow:0 1px 0 rgba(13,31,45,.03)}
+  .card .kick{font-family:var(--font-heading);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--cyan);margin:0 0 10px}
+  .card h3{font-family:var(--font-heading);font-weight:700;font-size:19px;margin:0 0 8px;color:var(--primary)}
+  .card p{margin:0;font-size:14.5px;line-height:1.55;color:var(--muted)}
+  .card .num{font-family:var(--font-heading);font-weight:800;font-size:13px;color:#fff;background:var(--gradient);
+    width:30px;height:30px;border-radius:9px;display:grid;place-items:center;margin-bottom:14px}
+
+  .stack{display:grid;gap:12px;margin-top:22px}
+  .row{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);
+    border-radius:13px;padding:15px 18px}
+  .row .dot{margin-top:6px;width:9px;height:9px;border-radius:50%;background:var(--gradient);flex:none}
+  .row .rtxt{font-size:15px;line-height:1.5;color:var(--primary)}
+  .row .rtxt b{font-weight:600}
+  .row .rtxt span{color:var(--muted)}
+
+  .tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-heading);font-weight:600;
+    font-size:12px;letter-spacing:.03em;padding:6px 12px;border-radius:99px;border:1px solid var(--line);color:var(--primary)}
+  .tag.on{background:rgba(26,158,158,.1);border-color:transparent;color:#0a7d7d}
+  .tag.blocked{background:rgba(124,58,237,.09);border-color:transparent;color:#6d28d9}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+
+  .quote{font-family:var(--font-heading);font-weight:600;font-size:clamp(20px,2.6vw,30px);line-height:1.3;
+    color:var(--primary);letter-spacing:-.01em}
+  .quote .q{color:var(--cyan)}
+
+  .callout{border-left:3px solid transparent;border-image:var(--gradient) 1;padding:4px 0 4px 20px;margin-top:22px}
+  .callout p{margin:0;font-size:16px;line-height:1.55;color:var(--primary)}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:26px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  @media (max-width:820px){.split{grid-template-columns:1fr}}
+  .split .half{padding:24px}
+  .split .half:first-child{border-right:1px solid var(--line)}
+  @media (max-width:820px){.split .half:first-child{border-right:none;border-bottom:1px solid var(--line)}}
+  .split .half .kick{font-family:var(--font-heading);font-weight:700;font-size:12px;letter-spacing:.1em;
+    text-transform:uppercase;margin:0 0 12px}
+  .split .half.out .kick{color:var(--cyan)}
+  .split .half.in .kick{color:var(--purple)}
+  .split .half ul{margin:0;padding-left:18px}
+  .split .half li{font-size:14.5px;line-height:1.6;color:var(--muted);margin-bottom:6px}
+  .split .half li strong{color:var(--primary)}
+
+  /* dark-slide overrides for primitives */
+  .theme-dark .slide h1,.theme-dark .slide h2{color:#fff}
+  .theme-dark .slide .lead{color:rgba(255,255,255,.72)}
+  .theme-dark .slide .lead.big{color:#fff}
+  .theme-dark .slide strong{color:#fff}
+  .theme-dark .card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12)}
+  .theme-dark .card h3{color:#fff}
+  .theme-dark .card p{color:rgba(255,255,255,.68)}
+  .theme-dark .row{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12)}
+  .theme-dark .row .rtxt{color:#fff}.theme-dark .row .rtxt span{color:rgba(255,255,255,.6)}
+  .theme-dark .quote{color:#fff}
+  .theme-dark .tag{color:#fff;border-color:rgba(255,255,255,.2)}
+</style>
+</head>
+<body>
+<div id="deck">
+  <div id="boot"><div class="boot-dot"></div></div>
+
+  <div id="stage"><div class="slidewrap"></div></div>
+
+  <div id="topbar">
+    <div class="wordmark">RE·REV × LANYARD</div>
+    <div class="hint">← → move · F fullscreen · O overview · R reload slide</div>
+  </div>
+
+  <div id="chrome">
+    <div class="cnt"><b id="cur">01</b> / <span id="tot">–</span></div>
+    <div class="railwrap"><div class="rail" id="rail"></div></div>
+    <div class="ttl" id="ttl"></div>
+    <div class="navbtns">
+      <button class="navbtn" id="prev" title="Previous (←)" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="navbtn" id="menu" title="Overview (O)" aria-label="Overview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      </button>
+      <button class="navbtn" id="next" title="Next (→)" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="overview">
+    <div class="ovcard">
+      <h3>Session overview</h3>
+      <p>Jump to any topic. Press a number, click a row, or hit O to close.</p>
+      <div class="ovlist" id="ovlist"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const BASE = new URL('.', location.href).href;          // dir of this doc, trailing slash
+  const bust = () => '?v=' + Date.now();                   // cache-bust for live reloads
+  const $ = s => document.querySelector(s);
+
+  const stage = $('#stage'), wrap = $('.slidewrap'), boot = $('#boot');
+  const curEl=$('#cur'), totEl=$('#tot'), railEl=$('#rail'), ttlEl=$('#ttl');
+  const prevB=$('#prev'), nextB=$('#next'), menuB=$('#menu');
+  const overview=$('#overview'), ovlist=$('#ovlist'), deck=$('#deck');
+
+  let slides=[];            // [{id,title,theme,html}]
+  let i=0;                  // current index
+  let idleTimer=null;
+
+  async function fetchFragment(id){
+    const res = await fetch(BASE + 'slides/' + id + '/slide.html' + bust(), {cache:'no-store'});
+    if(!res.ok) throw new Error('slide "'+id+'" → '+res.status);
+    return await res.text();
+  }
+
+  async function loadManifest(){
+    const res = await fetch(BASE + 'manifest.json' + bust(), {cache:'no-store'});
+    if(!res.ok) throw new Error('manifest.json → '+res.status);
+    return await res.json();
+  }
+
+  function fail(msg){
+    boot.innerHTML = '<div class="err"><h2 style="font-family:var(--font-heading)">Deck couldn\u2019t load</h2>'
+      + '<p style="color:var(--muted)">'+msg+'</p>'
+      + '<p style="color:var(--muted);font-size:13px">This only runs when served over http (Railway), not from a file:// path.</p></div>';
+  }
+
+  function render(){
+    const s = slides[i];
+    document.body.classList.toggle('theme-dark', s.theme==='dark');
+    wrap.innerHTML = s.html;
+    curEl.textContent = String(i+1).padStart(2,'0');
+    ttlEl.textContent = s.title || '';
+    railEl.style.width = (slides.length<2?100:(i/(slides.length-1))*100) + '%';
+    prevB.disabled = i===0;
+    nextB.disabled = i===slides.length-1;
+    stage.classList.toggle('can-advance', i<slides.length-1);
+    [...ovlist.children].forEach((r,idx)=>r.classList.toggle('active',idx===i));
+  }
+
+  function go(n){ const t=Math.max(0,Math.min(slides.length-1,n)); if(t!==i){i=t;render();} }
+  const next=()=>go(i+1), prev=()=>go(i-1);
+
+  async function reloadCurrent(){
+    // live-edit hook: re-pull just this one fragment, no full reload, keep position
+    try{
+      const s=slides[i];
+      const flash=ttlEl.textContent; ttlEl.textContent='reloading '+s.id+'…';
+      s.html = await fetchFragment(s.id);
+      render();
+      setTimeout(()=>{ if(ttlEl.textContent.startsWith('reloading')) ttlEl.textContent=flash; },200);
+    }catch(e){ ttlEl.textContent='reload failed: '+e.message; }
+  }
+
+  function toggleFs(){
+    if(!document.fullscreenElement){ document.documentElement.requestFullscreen?.(); }
+    else{ document.exitFullscreen?.(); }
+  }
+
+  function buildOverview(){
+    ovlist.innerHTML='';
+    slides.forEach((s,idx)=>{
+      const row=document.createElement('div');
+      row.className='ovrow';
+      row.innerHTML='<span class="ovnum">'+String(idx+1).padStart(2,'0')+'</span><span class="ovttl">'+s.title+'</span>';
+      row.onclick=()=>{ go(idx); closeOv(); };
+      ovlist.appendChild(row);
+    });
+  }
+  const openOv=()=>{overview.classList.add('open');};
+  const closeOv=()=>{overview.classList.remove('open');};
+  const toggleOv=()=>overview.classList.contains('open')?closeOv():openOv();
+
+  function idlePoke(){
+    deck.classList.remove('idle');
+    clearTimeout(idleTimer);
+    idleTimer=setTimeout(()=>deck.classList.add('idle'),2600);
+  }
+
+  // ---------- events ----------
+  nextB.onclick=next; prevB.onclick=prev; menuB.onclick=toggleOv;
+  stage.addEventListener('click',e=>{ if(stage.classList.contains('can-advance')) next(); });
+  overview.addEventListener('click',e=>{ if(e.target===overview) closeOv(); });
+
+  window.addEventListener('keydown',e=>{
+    idlePoke();
+    if(overview.classList.contains('open')){
+      if(e.key==='Escape'||e.key==='o'||e.key==='O') return closeOv();
+      if(/^[0-9]$/.test(e.key)){ const n=(e.key==='0'?10:parseInt(e.key,10))-1; if(slides[n]){go(n);closeOv();} return; }
+    }
+    switch(e.key){
+      case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); next(); break;
+      case 'ArrowLeft': case 'PageUp': e.preventDefault(); prev(); break;
+      case 'Home': go(0); break;
+      case 'End': go(slides.length-1); break;
+      case 'f': case 'F': toggleFs(); break;
+      case 'r': case 'R': reloadCurrent(); break;
+      case 'o': case 'O': toggleOv(); break;
+      case 'Escape': closeOv(); break;
+    }
+  });
+  window.addEventListener('mousemove',idlePoke);
+
+  // ---------- boot ----------
+  (async function(){
+    try{
+      const manifest = await loadManifest();
+      const list = Array.isArray(manifest) ? manifest : manifest.slides;
+      totEl.textContent = String(list.length).padStart(2,'0');
+      slides = await Promise.all(list.map(async m=>({
+        id:m.id, title:m.title||m.id, theme:m.theme||'light', html: await fetchFragment(m.id)
+      })));
+      buildOverview();
+      boot.style.display='none';
+      render(); idlePoke();
+    }catch(e){ fail(e.message); }
+  })();
+})();
+</script>
+</body>
+</html>
