@@ -1,0 +1,15 @@
+{
+  "slides": [
+    { "id": "01-cover",          "title": "Working session — Lanyard × ReRev", "theme": "dark" },
+    { "id": "02-agenda",         "title": "What we'll cover today" },
+    { "id": "03-frame",          "title": "Two priorities, one system", "theme": "dark" },
+    { "id": "04-linkedin-engine","title": "LinkedIn — the out-of-funnel engine" },
+    { "id": "05-nurture-defined","title": "Nurture, defined" },
+    { "id": "06-call-close",     "title": "The load-bearing condition" },
+    { "id": "07-peer-moves",     "title": "Nurture like peers — the two moves" },
+    { "id": "08-three-questions","title": "The three questions this kills" },
+    { "id": "09-tooling",        "title": "Tooling: playbook before software" },
+    { "id": "10-parking-lot",    "title": "Parking lot + what I need from you" },
+    { "id": "11-homework-cadence","title": "Homework, to-dos & how we work" }
+  ]
+}
