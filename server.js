@@ -9,16 +9,9 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 // Serve static files from /proposals folder — extensions: ['html'] allows extensionless URLs
 app.use('/proposals', express.static(path.join(__dirname, 'proposals'), { extensions: ['html'] }));
 
-// Index route — lists available proposals (helpful for debugging)
+// Index route — serves the master index.html listing every live proposal link
 app.get('/', (req, res) => {
-  res.send(`
-    <html>
-      <body style="font-family: sans-serif; padding: 2rem; background: #F0F7F7;">
-        <h2 style="color: #0D1F2D;">Proposals Server</h2>
-        <p style="color: #555;">Running. Proposals are served at <code>/proposals/[slug]</code></p>
-      </body>
-    </html>
-  `);
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // 404 handler
