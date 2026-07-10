@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposals Index — ReRev Labs</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F0F7F7;
+    --primary: #0D1F2D;
+    --body-text: #3D5166;
+    --cyan: #1A9E9E;
+    --purple: #7C3AED;
+    --gradient: linear-gradient(90deg, #1A9E9E, #7C3AED);
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --card-border: rgba(13,31,45,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--primary);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    padding: 48px 24px 80px;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; }
+  .wordmark { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 32px; }
+  .wordmark-bar { width: 26px; height: 3px; background: var(--gradient); border-radius: 2px; }
+  .wordmark-text { font-family: var(--font-heading); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cyan); }
+  h1 { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 40px); font-weight: 700; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .sub { color: var(--body-text); font-size: 15px; margin-bottom: 8px; }
+  .updated { color: var(--body-text); font-size: 12px; opacity: 0.7; margin-bottom: 40px; }
+  .search {
+    width: 100%; padding: 12px 16px; margin-bottom: 36px;
+    border: 1px solid var(--card-border); border-radius: 10px;
+    font-family: var(--font-body); font-size: 14px; background: white; color: var(--primary);
+  }
+  .search:focus { outline: none; border-color: var(--cyan); }
+  .venture { margin-bottom: 40px; }
+  .venture-title {
+    font-family: var(--font-heading); font-size: 13px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple);
+    margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--card-border);
+  }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    display: flex; flex-direction: column; gap: 4px;
+    background: white; border: 1px solid var(--card-border); border-radius: 10px;
+    padding: 14px 16px; text-decoration: none; color: var(--primary);
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .card:hover { box-shadow: 0 2px 12px rgba(13,31,45,0.08); transform: translateY(-1px); }
+  .card-name { font-family: var(--font-heading); font-size: 14px; font-weight: 600; }
+  .card-slug { font-size: 11.5px; color: var(--body-text); opacity: 0.75; font-family: monospace; }
+  .card-date { font-size: 11px; color: var(--cyan); font-weight: 500; }
+  .no-results { color: var(--body-text); font-size: 14px; display: none; }
+  footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--card-border); font-size: 12px; color: var(--body-text); opacity: 0.7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="wordmark">
+    <div class="wordmark-bar"></div>
+    <span class="wordmark-text">ReRev Labs</span>
+  </div>
+
+  <h1>Proposals Index</h1>
+  <p class="sub">Every live link in one place. Click a card to open it.</p>
+  <p class="updated">Last updated: July 10, 2026</p>
+
+  <input type="text" class="search" id="searchBox" placeholder="Search by name, slug, or keyword..." onkeyup="filterCards()">
+  <p class="no-results" id="noResults">No matches. Check the spelling or browse below.</p>
+
+  <div id="ventureContainer">
+
+    <div class="venture" data-venture="rerev">
+      <div class="venture-title">ReRev Labs</div>
+      <div class="grid">
+        <a class="card" href="/proposals/rerev-offerings-grid-0626.html" target="_blank">
+          <span class="card-name">Offering Grid (Tiers &times; Journeys)</span>
+          <span class="card-slug">rerev-offerings-grid-0626</span>
+          <span class="card-date">Jun 2026</span>
+        </a>
+        <a class="card" href="/proposals/rerev-content-tier-framework-0526.html" target="_blank">
+          <span class="card-name">Three-Tier Content Stack</span>
+          <span class="card-slug">rerev-content-tier-framework-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/rerev-revenue-stack-0626.html" target="_blank">
+          <span class="card-name">Revenue Stack</span>
+          <span class="card-slug">rerev-revenue-stack-0626</span>
+          <span class="card-date">Jun 2026</span>
+        </a>
+        <a class="card" href="/proposals/rerev-fb-athlete-site-0626.html" target="_blank">
+          <span class="card-name">Facebook Ads — Athlete Site</span>
+          <span class="card-slug">rerev-fb-athlete-site-0626</span>
+          <span class="card-date">Jun 2026</span>
+        </a>
+        <a class="card" href="/proposals/rerev-fb-expert-consultation-0626.html" target="_blank">
+          <span class="card-name">Facebook Ads — Expert Consultation</span>
+          <span class="card-slug">rerev-fb-expert-consultation-0626</span>
+          <span class="card-date">Jun 2026</span>
+        </a>
+        <a class="card" href="/proposals/rerev-loan-presentation-0426.html" target="_blank">
+          <span class="card-name">Loan Presentation</span>
+          <span class="card-slug">rerev-loan-presentation-0426</span>
+          <span class="card-date">Apr 2026</span>
+        </a>
+        <a class="card" href="/proposals/personal-brand-workshop-0526.html" target="_blank">
+          <span class="card-name">Personal Brand Workshop</span>
+          <span class="card-slug">personal-brand-workshop-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/publishing-layer-workshop-0526.html" target="_blank">
+          <span class="card-name">Publishing Layer Workshop</span>
+          <span class="card-slug">publishing-layer-workshop-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/llm-session-0526.html" target="_blank">
+          <span class="card-name">LLM Session</span>
+          <span class="card-slug">llm-session-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/nicole-clarke-workflow-0526.html" target="_blank">
+          <span class="card-name">Nicole Clarke — Workflow</span>
+          <span class="card-slug">nicole-clarke-workflow-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/parslabs-speaker-pitch-0526.html" target="_blank">
+          <span class="card-name">ParsLabs — Speaker Pitch</span>
+          <span class="card-slug">parslabs-speaker-pitch-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/athlete-pixels-review-0626.html" target="_blank">
+          <span class="card-name">Athlete Site — Pixels Review</span>
+          <span class="card-slug">athlete-pixels-review-0626</span>
+          <span class="card-date">Jun 2026</span>
+        </a>
+        <a class="card" href="/proposals/bwit-vibe-coding-0626.html" target="_blank">
+          <span class="card-name">BWIT — Vibe Coding</span>
+          <span class="card-slug">bwit-vibe-coding-0626</span>
+          <span class="card-date">Jun 2026</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="venture" data-venture="btc">
+      <div class="venture-title">BlackTech Capital</div>
+      <div class="grid">
+        <a class="card" href="/proposals/btc-ic-package-jun2026.html" target="_blank">
+          <span class="card-name">IC Package</span>
+          <span class="card-slug">btc-ic-package-jun2026</span>
+          <span class="card-date">Jun 2026</span>
+        </a>
+        <a class="card" href="/proposals/btc-climate-sources-0526.html" target="_blank">
+          <span class="card-name">Climate Sources</span>
+          <span class="card-slug">btc-climate-sources-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/btc-newsletter-calendar-0526.html" target="_blank">
+          <span class="card-name">Newsletter Calendar</span>
+          <span class="card-slug">btc-newsletter-calendar-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/btc-newsletter-slides-0526.html" target="_blank">
+          <span class="card-name">Newsletter Slides</span>
+          <span class="card-slug">btc-newsletter-slides-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="venture" data-venture="prismm">
+      <div class="venture-title">Prismm</div>
+      <div class="grid">
+        <a class="card" href="/proposals/prismm-whitepaper-proposal-0626.html" target="_blank">
+          <span class="card-name">Whitepaper Proposal</span>
+          <span class="card-slug">prismm-whitepaper-proposal-0626</span>
+          <span class="card-date">Jun 2026</span>
+        </a>
+        <a class="card" href="/proposals/prismm-whitepaper-rubric-0626.html" target="_blank">
+          <span class="card-name">Whitepaper Rubric</span>
+          <span class="card-slug">prismm-whitepaper-rubric-0626</span>
+          <span class="card-date">Jun 2026</span>
+        </a>
+        <a class="card" href="/proposals/prismm-readynow-climb-0626.html" target="_blank">
+          <span class="card-name">ReadyNow — Climb</span>
+          <span class="card-slug">prismm-readynow-climb-0626</span>
+          <span class="card-date">Jun 2026</span>
+        </a>
+        <a class="card" href="/proposals/prismm-advintro-partnership-0626.html" target="_blank">
+          <span class="card-name">Advisor Intro — Partnership</span>
+          <span class="card-slug">prismm-advintro-partnership-0626</span>
+          <span class="card-date">Jun 2026</span>
+        </a>
+        <a class="card" href="/proposals/prismm-icp-grid-0526.html" target="_blank">
+          <span class="card-name">ICP Grid</span>
+          <span class="card-slug">prismm-icp-grid-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/prismm-sunset-competitive-0526.html" target="_blank">
+          <span class="card-name">Sunset — Competitive</span>
+          <span class="card-slug">prismm-sunset-competitive-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/prismm-shari-fleming-preview-0526.html" target="_blank">
+          <span class="card-name">Shari Fleming — Partner Preview</span>
+          <span class="card-slug">prismm-shari-fleming-preview-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/prismm-invoice-0626.html" target="_blank">
+          <span class="card-name">Invoice — June</span>
+          <span class="card-slug">prismm-invoice-0626</span>
+          <span class="card-date">Jun 2026</span>
+        </a>
+        <a class="card" href="/proposals/prismm-invoice-0526.html" target="_blank">
+          <span class="card-name">Invoice — May</span>
+          <span class="card-slug">prismm-invoice-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/prismm-invoice-0426.html" target="_blank">
+          <span class="card-name">Invoice — April</span>
+          <span class="card-slug">prismm-invoice-0426</span>
+          <span class="card-date">Apr 2026</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="venture" data-venture="infra">
+      <div class="venture-title">Client Infrastructure Builds</div>
+      <div class="grid">
+        <a class="card" href="/proposals/bill-parser-setup-0526.html" target="_blank">
+          <span class="card-name">Bill Parser — Setup</span>
+          <span class="card-slug">bill-parser-setup-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/gpm-bill-parser-viz.html" target="_blank">
+          <span class="card-name">GPM Bill Parser — Visualization</span>
+          <span class="card-slug">gpm-bill-parser-viz</span>
+          <span class="card-date">&mdash;</span>
+        </a>
+        <a class="card" href="/proposals/fathom-post-meeting-setup-0526.html" target="_blank">
+          <span class="card-name">Fathom — Post-Meeting Setup</span>
+          <span class="card-slug">fathom-post-meeting-setup-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/t018-fathom-setup-0526.html" target="_blank">
+          <span class="card-name">T018 — Fathom Setup</span>
+          <span class="card-slug">t018-fathom-setup-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/t018-google-meet-setup-0526.html" target="_blank">
+          <span class="card-name">T018 — Google Meet Setup</span>
+          <span class="card-slug">t018-google-meet-setup-0526</span>
+          <span class="card-date">May 2026</span>
+        </a>
+        <a class="card" href="/proposals/lanyard-health-automation-0625.html" target="_blank">
+          <span class="card-name">Lanyard Health — Automation</span>
+          <span class="card-slug">lanyard-health-automation-0625</span>
+          <span class="card-date">Jun 2025</span>
+        </a>
+        <a class="card" href="/proposals/lanyard-working-0726/" target="_blank">
+          <span class="card-name">Lanyard — Working Build (multi-file)</span>
+          <span class="card-slug">lanyard-working-0726/</span>
+          <span class="card-date">Jul 2026</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="no-results" id="bottomNote" style="opacity:0.6; font-size:12px; margin-top:24px;">
+    New proposals get added here every time one is pushed. If a link 404s, it may live in a subfolder — check the GitHub repo directly.
+  </p>
+
+  <footer>
+    keyona-rerev/proposals-server &middot; auto-deployed via Railway
+  </footer>
+
+</div>
+
+<script>
+  function filterCards() {
+    const q = document.getElementById('searchBox').value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.card');
+    const ventures = document.querySelectorAll('.venture');
+    let anyVisible = false;
+
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      const match = text.includes(q);
+      card.style.display = match ? 'flex' : 'none';
+      if (match) anyVisible = true;
+    });
+
+    ventures.forEach(v => {
+      const hasVisible = Array.from(v.querySelectorAll('.card')).some(c => c.style.display !== 'none');
+      v.style.display = hasVisible ? 'block' : 'none';
+    });
+
+    document.getElementById('noResults').style.display = anyVisible ? 'none' : 'block';
+  }
+</script>
+
+</body>
+</html>
