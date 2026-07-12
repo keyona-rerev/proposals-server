@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full-Funnel Campaign Kit — Build Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#141414; --surface:#1c1c1c; --pink:#EF67A5; --green:#00A650;
+    --ink:#ffffff; --ink-soft:rgba(255,255,255,0.65); --rule:rgba(255,255,255,0.1);
+    --amber:#E0A83E; --red:#D9694B;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.55;}
+  .wrap{max-width:840px;margin:0 auto;padding:56px 28px 90px;}
+  .eyebrow{font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink);font-weight:700;margin-bottom:14px;}
+  h1{font-family:'Fraunces',serif;font-weight:800;font-size:clamp(28px,4.4vw,42px);margin:0 0 14px;letter-spacing:-0.01em;}
+  .sub{font-size:16px;color:var(--ink-soft);max-width:68ch;margin-bottom:6px;}
+  .tracker{font-size:13px;color:var(--ink-soft);margin-bottom:44px;}
+  .tracker b{color:var(--green);}
+
+  .phase{margin-bottom:34px;}
+  .phase-head{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;}
+  .phase-num{font-family:'Fraunces',serif;font-weight:700;color:var(--pink);font-size:14px;}
+  .phase-title{font-family:'Fraunces',serif;font-weight:700;font-size:20px;}
+  .phase-desc{font-size:13.5px;color:var(--ink-soft);margin:2px 0 16px 0;}
+
+  .item{
+    display:flex;align-items:flex-start;gap:14px;
+    background:var(--surface);border:1px solid var(--rule);border-radius:10px;
+    padding:15px 18px;margin-bottom:10px;
+  }
+  .check{
+    flex:0 0 22px;width:22px;height:22px;border-radius:6px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;margin-top:1px;
+  }
+  .check.done{background:var(--green);color:var(--bg);}
+  .check.progress{background:var(--amber);color:var(--bg);}
+  .check.blocked{background:var(--red);color:var(--bg);}
+  .check.open{background:transparent;border:2px solid var(--rule);}
+  .item-body{flex:1;min-width:0;}
+  .item-title{font-weight:600;font-size:15px;margin-bottom:3px;}
+  .item-status{
+    display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
+    padding:2px 9px;border-radius:999px;margin-bottom:6px;
+  }
+  .status-done{background:rgba(0,166,80,0.18);color:var(--green);}
+  .status-progress{background:rgba(224,168,62,0.18);color:var(--amber);}
+  .status-blocked{background:rgba(217,105,75,0.18);color:var(--red);}
+  .status-open{background:rgba(255,255,255,0.08);color:var(--ink-soft);}
+  .item-desc{font-size:13.5px;color:var(--ink-soft);line-height:1.45;}
+
+  .principle{
+    border-left:3px solid var(--pink);background:rgba(239,103,165,0.08);
+    padding:14px 18px;border-radius:0 8px 8px 0;font-size:13.5px;color:var(--ink-soft);margin:16px 0 20px;
+  }
+  .principle b{color:var(--ink);}
+
+  .divider{height:1px;background:var(--rule);margin:40px 0 36px;}
+  footer{font-size:12px;color:var(--ink-soft);margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Reusable operating checklist</div>
+  <h1>Full-funnel campaign kit</h1>
+  <p class="sub">The repeatable delivery structure for any client's full-funnel campaign: ad, free asset, audience profile, conversion path, and nurture. Built once, tracked per client.</p>
+  <p class="tracker">Currently tracked against <b>SisterGolf</b>. Copy this structure for the next client, reset the statuses.</p>
+
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">01</span><span class="phase-title">Top of funnel</span></div>
+    <div class="phase-desc">Get her attention and drive her to the free asset.</div>
+
+    <div class="item">
+      <div class="check progress">~</div>
+      <div class="item-body">
+        <span class="item-status status-progress">4 of 5 built</span>
+        <div class="item-title">Facebook ad variants (aim for 5)</div>
+        <div class="item-desc">Four directions built: loss framing, Poker Power mirror, belonging, and the talking-head coach hook. One more variant to round out the test set.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">02</span><span class="phase-title">Free asset</span></div>
+    <div class="phase-desc">Earn the email and prove the value, before she ever talks to a human.</div>
+
+    <div class="item">
+      <div class="check open">&#9675;</div>
+      <div class="item-body">
+        <span class="item-status status-open">Decision needed</span>
+        <div class="item-title">Digital lead magnet chosen and built</div>
+        <div class="item-desc">Leading concept: a calculator showing what golf-adjacent access is costing her, plus a personalized skill-building plan and a dollar estimate. Nothing else downstream can be built until this is picked.</div>
+      </div>
+    </div>
+
+    <div class="principle"><b>Design principle, not a checklist item:</b> the email ask lives inside the tool's own flow, the way the Brand Assessor Calculator does it, where every entry naturally includes an email because the tool itself asks for it. It should never feel like a gate in front of the value.</div>
+
+    <div class="item">
+      <div class="check blocked">&#215;</div>
+      <div class="item-body">
+        <span class="item-status status-blocked">Blocked on asset decision</span>
+        <div class="item-title">Landing page for the free asset</div>
+        <div class="item-desc">Copy structure is drafted. Can't finish the real build until the asset above is chosen.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">03</span><span class="phase-title">Audience definition</span></div>
+    <div class="phase-desc">Know exactly who this whole kit is built for.</div>
+
+    <div class="item">
+      <div class="check done">&#10003;</div>
+      <div class="item-body">
+        <span class="item-status status-done">Built</span>
+        <div class="item-title">Target audience in-depth profile</div>
+        <div class="item-desc">Ready-Now Buyer profile complete, split into self-funded professionals and employer-sponsored teams, with momentary and static signals for each.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">04</span><span class="phase-title">Conversion</span></div>
+    <div class="phase-desc">Turn the free asset into a booked consult or a purchase.</div>
+
+    <div class="item">
+      <div class="check open">&#9675;</div>
+      <div class="item-body">
+        <span class="item-status status-open">Not started</span>
+        <div class="item-title">Consult booking flow, with location branch</div>
+        <div class="item-desc">In-market prospects route to in-person SisterGolf sessions. Out-of-market prospects route to Shella's online coaching program. The branch needs to be an explicit question at booking, not a guess.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="check open">&#9675;</div>
+      <div class="item-body">
+        <span class="item-status status-open">Decision needed</span>
+        <div class="item-title">Core offering defined for both paths</div>
+        <div class="item-desc">What she actually buys or joins after the consult, on both the in-person and remote sides.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">05</span><span class="phase-title">Retention of interest</span></div>
+    <div class="phase-desc">For everyone who downloads the asset but isn't ready to book or buy yet.</div>
+
+    <div class="item">
+      <div class="check open">&#9675;</div>
+      <div class="item-body">
+        <span class="item-status status-open">Not started</span>
+        <div class="item-title">Nurture sequence</div>
+        <div class="item-desc">Pain-point focused, not sales focused. Separate track from cold outreach entirely, this is about addressing why she hasn't converted yet, not pitching her again.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">06</span><span class="phase-title">Outbound</span></div>
+    <div class="phase-desc">The cold side, running in parallel to the inbound funnel above.</div>
+
+    <div class="item">
+      <div class="check open">&#9675;</div>
+      <div class="item-body">
+        <span class="item-status status-open">Not started</span>
+        <div class="item-title">Cold email campaign copy for the target audience</div>
+        <div class="item-desc">Selling to them directly, distinct from the nurture sequence which addresses pain points to convert people already in the funnel.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="check open">&#9675;</div>
+      <div class="item-body">
+        <span class="item-status status-open">Not started</span>
+        <div class="item-title">Recommended email signature</div>
+        <div class="item-desc">Whatever Shella (or whoever's sending) uses across the outbound and nurture sends.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">07</span><span class="phase-title">Operations</span></div>
+    <div class="phase-desc">How the whole kit actually runs once it's live.</div>
+
+    <div class="item">
+      <div class="check open">&#9675;</div>
+      <div class="item-body">
+        <span class="item-status status-open">Not started</span>
+        <div class="item-title">Execution timeline, with volume and cadence</div>
+        <div class="item-desc">How many sends, how often, and over what window, once everything above is built.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <footer>Reusable structure. When starting the next client, duplicate this page, keep the seven phases, reset every item to open, and swap the audience profile and asset concept for the new client's specifics.</footer>
+</div>
+</body>
+</html>
