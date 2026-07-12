@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SisterGolf — Tournament Readiness Tool Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF7F2;
+    --surface:#FFFFFF;
+    --ink:#1A1A1A;
+    --ink-soft:#4A4A4A;
+    --ink-mute:#8A8A8A;
+    --pink:#EF67A5;
+    --pink-pale:#FCE3EE;
+    --pink-dark:#C4437F;
+    --green:#00A650;
+    --green-pale:#E4F3EA;
+    --amber:#B8862E;
+    --amber-pale:#FBF0D9;
+    --rule:rgba(0,0,0,0.1);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1120px;margin:0 auto;padding:56px 28px 90px;}
+  .eyebrow{font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink);font-weight:700;margin-bottom:14px;}
+  h1{font-family:'Fraunces',serif;font-weight:800;font-size:clamp(30px,4.4vw,44px);margin:0 0 14px;letter-spacing:-0.015em;color:var(--ink);}
+  .sub{font-size:16px;color:var(--ink-soft);max-width:70ch;margin-bottom:6px;}
+  .tracker{font-size:13px;color:var(--ink-mute);margin-bottom:44px;}
+  .tracker b{color:var(--green);font-weight:600;}
+
+  /* Persona card */
+  .persona{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:16px;
+    padding:36px 40px;
+    margin-bottom:48px;
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:36px;
+    align-items:start;
+    box-shadow:0 1px 3px rgba(0,0,0,0.04);
+  }
+  .persona-tag{
+    display:inline-block;
+    background:var(--pink);
+    color:#fff;
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    padding:6px 12px;
+    border-radius:999px;
+    margin-bottom:16px;
+  }
+  .persona-avatar{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--pink),var(--pink-dark));
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:38px;
+    margin-bottom:18px;
+  }
+  .persona-left h2{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:26px;
+    margin:0 0 4px;
+    color:var(--ink);
+  }
+  .persona-role{
+    font-size:14px;
+    color:var(--ink-soft);
+    margin:0 0 22px;
+  }
+  .persona-stats{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .persona-stat{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .persona-stat .label{
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-mute);
+    font-weight:600;
+  }
+  .persona-stat .val{
+    font-size:14px;
+    color:var(--ink);
+    font-weight:500;
+  }
+  .persona-story h3{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:18px;
+    color:var(--pink-dark);
+    margin:0 0 10px;
+  }
+  .persona-story p{
+    color:var(--ink-soft);
+    font-size:14.5px;
+    margin:0 0 12px;
+    line-height:1.55;
+  }
+  .persona-quote{
+    background:var(--pink-pale);
+    border-left:3px solid var(--pink);
+    padding:14px 18px;
+    border-radius:0 8px 8px 0;
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    color:var(--ink);
+    font-size:15px;
+    margin:14px 0 0;
+  }
+  .persona-cta{
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid var(--rule);
+    font-size:13px;
+    color:var(--ink-mute);
+  }
+  .persona-cta b{color:var(--ink);font-weight:600;}
+
+  /* Section header */
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    margin:20px 0 24px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--rule);
+  }
+  .section-head h2{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:22px;
+    margin:0;
+  }
+  .section-head .kicker{
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--pink);
+    font-weight:700;
+  }
+
+  /* Screen grid */
+  .screens{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:36px;
+  }
+  .screen-block{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .screen-label{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+  }
+  .screen-num{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:11px;
+    color:#fff;
+    background:var(--ink);
+    padding:4px 10px;
+    border-radius:6px;
+    letter-spacing:0.06em;
+  }
+  .screen-title{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--ink);
+  }
+
+  /* Device mockup frame */
+  .device{
+    width:100%;
+    max-width:360px;
+    background:#fff;
+    border:2px solid #E8E4DD;
+    border-radius:22px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.06);
+    overflow:hidden;
+    padding:22px 20px;
+    min-height:520px;
+    display:flex;
+    flex-direction:column;
+    align-self:center;
+  }
+  .device-notch{
+    display:flex;
+    justify-content:center;
+    margin-bottom:14px;
+  }
+  .device-notch::before{
+    content:"";
+    width:44px;
+    height:5px;
+    background:#E8E4DD;
+    border-radius:999px;
+  }
+  .device-brand{
+    text-align:center;
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:14px;
+    color:var(--pink);
+    margin-bottom:10px;
+  }
+  .device-progress{
+    display:flex;
+    gap:5px;
+    margin-bottom:22px;
+  }
+  .device-progress-dot{
+    height:4px;
+    background:#EFEBE4;
+    border-radius:2px;
+    flex:1;
+  }
+  .device-progress-dot.active{background:var(--pink);}
+
+  /* Landing screen content */
+  .lp-hook{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:22px;
+    color:var(--ink);
+    line-height:1.2;
+    margin:20px 0 12px;
+    letter-spacing:-0.01em;
+  }
+  .lp-sub{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-bottom:24px;
+    line-height:1.5;
+  }
+  .lp-features{
+    background:var(--pink-pale);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:22px;
+  }
+  .lp-features-title{
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--pink-dark);
+    font-weight:700;
+    margin-bottom:8px;
+  }
+  .lp-feature{
+    font-size:12.5px;
+    color:var(--ink);
+    padding:4px 0;
+    display:flex;
+    gap:8px;
+    align-items:flex-start;
+  }
+  .lp-feature::before{
+    content:"→";
+    color:var(--pink);
+    font-weight:700;
+    flex:0 0 auto;
+  }
+  .lp-trust{
+    font-size:11px;
+    color:var(--ink-mute);
+    text-align:center;
+    margin-top:auto;
+    padding-top:18px;
+  }
+
+  /* Buttons */
+  .btn{
+    background:var(--pink);
+    color:#fff;
+    border:none;
+    padding:14px 20px;
+    border-radius:10px;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    width:100%;
+    cursor:pointer;
+    display:block;
+    text-align:center;
+    margin-top:auto;
+  }
+  .btn-secondary{
+    background:transparent;
+    color:var(--ink);
+    border:1px solid var(--rule);
+    margin-top:10px;
+  }
+
+  /* Form inputs */
+  .q-heading{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:19px;
+    color:var(--ink);
+    margin:14px 0 8px;
+    line-height:1.25;
+  }
+  .q-helper{
+    font-size:12px;
+    color:var(--ink-mute);
+    margin-bottom:20px;
+  }
+  .field{
+    background:#F5F1EA;
+    border:1px solid #E8E1D4;
+    border-radius:8px;
+    padding:12px 14px;
+    font-size:14px;
+    color:var(--ink);
+    margin-bottom:12px;
+  }
+  .field.entered{
+    background:#fff;
+    border-color:var(--pink);
+    color:var(--ink);
+    font-weight:500;
+  }
+  .field-label{
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-mute);
+    font-weight:600;
+    margin-bottom:4px;
+  }
+  .dropdown{
+    background:#fff;
+    border:1px solid var(--pink);
+    border-radius:8px;
+    margin-bottom:14px;
+  }
+  .dropdown-item{
+    padding:10px 14px;
+    font-size:13px;
+    color:var(--ink);
+    border-bottom:1px solid #F0EBE3;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .dropdown-item:last-child{border-bottom:none;}
+  .dropdown-item.selected{
+    background:var(--pink-pale);
+    color:var(--pink-dark);
+    font-weight:600;
+  }
+  .dropdown-item .check{color:var(--pink);font-weight:700;}
+  .radio-group{margin-bottom:16px;}
+  .radio{
+    background:#fff;
+    border:1px solid #E8E1D4;
+    border-radius:10px;
+    padding:14px;
+    margin-bottom:10px;
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+  }
+  .radio.selected{
+    border-color:var(--pink);
+    background:var(--pink-pale);
+  }
+  .radio-dot{
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    border:2px solid #CCC5B8;
+    flex:0 0 auto;
+    margin-top:2px;
+    position:relative;
+  }
+  .radio.selected .radio-dot{border-color:var(--pink);}
+  .radio.selected .radio-dot::after{
+    content:"";
+    position:absolute;
+    top:2px;left:2px;right:2px;bottom:2px;
+    background:var(--pink);
+    border-radius:50%;
+  }
+  .radio-body strong{
+    display:block;
+    font-size:13.5px;
+    color:var(--ink);
+    margin-bottom:2px;
+  }
+  .radio-body span{
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+
+  /* Loading screen */
+  .loading-anim{
+    text-align:center;
+    padding:40px 0 30px;
+  }
+  .spinner{
+    width:60px;
+    height:60px;
+    border:4px solid #F0EBE3;
+    border-top-color:var(--pink);
+    border-radius:50%;
+    margin:0 auto 24px;
+  }
+  .load-step{
+    font-size:13px;
+    color:var(--ink);
+    padding:6px 0;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .load-step.done{color:var(--ink-mute);text-decoration:line-through;text-decoration-color:rgba(0,0,0,0.25);}
+  .load-step .dot{
+    width:8px;height:8px;border-radius:50%;flex:0 0 auto;
+  }
+  .load-step.done .dot{background:var(--green);}
+  .load-step.active .dot{background:var(--pink);}
+  .load-step.pending .dot{background:#E8E1D4;}
+
+  /* Report screens */
+  .report-header{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:22px;
+    color:var(--ink);
+    line-height:1.2;
+    margin:12px 0 8px;
+    letter-spacing:-0.01em;
+  }
+  .report-sub{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    margin-bottom:20px;
+  }
+  .stat-card{
+    background:linear-gradient(135deg,var(--pink),var(--pink-dark));
+    color:#fff;
+    padding:22px;
+    border-radius:12px;
+    margin-bottom:14px;
+  }
+  .stat-num{
+    font-family:'Fraunces',serif;
+    font-weight:800;
+    font-size:36px;
+    line-height:1;
+    margin-bottom:8px;
+  }
+  .stat-label{
+    font-size:12px;
+    line-height:1.4;
+  }
+  .stat-flag{
+    font-size:10.5px;
+    background:rgba(255,255,255,0.2);
+    padding:4px 8px;
+    border-radius:6px;
+    display:inline-block;
+    margin-top:10px;
+    font-weight:600;
+  }
+
+  .event-card{
+    background:#fff;
+    border:1px solid var(--rule);
+    border-radius:10px;
+    padding:16px;
+    margin-bottom:12px;
+  }
+  .event-rank{
+    display:inline-block;
+    background:var(--green);
+    color:#fff;
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    padding:3px 9px;
+    border-radius:999px;
+    margin-bottom:10px;
+  }
+  .event-rank.two{background:var(--amber);}
+  .event-name{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:15px;
+    color:var(--ink);
+    margin:0 0 6px;
+    line-height:1.25;
+  }
+  .event-meta{
+    font-size:11.5px;
+    color:var(--ink-mute);
+    margin-bottom:10px;
+    line-height:1.5;
+  }
+  .event-meta b{color:var(--ink-soft);font-weight:600;}
+  .event-why{
+    background:var(--green-pale);
+    padding:9px 11px;
+    border-radius:6px;
+    font-size:12px;
+    color:var(--ink);
+    line-height:1.4;
+  }
+  .event-card.two .event-why{background:var(--amber-pale);}
+  .event-why b{color:var(--green);font-weight:700;}
+  .event-card.two .event-why b{color:var(--amber);}
+  .event-prep{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px solid var(--rule);
+    font-size:11.5px;
+    color:var(--ink-mute);
+  }
+  .event-prep b{color:var(--ink);}
+
+  /* Plan screen */
+  .plan-month{
+    background:#fff;
+    border:1px solid var(--rule);
+    border-radius:8px;
+    padding:12px 14px;
+    margin-bottom:10px;
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:12px;
+    align-items:start;
+  }
+  .plan-num{
+    background:var(--pink);
+    color:#fff;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:14px;
+  }
+  .plan-body strong{
+    display:block;
+    font-size:13px;
+    color:var(--ink);
+    margin-bottom:2px;
+  }
+  .plan-body span{
+    font-size:11.5px;
+    color:var(--ink-soft);
+    line-height:1.45;
+  }
+  .plan-outro{
+    background:var(--green-pale);
+    border-left:3px solid var(--green);
+    padding:12px 14px;
+    border-radius:0 8px 8px 0;
+    font-size:12.5px;
+    color:var(--ink);
+    margin-top:14px;
+    line-height:1.45;
+  }
+  .plan-outro b{color:var(--green);}
+
+  /* Final CTA */
+  .cta-header{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:22px;
+    color:var(--ink);
+    line-height:1.2;
+    margin:12px 0 8px;
+    letter-spacing:-0.01em;
+  }
+  .cta-sub{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    margin-bottom:22px;
+  }
+  .cta-option{
+    background:#fff;
+    border:1px solid var(--rule);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:10px;
+  }
+  .cta-option.primary{
+    border-color:var(--pink);
+    background:var(--pink-pale);
+  }
+  .cta-option-label{
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--pink);
+    font-weight:700;
+    margin-bottom:4px;
+  }
+  .cta-option-title{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:15px;
+    color:var(--ink);
+    margin-bottom:3px;
+  }
+  .cta-option-desc{
+    font-size:12px;
+    color:var(--ink-soft);
+    line-height:1.4;
+  }
+
+  /* Design notes */
+  .note{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    padding:12px 14px;
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:8px;
+    line-height:1.5;
+    max-width:360px;
+  }
+  .note b{color:var(--ink);font-weight:600;}
+
+  .divider{height:1px;background:var(--rule);margin:56px 0 30px;}
+  footer{font-size:12px;color:var(--ink-mute);line-height:1.6;max-width:70ch;}
+  footer b{color:var(--ink-soft);}
+
+  @media(max-width:900px){
+    .persona{grid-template-columns:1fr;gap:24px;padding:28px;}
+    .screens{grid-template-columns:1fr;}
+    .device{max-width:340px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">Free asset walkthrough</div>
+  <h1>Tournament Readiness Tool: screen by screen</h1>
+  <p class="sub">The full experience of the free asset from ad click to booked consult, walked through with a real (composite) prospect. What Shella will actually be looking at when she sees this tool in the wild.</p>
+  <p class="tracker">Working spec, <b>SisterGolf</b>, ready for Shella review.</p>
+
+  <!-- ================== PERSONA ================== -->
+  <div class="persona">
+    <div class="persona-left">
+      <span class="persona-tag">Screen 0 · The prospect</span>
+      <div class="persona-avatar">RO</div>
+      <h2>Rachel Okafor</h2>
+      <p class="persona-role">34, Senior Territory Manager, orthopedic implants · Southeast territory</p>
+
+      <div class="persona-stats">
+        <div class="persona-stat">
+          <span class="label">Based in</span>
+          <span class="val">Atlanta, GA (30303)</span>
+        </div>
+        <div class="persona-stat">
+          <span class="label">Ideal client</span>
+          <span class="val">Orthopedic surgeons, ASC administrators, hospital procurement</span>
+        </div>
+        <div class="persona-stat">
+          <span class="label">Golf comfort</span>
+          <span class="val">Beginner. Been invited, feels out of place, has declined twice.</span>
+        </div>
+        <div class="persona-stat">
+          <span class="label">Compensation model</span>
+          <span class="val">Base + commission on account growth</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-story">
+      <h3>The moment she needed this</h3>
+      <p>Rachel spent ten months building a relationship with a lead orthopedic surgeon at a large Atlanta hospital system, targeting a $1.8M implant contract renewal. She had the clinical case dialed in, the pricing, the follow-through. She was doing everything her playbook said to do.</p>
+      <p>She lost the account to a male competitor rep. She found out later, from a mutual contact, that the rep had played in the hospital foundation's annual charity golf classic with the same surgeon two months before the decision. Not as a formal pitch, just the four hours of course time that made him feel like a known quantity.</p>
+      <div class="persona-quote">"I'd been invited to that same tournament. I didn't go because I didn't know what I was doing. That's the deal I lost."</div>
+      <p class="persona-cta"><b>What happens next:</b> Rachel scrolls Facebook two weeks later and sees the SisterGolf "Everyone Has a Coach" ad. She taps it. Here's what she experiences.</p>
+    </div>
+  </div>
+
+  <!-- ================== SECTION: TOOL FLOW ================== -->
+  <div class="section-head">
+    <span class="kicker">The tool</span>
+    <h2>10 screens, ad click to booked consult</h2>
+  </div>
+
+  <div class="screens">
+
+    <!-- SCREEN 1: LANDING -->
+    <div class="screen-block">
+      <div class="screen-label">
+        <span class="screen-num">01</span>
+        <span class="screen-title">Landing page</span>
+      </div>
+      <div class="device">
+        <div class="device-notch"></div>
+        <div class="device-brand">SisterGolf</div>
+        <div class="lp-hook">Find the two golf events where your next big client will be.</div>
+        <div class="lp-sub">A free 90-second assessment that shows you the two tournaments near you where your ideal clients will be, and how to be ready for each.</div>
+        <div class="lp-features">
+          <div class="lp-features-title">You'll walk away with</div>
+          <div class="lp-feature">Your top 2 events in the next 6 months</div>
+          <div class="lp-feature">Why each one fits your buyer</div>
+          <div class="lp-feature">A personalized prep plan</div>
+        </div>
+        <button class="btn">Start my assessment</button>
+        <div class="lp-trust">Built by SisterGolf, the golf and business network for women in commission-driven sales.</div>
+      </div>
+      <div class="note"><b>Design note:</b> the promise is specific ("the two events") not vague ("golf events near you"). Specificity is the whole hook.</div>
+    </div>
+
+    <!-- SCREEN 2: NAME + EMAIL -->
+    <div class="screen-block">
+      <div class="screen-label">
+        <span class="screen-num">02</span>
+        <span class="screen-title">Who this is for</span>
+      </div>
+      <div class="device">
+        <div class="device-notch"></div>
+        <div class="device-brand">SisterGolf</div>
+        <div class="device-progress">
+          <div class="device-progress-dot active"></div>
+          <div class="device-progress-dot"></div>
+          <div class="device-progress-dot"></div>
+          <div class="device-progress-dot"></div>
+        </div>
+        <div class="q-heading">First, who are we building this for?</div>
+        <div class="q-helper">Your report gets emailed to you so you can save and reference it later.</div>
+        <div class="field-label">Your name</div>
+        <div class="field entered">Rachel Okafor</div>
+        <div class="field-label">Email address</div>
+        <div class="field entered">rachel.okafor@[work-email].com</div>
+        <button class="btn">Continue</button>
+      </div>
+      <div class="note"><b>Email capture is not a gate,</b> it's baked into the tool's own experience. Same pattern as the Brand Assessor Calculator, every entry naturally carries an email because the tool asks for it.</div>
+    </div>
+
+    <!-- SCREEN 3: ZIP -->
+    <div class="screen-block">
+      <div class="screen-label">
+        <span class="screen-num">03</span>
+        <span class="screen-title">Where you sell</span>
+      </div>
+      <div class="device">
+        <div class="device-notch"></div>
+        <div class="device-brand">SisterGolf</div>
+        <div class="device-progress">
+          <div class="device-progress-dot active"></div>
+          <div class="device-progress-dot active"></div>
+          <div class="device-progress-dot"></div>
+          <div class="device-progress-dot"></div>
+        </div>
+        <div class="q-heading">Where do you sell?</div>
+        <div class="q-helper">We'll find the tournaments in your metro. Just a zip code, we don't share this.</div>
+        <div class="field-label">Zip code</div>
+        <div class="field entered">30303</div>
+        <div style="background:var(--green-pale);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--ink);margin-bottom:18px;">
+          <b style="color:var(--green);">Metro identified:</b> Atlanta, GA
+        </div>
+        <button class="btn">Continue</button>
+      </div>
+      <div class="note"><b>Zip beats metro dropdown</b> — one field, no dropdown of every US city, and the tool proves it's smart by identifying the metro back to her.</div>
+    </div>
+
+    <!-- SCREEN 4: SALES TYPE -->
+    <div class="screen-block">
+      <div class="screen-label">
+        <span class="screen-num">04</span>
+        <span class="screen-title">Sales type</span>
+      </div>
+      <div class="device">
+        <div class="device-notch"></div>
+        <div class="device-brand">SisterGolf</div>
+        <div class="device-progress">
+          <div class="device-progress-dot active"></div>
+          <div class="device-progress-dot active"></div>
+          <div class="device-progress-dot active"></div>
+          <div class="device-progress-dot"></div>
+        </div>
+        <div class="q-heading">What kind of sales do you do?</div>
+        <div class="q-helper">This shapes which tournaments we surface and the language of your plan.</div>
+        <div class="dropdown">
+          <div class="dropdown-item">Enterprise SaaS &amp; tech</div>
+          <div class="dropdown-item selected">Medical device / life sciences <span class="check">✓</span></div>
+          <div class="dropdown-item">Wealth management &amp; financial services</div>
+          <div class="dropdown-item">Commercial real estate</div>
+          <div class="dropdown-item">Insurance</div>
+          <div class="dropdown-item">Luxury goods &amp; hospitality</div>
+          <div class="dropdown-item">Automotive</div>
+          <div class="dropdown-item">Professional services (legal, consulting)</div>
+        </div>
+        <button class="btn">Continue</button>
+      </div>
+      <div class="note"><b>Starter list of 8.</b> Shella refines the categories. What matters is she can map each one to a coaching-language variant, medical device rep and wealth manager both get a plan, but the vocabulary shifts.</div>
+    </div>
+
+    <!-- SCREEN 5: COMFORT -->
+    <div class="screen-block">
+      <div class="screen-label">
+        <span class="screen-num">05</span>
+        <span class="screen-title">Comfort level</span>
+      </div>
+      <div class="device">
+        <div class="device-notch"></div>
+        <div class="device-brand">SisterGolf</div>
+        <div class="device-progress">
+          <div class="device-progress-dot active"></div>
+          <div class="device-progress-dot active"></div>
+          <div class="device-progress-dot active"></div>
+          <div class="device-progress-dot active"></div>
+        </div>
+        <div class="q-heading">How comfortable are you with golf right now?</div>
+        <div class="q-helper">Honest answers get you a better plan. Nobody sees this but you.</div>
+        <div class="radio-group">
+          <div class="radio selected">
+            <div class="radio-dot"></div>
+            <div class="radio-body">
+              <strong>Beginner</strong>
+              <span>Been invited, feel out of place, mostly decline.</span>
+            </div>
+          </div>
+          <div class="radio">
+            <div class="radio-dot"></div>
+            <div class="radio-body">
+              <strong>Intermediate</strong>
+              <span>Can play, want to sharpen the business side.</span>
+            </div>
+          </div>
+          <div class="radio">
+            <div class="radio-dot"></div>
+            <div class="radio-body">
+              <strong>Decent player</strong>
+              <span>Comfortable on the course, want executive presence.</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn">See my report</button>
+      </div>
+      <div class="note"><b>Three tiers, not two.</b> Beginner and intermediate need genuinely different coaching plans, worth the extra option.</div>
+    </div>
+
+    <!-- SCREEN 6: LOADING -->
+    <div class="screen-block">
+      <div class="screen-label">
+        <span class="screen-num">06</span>
+        <span class="screen-title">Building the report</span>
+      </div>
+      <div class="device">
+        <div class="device-notch"></div>
+        <div class="device-brand">SisterGolf</div>
+        <div class="loading-anim">
+          <div class="spinner"></div>
+          <div style="font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--ink);margin-bottom:22px;">Building your report</div>
+        </div>
+        <div style="padding:0 4px;">
+          <div class="load-step done"><span class="dot"></span>Scanning tournaments within 60 miles of 30303</div>
+          <div class="load-step done"><span class="dot"></span>Cross-referencing medical device buyer profile</div>
+          <div class="load-step active"><span class="dot"></span>Ranking by fit and timeline</div>
+          <div class="load-step pending"><span class="dot"></span>Building your 4-month prep plan</div>
+        </div>
+      </div>
+      <div class="note"><b>The wait is the pitch.</b> Steps show what the tool is doing, so the report feels like the result of real work when it appears, not a template.</div>
+    </div>
+
+    <!-- SCREEN 7: STAT REVEAL -->
+    <div class="screen-block">
+      <div class="screen-label">
+        <span class="screen-num">07</span>
+        <span class="screen-title">The stat</span>
+      </div>
+      <div class="device">
+        <div class="device-notch"></div>
+        <div class="device-brand">SisterGolf</div>
+        <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-top:8px;">Your report · Rachel</div>
+        <div class="report-header">First, the truth about what you've been up against.</div>
+        <div class="report-sub">Before the two events and your plan, here's the context every woman in commission-driven sales should have.</div>
+        <div class="stat-card">
+          <div class="stat-num">[$XX,XXX]</div>
+          <div class="stat-label">is the average revenue gap between women and men in enterprise sales roles that research links to informal networking exclusion, including golf-based client relationships.</div>
+          <div class="stat-flag">Placeholder — real figure to be confirmed</div>
+        </div>
+        <div style="font-size:12.5px;color:var(--ink-soft);line-height:1.5;">This is the same for every woman who takes this assessment. What comes next is not.</div>
+      </div>
+      <div class="note"><b>Static stat, not calculated.</b> The number is the same for everyone. <b>Flagged separately in chat:</b> the real number needs 30 minutes of research before we can lock it in, source and framing both need to be defensible.</div>
+    </div>
+
+    <!-- SCREEN 8: TOP 2 EVENTS -->
+    <div class="screen-block">
+      <div class="screen-label">
+        <span class="screen-num">08</span>
+        <span class="screen-title">Your top 2 events</span>
+      </div>
+      <div class="device">
+        <div class="device-notch"></div>
+        <div class="device-brand">SisterGolf</div>
+        <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-top:8px;">Your report · continued</div>
+        <div class="report-header">The two events where your buyers will be.</div>
+
+        <div class="event-card">
+          <span class="event-rank">Top match</span>
+          <h3 class="event-name">Children's Healthcare of Atlanta Foundation Golf Classic</h3>
+          <div class="event-meta"><b>Oct 14, 2026</b> · Capital City Club · Charity scramble format</div>
+          <div class="event-why"><b>Why this is your #1:</b> Attended by orthopedic and pediatric surgeons, ASC administrators, and hospital foundation board members. This is exactly your buyer profile in one room for four hours.</div>
+          <div class="event-prep"><span>Prep time</span><b>4 months</b></div>
+        </div>
+
+        <div class="event-card two">
+          <span class="event-rank two">Runner-up</span>
+          <h3 class="event-name">Emory Healthcare Executive Golf Invitational</h3>
+          <div class="event-meta"><b>Nov 6, 2026</b> · East Lake Golf Club · Team best-ball</div>
+          <div class="event-why"><b>Why this matters:</b> Hospital C-suite and department chairs. Broader executive presence for future accounts, higher stakes format.</div>
+          <div class="event-prep"><span>Prep time</span><b>5 months</b></div>
+        </div>
+      </div>
+      <div class="note"><b>The magic moment.</b> Rachel sees the hospital foundation tournament, the exact type of event she declined last year, ranked as her top pick with the specific reason it fits. This is where she messages a friend.</div>
+    </div>
+
+    <!-- SCREEN 9: PLAN -->
+    <div class="screen-block">
+      <div class="screen-label">
+        <span class="screen-num">09</span>
+        <span class="screen-title">Your 4-month plan</span>
+      </div>
+      <div class="device">
+        <div class="device-notch"></div>
+        <div class="device-brand">SisterGolf</div>
+        <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-top:8px;">Your report · continued</div>
+        <div class="report-header">Built for a beginner, timed for Oct 14.</div>
+
+        <div class="plan-month">
+          <div class="plan-num">1</div>
+          <div class="plan-body">
+            <strong>Fundamentals</strong>
+            <span>Grip, stance, ball contact. Feeling confident holding a club before you swing it in front of anyone.</span>
+          </div>
+        </div>
+        <div class="plan-month">
+          <div class="plan-num">2</div>
+          <div class="plan-body">
+            <strong>On-course basics</strong>
+            <span>Etiquette, pace of play, tee-box protocol. Not being the reason the group falls behind.</span>
+          </div>
+        </div>
+        <div class="plan-month">
+          <div class="plan-num">3</div>
+          <div class="plan-body">
+            <strong>Charity scramble prep</strong>
+            <span>Scrambles hide handicap differences. Learning how to contribute meaningfully even as a beginner.</span>
+          </div>
+        </div>
+        <div class="plan-month">
+          <div class="plan-num">4</div>
+          <div class="plan-body">
+            <strong>Business conversation flow</strong>
+            <span>Making the round feel natural, moving between sport and shop-talk without either feeling forced.</span>
+          </div>
+        </div>
+
+        <div class="plan-outro"><b>This is exactly what Shella coaches.</b> Every plan we build is what her sessions actually cover. She can get you to Oct 14 ready.</div>
+      </div>
+      <div class="note"><b>Two axes of customization,</b> comfort level shapes the structure (beginner starts at grip; intermediate skips to conversation flow), sales type shapes the vocabulary (scramble prep for medical, member-guest prep for finance).</div>
+    </div>
+
+    <!-- SCREEN 10: CTA -->
+    <div class="screen-block">
+      <div class="screen-label">
+        <span class="screen-num">10</span>
+        <span class="screen-title">Book the consult</span>
+      </div>
+      <div class="device">
+        <div class="device-notch"></div>
+        <div class="device-brand">SisterGolf</div>
+        <div class="cta-header">Ready to be at Children's on Oct 14?</div>
+        <div class="cta-sub">Book a 20-minute strategy call with Shella, or explore the coaching program that fits your situation.</div>
+
+        <div class="cta-option primary">
+          <div class="cta-option-label">Recommended for Atlanta</div>
+          <div class="cta-option-title">Book a strategy call</div>
+          <div class="cta-option-desc">20 minutes with Shella. Walk through your plan, ask questions, decide if in-person SisterGolf sessions are the right fit.</div>
+        </div>
+
+        <div class="cta-option">
+          <div class="cta-option-label">Not in Atlanta or Birmingham?</div>
+          <div class="cta-option-title">See the online coaching sprint</div>
+          <div class="cta-option-desc">Shella's remote coaching program, same coaching, works from anywhere in the country.</div>
+        </div>
+
+        <button class="btn">Book my call</button>
+        <button class="btn btn-secondary">See coaching options</button>
+      </div>
+      <div class="note"><b>Location branch is explicit here,</b> not guessed. Zip code from screen 3 pre-selects "recommended for Atlanta" if she's in-market, "see the online sprint" if she's out.</div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+  <footer>
+    <b>What Shella needs to confirm before build:</b>
+    the 8 sales-type categories and how her coaching language shifts across them,
+    the actual list of high-fit tournaments in her launch metros (Atlanta, Birmingham, and 2-3 more),
+    her coaching curriculum broken down by comfort level so the 4-month plan output maps to real sessions,
+    and the framing of the static stat once we've researched a defensible source.
+  </footer>
+</div>
+</body>
+</html>
