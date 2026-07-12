@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SisterGolf: The climb to a ready-now member</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --fairway:#141414;--gold:#EF67A5;--rust:#EF67A5;--sage:#00A650;
+    --paper:#FFF3F8;--white:#ffffff;
+    --display:"Fraunces",serif;--body:"Inter",sans-serif;
+    --line:rgba(255,255,255,0.1);--soft:rgba(255,255,255,0.7);--soft-2:rgba(255,255,255,0.5);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--body);background:var(--fairway);color:var(--white);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .glow{position:fixed;border-radius:50%;filter:blur(90px);z-index:0;pointer-events:none;}
+  .glow.g{top:-160px;right:-120px;width:480px;height:480px;background:var(--gold);opacity:0.18;}
+  .glow.r{bottom:-200px;left:-140px;width:520px;height:520px;background:var(--rust);opacity:0.14;}
+  .stage{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:64px 36px 80px;}
+
+  .eyebrow{font-size:12px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:22px;}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,5.4vw,60px);line-height:0.98;letter-spacing:-0.02em;max-width:17ch;}
+  .thesis{font-size:18px;color:var(--soft);max-width:64ch;margin-top:22px;}
+  .thesis b{color:var(--white);font-weight:600;}
+
+  .climb{display:flex;gap:20px;margin-top:48px;align-items:stretch;}
+  .rail{flex:0 0 44px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px 0;}
+  .rail .track{position:absolute;top:30px;bottom:30px;left:50%;transform:translateX(-50%);width:3px;border-radius:3px;background:linear-gradient(to top,var(--paper),var(--sage) 48%,var(--rust) 82%,var(--gold));opacity:0.85;}
+  .rail .cap{position:relative;z-index:2;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft-2);background:var(--fairway);padding:6px 0;}
+  .rail .word{position:relative;z-index:2;writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--display);font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--soft-2);background:var(--fairway);padding:14px 0;}
+  .stack{flex:1;min-width:0;display:flex;flex-direction:column;gap:16px;}
+
+  .apex{background:var(--gold);color:var(--fairway);border-radius:16px;padding:22px 30px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+  .apex .lead{font-family:var(--display);font-weight:800;font-size:25px;letter-spacing:-0.01em;}
+  .apex .sub{font-size:15px;color:rgba(20,20,20,0.82);font-weight:500;max-width:60ch;}
+  .apex .chev{margin-left:auto;font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(20,20,20,0.66);}
+
+  .tabhint{font-size:12.5px;letter-spacing:0.04em;color:var(--soft-2);text-transform:uppercase;font-weight:600;}
+  .tabs{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;}
+  .tab{border:1px solid var(--line);border-radius:12px;padding:15px 20px;background:rgba(255,255,255,0.03);cursor:pointer;text-align:left;color:var(--white);font-family:inherit;opacity:0.42;transition:opacity .15s,border-color .15s,background .15s;}
+  .tab .name{font-family:var(--display);font-weight:700;font-size:19px;}
+  .tab .kind{font-size:13px;color:var(--soft);margin-top:3px;}
+  .tab .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:9px;vertical-align:middle;}
+  .tab.ind .dot{background:var(--rust);}
+  .tab.emp .dot{background:var(--sage);}
+  .tab .wedge{display:inline-block;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;color:var(--fairway);background:var(--gold);padding:3px 8px;border-radius:999px;margin-left:9px;vertical-align:middle;}
+  [data-view="ind"] .tab.ind{opacity:1;border-color:rgba(239,103,165,0.6);background:rgba(239,103,165,0.1);}
+  [data-view="emp"] .tab.emp{opacity:1;border-color:rgba(0,166,80,0.6);background:rgba(0,166,80,0.1);}
+  .tab:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+  .minitabs{display:inline-flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap;}
+  .minitabs .ml{font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--soft-2);font-weight:600;margin-right:4px;}
+  .minitab{font-family:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:rgba(255,255,255,0.03);color:var(--soft);border-radius:999px;padding:7px 15px;cursor:pointer;opacity:0.62;transition:opacity .15s,border-color .15s,background .15s,color .15s;}
+  .minitab .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;vertical-align:middle;}
+  .minitab.ind .dot{background:var(--rust);}
+  .minitab.emp .dot{background:var(--sage);}
+  .minitab:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  [data-view="ind"] .minitab.ind{opacity:1;color:var(--white);border-color:rgba(239,103,165,0.6);background:rgba(239,103,165,0.12);}
+  [data-view="emp"] .minitab.emp{opacity:1;color:var(--white);border-color:rgba(0,166,80,0.6);background:rgba(0,166,80,0.12);}
+
+  .drivers{border:1px solid var(--line);border-radius:16px;padding:16px 20px;background:rgba(255,255,255,0.03);}
+  .drivers-label{font-family:var(--display);font-weight:700;font-size:13px;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+  .chain{display:flex;align-items:stretch;flex-wrap:nowrap;}
+  .step{flex:1;min-width:0;padding:2px 10px;}
+  .step .k{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--soft-2);font-weight:600;margin-bottom:6px;}
+  .step .v{font-size:14px;color:rgba(255,255,255,0.92);line-height:1.32;font-weight:500;}
+  .step .vt{display:block;font-size:12px;color:var(--soft-2);margin-top:3px;font-weight:400;line-height:1.32;}
+  .step.hook .v{color:var(--gold);}
+  .arrowcol{display:flex;align-items:center;color:var(--soft-2);font-size:15px;flex:0 0 auto;}
+
+  .layer{border-radius:16px;padding:20px;}
+  .layer.momentary{background:rgba(239,103,165,0.12);border:1px solid rgba(239,103,165,0.42);}
+  .layer.statics{background:rgba(0,166,80,0.14);border:1px solid rgba(0,166,80,0.42);}
+  .layer-bar{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:16px;}
+  .layer-bar .title{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-0.01em;}
+  .layer.momentary .title{color:var(--rust);}
+  .layer.statics .title{color:#7ED9A8;}
+  .layer-bar .desc{font-size:14px;color:var(--soft);}
+  .layer-bar .flag{margin-left:auto;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;}
+  .layer.momentary .flag{background:var(--rust);color:var(--fairway);}
+  .layer.statics .flag{background:rgba(0,166,80,0.32);color:#CDEFDD;}
+
+  .siglist{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .sig{background:rgba(20,20,20,0.5);border-radius:10px;padding:12px 16px 12px 38px;position:relative;}
+  .sig .h{font-size:14.5px;color:rgba(255,255,255,0.9);line-height:1.35;}
+  .sig .tag{display:block;font-size:12.5px;color:var(--soft-2);margin-top:3px;line-height:1.35;}
+  .sig::before{position:absolute;left:15px;top:13px;font-size:13px;font-weight:700;}
+  .layer.momentary .sig::before{content:"\2192";color:var(--rust);}
+  .layer.statics .sig::before{content:"+";color:#7ED9A8;}
+
+  .note{margin-top:14px;border-left:3px solid var(--gold);border-radius:0;background:rgba(239,103,165,0.08);padding:13px 18px;font-size:13.5px;color:var(--soft);}
+  .note b{color:var(--white);font-weight:600;}
+
+  .only-ind,.only-emp{display:none;}
+  [data-view="ind"] .only-ind{display:block;}
+  [data-view="emp"] .only-emp{display:block;}
+
+  .foundation{background:var(--paper);color:var(--fairway);border-radius:16px;padding:24px 26px;}
+  .foundation .fbar{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px;}
+  .foundation .ftitle{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-0.01em;}
+  .foundation .fdesc{font-size:14px;color:rgba(20,20,20,0.72);font-weight:500;}
+  .foundation .gate{margin-left:auto;font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--rust);}
+  .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px;margin-top:14px;}
+  .fgrid div{font-size:14.5px;color:rgba(20,20,20,0.88);padding:10px 0 10px 26px;position:relative;border-top:1px solid rgba(20,20,20,0.12);}
+  .fgrid div::before{content:"";position:absolute;left:4px;top:18px;width:9px;height:9px;border-radius:2px;background:var(--fairway);}
+  .fnuance{margin-top:16px;font-size:13.5px;color:rgba(20,20,20,0.7);border-top:1px solid rgba(20,20,20,0.14);padding-top:14px;}
+  .fnuance b{color:var(--fairway);font-weight:700;}
+
+  .channel{margin-top:30px;border:1px dashed rgba(239,103,165,0.5);border-radius:14px;padding:20px 24px;background:rgba(239,103,165,0.06);}
+  .channel .h{font-family:var(--display);font-weight:700;font-size:15px;color:var(--gold);margin-bottom:8px;}
+  .channel p{font-size:14.5px;color:var(--soft);max-width:84ch;}
+  .channel p b{color:var(--white);font-weight:600;}
+  .order{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--soft-2);}
+  .order span{font-family:var(--display);font-weight:700;color:var(--soft);}
+  .order .ar{color:var(--gold);}
+
+  .compass{margin-top:50px;padding-top:42px;border-top:1px solid var(--line);}
+  .ctitle{font-family:var(--display);font-weight:800;font-size:clamp(26px,4vw,38px);letter-spacing:-0.015em;margin-top:6px;}
+  .clede{font-size:16px;color:var(--soft);max-width:72ch;margin-top:14px;}
+  .sub-h{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--soft-2);margin:34px 0 16px;}
+
+  .cmap{margin-top:4px;}
+  .cgrp{position:relative;padding-left:38px;}
+  .cgrp::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:3px;background:var(--cc);}
+  .cgrp:first-child::before{top:14px;}
+  .cgrp:last-child::before{bottom:auto;height:30px;}
+  .cgrp-dot{position:absolute;left:1px;top:18px;width:17px;height:17px;border-radius:50%;background:var(--cc);border:3px solid var(--fairway);}
+  .cgrp-head{width:100%;text-align:left;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;padding:13px 16px;cursor:pointer;color:var(--white);font-family:inherit;display:flex;align-items:center;gap:12px;transition:background .15s;}
+  .cgrp-head:hover{background:rgba(255,255,255,0.06);}
+  .cgrp-head:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  .cgrp-titles{flex:1;min-width:0;}
+  .cgrp-title{font-family:var(--display);font-weight:700;font-size:16px;display:block;}
+  .cgrp-sub{font-size:12.5px;color:var(--soft);margin-top:2px;display:block;}
+  .cflag{display:inline-block;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;font-weight:700;color:var(--fairway);background:var(--gold);border-radius:999px;padding:2px 8px;margin-left:8px;vertical-align:middle;}
+  .cgrp-chev{flex:0 0 auto;color:var(--soft-2);font-size:13px;transition:transform .2s;}
+  .cgrp-head[aria-expanded="true"] .cgrp-chev{transform:rotate(90deg);}
+  .cgrp-body{padding:4px 0 16px;}
+  .crow{display:grid;grid-template-columns:210px 1fr;gap:18px;padding:11px 4px 11px 2px;border-bottom:1px solid var(--line);}
+  .crow:last-child{border-bottom:none;}
+  .cname{font-size:14px;font-weight:600;color:var(--white);line-height:1.35;}
+  .cname a{display:inline-block;margin-top:5px;font-size:11.5px;font-weight:500;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(239,103,165,0.4);}
+  .cwhy{font-size:13px;color:var(--soft);line-height:1.46;}
+  .cgrp.int .cgrp-head{border-style:dashed;border-color:rgba(239,103,165,0.5);}
+
+  footer{margin-top:38px;font-size:12.5px;color:var(--soft-2);}
+
+  .prompts{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .prompt-card{border:1px solid var(--line);border-radius:14px;padding:18px 20px;background:rgba(255,255,255,0.03);display:flex;flex-direction:column;}
+  .pc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+  .pc-title{font-family:var(--display);font-weight:700;font-size:17px;}
+  .pc-purpose{font-size:13px;color:var(--soft);margin:7px 0 14px;line-height:1.45;}
+  .copybtn{flex:0 0 auto;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--fairway);background:var(--gold);border:none;border-radius:999px;padding:7px 15px;cursor:pointer;letter-spacing:0.02em;transition:background .15s;}
+  .copybtn:hover{background:#F79CC3;}
+  .copybtn.ok{background:#9fe1cb;}
+  .prompt-card pre{background:rgba(0,0,0,0.22);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-family:var(--body);font-size:12.8px;line-height:1.52;color:rgba(255,255,255,0.84);white-space:pre-wrap;overflow:auto;}
+  .pc-foot{font-size:12px;color:var(--soft-2);margin-top:11px;}
+
+  .deal-economics{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);}
+  .deal-row{display:flex;gap:16px;}
+  .deal-field{flex:1;background:rgba(239,103,165,0.07);border:1px dashed rgba(239,103,165,0.35);border-radius:10px;padding:12px 16px;}
+  .deal-k{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:6px;}
+  .deal-v{font-family:var(--display);font-weight:700;font-size:20px;color:var(--white);letter-spacing:-0.01em;}
+  .deal-note{font-size:12px;color:var(--soft-2);margin-top:6px;line-height:1.4;}
+
+  @media(max-width:760px){
+    .stage{padding:44px 20px 60px;}
+    .climb{gap:12px;}
+    .rail{flex:0 0 30px;}
+    .rail .word{display:none;}
+    .tabs,.siglist,.fgrid,.prompts{grid-template-columns:1fr;}
+    .crow{grid-template-columns:1fr;gap:3px;}
+    .chain{flex-direction:column;gap:12px;}
+    .arrowcol{transform:rotate(90deg);padding:2px 0;}
+    .apex .chev{display:none;}
+    .deal-row{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+  <div class="glow g"></div>
+  <div class="glow r"></div>
+
+  <main class="stage" data-view="ind">
+    <header>
+      <div class="eyebrow">SisterGolf go-to-market</div>
+      <h1>The climb to a ready-now member.</h1>
+      <p class="thesis"><b>Standard fit is the gate.</b> If she isn't this, we aren't talking. <b>Static signals</b> tell us who already gets it. <b>Momentary signals</b> tell us whose window is open now. Both lanes climb the same stack, and <b>self-funded professionals are the initial wedge.</b> Tap a lane to compare. The lane you pick drives the whole page, including the prompts at the bottom.</p>
+    </header>
+
+    <div class="climb">
+      <div class="rail">
+        <span class="cap">Spear</span>
+        <span class="word">Selectivity</span>
+        <span class="cap">Pool</span>
+        <div class="track"></div>
+      </div>
+
+      <div class="stack">
+
+        <div class="apex">
+          <div>
+            <div class="lead">Ready-now member</div>
+            <div class="sub">Fit, signaled, ready to invest in herself, reached through a referral. This is who joins first.</div>
+          </div>
+          <div class="chev">&#9650; both lanes converge</div>
+        </div>
+
+        <div><span class="tabhint">Lead with self-funded professionals</span></div>
+        <div class="tabs" role="tablist" aria-label="Buyer type">
+          <button class="tab ind" role="tab" aria-selected="true" onclick="setView('ind')">
+            <div class="name"><span class="dot"></span>Self-funded professional<span class="wedge">Initial wedge</span></div>
+            <div class="kind">The personal-investment lane. Lead segment.</div>
+          </button>
+          <button class="tab emp" role="tab" aria-selected="false" onclick="setView('emp')">
+            <div class="name"><span class="dot"></span>Employer-sponsored</div>
+            <div class="kind">The team-development lane. Strong second segment.</div>
+          </button>
+        </div>
+
+        <div class="drivers">
+          <div class="drivers-label">What drives this buyer</div>
+          <div class="only-ind"><div class="chain">
+            <div class="step"><div class="k">Answers to</div><div class="v">Herself, and her own pipeline<span class="vt">no board, no committee, just her number</span></div></div>
+            <div class="arrowcol">&#8594;</div>
+            <div class="step"><div class="k">Paid on</div><div class="v">Commission, not salary<span class="vt">a skill gap has a visible dollar cost</span></div></div>
+            <div class="arrowcol">&#8594;</div>
+            <div class="step"><div class="k">Acts on</div><div class="v">Whatever closes the next deal faster<span class="vt">she self-funds tools that pay for themselves</span></div></div>
+            <div class="arrowcol">&#8594;</div>
+            <div class="step hook"><div class="k">Our hook</div><div class="v">A specific room she's been left out of<span class="vt">the individual pitch</span></div></div>
+          </div></div>
+          <div class="only-emp"><div class="chain">
+            <div class="step"><div class="k">Answers to</div><div class="v">A sales VP or leadership team<span class="vt">who owns the number the team misses</span></div></div>
+            <div class="arrowcol">&#8594;</div>
+            <div class="step"><div class="k">Paid on</div><div class="v">Team quota and rep retention<span class="vt">especially of the women they don't want to lose</span></div></div>
+            <div class="arrowcol">&#8594;</div>
+            <div class="step"><div class="k">Acts on</div><div class="v">Whatever visibly develops women on the team<span class="vt">retention and pipeline both improve</span></div></div>
+            <div class="arrowcol">&#8594;</div>
+            <div class="step hook"><div class="k">Our hook</div><div class="v">A retention and development line item<span class="vt">the team pitch, not a perk</span></div></div>
+          </div></div>
+          <div class="deal-economics only-ind">
+            <div class="deal-row">
+              <div class="deal-field">
+                <div class="deal-k">Est. price point</div>
+                <div class="deal-v">$150&ndash;$400 / season</div>
+                <div class="deal-note">Working hypothesis, needs Shella's real pricing. Self-funded purchases at this range typically move fast.</div>
+              </div>
+              <div class="deal-field">
+                <div class="deal-k">Decision window</div>
+                <div class="deal-v">Days, not months</div>
+                <div class="deal-note">No approval chain. The blocker is confidence and timing, not budget process.</div>
+              </div>
+            </div>
+          </div>
+          <div class="deal-economics only-emp">
+            <div class="deal-row">
+              <div class="deal-field">
+                <div class="deal-k">Est. contract value</div>
+                <div class="deal-v">$2K&ndash;$8K / cohort</div>
+                <div class="deal-note">Working hypothesis, scales with seats and cohort size. Pending a first real employer deal to confirm.</div>
+              </div>
+              <div class="deal-field">
+                <div class="deal-k">Est. sales cycle</div>
+                <div class="deal-v">3&ndash;6 weeks</div>
+                <div class="deal-note">Needs a manager or L&amp;D sign-off. Faster if it rides on an existing ERG or DEI budget line.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="layer momentary">
+          <div class="layer-bar">
+            <span class="title">Momentary signals</span>
+            <span class="desc">Open windows. Who to reach out to this week.</span>
+            <span class="flag">Where we narrow</span>
+          </div>
+
+          <div class="only-ind">
+            <div class="siglist">
+              <div class="sig"><div class="h">Recently promoted or moved territory</div><span class="tag">New pressure to perform in unfamiliar rooms</span></div>
+              <div class="sig"><div class="h">Lost a deal she suspects closed off the clock</div><span class="tag">The exact frustration this product resolves</span></div>
+              <div class="sig"><div class="h">Posting about leveling up or new certifications</div><span class="tag">Publicly signaling she's investing in herself right now</span></div>
+              <div class="sig"><div class="h">New to a male-dominated team or office</div><span class="tag">The access gap just became personal, not theoretical</span></div>
+              <div class="sig"><div class="h">Company's annual PD stipend just reset</div><span class="tag">Budget she can use exists again, for a limited window</span></div>
+              <div class="sig"><div class="h">Engaging with women-in-sales content in the last 30 days</div><span class="tag">Already thinking about the problem, primed to hear the pitch</span></div>
+            </div>
+            <div class="note"><b>Readiness is the trigger, not a life event.</b> She doesn't need a reason external to her. "Ready to take it seriously and has a budget she can access" is itself the momentary signal, we're watching for her saying that out loud.</div>
+          </div>
+
+          <div class="only-emp">
+            <div class="siglist">
+              <div class="sig"><div class="h">Posted a role tied to women in sales or DEI</div><span class="tag">Budget and a mandate already exist for this</span></div>
+              <div class="sig"><div class="h">Leadership publicly discussing rep retention</div><span class="tag">The pain is already named at the top</span></div>
+              <div class="sig"><div class="h">A women's ERG launched or expanded recently</div><span class="tag">Infrastructure and a champion already in place</span></div>
+              <div class="sig"><div class="h">Budget line newly opened for offsites or leadership development</div><span class="tag">The money is unlocked, the question is where it goes</span></div>
+              <div class="sig"><div class="h">A strong woman rep recently left, citing culture</div><span class="tag">A visible cost leadership can point to, the attrition trigger</span></div>
+              <div class="sig"><div class="h">New sales leader in their first 90 days</div><span class="tag">Building their own mandate, looking for a visible win</span></div>
+            </div>
+            <div class="note"><b>The employer wedge is retention, not perks.</b> This is a cost they already have a number for. Framed against attrition and lost pipeline, it competes for budget as a fix, not an extra.</div>
+          </div>
+        </div>
+
+        <div class="layer statics">
+          <div class="layer-bar">
+            <span class="title">Static signals</span>
+            <span class="desc">Standing acuity. Who already gets it.</span>
+            <span class="flag">Who gets it</span>
+          </div>
+
+          <div class="only-ind">
+            <div class="siglist">
+              <div class="sig"><div class="h">Works in a visibly male-dominated vertical</div><span class="tag">Enterprise sales, CRE, auto, wealth, medical device</span></div>
+              <div class="sig"><div class="h">Active, professional LinkedIn presence</div><span class="tag">Already comfortable investing time in her own visibility</span></div>
+              <div class="sig"><div class="h">Already pays for a coach, mastermind, or paid community</div><span class="tag">Proven willingness to self-fund development</span></div>
+              <div class="sig"><div class="h">Speaks openly about being the only woman in the room</div><span class="tag">Names the exact problem SisterGolf solves, unprompted</span></div>
+            </div>
+          </div>
+
+          <div class="only-emp">
+            <div class="siglist">
+              <div class="sig"><div class="h">Already runs or funds a women's leadership program</div><span class="tag">The budget line and the appetite already exist</span></div>
+              <div class="sig"><div class="h">States DEI or women-in-leadership as a value, not a policy line</div><span class="tag">Culturally pre-sold, this reads as consistent with what they say</span></div>
+              <div class="sig"><div class="h">Sales team visibly skews male at the senior level</div><span class="tag">The gap is structural and already known internally</span></div>
+              <div class="sig"><div class="h">Has sponsored experiential development before</div><span class="tag">Offsites, coaching, conferences, this format isn't a stretch</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="foundation">
+          <div class="fbar">
+            <span class="ftitle">Standard fit</span>
+            <span class="fdesc">Core ICP. The gate underneath both lanes.</span>
+            <span class="gate">If not this, no conversation</span>
+          </div>
+          <div class="fgrid">
+            <div>Woman in a commission-driven, relationship-heavy sales role</div>
+            <div>Technical or enterprise sales, commercial real estate, auto, wealth, or medical device</div>
+            <div>Has, or her employer has, a professional development budget she can actually reach</div>
+            <div>Already good at the job, the gap is access and room, not competence</div>
+          </div>
+          <div class="fnuance"><b>The lane split lives here.</b> The individual feels the gap as a missed deal and a Saturday she wasn't invited to. The employer feels it as a retention risk on their best women reps. Same program, two pain stories.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="channel">
+      <div class="h">A member referral is not a layer.</div>
+      <p>An existing member bringing a colleague, or a corporate partner introducing us to their sales floor, does not sit in the stack. It runs alongside the whole climb and pulls a qualified target to the front of the line. <b>A warm intro doesn't change who fits, it changes who we reach first.</b></p>
+    </div>
+
+    <div class="order">
+      <span>Read it bottom up:</span> Fit qualifies the pool <span class="ar">&#8594;</span> Static signals rank receptivity <span class="ar">&#8594;</span> Momentary signals time the outreach <span class="ar">&#8594;</span> A member referral jumps the queue
+    </div>
+
+    <section class="compass">
+      <div class="eyebrow">Operate it</div>
+      <h2 class="ctitle">The compass</h2>
+      <p class="clede">The climb tells you who and when. The compass tells you where each signal lives and why it sharpens the buyer definition. Expand a group to see its sources. Nothing here is either-or, every source stacks on the others to make the picture more acute.</p>
+
+      <div class="sub-h">Where each signal lives</div>
+      <div class="cmap">
+
+        <div class="cgrp" style="--cc:#EF67A5;">
+          <span class="cgrp-dot"></span>
+          <button class="cgrp-head" aria-expanded="true" onclick="toggleGrp(this)">
+            <span class="cgrp-titles"><span class="cgrp-title">Public and free</span><span class="cgrp-sub">The third-party authorities, no login needed.</span></span>
+            <span class="cgrp-chev">&#9656;</span>
+          </button>
+          <div class="cgrp-body" style="display:block;">
+            <div class="crow"><div class="cname">LinkedIn</div><div class="cwhy">Promotions, territory changes, and content about leveling up, in real time. The single richest momentary-signal source we have.</div></div>
+            <div class="crow"><div class="cname">Local business journals</div><div class="cwhy">"40 under 40" and "women to watch" lists in Birmingham and comparable metros surface exactly the profile we want, pre-vetted by someone else.</div></div>
+            <div class="crow"><div class="cname">Industry association rosters</div><div class="cwhy">Women in real estate, women in auto retail, and similar groups are a direct membership list of the standard-fit pool.</div></div>
+            <div class="crow"><div class="cname">Company press releases</div><div class="cwhy">DEI launches, ERG announcements, and new leadership hires on the employer side, dated and citable.</div></div>
+          </div>
+        </div>
+
+        <div class="cgrp" style="--cc:#00A650;">
+          <span class="cgrp-dot"></span>
+          <button class="cgrp-head" aria-expanded="false" onclick="toggleGrp(this)">
+            <span class="cgrp-titles"><span class="cgrp-title">Open web and trade</span><span class="cgrp-sub">Public, but you have to read it.</span></span>
+            <span class="cgrp-chev">&#9656;</span>
+          </button>
+          <div class="cgrp-body" style="display:none;">
+            <div class="crow"><div class="cname">Vertical trade press</div><div class="cwhy">Auto retail, CRE, and sales enablement trade pubs carry leadership moves and culture stories before they show up anywhere structured.</div></div>
+            <div class="crow"><div class="cname">Podcasts and panels</div><div class="cwhy">Women in sales who speak publicly on panels or podcasts are already standing-acuity, they've named the problem out loud.</div></div>
+            <div class="crow"><div class="cname">Conference agendas</div><div class="cwhy">Women in sales and similar conferences reveal both attendees worth reaching and companies sponsoring, an employer-lane signal.</div></div>
+          </div>
+        </div>
+
+        <div class="cgrp" style="--cc:#EF67A5;">
+          <span class="cgrp-dot"></span>
+          <button class="cgrp-head" aria-expanded="false" onclick="toggleGrp(this)">
+            <span class="cgrp-titles"><span class="cgrp-title">Commercial tools</span><span class="cgrp-sub">Paid and structured. Run through Claude.</span></span>
+            <span class="cgrp-chev">&#9656;</span>
+          </button>
+          <div class="cgrp-body" style="display:none;">
+            <div class="crow"><div class="cname">Apollo</div><div class="cwhy">Named people at fit companies and fit titles, both individual targets and the employer-side economic buyer, with contact fields.</div></div>
+            <div class="crow"><div class="cname">LinkedIn Sales Navigator</div><div class="cwhy">Filterable by title, industry, and recent activity, the fastest way to build both lanes' outreach lists at once.</div></div>
+          </div>
+        </div>
+
+        <div class="cgrp" style="--cc:#EF67A5;">
+          <span class="cgrp-dot"></span>
+          <button class="cgrp-head" aria-expanded="false" onclick="toggleGrp(this)">
+            <span class="cgrp-titles"><span class="cgrp-title">Build your own</span><span class="cgrp-sub">You construct it, you do not pull it.</span></span>
+            <span class="cgrp-chev">&#9656;</span>
+          </button>
+          <div class="cgrp-body" style="display:none;">
+            <div class="crow"><div class="cname">DEI and ERG tracker</div><div class="cwhy">A running list of employers in target verticals with active women's programs, the employer-lane target list.</div></div>
+            <div class="crow"><div class="cname">Budget-season calendar</div><div class="cwhy">Most professional development and L&amp;D budgets open in Q1 and again pre-fall, a predictable window to time employer outreach against.</div></div>
+          </div>
+        </div>
+
+        <div class="cgrp int" style="--cc:#00A650;">
+          <span class="cgrp-dot"></span>
+          <button class="cgrp-head" aria-expanded="false" onclick="toggleGrp(this)">
+            <span class="cgrp-titles"><span class="cgrp-title">Only from interviews<span class="cflag">We don't have this yet</span></span><span class="cgrp-sub">Primary discovery. No database holds it, and it compounds everything above.</span></span>
+            <span class="cgrp-chev">&#9656;</span>
+          </button>
+          <div class="cgrp-body" style="display:none;">
+            <div class="crow"><div class="cname">Champion language</div><div class="cwhy">The exact words members use to describe being left out. It's what makes outreach land, and it exists nowhere you can query.</div></div>
+            <div class="crow"><div class="cname">The breaking point</div><div class="cwhy">The specific missed deal or moment that converts a browser into a member. The incident to listen for so we arrive right after it.</div></div>
+            <div class="crow"><div class="cname">Who owns this inside a company</div><div class="cwhy">On the employer side, whether it's sales leadership, HR, or DEI who actually holds the budget and the decision.</div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sub-h">Run it with Claude</div>
+      <div class="minitabs" role="tablist" aria-label="Prompt lane">
+        <span class="ml">Prompts for</span>
+        <button class="minitab ind" role="tab" aria-selected="true" onclick="setView('ind')"><span class="dot"></span>Self-funded professionals</button>
+        <button class="minitab emp" role="tab" aria-selected="false" onclick="setView('emp')"><span class="dot"></span>Employer-sponsored</button>
+      </div>
+
+      <div class="only-ind">
+        <div class="prompts">
+          <div class="prompt-card">
+            <div class="pc-top">
+              <div class="pc-title">Find the people, with Apollo</div>
+              <button class="copybtn" onclick="copyPrompt('p-apollo-ind', this)">Copy</button>
+            </div>
+            <div class="pc-purpose">Run in Claude with the Apollo connector on. Builds a ranked list of fit women to reach directly.</div>
+            <pre id="p-apollo-ind">You have access to Apollo. I run growth for SisterGolf, a golf and business network for women in commission-driven, relationship-heavy sales roles. I'm targeting individual women who fit the profile, not companies.
+
+Using Apollo, build a target list of women in these titles and industries: technical or enterprise sales, commercial real estate brokerage, auto sales, wealth management or insurance, and medical device sales. Prioritize women with a recent title change, promotion, or territory move in the last six months, and anyone whose LinkedIn activity shows engagement with career development or women-in-sales content. Return name, title, company, industry, location, and the contact fields Apollo has. Rank by how many signals stack, most recently promoted or most active on development content first. Ask me before pulling more than fifty contacts.</pre>
+            <div class="pc-foot">Assumes the Apollo connector is enabled in Claude.</div>
+          </div>
+
+          <div class="prompt-card">
+            <div class="pc-top">
+              <div class="pc-title">Find the warm path, from your network</div>
+              <button class="copybtn" onclick="copyPrompt('p-linkedin-ind', this)">Copy</button>
+            </div>
+            <div class="pc-purpose">Export your LinkedIn connections, upload them, and Claude maps who fits and who can introduce you.</div>
+            <pre id="p-linkedin-ind">I am going to give you my LinkedIn connections. You can read them from the export I upload, or I will paste a list. I run growth for SisterGolf, a golf and business network for women in commission-driven sales roles: technical and enterprise sales, commercial real estate, auto sales, wealth management and insurance, and medical device sales.
+
+From my connections, do three things. First, surface any woman who fits that profile directly, so I can reach her myself. Second, surface connectors, people who could make a warm introduction to a fit woman even if they aren't one themselves, such as sales trainers, industry association contacts, or shared colleagues. Third, give me a prioritized shortlist naming who to contact, why she fits, and the exact introduction path. If I haven't given you the file yet, ask me for it.</pre>
+            <div class="pc-foot">Export connections from LinkedIn, Settings, Data privacy, Get a copy of your data.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="only-emp">
+        <div class="prompts">
+          <div class="prompt-card">
+            <div class="pc-top">
+              <div class="pc-title">Find the people, with Apollo</div>
+              <button class="copybtn" onclick="copyPrompt('p-apollo-emp', this)">Copy</button>
+            </div>
+            <div class="pc-purpose">Run in Claude with the Apollo connector on. Builds a ranked list of fit companies and the named people to reach at each.</div>
+            <pre id="p-apollo-emp">You have access to Apollo. I run growth for SisterGolf, a golf and business network for women in sales. For this list, target companies in enterprise or technical sales, commercial real estate, auto retail, wealth management, or medical device sales, with a visible women's ERG, a stated DEI or women-in-leadership value, or a recent trigger such as a new sales leader, a rep attrition problem, or a newly posted DEI-adjacent role.
+
+Using Apollo, build a target list of companies that fit. For each, pull two people: the economic buyer, meaning VP of Sales, Chief Revenue Officer, or Head of People or L&amp;D, and the likely champion, meaning a sales enablement lead, DEI lead, or ERG chair. Return company name, industry, size, the named people with titles and contact fields Apollo has, and any trigger you can confirm. Rank by how many signals stack. Frame the opportunity as rep retention and development, a number sales leadership already tracks. Ask me before pulling more than fifty contacts.</pre>
+            <div class="pc-foot">Assumes the Apollo connector is enabled in Claude.</div>
+          </div>
+
+          <div class="prompt-card">
+            <div class="pc-top">
+              <div class="pc-title">Find the warm path, from your network</div>
+              <button class="copybtn" onclick="copyPrompt('p-linkedin-emp', this)">Copy</button>
+            </div>
+            <div class="pc-purpose">Export your LinkedIn connections, upload them, and Claude maps who can introduce you and who to prioritize.</div>
+            <pre id="p-linkedin-emp">I am going to give you my LinkedIn connections. You can read them from the export I upload, or I will paste a list. I run growth for SisterGolf, a golf and business network for women in sales, and the employer-sponsored segment targets companies in enterprise sales, commercial real estate, auto retail, wealth management, or medical device sales that already invest in women's development or are showing signs of rep retention pressure.
+
+From my connections, do three things. First, surface anyone who is a decision-maker or champion at a fit company, meaning sales leadership, HR, L&amp;D, or DEI, so I can reach them directly. Second, surface connectors who could make a warm introduction even if they don't work at a fit company themselves. Third, give me a prioritized shortlist naming who to contact, why the company fits, and the exact introduction path. If I haven't given you the file yet, ask me for it.</pre>
+            <div class="pc-foot">Export connections from LinkedIn, Settings, Data privacy, Get a copy of your data.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>SisterGolf ready-now member model. Self-funded professionals are the initial wedge. The trigger layer is mostly public, and most of it updates in real time on LinkedIn.</footer>
+  </main>
+
+  <script>
+    function setView(v){
+      document.querySelector('.stage').dataset.view=v;
+      document.querySelectorAll('.tab,.minitab').forEach(function(t){
+        t.setAttribute('aria-selected', t.classList.contains(v) ? 'true' : 'false');
+      });
+    }
+    function toggleGrp(btn){
+      var body=btn.nextElementSibling;
+      var open=btn.getAttribute('aria-expanded')==='true';
+      btn.setAttribute('aria-expanded', String(!open));
+      body.style.display = open ? 'none' : 'block';
+    }
+    function copyPrompt(id, btn){
+      var el=document.getElementById(id);
+      if(!el) return;
+      var text=el.innerText;
+      function ok(){var t=btn.textContent;btn.textContent='Copied';btn.classList.add('ok');setTimeout(function(){btn.textContent=t;btn.classList.remove('ok');},1600);}
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(ok, function(){fb(text, ok);});
+      } else { fb(text, ok); }
+    }
+    function fb(text, ok){
+      var ta=document.createElement('textarea');
+      ta.value=text; ta.style.position='fixed'; ta.style.top='-1000px'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      try{ document.execCommand('copy'); ok(); }catch(e){}
+      document.body.removeChild(ta);
+    }
+  </script>
+</body>
+</html>
