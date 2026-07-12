@@ -1,0 +1,37 @@
+name: Update Proposals Index
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'proposals/**'
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Regenerate index.html
+        run: node scripts/generate-index.js
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "index.html unchanged, nothing to commit."
+          else
+            git commit -m "chore: auto-regenerate proposals index [skip ci]"
+            git push
+          fi
