@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CX Automation Scanner — Screen Flow v4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F0F7F7;--ink:#0D1F2D;--body:#3D5166;--cyan:#1A9E9E;--cyan-deep:#0D7E7E;
+    --purple:#7C3AED;--purple-deep:#5B21B6;--cyan-tag:rgba(26,158,158,0.12);--purple-tag:rgba(124,58,237,0.08);--line:#DCE7E7;
+    --site-accent:#1F5A3D; /* placeholder: bold/saturated pull of Lanyard's pale green, verify exact hex before shipping */
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;padding:48px 24px 120px;}
+  .wrap{max-width:1040px;margin:0 auto;}
+  .page-head{margin-bottom:56px;}
+  .page-head .eyebrow{font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan-deep);background:var(--cyan-tag);display:inline-block;padding:6px 14px;border-radius:100px;margin-bottom:16px;}
+  .page-head h1{font-family:'Outfit',sans-serif;font-size:34px;font-weight:700;margin:0 0 10px;letter-spacing:-0.01em;}
+  .page-head p{color:var(--body);font-size:15px;max-width:640px;line-height:1.6;margin:0;}
+  .changelog{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin-bottom:48px;}
+  .changelog .tag{font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--purple-deep);background:var(--purple-tag);display:inline-block;padding:4px 10px;border-radius:100px;margin-bottom:10px;}
+  .changelog ul{margin:0;padding-left:18px;}
+  .changelog li{font-size:13px;color:var(--body);line-height:1.7;}
+
+  .row{display:grid;grid-template-columns:56px 1fr 320px;gap:28px;margin-bottom:64px;align-items:start;}
+  .step-num{font-family:'Outfit',sans-serif;font-weight:800;font-size:15px;color:#fff;background:linear-gradient(135deg, var(--cyan), var(--purple));width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;}
+  .connector{width:2px;background:var(--line);height:calc(100% - 40px);margin:8px auto 0;}
+  .row:last-child .connector{display:none;}
+
+  .screen{background:#fff;border-radius:16px;border:1px solid var(--line);box-shadow:0 1px 2px rgba(13,31,45,0.04), 0 12px 32px rgba(13,31,45,0.06);overflow:hidden;}
+  .screen-chrome{background:#F7FAFA;border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:6px;}
+  .screen-chrome .dot{width:8px;height:8px;border-radius:50%;background:#DCE7E7;}
+  .screen-chrome .label{margin-left:8px;font-size:11px;color:var(--body);letter-spacing:.02em;}
+  .screen-body{padding:32px;}
+
+  .notes{padding-top:8px;}
+  .notes .tag{font-family:'Outfit',sans-serif;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--purple-deep);background:var(--purple-tag);display:inline-block;padding:4px 10px;border-radius:100px;margin-bottom:10px;}
+  .notes h4{font-family:'Outfit',sans-serif;font-size:16px;margin:0 0 8px;}
+  .notes p{font-size:13.5px;color:var(--body);line-height:1.6;margin:0 0 10px;}
+  .notes .new{border:1px solid var(--cyan);background:var(--cyan-tag);border-radius:10px;padding:10px 12px;font-size:12.5px;color:var(--cyan-deep);font-weight:600;margin-bottom:8px;display:inline-block;}
+
+  .q-field{margin-bottom:20px;}
+  .q-field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px;font-family:'Outfit',sans-serif;}
+  .q-input{border:1.5px solid var(--line);border-radius:10px;padding:11px 14px;font-size:14px;color:var(--body);background:#FBFDFD;}
+  .chip-grid{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip-option{border:1.5px solid var(--line);border-radius:100px;padding:8px 14px;font-size:13px;color:var(--body);display:flex;align-items:center;gap:6px;background:#FBFDFD;}
+  .chip-option .box{width:14px;height:14px;border:1.5px solid var(--line);border-radius:4px;display:inline-block;}
+  .chip-option.checked{border-color:var(--cyan);background:var(--cyan-tag);color:var(--cyan-deep);font-weight:600;}
+  .chip-option.checked .box{background:var(--cyan);border-color:var(--cyan);position:relative;}
+  .chip-option.checked .box::after{content:"✓";position:absolute;inset:0;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;}
+  .q-btn{margin-top:8px;background:var(--ink);color:#fff;border:none;border-radius:10px;padding:13px 22px;font-family:'Outfit',sans-serif;font-weight:600;font-size:14px;display:inline-block;}
+
+  .site-pill{display:inline-flex;align-items:center;gap:8px;background:var(--cyan-tag);color:var(--cyan-deep);font-size:12px;font-weight:600;padding:6px 12px;border-radius:100px;margin-bottom:22px;}
+  .transform-eyebrow{font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;color:var(--body);margin-bottom:12px;}
+  .transform-quote{font-family:'Outfit',sans-serif;font-size:22px;font-weight:700;line-height:1.5;margin:0;color:var(--ink);}
+  .transform-quote b{color:var(--site-accent);font-weight:800;text-shadow:0 0 14px rgba(31,90,61,0.35),0 0 28px rgba(31,90,61,0.18);}
+
+  .stage-eyebrow{font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--purple-deep);margin-bottom:6px;}
+  .stage-title{font-family:'Outfit',sans-serif;font-size:22px;font-weight:700;margin:0 0 20px;}
+  .block{margin-bottom:18px;}
+  .block .k{font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;color:var(--cyan-deep);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;display:block;}
+  .block p, .block li{font-size:13.5px;color:var(--body);line-height:1.6;margin:0;}
+  .block ul{margin:6px 0 0;padding-left:18px;}
+  .block li{margin-bottom:6px;}
+  .stat-chip{color:var(--body);font-size:13.5px;line-height:1.6;margin-top:4px;}
+  .encourage-chip{background:var(--cyan-tag);color:var(--cyan-deep);border-radius:10px;padding:10px 14px;font-size:13px;line-height:1.5;margin-top:8px;font-weight:600;}
+  .needs-stat{border:1.5px dashed #D97757;color:#B85C3E;border-radius:10px;padding:10px 14px;font-size:12.5px;margin-top:6px;}
+
+  /* stacked process-box visualization */
+  .process-stack{margin-top:10px;}
+  .process-box{
+    position:relative;
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:16px 18px;
+    margin-bottom:12px;
+    background:#FBFDFD;
+  }
+  .process-box .stage-label{
+    font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--purple-deep);background:var(--purple-tag);display:inline-block;padding:3px 10px;border-radius:100px;margin-bottom:10px;
+  }
+  .process-box .auto-overlay{
+    background:linear-gradient(90deg, var(--cyan-tag), var(--purple-tag));
+    border-left:3px solid var(--cyan);
+    border-radius:8px;
+    padding:10px 12px;
+    font-size:13px;
+    color:var(--ink);
+    line-height:1.55;
+  }
+  .process-box .auto-overlay b{color:var(--cyan-deep);}
+  .process-arrow{text-align:center;color:#8DA3A3;font-size:14px;margin:-4px 0 12px;}
+
+  .email-mock{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:10px;}
+  .email-mock .em-head{background:#F7FAFA;padding:8px 12px;border-bottom:1px solid var(--line);font-size:11.5px;color:var(--body);}
+  .email-mock .em-head b{color:var(--ink);}
+  .email-mock .em-body{padding:12px 14px;font-size:12px;color:var(--body);line-height:1.6;}
+  .example-flag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#B85C3E;background:rgba(217,119,87,0.1);padding:3px 8px;border-radius:6px;margin:10px 0 0 12px;}
+
+  /* delivery: status tracker viz */
+  .status-track{display:flex;align-items:center;gap:0;margin:12px 0 4px;}
+  .status-step{flex:1;text-align:center;position:relative;}
+  .status-step .pip{width:12px;height:12px;border-radius:50%;background:var(--cyan);margin:0 auto 6px;}
+  .status-step.pending .pip{background:var(--line);}
+  .status-step span{font-size:10.5px;color:var(--body);font-weight:600;}
+  .status-step:not(:last-child)::after{content:"";position:absolute;top:5px;left:56%;width:88%;height:2px;background:var(--line);}
+  .live-badge{display:inline-block;font-size:10px;font-weight:700;color:var(--cyan-deep);background:var(--cyan-tag);padding:3px 9px;border-radius:100px;margin-top:10px;}
+
+  /* retention: trigger viz */
+  .trigger-box{border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:10px;background:#FBFDFD;display:flex;align-items:center;gap:12px;}
+  .trigger-box .icon{width:34px;height:34px;border-radius:50%;background:var(--cyan-tag);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+  .trigger-box .txt{font-size:12.5px;color:var(--body);line-height:1.5;}
+  .trigger-box .txt b{color:var(--ink);}
+
+  /* report: checklist + counter */
+  .png-frame{border:2px dashed var(--line);border-radius:12px;padding:24px;margin-bottom:18px;}
+  .png-frame .cap{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#8DA3A3;font-weight:700;margin-bottom:14px;}
+  .checklist{list-style:none;margin:0 0 22px;padding:0;}
+  .checklist li{
+    display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--ink);font-weight:600;
+    padding:9px 0;border-bottom:1px solid var(--line);
+    opacity:0;animation:fadeIn .5s ease forwards;
+  }
+  .checklist li:nth-child(1){animation-delay:.1s;}
+  .checklist li:nth-child(2){animation-delay:.35s;}
+  .checklist li:nth-child(3){animation-delay:.6s;}
+  .checklist li:nth-child(4){animation-delay:.85s;}
+  .checklist li:last-child{border-bottom:none;}
+  .checklist .tick{
+    width:20px;height:20px;border-radius:50%;background:var(--cyan);color:#fff;font-size:11px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  @keyframes fadeIn{from{opacity:0;transform:translateX(-6px);}to{opacity:1;transform:translateX(0);}}
+
+  .calc-box{
+    border-radius:12px;background:var(--ink);color:#fff;padding:22px 24px;text-align:center;
+    opacity:0;animation:fadeIn .6s ease forwards;animation-delay:1.1s;
+  }
+  .calc-box .calc-label{font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:#8FB8B8;margin-bottom:10px;font-weight:700;}
+  .calc-box .calc-number{
+    font-family:'Outfit',sans-serif;font-weight:800;font-size:44px;line-height:1;
+    background:linear-gradient(90deg, var(--cyan), #C4A6FF);-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .calc-box .calc-sub{font-size:13px;color:#B9CCCC;margin-top:8px;max-width:360px;margin-left:auto;margin-right:auto;line-height:1.5;}
+
+  .mini-timeline{display:flex;align-items:center;justify-content:space-between;margin:22px 0 6px;position:relative;}
+  .mini-timeline .track{position:absolute;top:9px;left:20px;right:20px;height:2px;background:var(--line);}
+  .mini-node{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;}
+  .mini-node .dot{width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--cyan);}
+  .mini-node.purple .dot{border-color:var(--purple);}
+  .mini-node span{font-size:11px;color:var(--body);font-weight:600;text-align:center;}
+  .mini-node .badge{font-size:9.5px;background:var(--cyan-tag);color:var(--cyan-deep);padding:2px 7px;border-radius:100px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+
+  .cta-block{background:linear-gradient(135deg, rgba(26,158,158,0.06), rgba(124,58,237,0.06));border-radius:12px;padding:22px;margin-top:18px;}
+  .cta-block p{font-size:13.5px;color:var(--body);margin:0 0 12px;line-height:1.6;}
+  .cta-btn{background:linear-gradient(90deg, var(--cyan), var(--purple));color:#fff;font-family:'Outfit',sans-serif;font-weight:600;font-size:13.5px;padding:11px 20px;border-radius:9px;display:inline-block;}
+
+  .email-meta{border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px;font-size:12.5px;color:var(--body);}
+  .email-meta div{margin-bottom:4px;}
+  .email-meta b{color:var(--ink);}
+  .email-body p{font-size:13.5px;color:var(--body);line-height:1.7;margin:0 0 12px;}
+  .email-body ul{padding-left:18px;margin:0 0 12px;}
+  .email-body li{font-size:13.5px;color:var(--body);line-height:1.7;margin-bottom:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-head">
+    <span class="eyebrow">ReRev Labs · Pixel Concept</span>
+    <h1>Automation Opportunity Scanner — Screen Flow v4</h1>
+    <p>Fourth pass: solid brand color instead of ombre, corrected box labels, lighter-weight "why it matters" text, and an explicit transcript-based follow-up callout. Cyan "new" tags mark what changed since v3.</p>
+  </div>
+
+  <div class="changelog">
+    <span class="tag">What changed since v3</span>
+    <ul>
+      <li>Transformation quote highlight is now a single bold solid color pulled from the site's dominant brand color, not an ombre, ombre was harder to read. Currently a placeholder forest green for Lanyard, exact hex still needs to be pulled from their real site before shipping</li>
+      <li>Fixed the swapped labels on the Pre-Sale process boxes, readiness scoring is "Discovery," the personal-note outreach is "Pre-Call Vetting"</li>
+      <li>"Why it matters to the customer" is now plain text, no dark box behind it, one less visual element competing for attention</li>
+      <li>Delivery's nurture box renamed to "Automated Follow-Up & Nurture Sequence," copy now explicit that it's built from the call transcript and speaks to the specific problems described, not a generic template</li>
+    </ul>
+  </div>
+
+  <!-- SCREEN 1: QUIZ -->
+  <div class="row">
+    <div><div class="step-num">1</div><div class="connector"></div></div>
+    <div class="screen">
+      <div class="screen-chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">scanner.rerev.io</span></div>
+      <div class="screen-body">
+        <div class="q-field"><label>Your name</label><div class="q-input">Founder's first name</div></div>
+        <div class="q-field"><label>Your website</label><div class="q-input">https://lanyardhealth.com/</div></div>
+        <div class="q-field"><label>Do you use Google Workspace?</label><div class="q-input">Yes</div></div>
+        <div class="q-field"><label>Preferred LLM</label><div class="q-input">Claude</div></div>
+        <div class="q-field">
+          <label>What CRM or contact tools do you use? (select all that apply)</label>
+          <div class="chip-grid">
+            <div class="chip-option checked"><span class="box"></span>Apollo</div>
+            <div class="chip-option"><span class="box"></span>HubSpot</div>
+            <div class="chip-option checked"><span class="box"></span>Pipedrive</div>
+            <div class="chip-option"><span class="box"></span>Salesforce</div>
+            <div class="chip-option"><span class="box"></span>Other</div>
+            <div class="chip-option"><span class="box"></span>None yet</div>
+          </div>
+        </div>
+        <div class="q-btn">Scan My Site →</div>
+      </div>
+    </div>
+    <div class="notes">
+      <span class="new">Changed</span>
+      <h4>Quiz</h4>
+      <p>CRM field is now multi-select chips instead of a text input, since most businesses run more than one tool at once. Selections here feed the checklist on the final report screen.</p>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: TRANSFORMATION -->
+  <div class="row">
+    <div><div class="step-num">2</div><div class="connector"></div></div>
+    <div class="screen">
+      <div class="screen-chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">scanner.rerev.io/results</span></div>
+      <div class="screen-body">
+        <div class="site-pill">🔎 lanyardhealth.com</div>
+        <div class="transform-eyebrow">This is the power of what you deliver to your customers:</div>
+        <div class="transform-quote">For payers and providers drowning in the time and cost of manual credentialing, <b>Lanyard Health turns a months-long, error-prone process into a weeks-long, fully compliant flow</b>, letting them scale their provider network without adding overhead.</div>
+      </div>
+    </div>
+    <div class="notes">
+      <span class="new">Changed</span>
+      <h4>Transformation statement</h4>
+      <p>Trailing "everything below shows..." line removed, that sentence was doing setup work the whitespace didn't need. The statement now just sits on its own.</p>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: PRE-SALE -->
+  <div class="row">
+    <div><div class="step-num">3</div><div class="connector"></div></div>
+    <div class="screen">
+      <div class="screen-chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">scanner.rerev.io/results — pre-sale</span></div>
+      <div class="screen-body">
+        <div class="stage-eyebrow">Stage 1 of 3 · Pre-Sale</div>
+        <div class="stage-title">Finding people who are ready for that transformation</div>
+
+        <div class="block">
+          <span class="k">What we found</span>
+          <p>Lanyard Health clearly speaks to payers and providers, and names their pain in specific terms ($15K lost per provider, 30-40% error rates, the $60K hire).</p>
+          <div class="encourage-chip">Most businesses at your stage haven't nailed this down yet, roughly two-thirds are still speaking in vague terms. You're already ahead of the curve here.</div>
+        </div>
+
+        <div class="block">
+          <span class="k">The automation opportunity</span>
+          <div class="process-stack">
+            <div class="process-box">
+              <span class="stage-label">Discovery</span>
+              <div class="auto-overlay"><b>Automated</b> readiness scoring flags which leads are already showing they need this now, so outreach goes to the right people first, not everyone equally.</div>
+            </div>
+            <div class="process-arrow">↓</div>
+            <div class="process-box">
+              <span class="stage-label">Pre-Call Vetting</span>
+              <div class="auto-overlay"><b>Automated</b>, natural-language outreach that reads like a personal note, not a form response, sent the moment a lead is flagged ready.</div>
+              <div class="email-mock">
+                <div class="em-head"><b>From:</b> [Your Name] · <b>Subject:</b> quick note on your provider network</div>
+                <div class="em-body">Hey, noticed you're actively growing your provider panel. Most teams at this stage lose weeks to manual credentialing errors, happy to show you what a faster path could look like...</div>
+              </div>
+              <span class="example-flag">Illustrative example only</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <span class="k">Why it matters to the customer</span>
+          <div class="stat-chip">A prospect who feels understood before the first call books faster and trusts sooner.</div>
+          <div class="needs-stat">⚠ needs a real number here, currently unsupported, flag before this ships</div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <span class="new">Changed</span>
+      <h4>Pre-Sale slide</h4>
+      <p>The two things being automated, vetting and outreach, are now visually separated into stacked boxes instead of two bullet points reading as one idea.</p>
+      <p>Every automation callout now explicitly uses the word "automated," per your note, this isn't advice for you to do, it's what happens on its own.</p>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: DELIVERY -->
+  <div class="row">
+    <div><div class="step-num">4</div><div class="connector"></div></div>
+    <div class="screen">
+      <div class="screen-chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">scanner.rerev.io/results — delivery</span></div>
+      <div class="screen-body">
+        <div class="stage-eyebrow">Stage 2 of 3 · Delivery</div>
+        <div class="stage-title">Making the transformation felt, not just delivered</div>
+
+        <div class="block">
+          <span class="k">What we found</span>
+          <p>Lanyard Health highlights 50% faster prep time and full compliance from day one, but nothing on the site shows customers what's happening while they wait.</p>
+        </div>
+
+        <div class="block">
+          <span class="k">The automation opportunity</span>
+          <div class="process-box" style="margin-top:0;">
+            <span class="stage-label">Live Status, Automated</span>
+            <div class="status-track">
+              <div class="status-step"><div class="pip"></div><span>Intake</span></div>
+              <div class="status-step"><div class="pip"></div><span>Verification</span></div>
+              <div class="status-step pending"><div class="pip"></div><span>Submitted</span></div>
+              <div class="status-step pending"><div class="pip"></div><span>Approved</span></div>
+            </div>
+            <span class="live-badge">Customer sees this update in real time, no one has to ask</span>
+          </div>
+          <div class="process-box">
+            <span class="stage-label">Automated Follow-Up &amp; Nurture Sequence</span>
+            <div class="auto-overlay"><b>Automated</b> follow-up and nurture sequence built directly from the call transcript, speaking to the specific problems they described, not a generic template with their name dropped in.</div>
+          </div>
+        </div>
+
+        <div class="block">
+          <span class="k">Why it matters to the customer</span>
+          <div class="stat-chip">This isn't about feeling personalized, it's about customers trusting you'll reliably get them the result they came for. Visibility during delivery is where that trust gets built or lost.</div>
+          <div class="needs-stat">⚠ need a stronger stat tied to trust/reliability, not generic personalization affinity</div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <span class="new">New visualization</span>
+      <h4>Delivery slide</h4>
+      <p>Added a status-tracker mockup so the "customers always know where they stand" idea is seen, not just described, in the same stacked-box style as Pre-Sale.</p>
+    </div>
+  </div>
+
+  <!-- SCREEN 5: RETENTION -->
+  <div class="row">
+    <div><div class="step-num">5</div><div class="connector"></div></div>
+    <div class="screen">
+      <div class="screen-chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">scanner.rerev.io/results — retention</span></div>
+      <div class="screen-body">
+        <div class="stage-eyebrow">Stage 3 of 3 · Retention</div>
+        <div class="stage-title">Turning satisfied customers into your best proof</div>
+
+        <div class="block">
+          <span class="k">What we found</span>
+          <p>Lanyard Health mentions scaling "with confidence," but there's no visible proof point anywhere on the site, no case study, no named testimonial.</p>
+        </div>
+
+        <div class="block">
+          <span class="k">The automation opportunity</span>
+          <div class="trigger-box">
+            <div class="icon">🔔</div>
+            <div class="txt"><b>Peak satisfaction detected</b> → review request sent automatically, right after a successful credentialing, while the win is still fresh.</div>
+          </div>
+          <div class="process-box">
+            <span class="stage-label">Ongoing Engagement, Automated</span>
+            <div class="auto-overlay">The same infrastructure also watches for early disengagement, missed updates, slow replies, before it turns into churn. Not just a warning system, it's the thing keeping the relationship active in between.</div>
+          </div>
+        </div>
+
+        <div class="block">
+          <span class="k">Why it matters to the customer</span>
+          <div class="stat-chip">Asking at the moment of peak satisfaction, not weeks later, is one of the most reliable levers for review and referral rates. Right now that moment is passing by unclaimed.</div>
+          <div class="needs-stat">⚠ verify the specific stat before this ships, currently a directional placeholder</div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <span class="new">New visualization</span>
+      <h4>Retention slide</h4>
+      <p>Trigger moment now shown as its own visual instead of a bullet, matches how it'll actually feel to the customer: a moment, not a policy.</p>
+    </div>
+  </div>
+
+  <!-- SCREEN 6: SUMMARY / REPORT -->
+  <div class="row">
+    <div><div class="step-num">6</div><div class="connector"></div></div>
+    <div class="screen">
+      <div class="screen-chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">scanner.rerev.io/results — report</span></div>
+      <div class="screen-body">
+        <div class="stage-eyebrow">Your report</div>
+        <div class="stage-title">The minimum viable tech stack to make this real</div>
+
+        <div class="png-frame">
+          <div class="cap">What you already have</div>
+          <ul class="checklist">
+            <li><span class="tick">✓</span> Google Workspace</li>
+            <li><span class="tick">✓</span> Claude</li>
+            <li><span class="tick">✓</span> Apollo + Pipedrive</li>
+            <li><span class="tick">✓</span> API access to connect all of it</li>
+          </ul>
+
+          <div class="calc-box">
+            <div class="calc-label">Calculating what you'll need to buy</div>
+            <div class="calc-number">$0</div>
+            <div class="calc-sub">New subscriptions required. This is one of our biggest selling points, we build on what you already pay for.</div>
+          </div>
+
+          <div class="cap" style="margin-top:26px;">What the automated journey looks like</div>
+          <div class="mini-timeline">
+            <div class="track"></div>
+            <div class="mini-node"><div class="dot"></div><span>Pre-Sale</span><span class="badge">Automated</span></div>
+            <div class="mini-node purple"><div class="dot"></div><span>Delivery</span><span class="badge">Automated</span></div>
+            <div class="mini-node"><div class="dot"></div><span>Retention</span><span class="badge">Automated</span></div>
+          </div>
+        </div>
+
+        <div class="cta-block">
+          <p>This is just the customer experience side. The same automation could also give you founder hours back and let you grow without adding headcount. Want the full picture?</p>
+          <div class="cta-btn">Book Your Automation Consult →</div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <span class="new">New visualization</span>
+      <h4>Report / summary slide</h4>
+      <p>Tech stack is now a literal checklist with checkmarks, pulled straight from their quiz answers (Workspace, LLM, CRM selections), then a calculating animation that lands on $0, your "no new subscriptions" line, made visual instead of just stated.</p>
+      <p>Checklist and calc box animate in on page load in this file, staggered, so you can see the beat/pacing, not just the end state.</p>
+    </div>
+  </div>
+
+  <!-- SCREEN 7: EMAIL -->
+  <div class="row">
+    <div><div class="step-num">7</div></div>
+    <div class="screen">
+      <div class="screen-chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="label">inbox</span></div>
+      <div class="screen-body">
+        <div class="email-meta">
+          <div><b>Subject:</b> Your Automation Opportunity Report — Lanyard Health</div>
+          <div><b>To:</b> founder@lanyardhealth.com</div>
+        </div>
+        <div class="email-body">
+          <p>Hi [Founder],</p>
+          <p>Here's where automation could help you deliver on "weeks, not months" even more reliably, and make it feel that way to your customers too:</p>
+          <ul>
+            <li>Pre-Sale: automated readiness scoring + automated personal-sounding outreach</li>
+            <li>Delivery: automated live status updates + call-based nurture</li>
+            <li>Retention: automated review requests timed to peak satisfaction</li>
+          </ul>
+          <p>[View your full report →]</p>
+          <p>And based on what you're already using, this needs $0 in new subscriptions to build.</p>
+          <p>That's just the customer experience side. The same stack could also hand you back founder hours and room to grow without new hires, want the full picture?</p>
+          <p>[Book a no-pressure consult →]</p>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <span class="tag">Follow-up</span>
+      <h4>Email</h4>
+      <p>Added the $0-new-subscriptions line here too, so the selling point shows up in both the report and the inbox, not just once.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
