@@ -32,6 +32,7 @@
     --mock-border:#E4D9BE;
   }
   *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
   .wrap{max-width:1120px;margin:0 auto;padding:56px 28px 90px;}
   .eyebrow{font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink);font-weight:700;margin-bottom:14px;}
@@ -39,6 +40,33 @@
   .sub{font-size:16px;color:var(--ink-soft);max-width:70ch;margin-bottom:6px;}
   .tracker{font-size:13px;color:var(--ink-mute);margin-bottom:44px;}
   .tracker b{color:var(--green);font-weight:600;}
+
+  /* ============ TOP NAV ============ */
+  .page-nav{
+    position:sticky;top:0;z-index:20;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:20px;flex-wrap:wrap;
+    background:rgba(250,247,242,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--rule);
+    padding:14px 4px;
+    margin:0 -28px 40px;
+    padding-left:28px;padding-right:28px;
+  }
+  .page-nav-brand{
+    font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--pink-dark);
+    flex:0 0 auto;
+  }
+  .page-nav-links{display:flex;flex-wrap:wrap;gap:4px;}
+  .page-nav-links a{
+    font-size:12.5px;font-weight:600;color:var(--ink-soft);
+    text-decoration:none;padding:7px 12px;border-radius:999px;
+    transition:background .15s,color .15s;white-space:nowrap;
+  }
+  .page-nav-links a:hover{background:var(--pink-pale);color:var(--pink-dark);}
+  @media(max-width:700px){
+    .page-nav{position:relative;}
+  }
 
   /* Persona card */
   .persona{
@@ -804,6 +832,161 @@
     font-weight:700;
   }
 
+  /* ============ TECH STACK — live flow line (metro stations) ============ */
+  .metro-scroll{overflow-x:auto;padding-bottom:6px;margin-bottom:22px;-webkit-overflow-scrolling:touch;}
+  .metro{display:flex;align-items:center;min-width:640px;}
+  .station{
+    background:none;border:0;cursor:pointer;font-family:inherit;
+    display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;padding:4px 2px;
+  }
+  .station .dot{
+    width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+    font-family:'Fraunces',serif;font-weight:700;font-size:13px;background:#fff;
+    border:2px solid var(--rule);color:var(--ink-mute);
+    transition:all .2s ease;font-variant-numeric:tabular-nums;
+  }
+  .station .lab{font-size:11.5px;font-weight:600;color:var(--ink-mute);text-align:center;line-height:1.25;transition:color .2s ease;}
+  .station.active .dot{background:var(--pink);border-color:var(--pink);color:#fff;transform:scale(1.12);}
+  .station.active .lab{color:var(--pink-dark);}
+  .station.seen .dot{border-color:var(--green);color:var(--green);background:var(--green-pale);}
+  .seg{flex:0 0 auto;height:2px;width:26px;background:var(--rule);border-radius:2px;align-self:flex-start;margin-top:16px;}
+  .seg.filled{background:var(--green);}
+
+  .tech-panel{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:16px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.04);
+    padding:26px 28px 24px;
+    min-height:190px;
+  }
+  .tech-panel .eyebrow-sm{
+    font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pink);
+  }
+  .tech-panel .panel-title{
+    font-family:'Fraunces',serif;font-weight:700;font-size:23px;margin:6px 0 0;
+    color:var(--ink);letter-spacing:-0.01em;
+  }
+  .tech-panel .panel-copy{
+    color:var(--ink-soft);font-size:14.5px;max-width:60ch;margin:12px 0 0;line-height:1.6;
+  }
+  .tech-panel .panel-copy b{color:var(--ink);font-weight:600;}
+  .tech-blocker{
+    margin-top:14px;background:var(--pink-pale);color:var(--pink-dark);
+    border-radius:10px;padding:11px 13px;font-size:13px;font-weight:600;line-height:1.5;
+  }
+  .tech-blocker::before{content:"Blocked  ";font-weight:700;letter-spacing:.04em;}
+  .panel-nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:12px;}
+  .navbtn{
+    font-family:'Inter',sans-serif;font-weight:600;font-size:13px;cursor:pointer;
+    background:var(--bg);border:1px solid var(--rule);color:var(--ink);
+    padding:9px 16px;border-radius:100px;transition:all .15s ease;
+  }
+  .navbtn:hover:not(:disabled){border-color:var(--pink);color:var(--pink-dark);}
+  .navbtn:disabled{opacity:.35;cursor:default;}
+  .step-count{font-size:12px;color:var(--ink-mute);font-weight:600;letter-spacing:.03em;font-variant-numeric:tabular-nums;}
+
+  /* ============ BANNER / LANDING PAGE / TOOL FLOW ============ */
+  .flow-row{display:flex;align-items:flex-start;gap:18px;margin-bottom:8px;}
+  .flow-stop{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;}
+  .flow-num{
+    width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:700;font-size:12px;
+  }
+  .flow-arrow{
+    flex:0 0 auto;font-size:22px;color:var(--pink);margin-top:70px;
+  }
+  .flow-label{font-family:'Fraunces',serif;font-weight:700;font-size:14.5px;color:var(--ink);}
+  .flow-caption{font-size:12px;color:var(--ink-soft);line-height:1.45;max-width:220px;}
+  .flow-caption a{color:var(--pink-dark);font-weight:600;text-decoration:none;}
+
+  .browser-frame{
+    width:100%;background:#fff;border:2px solid #E8E4DD;border-radius:12px;
+    overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,0.06);
+  }
+  .browser-chrome{display:flex;gap:6px;padding:8px 10px;background:#F0EBE3;}
+  .browser-chrome .dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .browser-chrome .dot.r{background:#E8746A;}
+  .browser-chrome .dot.y{background:#EFC94C;}
+  .browser-chrome .dot.g{background:#7FBF7F;}
+
+  .banner-showcase{margin-bottom:8px;}
+  .full-banner{margin-bottom:2px;}
+  .banner-mock-v2{
+    display:flex;
+    align-items:center;
+    gap:26px;
+    padding:38px 34px;
+    background:var(--pink-dark);
+    min-height:170px;
+    flex-wrap:wrap;
+  }
+  .banner-copy{flex:0 0 auto;max-width:230px;}
+  .banner-brand{
+    display:block;font-family:'Fraunces',serif;font-weight:700;font-size:12px;
+    color:rgba(255,255,255,0.75);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;
+  }
+  .banner-headline-v2{
+    font-family:'Fraunces',serif;font-weight:800;font-size:23px;color:#fff;
+    line-height:1.15;margin:0;letter-spacing:-0.01em;
+  }
+  .banner-cta-block{
+    flex:1 1 200px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;
+  }
+  .banner-subtext{
+    font-family:'Fraunces',serif;font-style:italic;font-size:13px;
+    color:rgba(255,255,255,0.92);line-height:1.4;max-width:230px;
+  }
+  .banner-subtext em{font-style:italic;}
+  .banner-btn-v2{
+    background:var(--amber);color:#3A2A05;font-weight:700;font-size:13px;
+    padding:10px 20px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;
+  }
+  .banner-arrow-svg{width:50px;height:34px;opacity:.85;margin-left:2px;}
+  .banner-photo-standin{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .banner-photo-standin svg{width:64px;height:82px;}
+  .standin-label{font-size:9px;color:rgba(255,255,255,0.7);text-align:center;max-width:82px;line-height:1.3;}
+  .flow-down-arrow{text-align:center;font-size:20px;color:var(--pink);margin:4px 0 14px;}
+  @media(max-width:700px){
+    .banner-mock-v2{flex-direction:column;align-items:flex-start;}
+  }
+
+  .page-preview{width:100%;height:200px;border:0;display:block;pointer-events:none;background:#fff;}
+
+  .tool-mini{
+    display:flex;flex-direction:column;gap:8px;align-items:center;
+    padding:22px 14px;background:var(--mock-cream);min-height:200px;justify-content:center;
+  }
+  .tool-mini-brand{font-family:'Fraunces',serif;font-weight:700;font-size:12px;color:var(--mock-brand);}
+  .tool-mini-hook{font-family:'Fraunces',serif;font-weight:700;font-size:13px;color:var(--ink);line-height:1.3;}
+  .tool-mini-btn{
+    background:var(--mock-brand);color:#fff;font-size:11px;font-weight:600;
+    padding:6px 14px;border-radius:8px;margin-top:4px;
+  }
+
+  @media(max-width:900px){
+    .flow-row{flex-direction:column;align-items:stretch;}
+    .flow-arrow{align-self:center;margin-top:0;transform:rotate(90deg);}
+  }
+
+  /* ============ OUTREACH: email → landing page glow ============ */
+  .outreach-flow{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:22px;}
+  .outreach-node{
+    background:#fff;border:1px solid var(--rule);border-radius:10px;
+    padding:12px 22px;font-family:'Fraunces',serif;font-weight:700;font-size:14px;
+    color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,0.04);
+  }
+  .outreach-node a{color:var(--pink-dark);text-decoration:none;}
+  .glow-arrow{
+    font-size:26px;color:var(--pink);
+    animation:glowPulse 1.8s ease-in-out infinite;
+  }
+  @keyframes glowPulse{
+    0%,100%{text-shadow:0 0 4px rgba(239,103,165,0.35);opacity:.7;}
+    50%{text-shadow:0 0 18px rgba(239,103,165,0.95);opacity:1;}
+  }
+
   /* ============ NURTURE SEQUENCE ============ */
   .stop-banner{
     background:var(--green-pale);
@@ -816,6 +999,15 @@
     line-height:1.5;
   }
   .stop-banner b{color:var(--green);}
+  .phase-label{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:13px;
+    color:var(--pink-dark);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    margin:26px 0 14px;
+  }
   .email-seq{display:flex;flex-direction:column;gap:16px;}
   .email-card{
     background:var(--surface);
@@ -943,6 +1135,8 @@
   .divider{height:1px;background:var(--rule);margin:56px 0 30px;}
   footer{font-size:12px;color:var(--ink-mute);line-height:1.6;max-width:70ch;}
   footer b{color:var(--ink-soft);}
+  .confirm-list{margin:10px 0 0;padding-left:20px;}
+  .confirm-list li{margin-bottom:6px;}
 
   @media(max-width:900px){
     .persona{grid-template-columns:1fr;gap:24px;padding:28px;}
@@ -1009,19 +1203,34 @@
 <body>
 <div class="wrap">
 
+  <nav class="page-nav">
+    <span class="page-nav-brand">SisterGolf</span>
+    <div class="page-nav-links">
+      <a href="#section-persona">Persona</a>
+      <a href="#section-overview">Overview</a>
+      <a href="#tool-carousel-anchor">The Tool</a>
+      <a href="#section-techstack">Tech Stack</a>
+      <a href="#section-nurture">Nurture</a>
+      <a href="#section-outreach">Outreach</a>
+      <a href="#section-techimpl">Implementation</a>
+    </div>
+  </nav>
+
   <div class="eyebrow">Full funnel campaign · finalized for review</div>
   <h1>Tournament Readiness Tool: the full funnel</h1>
-  <p class="sub">The free asset, walked screen by screen, followed by the tech stack running behind it, the nurture sequence that follows a completed report, and the B2B workshop outreach that runs alongside it. What Shella will see on tomorrow's call.</p>
+  <p class="sub">The free asset, walked screen by screen, followed by the tech stack running behind it, the nurture sequence that follows a completed report, and the B2B workshop outreach that runs alongside it.</p>
   <p class="tracker">Working spec, <b>SisterGolf</b>, ready for Shella review.</p>
 
   <!-- ================== PERSONA ================== -->
-  <div class="persona">
+  <div class="persona" id="section-persona">
     <div class="persona-left">
       <span class="persona-tag">Screen 0 · The prospect</span>
       <span class="persona-icon">
         <svg viewBox="0 0 100 100"><path d="M40 55 Q50 61 60 55 L54 92 L46 92 Z" fill="var(--amber)"/><circle cx="50" cy="38" r="17" fill="#fff" stroke="var(--rule)" stroke-width="2"/></svg>
       </span>
-      <div class="persona-avatar">RO</div>
+      <div class="persona-avatar">
+        <svg viewBox="0 0 100 100" width="46" height="46"><circle cx="50" cy="38" r="20" fill="#fff"/><path d="M18 92 C18 65 30 55 50 55 C70 55 82 65 82 92 Z" fill="#fff"/></svg>
+      </div>
       <h2>Rachel Okafor</h2>
       <p class="persona-role">34, Senior Territory Manager, orthopedic implants · Southeast territory</p>
 
@@ -1054,8 +1263,74 @@
     </div>
   </div>
 
+  <!-- ================== SECTION: BANNER / LANDING PAGE / TOOL OVERVIEW ================== -->
+  <div class="section-head" id="section-overview">
+    <div class="icon-badge tint-green">
+      <svg viewBox="0 0 100 100"><path d="M20 50 L50 50 M42 38 L58 50 L42 62" fill="none" stroke="var(--green)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div>
+      <span class="kicker">Where traffic lands</span>
+      <h2>Banner, landing page, tool</h2>
+    </div>
+  </div>
+  <p class="section-note">The path someone follows, whether they click the site banner, a Facebook ad, or a cold outreach email, before they ever reach the interactive tool below. Three stops, in order.</p>
+
+  <div class="banner-showcase">
+    <div class="browser-frame full-banner">
+      <div class="browser-chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+      <div class="banner-mock-v2">
+        <div class="banner-copy">
+          <span class="banner-brand">SisterGolf</span>
+          <h3 class="banner-headline-v2">Find your next big client on the golf course.</h3>
+        </div>
+        <div class="banner-cta-block">
+          <span class="banner-subtext"><em>Not sure where to start?</em> Take the free 90-second assessment and we'll match you to your top 2 events.</span>
+          <span class="banner-btn-v2">⚡ Try it free</span>
+          <svg class="banner-arrow-svg" viewBox="0 0 80 50"><path d="M75 5 Q40 5 20 38" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M8 30 L20 38 L28 26" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="banner-photo-standin">
+          <svg viewBox="0 0 100 130"><rect x="2" y="2" width="96" height="126" rx="8" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-dasharray="6 5"/><circle cx="50" cy="46" r="24" fill="rgba(255,255,255,0.9)"/><path d="M14 122 C14 88 30 74 50 74 C70 74 86 88 86 122 Z" fill="rgba(255,255,255,0.9)"/></svg>
+          <span class="standin-label">Stand-in — swap for Shella's photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="flow-label">1 · The banner</div>
+    <div class="flow-caption">Sits at the top of Shella's existing site, sized bigger than a typical banner per your note. Placeholder styling and stand-in photo until her reference image and headshot are in hand.</div>
+  </div>
+
+  <div class="flow-down-arrow">↓</div>
+
+  <div class="flow-row">
+    <div class="flow-stop">
+      <div class="flow-num">2</div>
+      <div class="browser-frame">
+        <div class="browser-chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+        <iframe class="page-preview" src="https://proposals-server-production.up.railway.app/proposals/sistergolf-fb-landing-0726.html" loading="lazy" title="Landing page preview"></iframe>
+      </div>
+      <div class="flow-label">The landing page</div>
+      <div class="flow-caption"><a href="https://proposals-server-production.up.railway.app/proposals/sistergolf-fb-landing-0726.html" target="_blank" rel="noopener">Open the landing page →</a></div>
+    </div>
+
+    <div class="flow-arrow">→</div>
+
+    <div class="flow-stop">
+      <div class="flow-num">3</div>
+      <div class="browser-frame">
+        <div class="browser-chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+        <div class="tool-mini">
+          <div class="tool-mini-brand">SisterGolf</div>
+          <div class="tool-mini-hook">Find the two golf events where your next big client will be.</div>
+          <div class="tool-mini-btn">Start my assessment</div>
+        </div>
+      </div>
+      <div class="flow-label">The tool</div>
+      <div class="flow-caption"><a href="#tool-carousel-anchor">Full click-through below ↓</a></div>
+    </div>
+
+  </div>
+
   <!-- ================== SECTION: TOOL FLOW (CLICK-THROUGH) ================== -->
-  <div class="section-head">
+  <div class="section-head" id="tool-carousel-anchor">
     <div class="icon-badge tint-cream">
       <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="#fff" stroke="#E0DED8" stroke-width="2"/><circle cx="38" cy="38" r="3.5" fill="#DCD8CE"/><circle cx="50" cy="30" r="3.5" fill="#DCD8CE"/><circle cx="62" cy="38" r="3.5" fill="#DCD8CE"/><circle cx="32" cy="52" r="3.5" fill="#DCD8CE"/><circle cx="50" cy="52" r="3.5" fill="#DCD8CE"/><circle cx="68" cy="52" r="3.5" fill="#DCD8CE"/><circle cx="38" cy="65" r="3.5" fill="#DCD8CE"/><circle cx="50" cy="70" r="3.5" fill="#DCD8CE"/><circle cx="62" cy="65" r="3.5" fill="#DCD8CE"/></svg>
     </div>
@@ -1389,7 +1664,7 @@
   <div class="divider"></div>
 
   <!-- ================== SECTION: TECH STACK ================== -->
-  <div class="section-head">
+  <div class="section-head" id="section-techstack">
     <div class="icon-badge tint-green">
       <svg viewBox="0 0 100 100"><rect x="46" y="8" width="4" height="62" fill="var(--ink)"/><path d="M50 68 Q76 68 80 88 Q60 99 45 88 Z" fill="var(--green)"/></svg>
     </div>
@@ -1398,46 +1673,17 @@
       <h2>The stack running behind it</h2>
     </div>
   </div>
-  <p class="stack-flow">Ads <b>→</b> Assessment tool <b>→</b> Data &amp; matching logic <b>→</b> Report delivery <b>→</b> Nurture engine <b>→</b> Booking</p>
+  <p class="section-note">Click through the stations, or use Next, same one-thing-at-a-time pattern as the tool above.</p>
 
-  <div class="stack-grid">
-    <div class="stack-card">
-      <div class="stack-step">01 · Traffic</div>
-      <div class="stack-title">Ad platforms</div>
-      <div class="stack-desc">Meta (Facebook/Instagram) as the primary channel — this is where "Everyone Has a Coach" lives. Google Search as a secondary layer for high-intent terms. Retargeting pixel on the tool itself for anyone who starts the assessment but doesn't finish.</div>
-    </div>
-    <div class="stack-card">
-      <div class="stack-step">02 · Frontend</div>
-      <div class="stack-title">Assessment tool</div>
-      <div class="stack-desc">Same build pattern as this mockup — a single-page HTML/JS tool, hosted on <b>Railway</b>. No reloads between screens, mobile-first, feels instant. This is the actual live version of what you're clicking through above.</div>
-    </div>
-    <div class="stack-card">
-      <div class="stack-step">03 · Data &amp; logic</div>
-      <div class="stack-title">Data capture &amp; matching</div>
-      <div class="stack-desc">Submissions and the tournament database (event, date, city, buyer-profile tags) live in <b>Supabase</b>. The "top 2 events" logic runs as a real query, so Shella can add new tournaments without a rebuild.</div>
-    </div>
-    <div class="stack-card">
-      <div class="stack-step">04 · Delivery</div>
-      <div class="stack-title">Report generation</div>
-      <div class="stack-desc">A lightweight backend function assembles the personalized report the moment screen 05 submits, and sends it via <b>Gmail API</b> — so "90 seconds, ad click to report" ends with an actual email in her inbox, not just a screen.</div>
-    </div>
-    <div class="stack-card">
-      <div class="stack-step">05 · Follow-up</div>
-      <div class="stack-title">Nurture engine</div>
-      <div class="stack-desc">Scheduled sends via Apps Script + Gmail. Before every send, it checks: has she replied, booked, or enrolled? If yes to any, the sequence stops — no double-touch. Full detail below.</div>
-    </div>
-    <div class="stack-card">
-      <div class="stack-step">06 · Booking</div>
-      <div class="stack-title">Booking &amp; reporting</div>
-      <div class="stack-desc">Consult calls book directly to <b>Google Calendar</b>. Funnel stage (started → completed → booked → enrolled) rolls up into a simple dashboard so you and Shella can see where people are dropping off.</div>
-      <div class="stack-flag">Blocked on the Outlook/Google double-booking fix — can't send cold leads to a calendar that might double-book her</div>
-    </div>
+  <div class="metro-scroll">
+    <div class="metro" id="techMetro"></div>
   </div>
+  <div class="tech-panel" id="techPanel"></div>
 
   <div class="divider"></div>
 
   <!-- ================== SECTION: NURTURE SEQUENCE ================== -->
-  <div class="section-head">
+  <div class="section-head" id="section-nurture">
     <div class="icon-badge tint-pink">
       <svg viewBox="0 0 100 100"><rect x="46" y="12" width="4" height="72" fill="var(--ink)"/><path d="M50 12 L82 26 L50 40 Z" fill="var(--pink-dark)"/><ellipse cx="48" cy="88" rx="16" ry="4" fill="var(--rule)"/></svg>
     </div>
@@ -1446,47 +1692,73 @@
       <h2>Nurture sequence</h2>
     </div>
   </div>
-  <div class="stop-banner"><b>Up to 4 emails, never more.</b> The sequence stops the instant any of three signals fires: she replies, she books the call, or she enrolls. Whichever happens first ends the sequence — no email goes out after.</div>
+  <div class="stop-banner"><b>Two phases, one path to a booked call.</b> Phase 1 runs the first week after she gets her report, on a fixed schedule. Phase 2 runs for up to 6 months after that, triggered by real tournaments happening in her metro, not a fixed calendar. Either phase ends instantly the moment she replies, books a call, or enrolls, whichever happens first.</div>
 
+  <div class="phase-label">Phase 1 · First week, fixed schedule</div>
   <div class="email-seq">
     <div class="email-card">
       <div class="email-day">D0<span>Same day</span></div>
       <div>
-        <div class="email-subject">"Your 2 events (and your prep plan) are in your inbox"</div>
+        <div class="email-subject">"[Event] is in [X] months. Here's your plan."</div>
         <div class="email-purpose">Delivers, doesn't sell. Recaps her #1 event by name and date, restates the prep-time window, and reads like a personal note rather than a marketing send. First and only ask: book the call.</div>
+        <span class="email-cta">CTA → Book the call</span>
+      </div>
+    </div>
+    <div class="email-card">
+      <div class="email-day">D1<span>Day 1</span></div>
+      <div>
+        <div class="email-subject">"The $34,066 reason he's outselling you"</div>
+        <div class="email-purpose">Reconnects the medical-sales gap stat from the report directly to her specific #1 event — what's actually at stake if she skips it. Reinforces urgency without pressure.</div>
         <span class="email-cta">CTA → Book the call</span>
       </div>
     </div>
     <div class="email-card">
       <div class="email-day">D3<span>Day 3</span></div>
       <div>
-        <div class="email-subject">"The gap nobody tells you about"</div>
-        <div class="email-purpose">Reconnects the revenue-gap stat from the report directly to her specific #1 event — what's actually at stake if she skips it. Reinforces urgency without pressure.</div>
+        <div class="email-subject">"He's not better at his job. He just golfs."</div>
+        <div class="email-purpose">Same urgency as Day 1, reframed so the sequence doesn't repeat itself, keeps the "what he has that you don't" angle front and center.</div>
         <span class="email-cta">CTA → Book the call</span>
       </div>
     </div>
     <div class="email-card">
       <div class="email-day">D7<span>Day 7</span></div>
       <div>
-        <div class="email-subject">"'I don't play golf' is exactly who this is for"</div>
+        <div class="email-subject">"Beginners close deals too."</div>
         <div class="email-purpose">Handles the objection directly — beginner comfort level, ties back to the specific 4-month plan module that solves it (fundamentals → conversation flow), room for a short proof point once Shella has a client story to plug in.</div>
         <span class="email-cta">CTA → Book the call or see coaching options</span>
       </div>
     </div>
+  </div>
+
+  <div class="phase-label">Phase 2 · Up to 6 months, event-triggered</div>
+  <p class="section-note" style="margin-top:-6px;">Instead of guessing at a countdown, this phase waits for something real to happen. The day after any high-fit tournament runs in her metro, whether or not it was one of her original top 2, she gets an email. The pitch shifts from "get ready for what's coming" to "here's what you just missed," in real time.</p>
+  <div class="email-seq">
     <div class="email-card">
-      <div class="email-day">D14<span>Day 14</span></div>
+      <div class="email-day">+1d<span>Day after event</span></div>
       <div>
-        <div class="email-subject">"Prep time is closing in — last call before [Event]"</div>
-        <div class="email-purpose">Scarcity tied to her own prep window, not a generic deadline. Offers the online sprint as a fallback if in-person timing doesn't work. Final direct ask, reply-to-book works here too.</div>
-        <span class="email-cta">CTA → Book, or just reply</span>
+        <div class="email-subject">"You missed [Tournament] yesterday. Here's what that probably cost you."</div>
+        <div class="email-purpose">Triggers off any qualifying tournament in her metro completing, not a fixed day count. Real-time loss aversion instead of future prep framing, this is the emotional core of Phase 2.</div>
+        <span class="email-cta">CTA → Book the call</span>
       </div>
     </div>
+    <div class="email-card">
+      <div class="email-day">+1d<span>Day after event</span></div>
+      <div>
+        <div class="email-subject">"[Tournament] happened without you. Your competitors were there."</div>
+        <div class="email-purpose">Same trigger as above, rotates in as an alternate variant so repeat sends across the 6-month window don't feel identical.</div>
+        <span class="email-cta">CTA → Book the call</span>
+      </div>
+    </div>
+  </div>
+  <div class="note" style="max-width:100%;margin-top:4px;">
+    <b>What Phase 2 actually needs to run:</b> Shella's full tournament calendar for her launch metros, not just the top 2 surfaced in the report, since the system has to recognize every qualifying event as it happens across the 6-month window.
+    <b>Open decision:</b> if a stretch goes by with no qualifying tournament, does the sequence stay silent (simpler, lower risk) or does it get a generic backstop touch after some threshold? Flagging for Shella's input, not yet decided.
   </div>
 
   <div class="divider"></div>
 
   <!-- ================== SECTION: B2B OUTREACH ================== -->
-  <div class="section-head">
+  <div class="section-head" id="section-outreach">
     <div class="icon-badge tint-amber">
       <svg viewBox="0 0 100 100"><rect x="30" y="42" width="34" height="46" rx="7" fill="var(--pink-dark)"/><rect x="38" y="26" width="4" height="32" fill="var(--ink)"/><rect x="50" y="20" width="4" height="38" fill="var(--ink)"/><rect x="60" y="28" width="4" height="30" fill="var(--ink)"/></svg>
     </div>
@@ -1532,6 +1804,12 @@
     </div>
   </div>
 
+  <div class="outreach-flow">
+    <div class="outreach-node">Cold email</div>
+    <div class="glow-arrow">→</div>
+    <div class="outreach-node"><a href="https://proposals-server-production.up.railway.app/proposals/sistergolf-fb-landing-0726.html" target="_blank" rel="noopener">Landing page</a></div>
+  </div>
+
   <div class="template-box">
     <div class="template-meta">Outreach template · to HR / sales leadership</div>
     <div class="template-subject">Subject: A golf training built for the women on your sales team</div>
@@ -1545,20 +1823,65 @@ Worth a short call to see if it's a fit for your team?</div>
     <div class="template-sig">
       Keyona<br>
       SisterGolf<br>
-      <a href="#">→ See how women are using golf to grow their sales</a>
-      <div class="sig-flag">Signature link should point to the enrollment page — the actual conversion, not a general info page. Placeholder until the dedicated cohort landing page ships; use sistergolfonline.com's program page in the meantime.</div>
+      <a href="https://proposals-server-production.up.railway.app/proposals/sistergolf-fb-landing-0726.html" target="_blank" rel="noopener">→ See how women are using golf to grow their sales</a>
+      <div class="sig-flag">Signature link now points to the landing page above. Flagging to confirm: is this the right destination for cold outreach specifically, or should it go to a different enrollment page once one exists?</div>
     </div>
   </div>
 
   <div class="divider"></div>
+
+  <!-- ================== SECTION: TECHNICAL IMPLEMENTATION ================== -->
+  <div class="section-head" id="section-techimpl">
+    <div class="icon-badge tint-cream">
+      <svg viewBox="0 0 100 100"><rect x="20" y="30" width="60" height="42" rx="5" fill="#fff" stroke="var(--ink)" stroke-width="3"/><path d="M35 45 L45 55 L35 65" fill="none" stroke="var(--pink-dark)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><rect x="52" y="60" width="16" height="4" fill="var(--ink)"/></svg>
+    </div>
+    <div>
+      <span class="kicker">Before any of this goes live</span>
+      <h2>Technical implementation</h2>
+    </div>
+  </div>
+  <p class="section-note">What actually has to happen behind the scenes before this can run, not design decisions, access and setup.</p>
+
+  <div class="stack-grid">
+    <div class="stack-card">
+      <div class="stack-step">Access</div>
+      <div class="stack-title">Facebook ad account</div>
+      <div class="stack-desc">Need access to Shella's Facebook ad account to run the campaign. May need to set this up together, depending on how her login is configured.</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-step">Access</div>
+      <div class="stack-title">CRM or Google Apps Script</div>
+      <div class="stack-desc">Need access to whatever CRM Shella's using, or we build this on Google Apps Script instead, which just needs to run on her machine or Google account. Done this setup before, not a big deal, just needs a call to walk through it together, probably an hour to an hour and a half.</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-step">Access</div>
+      <div class="stack-title">Claude account</div>
+      <div class="stack-desc">Shella gets set up with a Claude account so she has access to the AI API this all runs on.</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-step">Tracking</div>
+      <div class="stack-title">Google Analytics 4 (GA4)</div>
+      <div class="stack-desc">A GA4 property and tracking snippet installed on both the landing page and the tool, so traffic and conversion can actually be measured, not guessed at.</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-step">Tracking</div>
+      <div class="stack-title">Meta Pixel</div>
+      <div class="stack-desc">A Meta (Facebook) Pixel installed on the landing page and the tool, feeding conversion data back into Ads Manager for retargeting and optimization.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
   <footer>
     <b>What Shella needs to confirm before build:</b>
-    the 8 sales-type categories and how her coaching language shifts across them,
-    the actual list of high-fit tournaments in her launch metros (Atlanta, Birmingham, and 2-3 more),
-    her coaching curriculum broken down by comfort level so the 4-month plan output maps to real sessions,
-    the framing of the static stat once we've researched a defensible source,
-    sign-off on the 8 target company types and outreach template tone,
-    and confirmation of the enrollment link to use in the outreach signature until the dedicated landing page is live.
+    <ul class="confirm-list">
+      <li>The 8 sales-type categories and how her coaching language shifts across them</li>
+      <li>The actual list of high-fit tournaments in her launch metros (Atlanta, Birmingham, and 2-3 more)</li>
+      <li>Her coaching curriculum broken down by comfort level so the 4-month plan output maps to real sessions</li>
+      <li>The framing of the static stat once we've researched a defensible source</li>
+      <li>Sign-off on the 8 target company types and outreach template tone</li>
+      <li>Confirmation of the enrollment link to use in the outreach signature until the dedicated landing page is live</li>
+    </ul>
   </footer>
 </div>
 
@@ -1596,6 +1919,70 @@ Worth a short call to see if it's a fit for your team?</div>
   });
 
   render();
+
+  // ---------- Tech stack: live flow line (metro stations) ----------
+  var techSteps = [
+    {n:'01', eyebrow:'Traffic', title:'Ad platforms', short:'Ads',
+     copy:'Meta (Facebook/Instagram) as the primary channel — this is where <b>"Everyone Has a Coach"</b> lives. Google Search as a secondary layer for high-intent terms. Retargeting pixel on the tool itself for anyone who starts the assessment but doesn\'t finish.'},
+    {n:'02', eyebrow:'Frontend', title:'Assessment tool', short:'Assessment',
+     copy:'Same build pattern as this mockup — a single-page HTML/JS tool, hosted on <b>Railway</b>. No reloads between screens, mobile-first, feels instant. This is the actual live version of what you\'re clicking through above.'},
+    {n:'03', eyebrow:'Data &amp; logic', title:'Data capture &amp; matching', short:'Data &amp; matching',
+     copy:'Submissions and the tournament database (event, date, city, buyer-profile tags) live in <b>Supabase</b>. The "top 2 events" logic runs as a real query, so Shella can add new tournaments without a rebuild.'},
+    {n:'04', eyebrow:'Delivery', title:'Report generation', short:'Report delivery',
+     copy:'A lightweight backend function assembles the personalized report the moment screen 05 submits, and sends it via <b>Gmail API</b> — so "90 seconds, ad click to report" ends with an actual email in her inbox, not just a screen.'},
+    {n:'05', eyebrow:'Follow-up', title:'Nurture engine', short:'Nurture',
+     copy:'Scheduled sends via Apps Script + Gmail. Before every send, it checks: has she replied, booked, or enrolled? If yes to any, the sequence stops — no double-touch. Full detail below.'},
+    {n:'06', eyebrow:'Booking', title:'Booking &amp; reporting', short:'Booking',
+     copy:'Consult calls book directly to <b>Google Calendar</b>. Funnel stage (started → completed → booked → enrolled) rolls up into a simple dashboard so you and Shella can see where people are dropping off.',
+     blocker:'on the Outlook/Google double-booking fix — can\'t send cold leads to a calendar that might double-book her'}
+  ];
+
+  var techMetro = document.getElementById('techMetro');
+  var techPanel = document.getElementById('techPanel');
+  var techActive = 0;
+
+  techSteps.forEach(function(s, i){
+    if(i > 0){
+      var seg = document.createElement('div');
+      seg.className = 'seg';
+      seg.dataset.seg = i;
+      techMetro.appendChild(seg);
+    }
+    var b = document.createElement('button');
+    b.className = 'station';
+    b.dataset.idx = i;
+    b.innerHTML = '<span class="dot">' + s.n + '</span><span class="lab">' + s.short + '</span>';
+    b.addEventListener('click', function(){ setTechActive(i); });
+    techMetro.appendChild(b);
+  });
+
+  function setTechActive(i){
+    techActive = i;
+    var stations = techMetro.querySelectorAll('.station');
+    stations.forEach(function(st, idx){
+      st.classList.toggle('active', idx === i);
+      st.classList.toggle('seen', idx < i);
+    });
+    techMetro.querySelectorAll('.seg').forEach(function(seg){
+      seg.classList.toggle('filled', parseInt(seg.dataset.seg,10) <= i);
+    });
+    var s = techSteps[i];
+    var blocker = s.blocker ? '<div class="tech-blocker">' + s.blocker + '</div>' : '';
+    techPanel.innerHTML =
+      '<span class="eyebrow-sm">' + s.eyebrow + '</span>' +
+      '<h3 class="panel-title">' + s.title + '</h3>' +
+      '<p class="panel-copy">' + s.copy + '</p>' + blocker +
+      '<div class="panel-nav">' +
+        '<button class="navbtn" id="techPrev"' + (i===0?' disabled':'') + '>← Previous</button>' +
+        '<span class="step-count">Step ' + (i+1) + ' of ' + techSteps.length + '</span>' +
+        '<button class="navbtn" id="techNext"' + (i===techSteps.length-1?' disabled':'') + '>Next →</button>' +
+      '</div>';
+    var prevBtn = document.getElementById('techPrev');
+    var nextBtn = document.getElementById('techNext');
+    if(prevBtn) prevBtn.addEventListener('click', function(){ setTechActive(techActive-1); });
+    if(nextBtn) nextBtn.addEventListener('click', function(){ setTechActive(techActive+1); });
+  }
+  setTechActive(0);
 </script>
 </body>
 </html>
