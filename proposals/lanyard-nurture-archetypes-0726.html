@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nurture Sequence Archetypes | Lanyard Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F6F4EF;
+    --card: #FFFFFF;
+    --ink: #24303D;
+    --ink-soft: #4E5B67;
+    --gold: #B8862E;
+    --gold-soft: #E9D8B8;
+    --teal: #3E6B63;
+    --teal-soft: #DCE7E4;
+    --green: #4C7A5D;
+    --green-bg: #E4EEE7;
+    --amber: #C08A2E;
+    --amber-bg: #F5EBD8;
+    --red: #B24A3D;
+    --red-bg: #F5E4E1;
+    --line: #DDD7CA;
+    --mail-bg: #FCFBF8;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 64px 32px 110px;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 42px;
+    line-height: 1.14;
+    margin: 0 0 18px;
+    letter-spacing: -0.01em;
+  }
+
+  .lede {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin: 0 0 40px;
+  }
+
+  .principle {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 22px 26px;
+    margin-bottom: 44px;
+    font-size: 14.5px;
+  }
+  .principle .flow {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink);
+    flex-wrap: wrap;
+  }
+  .flow .step {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 6px 11px;
+  }
+  .flow .step.win { border-color: var(--green); color: var(--green); background: var(--green-bg); }
+  .flow .step.fallback { border-color: var(--gold); color: #8a6420; background: var(--gold-soft); }
+  .flow .arrow { color: var(--ink-soft); }
+  .principle p { margin: 0; color: var(--ink-soft); }
+
+  section.framework { margin-bottom: 52px; }
+  section.framework h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+  section.framework > p.sub {
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    margin: 0 0 20px;
+    max-width: 600px;
+  }
+
+  .elements {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .element {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px 14px;
+  }
+  .element .name {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 15.5px;
+    margin-bottom: 5px;
+    line-height: 1.25;
+  }
+  .element .desc {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+
+  .divider { border: none; border-top: 1px solid var(--line); margin: 54px 0; }
+
+  .archetype { margin-bottom: 66px; }
+
+  .arch-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .arch-icon {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .arch-icon svg { width: 26px; height: 26px; }
+  .arch-title-block { flex: 1; min-width: 0; }
+  .arch-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .archetype h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 25px;
+    font-weight: 600;
+    margin: 2px 0 0;
+  }
+
+  .at-a-glance {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+  }
+  .at-a-glance strong { color: var(--ink); font-weight: 600; }
+
+  /* TOGGLE / DETAILS STYLING */
+  details.profile {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  details.profile summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--teal);
+    font-weight: 600;
+  }
+  details.profile summary::-webkit-details-marker { display: none; }
+  details.profile summary .arrow {
+    transition: transform 0.15s ease;
+    color: var(--ink-soft);
+    font-size: 13px;
+  }
+  details.profile[open] summary .arrow { transform: rotate(90deg); }
+  details.profile summary:hover { background: var(--teal-soft); }
+
+  .profile-body {
+    padding: 4px 24px 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+  .badge-card {
+    flex-shrink: 0;
+    width: 168px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 14px 18px;
+    text-align: center;
+  }
+  .badge-clip {
+    width: 38px; height: 14px;
+    background: var(--gold);
+    border-radius: 7px;
+    margin: 0 auto 12px;
+  }
+  .badge-photo {
+    width: 72px; height: 72px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .badge-photo svg { width: 36px; height: 36px; }
+  .badge-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0 0 2px;
+  }
+  .badge-role { font-size: 11.5px; color: var(--ink-soft); }
+
+  .profile-detail { flex: 1; min-width: 0; }
+
+  .meters { display: flex; gap: 28px; margin-bottom: 18px; flex-wrap: wrap; }
+  .meter-block { min-width: 150px; }
+  .meter-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .meter-dots { display: flex; gap: 5px; }
+  .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--line); }
+  .dot.filled { background: var(--gold); }
+
+  .traits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .trait-box {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+  .trait-box h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 6px;
+    font-weight: 600;
+  }
+  .trait-box.needs h4 { color: var(--green); }
+  .trait-box.not-needs h4 { color: var(--red); }
+  .trait-box p { margin: 0; font-size: 13.5px; color: var(--ink-soft); }
+
+  .purpose {
+    background: var(--teal-soft);
+    border-radius: 4px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+  }
+  .purpose .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .purpose p { margin: 0; font-size: 14px; color: var(--ink); }
+
+  table.mix {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    font-size: 13px;
+  }
+  table.mix th {
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    font-weight: 600;
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  table.mix th:last-child, table.mix td:last-child { text-align: center; width: 90px; }
+  table.mix td { padding: 10px 14px; border-bottom: 1px solid var(--line); }
+  table.mix tr:last-child td { border-bottom: none; }
+  .light { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+  .light.green { background: var(--green); }
+  .light.yellow { background: var(--amber); }
+  .light.red { background: var(--red); }
+
+  .sub-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--teal);
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+
+  .email-card {
+    background: var(--mail-bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 22px 24px;
+    margin-bottom: 22px;
+  }
+  .email-subject {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 16.5px;
+    margin: 0 0 4px;
+  }
+  .email-meta {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .email-card p { margin: 0 0 12px; font-size: 14.5px; color: var(--ink); }
+  .email-card p:last-child { margin-bottom: 0; }
+  .email-card strong { background: var(--gold-soft); padding: 1px 4px; border-radius: 2px; }
+
+  .homework-box {
+    background: var(--gold-soft);
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 22px;
+  }
+  .homework-box .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #8a6420;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .homework-box p { margin: 0 0 8px; font-size: 14.5px; color: var(--ink); }
+  .homework-box p:last-child { margin-bottom: 0; }
+
+  .sequence-list { list-style: none; margin: 0; padding: 0; }
+  .sequence-list li {
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+  .sequence-list li:last-child { border-bottom: none; }
+  .sequence-list summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 10px 0;
+  }
+  .sequence-list summary::-webkit-details-marker { display: none; }
+  .sequence-list summary:hover .seq-subject { color: var(--teal); }
+  .seq-order {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+    width: 16px;
+  }
+  .seq-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--teal);
+    background: var(--teal-soft);
+    padding: 2px 8px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+  .seq-subject { color: var(--ink); transition: color 0.1s ease; }
+  .seq-arrow {
+    margin-left: auto;
+    color: var(--ink-soft);
+    font-size: 11px;
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+  }
+  .sequence-list details[open] .seq-arrow { transform: rotate(90deg); }
+  .seq-body {
+    padding: 2px 0 18px 28px;
+  }
+  .seq-body .email-meta {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .seq-body p { margin: 0 0 10px; font-size: 13.5px; color: var(--ink); }
+  .seq-body p:last-child { margin-bottom: 0; }
+  .seq-body strong { background: var(--gold-soft); padding: 1px 4px; border-radius: 2px; }
+
+  footer {
+    margin-top: 70px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 700px) {
+    .wrap { padding: 44px 18px 80px; }
+    h1 { font-size: 32px; }
+    .elements { grid-template-columns: 1fr 1fr; }
+    .badge-row { flex-direction: column; align-items: center; }
+    .traits { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">Lanyard Health, Nurture Sequence Framework</div>
+  <h1>Four kinds of buyer. Four different jobs for the follow up.</h1>
+  <p class="lede">Drawn from real calls. Each section moves from who they are, to the email sent the same day as the call, to the sequence that follows if a live next call couldn't get locked in. Tap "Full Profile" on any archetype for the underlying detail.</p>
+
+  <div class="principle">
+    <p>A nurture sequence starts where a live call ends. The best outcome from any call is a calendar invite sent before hanging up, the next conversation locked in while the energy is still there. Nurture is the fallback, not the plan.</p>
+    <div class="flow">
+      <div class="step win">Live call ends</div>
+      <span class="arrow">&rarr;</span>
+      <div class="step win">Calendar invite sent, next call locked</div>
+      <span class="arrow">&rarr;</span>
+      <div class="step fallback">Not ready: send an asset, enter nurture</div>
+    </div>
+  </div>
+
+  <section class="framework">
+    <h2>Five ways to help someone understand what's going on</h2>
+    <p class="sub">Five independent categories to pull from, not five required steps. A sequence might lean on one or two of these the whole way through, or mix all five. The order below is just for reference.</p>
+    <div class="elements">
+      <div class="element">
+        <div class="name">Symptom</div>
+        <div class="desc">The hidden cost of doing nothing. For someone who doesn't feel a problem yet.</div>
+      </div>
+      <div class="element">
+        <div class="name">Solution</div>
+        <div class="desc">How to evaluate options at all, and where most of them fall short.</div>
+      </div>
+      <div class="element">
+        <div class="name">Value Proposition</div>
+        <div class="desc">Why Lanyard specifically, not just why credentialing help in general.</div>
+      </div>
+      <div class="element">
+        <div class="name">Proof</div>
+        <div class="desc">Customer stories and data. Quantified results, not claims.</div>
+      </div>
+      <div class="element">
+        <div class="name">Product</div>
+        <div class="desc">How it actually works day to day. Mechanics, not persuasion.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ARCHETYPE 1: READY NOW -->
+  <div class="archetype">
+    <div class="arch-header">
+      <div class="arch-icon" style="background:#E9D8B8;">
+        <svg viewBox="0 0 48 48" fill="none" stroke="#8a6420" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M26 4 L12 26 H22 L20 44 L36 20 H26 Z"/>
+        </svg>
+      </div>
+      <div class="arch-title-block">
+        <div class="arch-num">Archetype 01</div>
+        <h2>Ready Now / Concrete Trigger</h2>
+      </div>
+    </div>
+    <p class="at-a-glance"><strong>Matt Bartholf, Better Well.</strong> New senior living psychotherapy line, scaling to 30 to 40 clinicians within a year, asked directly on the call: could I start seeing patients next week.</p>
+
+    <details class="profile">
+      <summary>Full profile <span class="arrow">&#9656;</span></summary>
+      <div class="profile-body">
+        <div class="badge-row">
+          <div class="badge-card">
+            <div class="badge-clip"></div>
+            <div class="badge-photo" style="background:#E9D8B8;">
+              <svg viewBox="0 0 48 48" fill="none" stroke="#8a6420" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M26 4 L12 26 H22 L20 44 L36 20 H26 Z"/>
+              </svg>
+            </div>
+            <div class="badge-name">Matt Bartholf</div>
+            <div class="badge-role">Better Well</div>
+          </div>
+          <div class="profile-detail">
+            <div class="meters">
+              <div class="meter-block">
+                <div class="meter-label">Urgency</div>
+                <div class="meter-dots">
+                  <div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div>
+                </div>
+              </div>
+              <div class="meter-block">
+                <div class="meter-label">Question Intensity</div>
+                <div class="meter-dots">
+                  <div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                </div>
+              </div>
+            </div>
+            <div class="traits">
+              <div class="trait-box needs">
+                <h4>Needs</h4>
+                <p>Speed, mechanical clarity on what happens next, a locked date to move.</p>
+              </div>
+              <div class="trait-box not-needs">
+                <h4>Doesn't need</h4>
+                <p>Convincing, competitor comparisons, proof of track record. Already sold.</p>
+              </div>
+            </div>
+            <div class="purpose">
+              <div class="label">Purpose of this sequence</div>
+              <p>Remove every remaining piece of friction between sold and signed. Shortest, most direct sequence of the four. The goal is the presentation call locked on the calendar, ideally before the discovery call even ends.</p>
+            </div>
+          </div>
+        </div>
+        <table class="mix">
+          <tr><th>Content type</th><th>Fit</th></tr>
+          <tr><td>Symptom, hidden cost</td><td><span class="light red"></span></td></tr>
+          <tr><td>Solution, evaluation</td><td><span class="light red"></span></td></tr>
+          <tr><td>Value proposition</td><td><span class="light red"></span></td></tr>
+          <tr><td>Proof, data</td><td><span class="light yellow"></span></td></tr>
+          <tr><td>Product content</td><td><span class="light green"></span></td></tr>
+        </table>
+      </div>
+    </details>
+
+    <div class="sub-label">Immediate follow up, sent same day</div>
+    <div class="email-card">
+      <div class="email-subject">Following up: here's how we get you seeing patients fast</div>
+      <div class="email-meta">To Matt, from Kay</div>
+      <p>Thanks again for hopping on today. I could tell you're ready to move, so wanted to get this to you same day rather than let it sit overnight.</p>
+      <p>To your question about retroactive billing: yes, once your Medicare enrollment is submitted, we can back date up to 30 days prior, so an earlier start date doesn't get lost just because the paperwork is still processing. That should take some of the pressure off needing everything perfectly lined up before you start seeing patients.</p>
+      <p>Next step on our end is usually a quick presentation call where we walk through exact pricing and how we'd partner with you as you scale toward those 30 to 40 clinicians. I've got time Thursday or Friday this week.</p>
+      <p><strong>Can you grab 30 minutes Thursday or Friday so we can get your enrollment moving this week?</strong></p>
+    </div>
+
+    <div class="sub-label">If the call doesn't land, the sequence that follows</div>
+    <ul class="sequence-list">
+      <li><details><summary><span class="seq-order">02</span><span class="seq-tag">Product</span><span class="seq-subject">Everything we need from you to start this week</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Matt, from Kay</div>
+          <p>Quick follow up so we can keep momentum going. To get your Medicare group enrollment moving immediately, here is exactly what I need from you: business NPI and legal entity documentation, individual NPI for yourself and any other clinicians starting this month, and a completed W9 for the practice.</p>
+          <p><strong>Send those over whenever you have them ready and I'll have this in front of Medicare within three to five business days.</strong> Nothing else needed from you until then.</p>
+        </div>
+      </details></li>
+      <li><details><summary><span class="seq-order">03</span><span class="seq-tag">Product</span><span class="seq-subject">You're one step away, here's exactly what's left</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Matt, from Kay</div>
+          <p>Quick status update. Your group enrollment is submitted and moving through review. The only thing left on our end is confirming your effective date once Medicare responds, which we're tracking daily.</p>
+          <p><strong>If you bring on any additional clinicians before that comes back, send their information over and I'll add them to the same enrollment cycle</strong> rather than starting a separate one later.</p>
+        </div>
+      </details></li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ARCHETYPE 2: FRUSTRATED SWITCHER -->
+  <div class="archetype">
+    <div class="arch-header">
+      <div class="arch-icon" style="background:#DCE7E4;">
+        <svg viewBox="0 0 48 48" fill="none" stroke="#2f5951" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M24 5 L38 11 V22 C38 32 32 40 24 43 C16 40 10 32 10 22 V11 Z"/>
+          <path d="M18 24 L22 28 L30 19"/>
+        </svg>
+      </div>
+      <div class="arch-title-block">
+        <div class="arch-num">Archetype 02</div>
+        <h2>Frustrated Switcher</h2>
+      </div>
+    </div>
+    <p class="at-a-glance"><strong>Daniel Wijdenes, Madix Clinic.</strong> Requested a Banner Aetna enrollment six months earlier, never completed, three clients already moved to that plan. Actively comparing three to four vendors, deciding within days.</p>
+
+    <details class="profile">
+      <summary>Full profile <span class="arrow">&#9656;</span></summary>
+      <div class="profile-body">
+        <div class="badge-row">
+          <div class="badge-card">
+            <div class="badge-clip"></div>
+            <div class="badge-photo" style="background:#DCE7E4;">
+              <svg viewBox="0 0 48 48" fill="none" stroke="#2f5951" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M24 5 L38 11 V22 C38 32 32 40 24 43 C16 40 10 32 10 22 V11 Z"/>
+                <path d="M18 24 L22 28 L30 19"/>
+              </svg>
+            </div>
+            <div class="badge-name">Daniel Wijdenes</div>
+            <div class="badge-role">Madix Clinic</div>
+          </div>
+          <div class="profile-detail">
+            <div class="meters">
+              <div class="meter-block">
+                <div class="meter-label">Urgency</div>
+                <div class="meter-dots">
+                  <div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div>
+                </div>
+              </div>
+              <div class="meter-block">
+                <div class="meter-label">Question Intensity</div>
+                <div class="meter-dots">
+                  <div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div>
+                </div>
+              </div>
+            </div>
+            <div class="traits">
+              <div class="trait-box needs">
+                <h4>Needs</h4>
+                <p>Proof this won't repeat the last vendor's failure. Direct answers to specific evaluation questions.</p>
+              </div>
+              <div class="trait-box not-needs">
+                <h4>Doesn't need</h4>
+                <p>Education about the pain. They already know exactly what's wrong.</p>
+              </div>
+            </div>
+            <div class="purpose">
+              <div class="label">Purpose of this sequence</div>
+              <p>Rebuild trust with proof, not promises. Every commitment made on the call gets delivered on schedule. Medium length, still personal, still Kay's voice throughout, because the relationship is the thing doing the differentiating.</p>
+            </div>
+          </div>
+        </div>
+        <table class="mix">
+          <tr><th>Content type</th><th>Fit</th></tr>
+          <tr><td>Symptom, hidden cost</td><td><span class="light red"></span></td></tr>
+          <tr><td>Solution, evaluation</td><td><span class="light yellow"></span></td></tr>
+          <tr><td>Value proposition</td><td><span class="light green"></span></td></tr>
+          <tr><td>Proof, data</td><td><span class="light green"></span></td></tr>
+          <tr><td>Product content</td><td><span class="light yellow"></span></td></tr>
+        </table>
+      </div>
+    </details>
+
+    <div class="sub-label">Immediate follow up, sent same day</div>
+    <div class="email-card">
+      <div class="email-subject">The Banner Aetna thing, plus what you asked for</div>
+      <div class="email-meta">To Daniel, from Kay</div>
+      <p>Really appreciate you being candid today about where things stand with your current vendor. Six months waiting on a Banner Aetna enrollment, three of your clients already moved over, and still nothing done on your end, that's exactly the kind of thing that shouldn't happen. It's the reason every enrollment we submit gets automatic follow up instead of quietly sitting in someone's inbox.</p>
+      <p>As promised, I'm making the introduction to our billing partner today. You'll hear from them shortly.</p>
+      <p>I know you've got one more call Monday before deciding which direction to go. So you've got a clean, apples to apples comparison in hand, I'll have a proposal ready for you ahead of that.</p>
+      <p><strong>Let's lock in Tuesday like we discussed. I'll have your comparison ready proposal in hand by then.</strong></p>
+    </div>
+
+    <div class="sub-label">If the call doesn't land, the sequence that follows</div>
+    <ul class="sequence-list">
+      <li><details><summary><span class="seq-order">02</span><span class="seq-tag">Value</span><span class="seq-subject">What actually separates a real credentialing partner from a paperwork mill</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Daniel, from Kay</div>
+          <p>Following up ahead of our call Tuesday. One thing worth naming directly: most credentialing vendors consider their job done the moment an application is submitted. That's exactly the gap that let your Banner Aetna enrollment sit untouched for six months with nobody flagging it.</p>
+          <p><strong>The difference with us is what happens after submission.</strong> Every application gets automatic follow up on a set schedule, and if a payer goes quiet, that gets flagged to a real person on our team, not left to sit.</p>
+          <p>Looking forward to walking through the proposal with you Tuesday.</p>
+        </div>
+      </details></li>
+      <li><details><summary><span class="seq-order">03</span><span class="seq-tag">Proof</span><span class="seq-subject">What other practices your size were leaving on the table</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Daniel, from Kay</div>
+          <p>Wanted to share something ahead of Tuesday. We worked with a multi provider behavioral health group that had the exact same kind of stalled enrollment problem you described, contracts they believed were active that weren't actually generating paid claims. Once we took over, we found and resolved three separate gaps like that within the first month, work that had been sitting untouched for months under their previous vendor.</p>
+          <p><strong>That's really the core of what we do differently, not just submitting applications, but actively watching for exactly this kind of silent failure.</strong></p>
+        </div>
+      </details></li>
+      <li><details><summary><span class="seq-order">04</span><span class="seq-tag">Value</span><span class="seq-subject">Switching is less painful than staying stuck</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Daniel, from Kay</div>
+          <p>I know switching vendors can feel like its own project on top of an already frustrating situation. In practice, onboarding with us usually takes five to seven minutes of setup on your end, and from there we take over tracking everything currently sitting in your old vendor's spreadsheets.</p>
+          <p><strong>If Tuesday's proposal makes sense, the actual transition is a lot less painful than continuing to chase down another six month gap like the Banner Aetna one.</strong></p>
+        </div>
+      </details></li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ARCHETYPE 3: COMPLEX/CONTINGENT -->
+  <div class="archetype">
+    <div class="arch-header">
+      <div class="arch-icon" style="background:#E4EEE7;">
+        <svg viewBox="0 0 48 48" fill="none" stroke="#3d5c47" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="24" r="9"/>
+          <circle cx="32" cy="17" r="6"/>
+          <circle cx="32" cy="31" r="6"/>
+          <path d="M25 20 L27 21 M25 28 L27 27"/>
+        </svg>
+      </div>
+      <div class="arch-title-block">
+        <div class="arch-num">Archetype 03</div>
+        <h2>Complex / Contingent Fit</h2>
+      </div>
+    </div>
+    <p class="at-a-glance"><strong>Matt Crook, Sylvan Health.</strong> Leases dietician staff to partner medical groups rather than holding contracts directly. Real need, but whether the deal works at all depends on payer delegation approval, something neither party controls alone.</p>
+
+    <details class="profile">
+      <summary>Full profile <span class="arrow">&#9656;</span></summary>
+      <div class="profile-body">
+        <div class="badge-row">
+          <div class="badge-card">
+            <div class="badge-clip"></div>
+            <div class="badge-photo" style="background:#E4EEE7;">
+              <svg viewBox="0 0 48 48" fill="none" stroke="#3d5c47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="24" r="9"/>
+                <circle cx="32" cy="17" r="6"/>
+                <circle cx="32" cy="31" r="6"/>
+              </svg>
+            </div>
+            <div class="badge-name">Matt Crook</div>
+            <div class="badge-role">Sylvan Health</div>
+          </div>
+          <div class="profile-detail">
+            <div class="meters">
+              <div class="meter-block">
+                <div class="meter-label">Urgency</div>
+                <div class="meter-dots">
+                  <div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                </div>
+              </div>
+              <div class="meter-block">
+                <div class="meter-label">Question Intensity</div>
+                <div class="meter-dots">
+                  <div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div>
+                </div>
+              </div>
+            </div>
+            <div class="traits">
+              <div class="trait-box needs">
+                <h4>Needs</h4>
+                <p>Patience, real expertise on the structural question, to feel like the obvious call once the pieces clear.</p>
+              </div>
+              <div class="trait-box not-needs">
+                <h4>Doesn't need</h4>
+                <p>Pressure to close on a timeline that isn't real. The blocker isn't Lanyard.</p>
+              </div>
+            </div>
+            <div class="purpose">
+              <div class="label">Purpose of this sequence</div>
+              <p>Stay present and credible across a long, uncertain runway. The job is to be the expert, not the closer, so Lanyard is the natural call the moment the external pieces resolve.</p>
+            </div>
+          </div>
+        </div>
+        <table class="mix">
+          <tr><th>Content type</th><th>Fit</th></tr>
+          <tr><td>Symptom, hidden cost</td><td><span class="light yellow"></span></td></tr>
+          <tr><td>Solution, evaluation</td><td><span class="light green"></span></td></tr>
+          <tr><td>Value proposition</td><td><span class="light yellow"></span></td></tr>
+          <tr><td>Proof, data</td><td><span class="light yellow"></span></td></tr>
+          <tr><td>Product content</td><td><span class="light green"></span></td></tr>
+        </table>
+      </div>
+    </details>
+
+    <div class="sub-label">Immediate follow up, sent same day</div>
+    <div class="email-card">
+      <div class="email-subject">Recap and next step on delegated credentialing</div>
+      <div class="email-meta">To Matt, from Kay</div>
+      <p>Great conversation today. I don't often get to go this deep on delegation mechanics, and it's clear you've already thought through where the friction points are for Sylvan's model.</p>
+      <p>The honest next step here isn't something I can answer for you on my own. It's a conversation with the specific payers you're targeting, Aetna, Cigna, United, the Blues, about whether they'll extend a delegated arrangement for your staffing and leasing structure. That's ultimately a case by case call on their end, not something either of us can decide alone.</p>
+      <p><strong>I'd like to help set up that first conversation with one of your target payers. Happy to be on the call with you.</strong> Let me know which payer makes the most sense to start with and I'll help make the introduction.</p>
+    </div>
+
+    <div class="sub-label">If the call doesn't land, the sequence that follows</div>
+    <ul class="sequence-list">
+      <li><details><summary><span class="seq-order">02</span><span class="seq-tag">Solution</span><span class="seq-subject">Where the friction usually shows up in deals like yours</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Matt, from Kay</div>
+          <p>Following up on delegated credentialing. In similar staffing and leasing arrangements, the friction usually shows up in one of two places: either the payer has never delegated to a staffing model before and needs to be walked through how your structure works, or your existing verification process needs to be documented more formally before they'll even consider it.</p>
+          <p><strong>Worth knowing going in, so neither becomes a surprise once you're in the room with a payer.</strong></p>
+        </div>
+      </details></li>
+      <li><details><summary><span class="seq-order">03</span><span class="seq-tag">Solution</span><span class="seq-subject">What we've seen work, and not work, for similar structures</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Matt, from Kay</div>
+          <p>A few patterns worth sharing from similar conversations. What tends to work: coming in with a clear, documented verification process and a specific ask, rather than an open ended request for delegation. What tends to stall things: asking a payer to delegate credentialing for a specialty they've never delegated before without another comparable group as precedent.</p>
+          <p><strong>Happy to talk through where Sylvan's model fits into that, if it's useful.</strong></p>
+        </div>
+      </details></li>
+      <li><details><summary><span class="seq-order">04</span><span class="seq-tag">Symptom</span><span class="seq-subject">A pattern worth knowing before you're deep into negotiations</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Matt, from Kay</div>
+          <p>One thing worth flagging before you get too far into payer conversations. Practices that go into delegation discussions without a clear roster process in place often end up restarting the conversation later, once the payer asks for something they can't produce yet.</p>
+          <p><strong>Might be worth having that roster structure ready before your first real conversation with a payer, even if delegation is still a few months out.</strong></p>
+        </div>
+      </details></li>
+      <li><details><summary><span class="seq-order">05</span><span class="seq-tag">Check-in</span><span class="seq-subject">Still here when the pieces line up</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Matt, from Kay</div>
+          <p>No update needed from you, just checking in.</p>
+          <p><strong>If any of your payer conversations have moved, or if it would help to have me on a call with one of them, I'm around whenever that becomes useful.</strong></p>
+        </div>
+      </details></li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ARCHETYPE 4: NO URGENCY -->
+  <div class="archetype">
+    <div class="arch-header">
+      <div class="arch-icon" style="background:#F5EBD8;">
+        <svg viewBox="0 0 48 48" fill="none" stroke="#8a6420" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="21" cy="21" r="13"/>
+          <path d="M30.5 30.5 L40 40"/>
+        </svg>
+      </div>
+      <div class="arch-title-block">
+        <div class="arch-num">Archetype 04</div>
+        <h2>No Urgency / Just Browsing</h2>
+      </div>
+    </div>
+    <p class="at-a-glance"><strong>Piyush Gupta, Sevi Health.</strong> Said it directly: there's a discovery to see what's out there. No pain named, no timeline, decision handed off to someone else entirely.</p>
+
+    <details class="profile">
+      <summary>Full profile <span class="arrow">&#9656;</span></summary>
+      <div class="profile-body">
+        <div class="badge-row">
+          <div class="badge-card">
+            <div class="badge-clip"></div>
+            <div class="badge-photo" style="background:#F5EBD8;">
+              <svg viewBox="0 0 48 48" fill="none" stroke="#8a6420" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="21" cy="21" r="13"/>
+                <path d="M30.5 30.5 L40 40"/>
+              </svg>
+            </div>
+            <div class="badge-name">Piyush Gupta</div>
+            <div class="badge-role">Sevi Health</div>
+          </div>
+          <div class="profile-detail">
+            <div class="meters">
+              <div class="meter-block">
+                <div class="meter-label">Urgency</div>
+                <div class="meter-dots">
+                  <div class="dot filled"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                </div>
+              </div>
+              <div class="meter-block">
+                <div class="meter-label">Question Intensity</div>
+                <div class="meter-dots">
+                  <div class="dot filled"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                </div>
+              </div>
+            </div>
+            <div class="traits">
+              <div class="trait-box needs">
+                <h4>Needs</h4>
+                <p>A reason to believe there's a problem at all. Low pressure, over a long window.</p>
+              </div>
+              <div class="trait-box not-needs">
+                <h4>Doesn't need</h4>
+                <p>Urgency framing, a hard ask, or a locked calendar push. Nothing is broken for them yet.</p>
+              </div>
+            </div>
+            <div class="purpose">
+              <div class="label">Purpose of this sequence</div>
+              <p>Surface a cost they don't currently feel. Longest, most patient sequence of the four, built to build a case slowly rather than force one that isn't there yet.</p>
+            </div>
+          </div>
+        </div>
+        <table class="mix">
+          <tr><th>Content type</th><th>Fit</th></tr>
+          <tr><td>Symptom, hidden cost</td><td><span class="light green"></span></td></tr>
+          <tr><td>Solution, evaluation</td><td><span class="light green"></span></td></tr>
+          <tr><td>Value proposition</td><td><span class="light yellow"></span></td></tr>
+          <tr><td>Proof, data</td><td><span class="light green"></span></td></tr>
+          <tr><td>Product content</td><td><span class="light red"></span></td></tr>
+        </table>
+      </div>
+    </details>
+
+    <div class="sub-label">Immediate follow up, sent same day</div>
+    <div class="email-card">
+      <div class="email-subject">Pricing, as promised</div>
+      <div class="email-meta">To Piyush, from Kay</div>
+      <p>Thanks for the time today. Sounds like you've got a good handle on what you're comparing, so I'll keep this simple.</p>
+      <p>Pricing is attached below so you can pass it along to your in-house credentialing person alongside whatever else you're looking at.</p>
+      <p><strong>If it'd help, I'm happy to set up sandbox access so your team can test the platform directly with a few sample providers. No pressure at all, just let me know if that's useful.</strong></p>
+    </div>
+
+    <div class="homework-box">
+      <div class="label">If pricing isn't locked yet</div>
+      <p>Not every prospect gets an exact quote in the immediate follow up, and that's fine. Pricing doesn't have to be finalized to send this email.</p>
+      <p><strong>What does have to exist instead: a clear list of the questions that determine contract value.</strong> Things like provider count, payer mix, states, and whatever else changes what it actually costs to service a given practice. Once that list exists, quoting becomes fast and confident instead of a guess. This is this week's homework.</p>
+    </div>
+
+    <div class="sub-label">If the call doesn't land, the sequence that follows</div>
+    <ul class="sequence-list">
+      <li><details><summary><span class="seq-order">02</span><span class="seq-tag">Solution</span><span class="seq-subject">How to actually evaluate a credentialing vendor, most people skip this part</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Piyush, from Kay</div>
+          <p>No ask here, just something that might be useful whenever you and your credentialing lead sit down to compare options. Most practices evaluate vendors on price and speed alone, but the more telling question is what happens after submission: does the vendor proactively follow up with payers, or does the application just sit until someone remembers to check on it.</p>
+          <p><strong>Worth asking any vendor you're comparing us against directly.</strong></p>
+        </div>
+      </details></li>
+      <li><details><summary><span class="seq-order">03</span><span class="seq-tag">Solution</span><span class="seq-subject">What separates real automation from AI branded manual work</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Piyush, from Kay</div>
+          <p>A lot of vendors market themselves as AI powered right now, worth knowing what that actually means in practice. Some of it is genuine automation, forms getting pre filled from existing data, automatic follow up on a schedule. Some of it is just a human doing the same manual work with an AI label attached.</p>
+          <p><strong>If it's useful, happy to show your credentialing lead exactly what's automated versus manual in our platform when you're ready.</strong></p>
+        </div>
+      </details></li>
+      <li><details><summary><span class="seq-order">04</span><span class="seq-tag">Proof</span><span class="seq-subject">The math other practices your size are running</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Piyush, from Kay</div>
+          <p>Sharing something that might be useful for your comparison. Practices with four or so locations and 15 to 20 providers, similar to Sevi Health, typically see somewhere between ten and fifteen thousand dollars in delayed or lost revenue per provider when credentialing gaps go unnoticed. Most of that comes from applications sitting untouched, not from the credentialing process itself taking too long.</p>
+          <p><strong>Just a data point worth having on hand.</strong></p>
+        </div>
+      </details></li>
+      <li><details><summary><span class="seq-order">05</span><span class="seq-tag">Symptom</span><span class="seq-subject">A pattern worth knowing before it becomes urgent</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Piyush, from Kay</div>
+          <p>No news to report, just a pattern worth having in your back pocket. Practices with one dedicated in house credentialing person tend to be fine day to day, right up until a hiring wave or a new location hits. That's usually when things start slipping, and by the time it's visible, providers are already sitting unbillable for weeks.</p>
+          <p><strong>Not saying that's where Sevi Health is headed, just worth knowing before it becomes relevant.</strong></p>
+        </div>
+      </details></li>
+      <li><details><summary><span class="seq-order">06</span><span class="seq-tag">Check-in</span><span class="seq-subject">Still here, no pressure, just checking in</span><span class="seq-arrow">&#9656;</span></summary>
+        <div class="seq-body">
+          <div class="email-meta">To Piyush, from Kay</div>
+          <p>Just making sure I'm still on your radar.</p>
+          <p><strong>No pressure at all, if anything has changed on your end or if it would help to get sandbox access set up for your credentialing lead, just let me know.</strong></p>
+        </div>
+      </details></li>
+    </ul>
+  </div>
+
+  <footer>
+    Built from 12 real prospect calls, Sept 2025 to Feb 2026. This is the shape of the system, not the automation itself. That build comes next.
+  </footer>
+
+</div>
+</body>
+</html>
