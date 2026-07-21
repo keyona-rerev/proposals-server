@@ -13,6 +13,7 @@
     --text: #1A2A1A; --muted: #6B7F6B;
     --yes: #2D7A4F; --partial: #B45309; --no: #9E2A2A;
     --yes-bg: #E8F5EE; --partial-bg: #FEF3C7; --no-bg: #FEE2E2;
+    --yellow: #92700A; --yellow-bg: #FEF9C3;
     --tag-marketing: #EBF2FA; --tag-marketing-text: #1E40AF;
     --font-head: 'Outfit', sans-serif; --font-body: 'Inter', sans-serif; --font-mono: 'IBM Plex Mono', monospace;
   }
@@ -75,23 +76,12 @@
   .coming-soon h2 { font-family: var(--font-head); font-size: 16px; font-weight: 600; color: var(--muted); }
   .coming-soon p { font-size: 13px; color: var(--muted); max-width: 360px; }
 
-  /* SECTION DIVIDER */
   .section-divider { display: flex; align-items: center; gap: 16px; margin: 36px 0 24px; }
   .section-divider-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); white-space: nowrap; }
   .section-divider-line { flex: 1; height: 1px; background: var(--border); }
 
-  /* PENTAGRAM / RADAR */
-  .capsule-overview {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 32px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 28px 32px;
-    margin-bottom: 24px;
-    align-items: center;
-  }
+  /* RADAR */
+  .capsule-overview { display: grid; grid-template-columns: 300px 1fr; gap: 32px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 28px 32px; margin-bottom: 24px; align-items: center; }
   .radar-col { display: flex; flex-direction: column; align-items: center; gap: 8px; }
   .radar-caption { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); text-align: center; }
   .overall-block { display: flex; flex-direction: column; gap: 12px; }
@@ -104,12 +94,15 @@
   .min-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
   .min-pill { font-family: var(--font-mono); font-size: 10px; padding: 4px 10px; border-radius: 100px; }
   .min-pill.pass { background: var(--yes-bg); color: var(--yes); }
+  .min-pill.partial { background: var(--yellow-bg); color: var(--yellow); }
   .min-pill.fail { background: var(--no-bg); color: var(--no); }
 
   /* CAPSULE ROWS */
   .capsule-journey { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
-  .capsule-row { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: grid; grid-template-columns: 190px 1fr 170px 160px; }
-  .capsule-stage { background: var(--primary); padding: 18px 18px; display: flex; flex-direction: column; justify-content: center; }
+
+  .capsule-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .capsule-row { display: grid; grid-template-columns: 190px 1fr 170px 160px; }
+  .capsule-stage { background: var(--primary); padding: 18px; display: flex; flex-direction: column; justify-content: center; }
   .capsule-stage-num { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
   .capsule-stage-name { font-family: var(--font-head); font-size: 13px; font-weight: 600; color: #fff; line-height: 1.3; margin-bottom: 5px; }
   .capsule-stage-job { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; }
@@ -127,6 +120,50 @@
   .status-badge.weak { background: var(--partial-bg); color: var(--partial); }
   .status-badge.solid { background: var(--yes-bg); color: var(--yes); }
   .status-note { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+  /* TOGGLE */
+  .capsule-toggle-btn {
+    width: 100%;
+    background: var(--bg);
+    border: none;
+    border-top: 1px solid var(--border);
+    padding: 9px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: left;
+    transition: background 0.1s;
+  }
+  .capsule-toggle-btn:hover { background: var(--border); }
+  .capsule-toggle-btn .toggle-arrow { transition: transform 0.2s; display: inline-block; }
+  .capsule-toggle-btn.open .toggle-arrow { transform: rotate(90deg); }
+
+  .capsule-pieces {
+    display: none;
+    border-top: 1px solid var(--border);
+    padding: 16px 20px;
+    background: #FAFBFA;
+  }
+  .capsule-pieces.open { display: block; }
+  .pieces-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px; }
+  .piece-item { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--border); gap: 16px; }
+  .piece-item:last-child { border-bottom: none; }
+  .piece-left { display: flex; flex-direction: column; gap: 3px; }
+  .piece-title { font-size: 12px; font-weight: 500; color: var(--text); }
+  .piece-title a { color: var(--text); text-decoration: none; }
+  .piece-title a:hover { color: var(--green); text-decoration: underline; }
+  .piece-note { font-size: 11px; color: var(--muted); line-height: 1.4; }
+  .piece-fit { font-family: var(--font-mono); font-size: 10px; padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+  .piece-fit.solid { background: var(--yes-bg); color: var(--yes); }
+  .piece-fit.loose { background: var(--partial-bg); color: var(--partial); }
+  .piece-fit.none { background: var(--no-bg); color: var(--no); }
+  .piece-none { font-size: 12px; color: var(--muted); font-style: italic; padding: 6px 0; }
 
   .capsule-callout { background: var(--primary); border-radius: 8px; padding: 16px 22px; font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.6; }
   .capsule-callout strong { color: var(--lime); }
@@ -276,64 +313,42 @@
     </div>
   </div>
 
-  <!-- MARKETING ASPECTS PLACEHOLDER -->
   <div class="coming-soon" style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 40px; margin-bottom: 32px;">
     <div class="coming-soon-icon">◎</div>
     <h2>Marketing Aspects</h2>
     <p>Channel strategy, content distribution, brand positioning, and SEO aspects to be mapped in a future working session.</p>
   </div>
 
-  <!-- CONTENT CAPSULE SECTION -->
   <div class="section-divider">
     <div class="section-divider-label">Content Capsule Audit</div>
     <div class="section-divider-line"></div>
   </div>
 
-  <!-- PENTAGRAM + OVERALL -->
+  <!-- RADAR + OVERALL -->
   <div class="capsule-overview">
     <div class="radar-col">
       <svg width="260" height="260" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <style>
-            .radar-axis { stroke: #E2E8E2; stroke-width: 1; }
-            .radar-ring { stroke: #E2E8E2; stroke-width: 1; fill: none; }
-            .radar-fill { fill: rgba(45,122,79,0.18); stroke: #2D7A4F; stroke-width: 2; }
-            .radar-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; fill: #6B7F6B; text-transform: uppercase; letter-spacing: 0.08em; }
-            .radar-score { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; fill: #1A3A2A; }
-          </style>
-        </defs>
-        <!-- Center point -->
         <g transform="translate(130,130)">
-          <!-- Rings at 25%, 50%, 75%, 100% of radius 95 -->
-          <polygon class="radar-ring" points="0,-23.75 22.59,-7.33 13.95,19.58 -13.95,19.58 -22.59,-7.33"/>
-          <polygon class="radar-ring" points="0,-47.5 45.18,-14.66 27.9,39.16 -27.9,39.16 -45.18,-14.66"/>
-          <polygon class="radar-ring" points="0,-71.25 67.77,-21.99 41.85,58.74 -41.85,58.74 -67.77,-21.99"/>
-          <polygon class="radar-ring" points="0,-95 90.36,-29.32 55.8,78.32 -55.8,78.32 -90.36,-29.32"/>
-          <!-- Axes -->
-          <line class="radar-axis" x1="0" y1="0" x2="0" y2="-95"/>
-          <line class="radar-axis" x1="0" y1="0" x2="90.36" y2="-29.32"/>
-          <line class="radar-axis" x1="0" y1="0" x2="55.8" y2="78.32"/>
-          <line class="radar-axis" x1="0" y1="0" x2="-55.8" y2="78.32"/>
-          <line class="radar-axis" x1="0" y1="0" x2="-90.36" y2="-29.32"/>
-          <!-- Data polygon: scores 62,30,58,8,44 as % of 95px radius -->
-          <!-- Symptom(62%): 0,-58.9  Solution(30%): 27.11,-8.8  Value(58%): 32.36,45.43  Stories(8%): -4.46,6.27  Product(44%): -39.76,-12.9 -->
-          <polygon class="radar-fill" points="0,-58.9 27.11,-8.8 32.36,45.43 -4.46,6.27 -39.76,-12.9"/>
-          <!-- Labels and scores -->
-          <!-- Symptom Awareness — top -->
-          <text class="radar-label" x="0" y="-103" text-anchor="middle">Symptom</text>
-          <text class="radar-score" x="0" y="-114" text-anchor="middle">62</text>
-          <!-- Solution Education — upper right -->
-          <text class="radar-label" x="98" y="-34" text-anchor="start">Solution</text>
-          <text class="radar-score" x="98" y="-45" text-anchor="start">30</text>
-          <!-- Value Prop — lower right -->
-          <text class="radar-label" x="64" y="98" text-anchor="start">Value Prop</text>
-          <text class="radar-score" x="64" y="109" text-anchor="start">58</text>
-          <!-- Customer Stories — lower left -->
-          <text class="radar-label" x="-64" y="98" text-anchor="end">Stories</text>
-          <text class="radar-score" x="-64" y="109" text-anchor="end">8</text>
-          <!-- Product Deep Dive — upper left -->
-          <text class="radar-label" x="-98" y="-34" text-anchor="end">Product</text>
-          <text class="radar-score" x="-98" y="-45" text-anchor="end">44</text>
+          <polygon stroke="#E2E8E2" stroke-width="1" fill="none" points="0,-23.75 22.59,-7.33 13.95,19.58 -13.95,19.58 -22.59,-7.33"/>
+          <polygon stroke="#E2E8E2" stroke-width="1" fill="none" points="0,-47.5 45.18,-14.66 27.9,39.16 -27.9,39.16 -45.18,-14.66"/>
+          <polygon stroke="#E2E8E2" stroke-width="1" fill="none" points="0,-71.25 67.77,-21.99 41.85,58.74 -41.85,58.74 -67.77,-21.99"/>
+          <polygon stroke="#E2E8E2" stroke-width="1" fill="none" points="0,-95 90.36,-29.32 55.8,78.32 -55.8,78.32 -90.36,-29.32"/>
+          <line stroke="#E2E8E2" stroke-width="1" x1="0" y1="0" x2="0" y2="-95"/>
+          <line stroke="#E2E8E2" stroke-width="1" x1="0" y1="0" x2="90.36" y2="-29.32"/>
+          <line stroke="#E2E8E2" stroke-width="1" x1="0" y1="0" x2="55.8" y2="78.32"/>
+          <line stroke="#E2E8E2" stroke-width="1" x1="0" y1="0" x2="-55.8" y2="78.32"/>
+          <line stroke="#E2E8E2" stroke-width="1" x1="0" y1="0" x2="-90.36" y2="-29.32"/>
+          <polygon fill="rgba(45,122,79,0.18)" stroke="#2D7A4F" stroke-width="2" points="0,-58.9 27.11,-8.8 32.36,45.43 -4.46,6.27 -39.76,-12.9"/>
+          <text font-family="IBM Plex Mono,monospace" font-size="9" fill="#6B7F6B" text-anchor="middle" x="0" y="-103">Symptom</text>
+          <text font-family="Outfit,sans-serif" font-size="11" font-weight="700" fill="#1A3A2A" text-anchor="middle" x="0" y="-114">62</text>
+          <text font-family="IBM Plex Mono,monospace" font-size="9" fill="#6B7F6B" text-anchor="start" x="98" y="-34">Solution</text>
+          <text font-family="Outfit,sans-serif" font-size="11" font-weight="700" fill="#1A3A2A" text-anchor="start" x="98" y="-45">30</text>
+          <text font-family="IBM Plex Mono,monospace" font-size="9" fill="#6B7F6B" text-anchor="start" x="64" y="98">Value Prop</text>
+          <text font-family="Outfit,sans-serif" font-size="11" font-weight="700" fill="#1A3A2A" text-anchor="start" x="64" y="109">58</text>
+          <text font-family="IBM Plex Mono,monospace" font-size="9" fill="#6B7F6B" text-anchor="end" x="-64" y="98">Stories</text>
+          <text font-family="Outfit,sans-serif" font-size="11" font-weight="700" fill="#1A3A2A" text-anchor="end" x="-64" y="109">8</text>
+          <text font-family="IBM Plex Mono,monospace" font-size="9" fill="#6B7F6B" text-anchor="end" x="-98" y="-34">Product</text>
+          <text font-family="Outfit,sans-serif" font-size="11" font-weight="700" fill="#1A3A2A" text-anchor="end" x="-98" y="-45">44</text>
         </g>
       </svg>
       <div class="radar-caption">Content capsule coverage · July 2026</div>
@@ -348,127 +363,226 @@
         Lanyard has real numbers and a functional product page, but the capsule is missing its two most important jobs. <b>No named customer story exists anywhere on the site.</b> No comparative or evaluation-framework content helps a prospect understand their options before choosing Lanyard. The homepage does strong value-prop work, but it carries too much of the load alone. A single case study and one solution-education piece would move the score dramatically.
       </div>
       <div class="min-pills">
-        <span class="min-pill pass">Symptom ✓</span>
-        <span class="min-pill fail">Solution ✗</span>
-        <span class="min-pill pass">Value Prop ✓</span>
-        <span class="min-pill fail">Stories ✗</span>
-        <span class="min-pill pass">Product ✓</span>
+        <span class="min-pill partial">:/ Symptom</span>
+        <span class="min-pill fail">✗ Solution</span>
+        <span class="min-pill partial">:/ Value Prop</span>
+        <span class="min-pill fail">✗ Stories</span>
+        <span class="min-pill partial">:/ Product</span>
       </div>
     </div>
   </div>
 
-  <!-- CAPSULE ROWS -->
+  <!-- CAPSULE ROWS WITH TOGGLES -->
   <div class="capsule-journey">
-    <div class="capsule-row">
-      <div class="capsule-stage">
-        <div class="capsule-stage-num">01</div>
-        <div class="capsule-stage-name">Symptom Awareness</div>
-        <div class="capsule-stage-job">Help problem-unaware prospects recognize the warning signs and hidden costs of the status quo.</div>
+
+    <!-- 01 SYMPTOM AWARENESS -->
+    <div class="capsule-card">
+      <div class="capsule-row">
+        <div class="capsule-stage">
+          <div class="capsule-stage-num">01</div>
+          <div class="capsule-stage-name">Symptom Awareness</div>
+          <div class="capsule-stage-job">Help problem-unaware prospects recognize the warning signs and hidden costs of the status quo.</div>
+        </div>
+        <div class="capsule-content">
+          <div class="capsule-content-label">Lanyard example</div>
+          <div class="capsule-example">"Signs your credentialing process is costing you more than you think"</div>
+          <div class="capsule-rationale">Targets practice managers who don't yet know they have a credentialing problem. Surfaces symptoms: delayed enrollments, revenue gaps, manual errors, provider frustration.</div>
+        </div>
+        <div class="capsule-format">
+          <div class="capsule-format-label">Format</div>
+          <span class="format-pill">Blog article</span>
+        </div>
+        <div class="capsule-status">
+          <div class="capsule-status-label">Current state</div>
+          <span class="status-badge weak">Weak — 62/100</span>
+          <div class="status-note">One blog post touches symptoms loosely. No piece built specifically for this job.</div>
+        </div>
       </div>
-      <div class="capsule-content">
-        <div class="capsule-content-label">Lanyard example</div>
-        <div class="capsule-example">"Signs your credentialing process is costing you more than you think"</div>
-        <div class="capsule-rationale">Targets practice managers who don't yet know they have a credentialing problem. Surfaces symptoms: delayed enrollments, revenue gaps, manual errors, provider frustration.</div>
-      </div>
-      <div class="capsule-format">
-        <div class="capsule-format-label">Format</div>
-        <span class="format-pill">Blog article</span>
-        <span class="format-pill">LinkedIn post</span>
-      </div>
-      <div class="capsule-status">
-        <div class="capsule-status-label">Current state</div>
-        <span class="status-badge weak">Weak — 62/100</span>
-        <div class="status-note">One blog post touches symptoms loosely. No piece built specifically for this job.</div>
-      </div>
-    </div>
-    <div class="capsule-row">
-      <div class="capsule-stage">
-        <div class="capsule-stage-num">02</div>
-        <div class="capsule-stage-name">Solution Education</div>
-        <div class="capsule-stage-job">Help problem-aware prospects understand their options, how to evaluate them, and where alternatives fall short.</div>
-      </div>
-      <div class="capsule-content">
-        <div class="capsule-content-label">Lanyard example</div>
-        <div class="capsule-example">"In-house vs. outsourced vs. platform: how to evaluate your credentialing options in 2025"</div>
-        <div class="capsule-rationale">Teaches the evaluation framework before Lanyard is even in the running. Builds trust by being genuinely useful to someone who might not choose Lanyard.</div>
-      </div>
-      <div class="capsule-format">
-        <div class="capsule-format-label">Format</div>
-        <span class="format-pill">Comparative guide</span>
-        <span class="format-pill">Checklist</span>
-      </div>
-      <div class="capsule-status">
-        <div class="capsule-status-label">Current state</div>
-        <span class="status-badge gap">Gap — 30/100</span>
-        <div class="status-note">No evaluation framework or comparative content exists. Biggest content gap after proof.</div>
-      </div>
-    </div>
-    <div class="capsule-row">
-      <div class="capsule-stage">
-        <div class="capsule-stage-num">03</div>
-        <div class="capsule-stage-name">Value Proposition</div>
-        <div class="capsule-stage-job">Make the case for why Lanyard specifically — not just why help in general.</div>
-      </div>
-      <div class="capsule-content">
-        <div class="capsule-content-label">Lanyard example</div>
-        <div class="capsule-example">"How Lanyard cuts credentialing errors to zero — and what that means for your revenue"</div>
-        <div class="capsule-rationale">Homepage carries strong numbers: 0% error rate vs 30-40% industry standard, 50% faster prep time. Needs a dedicated page that argues directly against named alternatives.</div>
-      </div>
-      <div class="capsule-format">
-        <div class="capsule-format-label">Format</div>
-        <span class="format-pill">Explainer page</span>
-        <span class="format-pill">One-pager</span>
-      </div>
-      <div class="capsule-status">
-        <div class="capsule-status-label">Current state</div>
-        <span class="status-badge weak">Partial — 58/100</span>
-        <div class="status-note">Homepage carries this job. No dedicated page and no named competitor comparison yet.</div>
+      <button class="capsule-toggle-btn" onclick="togglePieces(this)">
+        <span class="toggle-arrow">▶</span> View pieces considered (2)
+      </button>
+      <div class="capsule-pieces">
+        <div class="pieces-label">Pieces evaluated</div>
+        <div class="piece-item">
+          <div class="piece-left">
+            <div class="piece-title"><a href="https://lanyardhealth.com/blog/how-digital-health-is-rewriting-the-doula-model" target="_blank">The New Infrastructure of Maternal Care: How Digital Health Is Rewriting the Doula Model</a></div>
+            <div class="piece-note">~90% of the piece profiles five other doula-care startups. Credentialing mentioned only in the closing line. Reads as market intelligence, not a symptom awareness piece for Lanyard's buyer.</div>
+          </div>
+          <span class="piece-fit loose">loose fit</span>
+        </div>
+        <div class="piece-item">
+          <div class="piece-left">
+            <div class="piece-title"><a href="https://lanyardhealth.com/blog/building-smarter-care-teams-with-community-health-workers" target="_blank">Beyond the Staffing Shortage: Building Smarter Care Teams with Community Health Workers</a></div>
+            <div class="piece-note">Same structure as the doula post: policy trend analysis ending in a generic CTA. No distinct symptom named, no credentialing pain surfaced for the reader.</div>
+          </div>
+          <span class="piece-fit loose">loose fit</span>
+        </div>
       </div>
     </div>
-    <div class="capsule-row">
-      <div class="capsule-stage">
-        <div class="capsule-stage-num">04</div>
-        <div class="capsule-stage-name">Customer Stories</div>
-        <div class="capsule-stage-job">Let someone else say it worked, with a number attached.</div>
+
+    <!-- 02 SOLUTION EDUCATION -->
+    <div class="capsule-card">
+      <div class="capsule-row">
+        <div class="capsule-stage">
+          <div class="capsule-stage-num">02</div>
+          <div class="capsule-stage-name">Solution Education</div>
+          <div class="capsule-stage-job">Help problem-aware prospects understand their options, how to evaluate them, and where alternatives fall short.</div>
+        </div>
+        <div class="capsule-content">
+          <div class="capsule-content-label">Lanyard example</div>
+          <div class="capsule-example">"In-house vs. outsourced vs. platform: how to evaluate your credentialing options in 2025"</div>
+          <div class="capsule-rationale">Teaches the evaluation framework before Lanyard is even in the running. Builds trust by being genuinely useful to someone who might not choose Lanyard.</div>
+        </div>
+        <div class="capsule-format">
+          <div class="capsule-format-label">Format</div>
+          <span class="format-pill">Comparative guide</span>
+          <span class="format-pill">Checklist</span>
+        </div>
+        <div class="capsule-status">
+          <div class="capsule-status-label">Current state</div>
+          <span class="status-badge gap">Gap — 30/100</span>
+          <div class="status-note">No evaluation framework or comparative content exists. Biggest content gap after proof.</div>
+        </div>
       </div>
-      <div class="capsule-content">
-        <div class="capsule-content-label">Lanyard example</div>
-        <div class="capsule-example">"How [Practice Name] got 4 providers credentialed in 6 weeks without hiring a credentialing coordinator"</div>
-        <div class="capsule-rationale">Named practice, specific timeline, specific outcome, specific alternative avoided. Aggregate stats do not count. One named story outperforms any number of anonymous claims.</div>
-      </div>
-      <div class="capsule-format">
-        <div class="capsule-format-label">Format</div>
-        <span class="format-pill">Case study</span>
-        <span class="format-pill">Customer interview</span>
-      </div>
-      <div class="capsule-status">
-        <div class="capsule-status-label">Current state</div>
-        <span class="status-badge gap">Gap — 8/100</span>
-        <div class="status-note">Single biggest gap. No named customer, no testimonial, no attributed before-and-after anywhere on site.</div>
+      <button class="capsule-toggle-btn" onclick="togglePieces(this)">
+        <span class="toggle-arrow">▶</span> View pieces considered (1)
+      </button>
+      <div class="capsule-pieces">
+        <div class="pieces-label">Pieces evaluated</div>
+        <div class="piece-item">
+          <div class="piece-left">
+            <div class="piece-title"><a href="https://lanyardhealth.com/blog/unitedhealthcare-provider-enrollment-timelines" target="_blank">Navigating UnitedHealthcare Provider Enrollment Timelines</a></div>
+            <div class="piece-note">Genuinely useful and correctly targeted — but teaches how to navigate one payer's process, not how to evaluate manual vs. outsourced vs. platform approaches to credentialing broadly. Does not meet the bar for Solution Education.</div>
+          </div>
+          <span class="piece-fit loose">loose / single-payer</span>
+        </div>
+        <div class="piece-item">
+          <div class="piece-left">
+            <div class="piece-title">No comparative or evaluation-framework content found</div>
+            <div class="piece-note">No "in-house vs. outsourced vs. software" breakdown, no evaluation checklist, no framework a prospect could use to shop credentialing solutions exists anywhere on the site.</div>
+          </div>
+          <span class="piece-fit none">gap</span>
+        </div>
       </div>
     </div>
-    <div class="capsule-row">
-      <div class="capsule-stage">
-        <div class="capsule-stage-num">05</div>
-        <div class="capsule-stage-name">Product Deep Dive</div>
-        <div class="capsule-stage-job">Help someone who is already sold picture using Lanyard on day one.</div>
+
+    <!-- 03 VALUE PROPOSITION -->
+    <div class="capsule-card">
+      <div class="capsule-row">
+        <div class="capsule-stage">
+          <div class="capsule-stage-num">03</div>
+          <div class="capsule-stage-name">Value Proposition</div>
+          <div class="capsule-stage-job">Make the case for why Lanyard specifically — not just why help in general.</div>
+        </div>
+        <div class="capsule-content">
+          <div class="capsule-content-label">Lanyard example</div>
+          <div class="capsule-example">"How Lanyard cuts credentialing errors to zero — and what that means for your revenue"</div>
+          <div class="capsule-rationale">Homepage carries strong numbers: 0% error rate vs 30-40% industry standard, 50% faster prep time. Needs a dedicated page that argues directly against named alternatives.</div>
+        </div>
+        <div class="capsule-format">
+          <div class="capsule-format-label">Format</div>
+          <span class="format-pill">Explainer page</span>
+          <span class="format-pill">One-pager</span>
+        </div>
+        <div class="capsule-status">
+          <div class="capsule-status-label">Current state</div>
+          <span class="status-badge weak">Partial — 58/100</span>
+          <div class="status-note">Homepage carries this job. No dedicated page and no named competitor comparison yet.</div>
+        </div>
       </div>
-      <div class="capsule-content">
-        <div class="capsule-content-label">Lanyard example</div>
-        <div class="capsule-example">"What onboarding a new NP through three payers actually looks like inside Lanyard"</div>
-        <div class="capsule-rationale">Walks through a specific use case end to end. Removes the "but what does this actually do" anxiety from a near-close prospect.</div>
-      </div>
-      <div class="capsule-format">
-        <div class="capsule-format-label">Format</div>
-        <span class="format-pill">Demo video</span>
-        <span class="format-pill">Workflow walkthrough</span>
-      </div>
-      <div class="capsule-status">
-        <div class="capsule-status-label">Current state</div>
-        <span class="status-badge weak">Thin — 44/100</span>
-        <div class="status-note">/enrollments page exists but is thin. No demo video, no walked-through workflow, no specific use case.</div>
+      <button class="capsule-toggle-btn" onclick="togglePieces(this)">
+        <span class="toggle-arrow">▶</span> View pieces considered (1)
+      </button>
+      <div class="capsule-pieces">
+        <div class="pieces-label">Pieces evaluated</div>
+        <div class="piece-item">
+          <div class="piece-left">
+            <div class="piece-title"><a href="https://lanyardhealth.com/" target="_blank">Homepage — "Stop Revenue Leaks / Scale Without Staffing"</a></div>
+            <div class="piece-note">Carries the value prop with real numbers: 0% error rate vs. 30-40% industry standard, 50% faster prep time, $60K+ credentialing hire avoided, $15K+ lost per provider to manual errors. Solid fit, but no named alternative is argued against directly — it states the case for Lanyard without making the case over anything named.</div>
+          </div>
+          <span class="piece-fit solid">solid fit</span>
+        </div>
       </div>
     </div>
+
+    <!-- 04 CUSTOMER STORIES -->
+    <div class="capsule-card">
+      <div class="capsule-row">
+        <div class="capsule-stage">
+          <div class="capsule-stage-num">04</div>
+          <div class="capsule-stage-name">Customer Stories</div>
+          <div class="capsule-stage-job">Let someone else say it worked, with a number attached.</div>
+        </div>
+        <div class="capsule-content">
+          <div class="capsule-content-label">Lanyard example</div>
+          <div class="capsule-example">"How [Practice Name] got 4 providers credentialed in 6 weeks without hiring a credentialing coordinator"</div>
+          <div class="capsule-rationale">Named practice, specific timeline, specific outcome, specific alternative avoided. Aggregate stats do not count. One named story outperforms any number of anonymous claims.</div>
+        </div>
+        <div class="capsule-format">
+          <div class="capsule-format-label">Format</div>
+          <span class="format-pill">Case study</span>
+          <span class="format-pill">Customer interview</span>
+        </div>
+        <div class="capsule-status">
+          <div class="capsule-status-label">Current state</div>
+          <span class="status-badge gap">Gap — 8/100</span>
+          <div class="status-note">Single biggest gap. No named customer, no testimonial, no attributed before-and-after anywhere on site.</div>
+        </div>
+      </div>
+      <button class="capsule-toggle-btn" onclick="togglePieces(this)">
+        <span class="toggle-arrow">▶</span> View pieces considered (1)
+      </button>
+      <div class="capsule-pieces">
+        <div class="pieces-label">Pieces evaluated</div>
+        <div class="piece-item">
+          <div class="piece-left">
+            <div class="piece-title">Homepage aggregate stats — "300+ successful enrollments / 200+ providers credentialed"</div>
+            <div class="piece-note">Only proof-adjacent signal on the site. Self-reported aggregate with no attribution — not a story, not a quote, not one named practice's before-and-after. Does not meet the bar for Customer Stories: a named entity or direct quote is required.</div>
+          </div>
+          <span class="piece-fit none">does not qualify</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 PRODUCT DEEP DIVE -->
+    <div class="capsule-card">
+      <div class="capsule-row">
+        <div class="capsule-stage">
+          <div class="capsule-stage-num">05</div>
+          <div class="capsule-stage-name">Product Deep Dive</div>
+          <div class="capsule-stage-job">Help someone who is already sold picture using Lanyard on day one.</div>
+        </div>
+        <div class="capsule-content">
+          <div class="capsule-content-label">Lanyard example</div>
+          <div class="capsule-example">"What onboarding a new NP through three payers actually looks like inside Lanyard"</div>
+          <div class="capsule-rationale">Walks through a specific use case end to end. Removes the "but what does this actually do" anxiety from a near-close prospect.</div>
+        </div>
+        <div class="capsule-format">
+          <div class="capsule-format-label">Format</div>
+          <span class="format-pill">Demo video</span>
+          <span class="format-pill">Workflow walkthrough</span>
+        </div>
+        <div class="capsule-status">
+          <div class="capsule-status-label">Current state</div>
+          <span class="status-badge weak">Thin — 44/100</span>
+          <div class="status-note">/enrollments page exists but is thin. No demo video, no walked-through workflow, no specific use case.</div>
+        </div>
+      </div>
+      <button class="capsule-toggle-btn" onclick="togglePieces(this)">
+        <span class="toggle-arrow">▶</span> View pieces considered (1)
+      </button>
+      <div class="capsule-pieces">
+        <div class="pieces-label">Pieces evaluated</div>
+        <div class="piece-item">
+          <div class="piece-left">
+            <div class="piece-title"><a href="https://lanyardhealth.com/enrollments" target="_blank">/enrollments — product feature page</a></div>
+            <div class="piece-note">Correctly targeted: enter provider info once, track progress in real time, automated follow-up. But thin — three feature bullets, no walked-through workflow, no specific use case (e.g. "here's what onboarding a new NP through three payers actually looks like"), and no demo video. A prospect who is sold still can't picture a day-one moment using the product.</div>
+          </div>
+          <span class="piece-fit loose">thin fit</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div class="capsule-callout">
@@ -496,6 +610,14 @@
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
     document.getElementById('tab-' + name).classList.add('active');
     btn.classList.add('active');
+  }
+  function togglePieces(btn) {
+    const pieces = btn.nextElementSibling;
+    const isOpen = pieces.classList.contains('open');
+    pieces.classList.toggle('open', !isOpen);
+    btn.classList.toggle('open', !isOpen);
+    const count = btn.textContent.match(/\(\d+\)/)?.[0] || '';
+    btn.innerHTML = `<span class="toggle-arrow">${isOpen ? '▶' : '▶'}</span> ${isOpen ? 'View' : 'Hide'} pieces considered ${count}`;
   }
 </script>
 </body>
