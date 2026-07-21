@@ -7,30 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #F5F7F5;
-    --surface: #FFFFFF;
-    --border: #E2E8E2;
-    --primary: #1A3A2A;
-    --green: #2D7A4F;
-    --green-light: #E8F5EE;
-    --lime: #8DC63F;
-    --text: #1A2A1A;
-    --muted: #6B7F6B;
-    --yes: #2D7A4F;
-    --partial: #B45309;
-    --no: #9E2A2A;
-    --yes-bg: #E8F5EE;
-    --partial-bg: #FEF3C7;
-    --no-bg: #FEE2E2;
-    --tag-marketing: #EBF2FA;
-    --tag-marketing-text: #1E40AF;
-    --font-head: 'Outfit', sans-serif;
-    --font-body: 'Inter', sans-serif;
-    --font-mono: 'IBM Plex Mono', monospace;
+    --bg: #F5F7F5; --surface: #FFFFFF; --border: #E2E8E2; --primary: #1A3A2A;
+    --green: #2D7A4F; --green-light: #E8F5EE; --lime: #8DC63F;
+    --text: #1A2A1A; --muted: #6B7F6B;
+    --yes: #2D7A4F; --partial: #B45309; --no: #9E2A2A;
+    --yes-bg: #E8F5EE; --partial-bg: #FEF3C7; --no-bg: #FEE2E2;
+    --tag-marketing: #EBF2FA; --tag-marketing-text: #1E40AF;
+    --font-head: 'Outfit', sans-serif; --font-body: 'Inter', sans-serif; --font-mono: 'IBM Plex Mono', monospace;
   }
-
   body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; font-size: 14px; line-height: 1.5; }
 
   .header { background: var(--primary); padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
@@ -38,8 +23,8 @@
   .header h1 { font-family: var(--font-head); font-size: 16px; font-weight: 600; color: #fff; letter-spacing: 0.02em; }
   .header-sub { font-size: 12px; color: rgba(255,255,255,0.5); font-family: var(--font-mono); margin-left: auto; }
 
-  .tab-bar { background: var(--surface); border-bottom: 1px solid var(--border); display: flex; padding: 0 32px; gap: 0; overflow-x: auto; }
-  .tab-btn { font-family: var(--font-head); font-size: 13px; font-weight: 500; padding: 14px 20px; border: none; background: none; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.15s, border-color 0.15s; letter-spacing: 0.01em; }
+  .tab-bar { background: var(--surface); border-bottom: 1px solid var(--border); display: flex; padding: 0 32px; overflow-x: auto; }
+  .tab-btn { font-family: var(--font-head); font-size: 13px; font-weight: 500; padding: 14px 20px; border: none; background: none; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.15s, border-color 0.15s; }
   .tab-btn:hover { color: var(--primary); }
   .tab-btn.active { color: var(--green); border-bottom-color: var(--green); font-weight: 600; }
   .tab-btn .coming { font-family: var(--font-mono); font-size: 9px; color: var(--muted); margin-left: 6px; opacity: 0.7; }
@@ -61,214 +46,89 @@
   .framework-table tbody tr:last-child { border-bottom: none; }
   .framework-table tbody tr:hover { background: #FAFBFA; }
   .framework-table td { padding: 14px 16px; vertical-align: top; line-height: 1.5; }
-
   .col-aspect { width: 14%; } .col-def { width: 22%; } .col-format { width: 13%; } .col-auto { width: 12%; } .col-prereq { width: 24%; } .col-builds { width: 15%; }
 
   .aspect-name { font-family: var(--font-head); font-weight: 600; color: var(--primary); font-size: 13px; margin-bottom: 2px; }
-  .overlap-tag { display: inline-block; font-family: var(--font-mono); font-size: 10px; padding: 2px 7px; border-radius: 4px; background: var(--tag-marketing); color: var(--tag-marketing-text); margin-top: 4px; letter-spacing: 0.02em; }
-
+  .overlap-tag { display: inline-block; font-family: var(--font-mono); font-size: 10px; padding: 2px 7px; border-radius: 4px; background: var(--tag-marketing); color: var(--tag-marketing-text); margin-top: 4px; }
   .format-list { display: flex; flex-direction: column; gap: 3px; }
   .format-item { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
-
   .auto-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; font-family: var(--font-head); padding: 4px 10px; border-radius: 20px; }
   .auto-badge.yes { background: var(--yes-bg); color: var(--yes); }
   .auto-badge.partial { background: var(--partial-bg); color: var(--partial); }
   .auto-badge.no { background: var(--no-bg); color: var(--no); }
   .auto-badge .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .auto-badge.yes .dot { background: var(--yes); }
-  .auto-badge.partial .dot { background: var(--partial); }
-  .auto-badge.no .dot { background: var(--no); }
+  .auto-badge.yes .dot { background: var(--yes); } .auto-badge.partial .dot { background: var(--partial); } .auto-badge.no .dot { background: var(--no); }
   .auto-note { font-size: 11px; color: var(--muted); margin-top: 5px; line-height: 1.4; }
-
   .prereq-list { list-style: none; display: flex; flex-direction: column; gap: 3px; }
   .prereq-list li { font-size: 12px; color: var(--text); padding-left: 12px; position: relative; line-height: 1.4; }
   .prereq-list li::before { content: '—'; position: absolute; left: 0; color: var(--muted); font-size: 10px; }
-
   .build-list { display: flex; flex-direction: column; gap: 4px; }
   .build-chip { font-family: var(--font-mono); font-size: 10px; padding: 3px 8px; border-radius: 4px; background: var(--green-light); color: var(--green); font-weight: 500; display: inline-block; }
   .build-chip.pending { background: var(--partial-bg); color: var(--partial); }
   .build-chip.tbd { background: var(--border); color: var(--muted); }
-
-  .coming-soon { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 32px; text-align: center; gap: 12px; }
-  .coming-soon-icon { font-size: 32px; opacity: 0.3; }
-  .coming-soon h2 { font-family: var(--font-head); font-size: 20px; font-weight: 600; color: var(--muted); }
-  .coming-soon p { font-size: 13px; color: var(--muted); max-width: 360px; }
-
   .legend { display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
   .legend-label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-right: 4px; }
   .legend-item { display: flex; align-items: center; gap: 6px; }
 
-  /* CONTENT CAPSULE STYLES */
-  .capsule-intro {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 24px 28px;
-    margin-bottom: 28px;
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-  .capsule-intro strong { color: var(--text); }
+  .coming-soon { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 32px; text-align: center; gap: 12px; }
+  .coming-soon-icon { font-size: 32px; opacity: 0.3; }
+  .coming-soon h2 { font-family: var(--font-head); font-size: 16px; font-weight: 600; color: var(--muted); }
+  .coming-soon p { font-size: 13px; color: var(--muted); max-width: 360px; }
 
-  .capsule-journey {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 36px;
-  }
+  /* SECTION DIVIDER */
+  .section-divider { display: flex; align-items: center; gap: 16px; margin: 36px 0 24px; }
+  .section-divider-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); white-space: nowrap; }
+  .section-divider-line { flex: 1; height: 1px; background: var(--border); }
 
-  .capsule-row {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
+  /* PENTAGRAM / RADAR */
+  .capsule-overview {
     display: grid;
-    grid-template-columns: 200px 1fr 180px 160px;
+    grid-template-columns: 300px 1fr;
+    gap: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    align-items: center;
   }
+  .radar-col { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .radar-caption { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); text-align: center; }
+  .overall-block { display: flex; flex-direction: column; gap: 12px; }
+  .overall-score-row { display: flex; align-items: baseline; gap: 6px; }
+  .overall-num { font-family: var(--font-head); font-size: 56px; font-weight: 700; line-height: 1; color: var(--no); }
+  .overall-denom { font-size: 20px; color: var(--muted); }
+  .overall-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 4px; }
+  .overall-verdict { font-size: 13px; color: var(--text); line-height: 1.6; }
+  .overall-verdict b { color: var(--primary); }
+  .min-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .min-pill { font-family: var(--font-mono); font-size: 10px; padding: 4px 10px; border-radius: 100px; }
+  .min-pill.pass { background: var(--yes-bg); color: var(--yes); }
+  .min-pill.fail { background: var(--no-bg); color: var(--no); }
 
-  .capsule-stage {
-    background: var(--primary);
-    padding: 20px 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .capsule-stage-num {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .capsule-stage-name {
-    font-family: var(--font-head);
-    font-size: 14px;
-    font-weight: 600;
-    color: #fff;
-    line-height: 1.3;
-    margin-bottom: 6px;
-  }
-  .capsule-stage-job {
-    font-size: 11px;
-    color: rgba(255,255,255,0.55);
-    line-height: 1.4;
-  }
-
-  .capsule-content {
-    padding: 20px 24px;
-    border-right: 1px solid var(--border);
-  }
-  .capsule-content-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-  .capsule-example {
-    font-family: var(--font-head);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--primary);
-    margin-bottom: 6px;
-    line-height: 1.4;
-  }
-  .capsule-rationale {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  .capsule-format {
-    padding: 20px 20px;
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-  }
-  .capsule-format-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .format-pill {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    background: var(--green-light);
-    color: var(--green);
-    display: inline-block;
-    width: fit-content;
-  }
-
-  .capsule-status {
-    padding: 20px 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 6px;
-  }
-  .capsule-status-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .status-exists {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    display: inline-block;
-    width: fit-content;
-    margin-bottom: 4px;
-  }
-  .status-exists.gap { background: var(--no-bg); color: var(--no); }
-  .status-exists.weak { background: var(--partial-bg); color: var(--partial); }
-  .status-exists.solid { background: var(--yes-bg); color: var(--yes); }
+  /* CAPSULE ROWS */
+  .capsule-journey { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+  .capsule-row { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: grid; grid-template-columns: 190px 1fr 170px 160px; }
+  .capsule-stage { background: var(--primary); padding: 18px 18px; display: flex; flex-direction: column; justify-content: center; }
+  .capsule-stage-num { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+  .capsule-stage-name { font-family: var(--font-head); font-size: 13px; font-weight: 600; color: #fff; line-height: 1.3; margin-bottom: 5px; }
+  .capsule-stage-job { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+  .capsule-content { padding: 18px 20px; border-right: 1px solid var(--border); }
+  .capsule-content-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .capsule-example { font-family: var(--font-head); font-size: 13px; font-weight: 600; color: var(--primary); margin-bottom: 5px; line-height: 1.4; }
+  .capsule-rationale { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .capsule-format { padding: 18px 16px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+  .capsule-format-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+  .format-pill { font-family: var(--font-mono); font-size: 10px; padding: 3px 8px; border-radius: 4px; background: var(--green-light); color: var(--green); display: inline-block; width: fit-content; }
+  .capsule-status { padding: 18px 16px; display: flex; flex-direction: column; justify-content: center; gap: 5px; }
+  .capsule-status-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+  .status-badge { font-family: var(--font-mono); font-size: 10px; padding: 3px 8px; border-radius: 4px; display: inline-block; width: fit-content; margin-bottom: 4px; }
+  .status-badge.gap { background: var(--no-bg); color: var(--no); }
+  .status-badge.weak { background: var(--partial-bg); color: var(--partial); }
+  .status-badge.solid { background: var(--yes-bg); color: var(--yes); }
   .status-note { font-size: 11px; color: var(--muted); line-height: 1.4; }
 
-  .capsule-score-bar {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 24px 28px;
-    margin-bottom: 8px;
-  }
-  .score-col { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .score-num { font-family: var(--font-head); font-size: 28px; font-weight: 700; line-height: 1; }
-  .score-num.strong { color: var(--yes); }
-  .score-num.mid { color: var(--partial); }
-  .score-num.weak { color: var(--no); }
-  .score-col-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); text-align: center; line-height: 1.3; }
-  .score-track { width: 100%; height: 4px; background: var(--border); border-radius: 100px; overflow: hidden; }
-  .score-fill { height: 100%; border-radius: 100px; }
-  .score-fill.strong { background: var(--yes); }
-  .score-fill.mid { background: var(--partial); }
-  .score-fill.weak { background: var(--no); }
-
-  .capsule-callout {
-    background: var(--primary);
-    border-radius: 8px;
-    padding: 18px 24px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.8);
-    line-height: 1.6;
-    margin-top: 20px;
-  }
+  .capsule-callout { background: var(--primary); border-radius: 8px; padding: 16px 22px; font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.6; }
   .capsule-callout strong { color: var(--lime); }
 </style>
 </head>
@@ -282,12 +142,11 @@
 
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('sales', this)">Sales</button>
-  <button class="tab-btn" onclick="switchTab('marketing', this)">Marketing <span class="coming">coming</span></button>
+  <button class="tab-btn" onclick="switchTab('marketing', this)">Marketing</button>
   <button class="tab-btn" onclick="switchTab('cx', this)">Customer Experience <span class="coming">coming</span></button>
   <button class="tab-btn" onclick="switchTab('team', this)">Team Efficiency <span class="coming">coming</span></button>
   <button class="tab-btn" onclick="switchTab('founder', this)">Founder Productivity <span class="coming">coming</span></button>
   <button class="tab-btn" onclick="switchTab('finance', this)">Financial Operations <span class="coming">coming</span></button>
-  <button class="tab-btn" onclick="switchTab('capsule', this)">Content Capsule</button>
 </div>
 
 <!-- SALES TAB -->
@@ -313,12 +172,8 @@
   <table class="framework-table">
     <thead>
       <tr>
-        <th class="col-aspect">Aspect</th>
-        <th class="col-def">Definition</th>
-        <th class="col-format">Format</th>
-        <th class="col-auto">Can It Be Automated?</th>
-        <th class="col-prereq">Prerequisites</th>
-        <th class="col-builds">Builds</th>
+        <th class="col-aspect">Aspect</th><th class="col-def">Definition</th><th class="col-format">Format</th>
+        <th class="col-auto">Can It Be Automated?</th><th class="col-prereq">Prerequisites</th><th class="col-builds">Builds</th>
       </tr>
     </thead>
     <tbody>
@@ -406,69 +261,104 @@
   </table>
 </div>
 
+<!-- MARKETING TAB -->
 <div id="tab-marketing" class="tab-content">
-  <div class="coming-soon"><div class="coming-soon-icon">◎</div><h2>Marketing</h2><p>This facet is queued. Content will be populated in a future working session.</p></div>
-</div>
-<div id="tab-cx" class="tab-content">
-  <div class="coming-soon"><div class="coming-soon-icon">◎</div><h2>Customer Experience</h2><p>This facet is queued. Content will be populated in a future working session.</p></div>
-</div>
-<div id="tab-team" class="tab-content">
-  <div class="coming-soon"><div class="coming-soon-icon">◎</div><h2>Team Efficiency</h2><p>This facet is queued. Content will be populated in a future working session.</p></div>
-</div>
-<div id="tab-founder" class="tab-content">
-  <div class="coming-soon"><div class="coming-soon-icon">◎</div><h2>Founder Productivity</h2><p>This facet is queued. Content will be populated in a future working session.</p></div>
-</div>
-<div id="tab-finance" class="tab-content">
-  <div class="coming-soon"><div class="coming-soon-icon">◎</div><h2>Financial Operations</h2><p>This facet is queued. Content will be populated in a future working session.</p></div>
-</div>
-
-<!-- CONTENT CAPSULE TAB -->
-<div id="tab-capsule" class="tab-content">
   <div class="section-header">
     <div>
-      <div class="section-title">Content Capsule</div>
-      <div class="section-subtitle">Five content jobs that equip a founder and small sales team with leverage before, during, and after any sales conversation. Scored against what Lanyard currently publishes.</div>
+      <div class="section-title">Marketing</div>
+      <div class="section-subtitle">How Lanyard creates awareness, builds credibility, and moves strangers toward a sales conversation. Aspects to be mapped in a future session.</div>
     </div>
     <div class="phase-note">
-      <strong>Audit basis</strong>
-      lanyardhealth.com · July 2026<br>
-      Site-wide content scan + blog index<br>
-      Overall score: 34 / 100
+      <strong>Status</strong>
+      Aspects: in progress<br>
+      Content Capsule: audited July 2026<br>
+      Overall capsule score: 34 / 100
     </div>
   </div>
 
-  <!-- SCORE SUMMARY -->
-  <div class="capsule-score-bar">
-    <div class="score-col">
-      <div class="score-num weak">62</div>
-      <div class="score-track"><div class="score-fill mid" style="width:62%"></div></div>
-      <div class="score-col-label">Symptom Awareness</div>
+  <!-- MARKETING ASPECTS PLACEHOLDER -->
+  <div class="coming-soon" style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 40px; margin-bottom: 32px;">
+    <div class="coming-soon-icon">◎</div>
+    <h2>Marketing Aspects</h2>
+    <p>Channel strategy, content distribution, brand positioning, and SEO aspects to be mapped in a future working session.</p>
+  </div>
+
+  <!-- CONTENT CAPSULE SECTION -->
+  <div class="section-divider">
+    <div class="section-divider-label">Content Capsule Audit</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <!-- PENTAGRAM + OVERALL -->
+  <div class="capsule-overview">
+    <div class="radar-col">
+      <svg width="260" height="260" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <style>
+            .radar-axis { stroke: #E2E8E2; stroke-width: 1; }
+            .radar-ring { stroke: #E2E8E2; stroke-width: 1; fill: none; }
+            .radar-fill { fill: rgba(45,122,79,0.18); stroke: #2D7A4F; stroke-width: 2; }
+            .radar-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; fill: #6B7F6B; text-transform: uppercase; letter-spacing: 0.08em; }
+            .radar-score { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; fill: #1A3A2A; }
+          </style>
+        </defs>
+        <!-- Center point -->
+        <g transform="translate(130,130)">
+          <!-- Rings at 25%, 50%, 75%, 100% of radius 95 -->
+          <polygon class="radar-ring" points="0,-23.75 22.59,-7.33 13.95,19.58 -13.95,19.58 -22.59,-7.33"/>
+          <polygon class="radar-ring" points="0,-47.5 45.18,-14.66 27.9,39.16 -27.9,39.16 -45.18,-14.66"/>
+          <polygon class="radar-ring" points="0,-71.25 67.77,-21.99 41.85,58.74 -41.85,58.74 -67.77,-21.99"/>
+          <polygon class="radar-ring" points="0,-95 90.36,-29.32 55.8,78.32 -55.8,78.32 -90.36,-29.32"/>
+          <!-- Axes -->
+          <line class="radar-axis" x1="0" y1="0" x2="0" y2="-95"/>
+          <line class="radar-axis" x1="0" y1="0" x2="90.36" y2="-29.32"/>
+          <line class="radar-axis" x1="0" y1="0" x2="55.8" y2="78.32"/>
+          <line class="radar-axis" x1="0" y1="0" x2="-55.8" y2="78.32"/>
+          <line class="radar-axis" x1="0" y1="0" x2="-90.36" y2="-29.32"/>
+          <!-- Data polygon: scores 62,30,58,8,44 as % of 95px radius -->
+          <!-- Symptom(62%): 0,-58.9  Solution(30%): 27.11,-8.8  Value(58%): 32.36,45.43  Stories(8%): -4.46,6.27  Product(44%): -39.76,-12.9 -->
+          <polygon class="radar-fill" points="0,-58.9 27.11,-8.8 32.36,45.43 -4.46,6.27 -39.76,-12.9"/>
+          <!-- Labels and scores -->
+          <!-- Symptom Awareness — top -->
+          <text class="radar-label" x="0" y="-103" text-anchor="middle">Symptom</text>
+          <text class="radar-score" x="0" y="-114" text-anchor="middle">62</text>
+          <!-- Solution Education — upper right -->
+          <text class="radar-label" x="98" y="-34" text-anchor="start">Solution</text>
+          <text class="radar-score" x="98" y="-45" text-anchor="start">30</text>
+          <!-- Value Prop — lower right -->
+          <text class="radar-label" x="64" y="98" text-anchor="start">Value Prop</text>
+          <text class="radar-score" x="64" y="109" text-anchor="start">58</text>
+          <!-- Customer Stories — lower left -->
+          <text class="radar-label" x="-64" y="98" text-anchor="end">Stories</text>
+          <text class="radar-score" x="-64" y="109" text-anchor="end">8</text>
+          <!-- Product Deep Dive — upper left -->
+          <text class="radar-label" x="-98" y="-34" text-anchor="end">Product</text>
+          <text class="radar-score" x="-98" y="-45" text-anchor="end">44</text>
+        </g>
+      </svg>
+      <div class="radar-caption">Content capsule coverage · July 2026</div>
     </div>
-    <div class="score-col">
-      <div class="score-num weak">30</div>
-      <div class="score-track"><div class="score-fill weak" style="width:30%"></div></div>
-      <div class="score-col-label">Solution Education</div>
-    </div>
-    <div class="score-col">
-      <div class="score-num mid">58</div>
-      <div class="score-track"><div class="score-fill mid" style="width:58%"></div></div>
-      <div class="score-col-label">Value Proposition</div>
-    </div>
-    <div class="score-col">
-      <div class="score-num weak">8</div>
-      <div class="score-track"><div class="score-fill weak" style="width:8%"></div></div>
-      <div class="score-col-label">Customer Stories</div>
-    </div>
-    <div class="score-col">
-      <div class="score-num weak">44</div>
-      <div class="score-track"><div class="score-fill mid" style="width:44%"></div></div>
-      <div class="score-col-label">Product Deep Dive</div>
+    <div class="overall-block">
+      <div class="overall-label">Overall capsule score</div>
+      <div class="overall-score-row">
+        <div class="overall-num">34</div>
+        <div class="overall-denom">/ 100</div>
+      </div>
+      <div class="overall-verdict">
+        Lanyard has real numbers and a functional product page, but the capsule is missing its two most important jobs. <b>No named customer story exists anywhere on the site.</b> No comparative or evaluation-framework content helps a prospect understand their options before choosing Lanyard. The homepage does strong value-prop work, but it carries too much of the load alone. A single case study and one solution-education piece would move the score dramatically.
+      </div>
+      <div class="min-pills">
+        <span class="min-pill pass">Symptom ✓</span>
+        <span class="min-pill fail">Solution ✗</span>
+        <span class="min-pill pass">Value Prop ✓</span>
+        <span class="min-pill fail">Stories ✗</span>
+        <span class="min-pill pass">Product ✓</span>
+      </div>
     </div>
   </div>
 
   <!-- CAPSULE ROWS -->
   <div class="capsule-journey">
-
     <div class="capsule-row">
       <div class="capsule-stage">
         <div class="capsule-stage-num">01</div>
@@ -487,21 +377,20 @@
       </div>
       <div class="capsule-status">
         <div class="capsule-status-label">Current state</div>
-        <span class="status-exists weak">Weak — 62/100</span>
-        <div class="status-note">One blog post touches symptoms loosely. No piece is built specifically around this job.</div>
+        <span class="status-badge weak">Weak — 62/100</span>
+        <div class="status-note">One blog post touches symptoms loosely. No piece built specifically for this job.</div>
       </div>
     </div>
-
     <div class="capsule-row">
       <div class="capsule-stage">
         <div class="capsule-stage-num">02</div>
         <div class="capsule-stage-name">Solution Education</div>
-        <div class="capsule-stage-job">Help problem-aware prospects understand their options, how to evaluate them, and where the alternatives fall short.</div>
+        <div class="capsule-stage-job">Help problem-aware prospects understand their options, how to evaluate them, and where alternatives fall short.</div>
       </div>
       <div class="capsule-content">
         <div class="capsule-content-label">Lanyard example</div>
         <div class="capsule-example">"In-house vs. outsourced vs. platform: how to evaluate your credentialing options in 2025"</div>
-        <div class="capsule-rationale">Teaches the evaluation framework before Lanyard is in the running. Builds trust by being genuinely useful to someone who might not choose Lanyard.</div>
+        <div class="capsule-rationale">Teaches the evaluation framework before Lanyard is even in the running. Builds trust by being genuinely useful to someone who might not choose Lanyard.</div>
       </div>
       <div class="capsule-format">
         <div class="capsule-format-label">Format</div>
@@ -510,11 +399,10 @@
       </div>
       <div class="capsule-status">
         <div class="capsule-status-label">Current state</div>
-        <span class="status-exists gap">Gap — 30/100</span>
-        <div class="status-note">No evaluation framework or comparative content exists. Biggest single content gap after proof.</div>
+        <span class="status-badge gap">Gap — 30/100</span>
+        <div class="status-note">No evaluation framework or comparative content exists. Biggest content gap after proof.</div>
       </div>
     </div>
-
     <div class="capsule-row">
       <div class="capsule-stage">
         <div class="capsule-stage-num">03</div>
@@ -524,7 +412,7 @@
       <div class="capsule-content">
         <div class="capsule-content-label">Lanyard example</div>
         <div class="capsule-example">"How Lanyard cuts credentialing errors to zero — and what that means for your revenue"</div>
-        <div class="capsule-rationale">Homepage already carries strong numbers: 0% error rate vs 30-40% industry standard, 50% faster prep time. Needs a dedicated page that argues directly against the alternatives by name.</div>
+        <div class="capsule-rationale">Homepage carries strong numbers: 0% error rate vs 30-40% industry standard, 50% faster prep time. Needs a dedicated page that argues directly against named alternatives.</div>
       </div>
       <div class="capsule-format">
         <div class="capsule-format-label">Format</div>
@@ -533,11 +421,10 @@
       </div>
       <div class="capsule-status">
         <div class="capsule-status-label">Current state</div>
-        <span class="status-exists weak">Partial — 58/100</span>
+        <span class="status-badge weak">Partial — 58/100</span>
         <div class="status-note">Homepage carries this job. No dedicated page and no named competitor comparison yet.</div>
       </div>
     </div>
-
     <div class="capsule-row">
       <div class="capsule-stage">
         <div class="capsule-stage-num">04</div>
@@ -547,7 +434,7 @@
       <div class="capsule-content">
         <div class="capsule-content-label">Lanyard example</div>
         <div class="capsule-example">"How [Practice Name] got 4 providers credentialed in 6 weeks without hiring a credentialing coordinator"</div>
-        <div class="capsule-rationale">Named practice, specific timeline, specific outcome, specific alternative avoided. Aggregate stats ("300+ enrollments") do not count. One named story outperforms any number of anonymous claims.</div>
+        <div class="capsule-rationale">Named practice, specific timeline, specific outcome, specific alternative avoided. Aggregate stats do not count. One named story outperforms any number of anonymous claims.</div>
       </div>
       <div class="capsule-format">
         <div class="capsule-format-label">Format</div>
@@ -556,11 +443,10 @@
       </div>
       <div class="capsule-status">
         <div class="capsule-status-label">Current state</div>
-        <span class="status-exists gap">Gap — 8/100</span>
-        <div class="status-note">Single biggest gap. No named customer, no testimonial, no attributed before-and-after anywhere on the site.</div>
+        <span class="status-badge gap">Gap — 8/100</span>
+        <div class="status-note">Single biggest gap. No named customer, no testimonial, no attributed before-and-after anywhere on site.</div>
       </div>
     </div>
-
     <div class="capsule-row">
       <div class="capsule-stage">
         <div class="capsule-stage-num">05</div>
@@ -570,7 +456,7 @@
       <div class="capsule-content">
         <div class="capsule-content-label">Lanyard example</div>
         <div class="capsule-example">"What onboarding a new NP through three payers actually looks like inside Lanyard"</div>
-        <div class="capsule-rationale">Walks through a specific use case end to end: what the founder enters, what happens automatically, what the status view looks like, how follow-ups are handled. Removes the "but what does this actually do" anxiety from a near-close prospect.</div>
+        <div class="capsule-rationale">Walks through a specific use case end to end. Removes the "but what does this actually do" anxiety from a near-close prospect.</div>
       </div>
       <div class="capsule-format">
         <div class="capsule-format-label">Format</div>
@@ -579,16 +465,29 @@
       </div>
       <div class="capsule-status">
         <div class="capsule-status-label">Current state</div>
-        <span class="status-exists weak">Thin — 44/100</span>
-        <div class="status-note">/enrollments page exists but is too thin. No demo video, no walked-through workflow, no specific use case.</div>
+        <span class="status-badge weak">Thin — 44/100</span>
+        <div class="status-note">/enrollments page exists but is thin. No demo video, no walked-through workflow, no specific use case.</div>
       </div>
     </div>
-
   </div>
 
   <div class="capsule-callout">
-    <strong>Priority order for production:</strong> Customer Stories first (highest leverage, lowest current score, requires Kay's input to source a willing customer). Solution Education second (no-cost, no-customer required, builds trust with everyone in the funnel). Value Proposition third (dedicated page, already have the numbers). Product Deep Dive fourth (video or walkthrough). Symptom Awareness last (already partially addressed).
+    <strong>Priority order for production:</strong> Customer Stories first (highest leverage, lowest score, requires Kay to source a willing customer). Solution Education second (no cost, no customer required, builds trust with everyone in the funnel). Value Proposition third (dedicated page, numbers already exist). Product Deep Dive fourth. Symptom Awareness last (already partially addressed).
   </div>
+</div>
+
+<!-- OTHER TABS -->
+<div id="tab-cx" class="tab-content">
+  <div class="coming-soon"><div class="coming-soon-icon">◎</div><h2>Customer Experience</h2><p>This facet is queued. Content will be populated in a future working session.</p></div>
+</div>
+<div id="tab-team" class="tab-content">
+  <div class="coming-soon"><div class="coming-soon-icon">◎</div><h2>Team Efficiency</h2><p>This facet is queued. Content will be populated in a future working session.</p></div>
+</div>
+<div id="tab-founder" class="tab-content">
+  <div class="coming-soon"><div class="coming-soon-icon">◎</div><h2>Founder Productivity</h2><p>This facet is queued. Content will be populated in a future working session.</p></div>
+</div>
+<div id="tab-finance" class="tab-content">
+  <div class="coming-soon"><div class="coming-soon-icon">◎</div><h2>Financial Operations</h2><p>This facet is queued. Content will be populated in a future working session.</p></div>
 </div>
 
 <script>
