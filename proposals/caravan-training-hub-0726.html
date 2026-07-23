@@ -78,6 +78,7 @@
     <button class="tab-btn" data-tab="mission-03">Mission 03</button>
     <button class="tab-btn" data-tab="mission-04">Mission 04</button>
     <button class="tab-btn" data-tab="mission-05">Mission 05</button>
+    <button class="tab-btn" data-tab="mission-06">Mission 06</button>
   </div>
 
   <!-- YOUR DAY -->
@@ -88,10 +89,14 @@
 
     <div class="working">
       <p class="lbl">What I'm working on today</p>
-      <p>Scoping call follow-up — turning a call into a fast, complete send within 48 hours. Standard is written, and the tools it needs (Gmail, Drive, Calendar, and more) are connected and proven live; next it becomes a skill in Mission 6.</p>
+      <p>Scoping call follow-up — turning a call into a fast, complete send within 48 hours. The Standard is written, the tools are connected and proven, and the thinking step is now a saved Skill (prospect-thinking-partner). Next: giving that skill a spin on a real transcript.</p>
     </div>
 
     <h2>The day, mission by mission</h2>
+    <div class="mission" onclick="showTab('mission-06')">
+      <div class="top"><span class="name">Mission 6 — Teach Your Hire the Job</span><span class="when">July 23, 2026</span></div>
+      <p class="line">Built your first Skill — prospect-thinking-partner — from your Standard, sharpened it against six outside sources, reshaped how it runs in your own voice, and saved it to reuse.</p>
+    </div>
     <div class="mission" onclick="showTab('mission-05')">
       <div class="top"><span class="name">Mission 5 — Set Up Your Tools</span><span class="when">July 23, 2026</span></div>
       <p class="line">Confirmed sign-in as work-you, found the tools this task needs were already connected, and proved Google Calendar live with a real question about upcoming scoping calls.</p>
@@ -109,7 +114,7 @@
       <p class="line">Felt the context and tools gaps live, ran the quick interview, updated CLAUDE.md, and saved session-closeout as a real, reusable skill.</p>
     </div>
 
-    <p class="oq"><strong>Still open:</strong> Move 3 from Mission 1 (the instructions gap) was parked to circle back to later.</p>
+    <p class="oq"><strong>Still open:</strong> giving the new skill a spin on a real transcript (the Nicole Clarke call is the one waiting). And Move 3 from Mission 1 (the instructions gap), parked to circle back to.</p>
   </section>
 
   <!-- MISSION 01 -->
@@ -491,6 +496,76 @@
     </div>
 
     <footer>Your tools were already proven before today — this mission's real work was catching your own instructions up to match how you actually work.</footer>
+  </section>
+
+  <!-- MISSION 06 -->
+  <section id="mission-06" class="tab-panel">
+    <p class="hello" style="cursor:pointer" onclick="showTab('your-day')">← Your Day</p>
+    <header>
+      <h1 style="font-size:1.55rem;">Mission 6 — Teach Your Hire the Job</h1>
+      <p class="meta">July 23, 2026 · Cowork · Claude Desktop</p>
+    </header>
+
+    <div class="stats">
+      <div class="stat"><div class="n">1</div><div class="l">skill built</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">sources weighed</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">skills used</div></div>
+    </div>
+
+    <h2>How it went</h2>
+
+    <div class="step">
+      <p class="who">Where we started</p>
+      <div class="happened">
+        <p>The idea for the day: your hire already knows you, can reach your tools, and has your playbook. Mission 6 was teaching it one job it can do the same way every time — a Skill. You opened by browsing the Anthropic plugin marketplace in Claude Desktop, just a scan to feel the ecosystem before making your own.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">skill built</span>
+        <p>Using the skill-creator skill, you built your first Skill: <strong>prospect-thinking-partner</strong>. It captures the one step worth reusing from your Standard — the thinking you do after a scoping call, transcript in hand, to pull out the insights a proposal gets built from. Not a recap generator; the read that makes the proposal land.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You asked</p>
+      <div class="you"><p class="prompt">i'm gonna dump in articles advising on this subject — take inspiration where it's appropriate and leave behind what's not useful</p></div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">sharpened it</span>
+        <p>You fed in five articles and had each scored for relevance — most were about writing the proposal or chasing it after, which your skill deliberately stops before. The one that earned its keep was a consulting guide on scoping: the "problem behind the problem," using the prospect's own words, and writing the read back for you to correct. A quick web-research round added three more moves — weighting what a prospect returns to, spotting what they've already tried that failed, and reading the decision dynamics. A GitHub check turned up only lead-scoring tools, so nothing to borrow — your call to doubt it was right.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You reshaped how it runs</p>
+      <div class="happened">
+        <span class="tag">your judgment</span>
+        <p>Then you gave it the shape only you could: recap the call first so you and it are on the same page before diving in; hunt the transcript for the insights you said out loud on the call; your read comes first, then its analysis; center the specific transformation you deliver for <em>this</em> prospect; adapt your proven work instead of reinventing each time; push back where your read is genuinely off, not pedantically; and let the session roll into a proposal draft when it's ready.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">skill saved</span>
+        <p>The skill was re-bundled through skill-creator so the changes are actually live, and saved so it's yours to reuse in any project. It now shows up in your installed skills.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What you want to remember</p>
+      <div class="happened">
+        <p>That the skill we made exists — a real job your hire now knows, built in your voice, waiting for the next call.</p>
+      </div>
+    </div>
+
+    <footer>Your hire learned its first job — and it'll do it the same way at 5pm on a Friday as it does right now. Still open: giving it a spin on a real transcript (the Nicole Clarke call is the one waiting).</footer>
   </section>
 
 </div>
