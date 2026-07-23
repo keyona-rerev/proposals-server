@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iron Vault — Design Reference</title>
+    <title>Design Reference — Objects</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=VT323&display=swap" rel="stylesheet">
 
     <style>
-        /* ============================
-           REFERENCE NAV
-        ============================= */
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
@@ -31,140 +28,31 @@
             gap: 0;
             padding: 0 2rem;
             height: 48px;
+            overflow-x: auto;
         }
-
-        .ref-nav .nav-label {
-            font-size: 0.65rem;
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #444;
-            margin-right: 2rem;
-            white-space: nowrap;
-        }
-
-        .ref-nav a {
-            display: inline-flex;
-            align-items: center;
-            height: 48px;
-            padding: 0 1.25rem;
-            font-size: 0.7rem;
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            text-decoration: none;
-            color: #555;
-            border-right: 1px solid #1f1f1f;
-            transition: color 0.15s, background 0.15s;
-            white-space: nowrap;
-        }
-
-        .ref-nav a:first-of-type {
-            border-left: 1px solid #1f1f1f;
-        }
-
-        .ref-nav a:hover {
-            color: #fff;
-            background: #1a1a1a;
-        }
-
-        .ref-nav a .dot {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            margin-right: 0.5rem;
-        }
-
+        .ref-nav .nav-label { font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 2px; color: #444; margin-right: 2rem; white-space: nowrap; }
+        .ref-nav a { display: inline-flex; align-items: center; height: 48px; padding: 0 1.25rem; font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1.5px; text-decoration: none; color: #555; border-right: 1px solid #1f1f1f; transition: color 0.15s, background 0.15s; white-space: nowrap; }
+        .ref-nav a:first-of-type { border-left: 1px solid #1f1f1f; }
+        .ref-nav a:hover { color: #fff; background: #1a1a1a; }
+        .ref-nav a .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 0.5rem; }
         .ref-nav a.variant-bright .dot { background: #f26d21; }
         .ref-nav a.variant-dark .dot { background: #4ade80; }
         .ref-nav a.variant-figmint .dot { background: #C05621; }
+        .ref-nav a.variant-watercolor .dot { background: #c93f32; }
 
-        /* ============================
-           SECTION WRAPPERS
-        ============================= */
-        .design-section {
-            position: relative;
-        }
-
-        .section-label {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.6rem 1.25rem;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            border-right: 1px solid rgba(255,255,255,0.06);
-            font-size: 0.65rem;
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #555;
-        }
-
-        .section-label .badge {
-            display: inline-block;
-            font-size: 0.6rem;
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 0.2rem 0.6rem;
-            border-radius: 2px;
-            font-weight: 700;
-        }
-
+        .design-section { position: relative; }
+        .section-label { position: absolute; top: 0; left: 0; z-index: 100; display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1.25rem; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255,255,255,0.06); border-right: 1px solid rgba(255,255,255,0.06); font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 2px; color: #555; }
+        .section-label .badge { display: inline-block; font-size: 0.6rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; padding: 0.2rem 0.6rem; border-radius: 2px; font-weight: 700; }
         .badge-bright { background: #f26d21; color: #fff; }
         .badge-dark { background: #4ade80; color: #000; }
-
-        .design-frame {
-            width: 100%;
-            height: 100vh;
-            border: none;
-            display: block;
-        }
+        .section-divider { height: 2px; background: linear-gradient(to right, #1f1f1f, #333, #1f1f1f); }
 
         /* ============================
            VARIANT 01 — BRIGHT OBJECT
         ============================= */
         #variant-bright { height: 100vh; overflow: hidden; }
-
-        #variant-bright .iv-root {
-            --bg-base: #ecebe6;
-            --accent-blue: #1b5edb;
-            --accent-orange: #f26d21;
-            --accent-green: #0d5c34;
-            --accent-pink: #eb74a6;
-            --accent-yellow: #f7b21a;
-            --text-main: #000000;
-            --text-secondary: #4a4a4a;
-            background-color: var(--bg-base);
-            font-family: 'Inter', sans-serif;
-            color: var(--text-main);
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        #variant-bright .iv-root::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: 100;
-        }
-
+        #variant-bright .iv-root { --bg-base: #ecebe6; --accent-blue: #1b5edb; --accent-orange: #f26d21; --accent-green: #0d5c34; --accent-pink: #eb74a6; --accent-yellow: #f7b21a; --text-main: #000000; background-color: var(--bg-base); font-family: 'Inter', sans-serif; color: var(--text-main); height: 100vh; width: 100%; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative; }
+        #variant-bright .iv-root::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); opacity: 0.15; pointer-events: none; z-index: 100; }
         #variant-bright .iv-container { width: 100%; max-width: 1400px; height: 100%; display: flex; align-items: center; justify-content: center; padding: 4rem; position: relative; }
         #variant-bright .iv-product-col { display: flex; justify-content: center; align-items: center; perspective: 2000px; height: 100%; }
         #variant-bright .iv-scene { position: relative; transform-style: preserve-3d; transform: rotateY(15deg) rotateX(5deg); }
@@ -197,26 +85,7 @@
            VARIANT 02 — DARK OBJECT
         ============================= */
         #variant-dark { height: 100vh; overflow: hidden; }
-
-        #variant-dark .iv-root {
-            --gunmetal: #1a1c1e;
-            --gunmetal-dark: #0f1112;
-            --copper-oxidized: #4d5d53;
-            --copper-bright: #b87333;
-            --iron-rivet: #2c2f33;
-            --text-gray: #a0a0a0;
-            --interface-green: #4ade80;
-            background-color: var(--gunmetal-dark);
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--text-gray);
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
+        #variant-dark .iv-root { --gunmetal: #1a1c1e; --gunmetal-dark: #0f1112; --copper-oxidized: #4d5d53; --copper-bright: #b87333; --iron-rivet: #2c2f33; --text-gray: #a0a0a0; --interface-green: #4ade80; background-color: var(--gunmetal-dark); font-family: 'JetBrains Mono', monospace; color: var(--text-gray); height: 100vh; width: 100%; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         #variant-dark .iv-container { width: 100%; max-width: 1400px; height: 900px; display: flex; align-items: center; justify-content: center; padding: 2rem; position: relative; }
         #variant-dark .iv-product-col { display: flex; justify-content: center; align-items: center; perspective: 2500px; height: 100%; }
         #variant-dark .iv-scene { position: relative; transform-style: preserve-3d; transform: rotateY(25deg) rotateX(10deg); }
@@ -302,12 +171,29 @@
         @keyframes fmBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         /* ============================
-           DIVIDER
+           VARIANT 05 — WATERCOLOR
         ============================= */
-        .section-divider { height: 2px; background: linear-gradient(to right, #1f1f1f, #333, #1f1f1f); }
+        #variant-watercolor { height: 100vh; overflow: hidden; position: relative; background-color: #fef5f5; }
+        #variant-watercolor canvas { display: block; }
+        #variant-watercolor .wc-paper-texture { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; opacity: 0.6; }
+        #variant-watercolor .wc-canvas-wrap { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; z-index: 1; }
     </style>
 </head>
 <body>
+
+    <!-- SVG filters shared across sections -->
+    <svg style="position:absolute;width:0;height:0;">
+        <filter id="paper-noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise"></feTurbulence>
+            <feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.4 0" in="noise" result="coloredNoise"></feColorMatrix>
+            <feComposite operator="in" in="coloredNoise" in2="SourceGraphic"></feComposite>
+        </filter>
+        <filter id="wc-watercolor">
+            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="5" result="noise"></feTurbulence>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="10"></feDisplacementMap>
+            <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
+        </filter>
+    </svg>
 
     <nav class="ref-nav">
         <span class="nav-label">design ref — objects</span>
@@ -315,6 +201,7 @@
         <a href="#variant-dark" class="variant-dark"><span class="dot"></span>02 · Dark Object</a>
         <a href="#variant-figmint" class="variant-figmint"><span class="dot"></span>03 · Fig Mint</a>
         <a href="#variant-grid" style="color:#555;"><span class="dot" style="background:#555;"></span>04 · Grid View</a>
+        <a href="#variant-watercolor" class="variant-watercolor"><span class="dot"></span>05 · Watercolor</a>
     </nav>
 
     <!-- 01 BRIGHT -->
@@ -460,7 +347,6 @@
     <div class="design-section" id="variant-grid">
         <div class="section-label"><span class="badge" style="background:#333;color:#aaa;border:1px solid #444;">04</span>Grid View — All Three Objects Side by Side</div>
         <div style="height:100vh;display:grid;grid-template-columns:repeat(3,1fr);background:#111;">
-            <!-- Cell 1: Fig Mint -->
             <div style="position:relative;border-right:1px solid #000;overflow:hidden;background:#f4f1e6;">
                 <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;">
                     <div style="transform:scale(0.5);transform-origin:center center;">
@@ -480,7 +366,6 @@
                     <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:#A09C8F;">Fig Mint</div>
                 </div>
             </div>
-            <!-- Cell 2: Dark Vault -->
             <div style="position:relative;border-right:1px solid #000;overflow:hidden;background:#0f1112;">
                 <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;">
                     <div style="transform:scale(0.45);transform-origin:center center;">
@@ -506,7 +391,6 @@
                     <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:#444;">Iron Vault · Dark</div>
                 </div>
             </div>
-            <!-- Cell 3: Bright Vault -->
             <div style="position:relative;overflow:hidden;background:#ecebe6;">
                 <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;">
                     <div style="transform:scale(0.45);transform-origin:center center;">
@@ -536,30 +420,52 @@
         </div>
     </div>
 
+    <div class="section-divider"></div>
+
+    <!-- 05 WATERCOLOR FLOWERS -->
+    <div class="design-section" id="variant-watercolor">
+        <div class="section-label"><span class="badge" style="background:#c93f32;color:#fff;">05</span>Watercolor — Generative Canvas / Floral / Paper Texture</div>
+
+        <div class="wc-paper-texture">
+            <svg style="width:100%;height:100%;">
+                <rect width="100%" height="100%" filter="url(#paper-noise)" opacity="0.3"></rect>
+            </svg>
+        </div>
+
+        <div class="wc-canvas-wrap">
+            <canvas id="wcCanvas"></canvas>
+        </div>
+    </div>
+
+    <!-- SHARED SCRIPTS -->
     <script>
+        /* ---- vault log tickers ---- */
         const logLines = ["SYS_INIT...","ENCRYPT_ACTIVE","NODE_SECURE: 0x4F2A","THERMAL_STABLE","NETWORK_ISOLATED","ENTROPY_COLLECTING...","AUTH_PENDING_"];
         function startLog(id) {
             let line = 0;
             const el = document.getElementById(id);
+            if (!el) return;
             function tick() { el.innerHTML = logLines.slice(Math.max(0,line-3),line+1).join("<br>"); line=(line+1)%logLines.length; setTimeout(tick,1500+Math.random()*2000); }
             tick();
         }
         startLog("log-bright");
         startLog("log-dark");
 
+        /* ---- fig mint typewriter ---- */
         (function() {
             const text = "Good morning. Your memo is drafted, your files are sorted, and your calendar is set. Ready when you are.";
             let i = 0;
             const target = document.getElementById("fm-typewriter");
+            if (!target) return;
             function type() { if(i<text.length){target.innerHTML+=text.charAt(i++);setTimeout(type,100+Math.random()*50);}else{setTimeout(()=>{target.innerHTML="";i=0;type();},3000);} }
             type();
         })();
 
+        /* ---- nav smooth scroll + active state ---- */
         document.querySelectorAll('.ref-nav a').forEach(link => {
             link.addEventListener('click', e => { e.preventDefault(); const t=document.querySelector(link.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); });
         });
-
-        const observer = new IntersectionObserver((entries) => {
+        const navObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) {
                     document.querySelectorAll('.ref-nav a').forEach(l=>l.style.color='');
@@ -568,7 +474,293 @@
                 }
             });
         }, {threshold:0.5});
-        document.querySelectorAll('.design-section').forEach(s=>observer.observe(s));
+        document.querySelectorAll('.design-section').forEach(s=>navObserver.observe(s));
     </script>
+
+    <!-- WATERCOLOR ENGINE — scoped to #variant-watercolor -->
+    <script>
+    (function() {
+        const section = document.getElementById('variant-watercolor');
+        const displayCanvas = document.getElementById('wcCanvas');
+        const displayCtx = displayCanvas.getContext('2d', { alpha: true });
+        const paintCanvas = document.createElement('canvas');
+        const paintCtx = paintCanvas.getContext('2d', { alpha: true });
+
+        const STAMEN_COLOR = {h:45,s:80,l:55};
+        const FLOWER_TYPE_COUNT = 6;
+        const VASE_HEIGHT = 210, VASE_WIDTH = 86, VASE_MOUTH_RATIO = 0.32;
+        let width, height, animationId, stems=[], flowers=[], brush, vase;
+
+        const PALETTE = {
+            stems: [{h:140,s:30,l:35},{h:130,s:25,l:40},{h:145,s:20,l:30}],
+            flowers: [{h:348,s:72,l:58},{h:332,s:64,l:64},{h:12,s:72,l:62},{h:286,s:40,l:58},{h:218,s:48,l:61},{h:198,s:62,l:58},{h:44,s:62,l:74},{h:312,s:44,l:62}],
+            calyx: {h:132,s:34,l:30},
+            vase: {h:0,s:20,l:92},
+            hearts: {h:350,s:100,l:65}
+        };
+
+        function pickFlowerType() {
+            const r=Math.random();
+            if(r<0.22)return 0;if(r<0.36)return 1;if(r<0.56)return 2;if(r<0.74)return 3;if(r<0.90)return 4;return 5;
+        }
+
+        function resize() {
+            width = section.offsetWidth;
+            height = section.offsetHeight;
+            displayCanvas.width = width; displayCanvas.height = height;
+            paintCanvas.width = width; paintCanvas.height = height;
+            paintCtx.lineCap='round'; paintCtx.lineJoin='round';
+        }
+
+        function renderFrame() {
+            displayCtx.clearRect(0,0,width,height);
+            displayCtx.filter='url(#wc-watercolor) blur(0.5px)';
+            displayCtx.drawImage(paintCanvas,0,0);
+            displayCtx.filter='none';
+        }
+
+        class Brush {
+            constructor(ctx){this.ctx=ctx;}
+            stroke(x1,y1,x2,y2,color,w,opacity){
+                this.ctx.beginPath();this.ctx.moveTo(x1,y1);this.ctx.lineTo(x2,y2);
+                this.ctx.strokeStyle=`hsla(${color.h+(Math.random()*10-5)},${color.s}%,${color.l+(Math.random()*10-5)}%,${opacity})`;
+                this.ctx.lineWidth=w*(0.8+Math.random()*0.4);this.ctx.stroke();
+            }
+            wash(x,y,r,color,opacity){
+                this.ctx.beginPath();this.ctx.arc(x,y,r,0,Math.PI*2);
+                this.ctx.fillStyle=`hsla(${color.h},${color.s}%,${color.l}%,${opacity})`;this.ctx.fill();
+            }
+            blob(x,y,radius,color,opacity,angle,stretch){
+                const bAngle=angle==null?Math.random()*Math.PI:angle;
+                const bStretch=stretch==null?(1.1+Math.random()*0.35):stretch;
+                for(let i=0;i<2;i++){
+                    const jx=(Math.random()-0.5)*radius*0.34,jy=(Math.random()-0.5)*radius*0.34;
+                    const r=Math.max(0.8,radius*(0.76+Math.random()*0.42));
+                    const rx=r*bStretch,ry=r*(0.65+Math.random()*0.35);
+                    const h=color.h+(Math.random()*8-4),l=color.l+(Math.random()*10-5);
+                    const a=bAngle+(Math.random()-0.5)*0.28;
+                    this.ctx.beginPath();this.ctx.ellipse(x+jx,y+jy,rx,ry,a,0,Math.PI*2);
+                    this.ctx.fillStyle=`hsla(${h},${color.s}%,${l}%,${opacity})`;this.ctx.fill();
+                }
+            }
+        }
+
+        class Stem {
+            constructor(x,y,h,angle){
+                this.x=x;this.y=y;this.targetHeight=h;this.angle=angle;
+                this.currentHeight=0;this.segments=[];this.growSpeed=2+Math.random()*2;
+                this.done=false;this.leavesBySegment=[];this.leafDensity=0.14+Math.random()*0.08;
+                let cx=x,cy=y,ca=angle;
+                const stepSize=5,totalSteps=Math.floor(h/stepSize);
+                for(let i=0;i<totalSteps;i++){
+                    ca+=(-Math.PI/2-ca)*0.02+(Math.random()-0.5)*0.05;
+                    const nx=cx+Math.cos(ca)*stepSize,ny=cy+Math.sin(ca)*stepSize;
+                    this.segments.push({x:nx,y:ny,angle:ca,cos:Math.cos(ca),sin:Math.sin(ca)});
+                    if(i>totalSteps*0.18&&i<totalSteps*0.92&&Math.random()<this.leafDensity){
+                        const side=Math.random()<0.5?-1:1;
+                        const la=ca+side*(0.65+Math.random()*0.55);
+                        if(!this.leavesBySegment[i])this.leavesBySegment[i]=[];
+                        this.leavesBySegment[i].push({angle:la,cos:Math.cos(la),sin:Math.sin(la),length:18+Math.random()*22,radius:4.4+Math.random()*4.4,drawn:false});
+                    }
+                    cx=nx;cy=ny;
+                }
+                this.tip={x:cx,y:cy};
+            }
+            update(){
+                if(this.currentHeight<this.segments.length){
+                    this.currentHeight+=this.growSpeed;
+                    if(this.currentHeight>=this.segments.length){this.currentHeight=this.segments.length;this.done=true;}
+                }
+                return this.done;
+            }
+            draw(br){
+                const maxIndex=Math.floor(this.currentHeight);if(maxIndex<1)return;
+                const drawEnd=this.hasFlower?Math.max(1,maxIndex-1):maxIndex;
+                const startIdx=Math.max(1,drawEnd-((this.growSpeed+0.999999)|0)-1);
+                const sc=this.segments.length;
+                for(let i=startIdx;i<drawEnd;i++){
+                    const prev=this.segments[i-1],curr=this.segments[i];
+                    const w=3.2*(1-i/sc)+0.85;
+                    br.stroke(prev.x,prev.y,curr.x,curr.y,PALETTE.stems[1],w,0.15);
+                    br.stroke(prev.x,prev.y,curr.x,curr.y,PALETTE.stems[2],w*0.55,0.18);
+                    const leaves=this.leavesBySegment[i];
+                    if(leaves){for(let j=0;j<leaves.length;j++){const lf=leaves[j];if(!lf.drawn){this.drawLeaf(br,curr.x,curr.y,lf,w);lf.drawn=true;}}}
+                }
+            }
+            drawLeaf(br,x,y,leaf,sw){
+                const tipX=x+leaf.cos*leaf.length,tipY=y+leaf.sin*leaf.length;
+                const mx=x+leaf.cos*leaf.length*0.55,my=y+leaf.sin*leaf.length*0.55;
+                const nx=-leaf.sin,ny=leaf.cos,lo=leaf.radius*0.55;
+                br.blob(mx,my,leaf.radius*1.15,PALETTE.stems[0],0.11,leaf.angle,2.15);
+                br.blob(mx+nx*lo,my+ny*lo,leaf.radius*0.82,PALETTE.stems[1],0.085,leaf.angle+0.14,1.9);
+                br.blob(mx-nx*lo,my-ny*lo,leaf.radius*0.78,PALETTE.stems[2],0.07,leaf.angle-0.12,1.8);
+                br.stroke(x-leaf.cos*leaf.radius*0.35,y-leaf.sin*leaf.radius*0.35,tipX,tipY,PALETTE.stems[2],Math.max(0.45,sw*0.26),0.15);
+            }
+        }
+
+        class Flower {
+            constructor(x,y,type,scale){
+                this.x=x;this.y=y;this.scale=scale||1;this.type=type==null?pickFlowerType():type;
+                this.age=0;this.maxAge=96+Math.random()*46;this.petals=[];this.centerDots=[];
+                this.colorBias=Math.floor(Math.random()*PALETTE.flowers.length);
+                this.baseColor=PALETTE.flowers[this.colorBias];
+                this.altColor=PALETTE.flowers[(this.colorBias+1+((Math.random()*2)|0))%PALETTE.flowers.length];
+                this.darkColor={h:this.baseColor.h,s:Math.min(100,this.baseColor.s+10),l:Math.max(16,this.baseColor.l-24)};
+                this.lightColor={h:this.baseColor.h,s:Math.max(20,this.baseColor.s-8),l:Math.min(84,this.baseColor.l+14)};
+                this.petalDrawChance=0.64;this.speckChance=0.28;
+                this.coreSize=7*this.scale;this.calyxSize=8.5*this.scale;
+                this.capWidth=28*this.scale;this.capHeight=20*this.scale;this.capLobes=8;
+                this.headTilt=(Math.random()-0.5)*0.65;this.headLift=11*this.scale;this.capMode='fan';
+                this.initShape();
+            }
+            addPetal(a,dist,radius,layer,stretch){this.petals.push({angle:a,cos:Math.cos(a),sin:Math.sin(a),distance:dist*this.scale,radius:radius*this.scale,layer:layer||0,stretch:(stretch==null?1.45:stretch)+(Math.random()-0.5)*0.24,jitter:(Math.random()-0.5)*0.35});}
+            addCenterDots(count,minD,maxD,minS,maxS,color){for(let i=0;i<count;i++){const a=Math.random()*Math.PI*2;this.centerDots.push({cos:Math.cos(a),sin:Math.sin(a),distance:(minD+Math.random()*(maxD-minD))*this.scale,size:(minS+Math.random()*(maxS-minS))*this.scale,color:color||STAMEN_COLOR});}}
+            initShape(){
+                if(this.type===0){
+                    this.petalDrawChance=0.6;this.maxAge=112+Math.random()*40;this.coreSize=8.6*this.scale;this.calyxSize=9*this.scale;this.capWidth=30*this.scale;this.capHeight=24*this.scale;this.capLobes=9;this.capMode='cluster';this.headLift=9*this.scale;
+                    for(let layer=0;layer<4;layer++){const count=5+layer*2,arc=2.1+layer*0.12;for(let i=0;i<count;i++){const t=count>1?i/(count-1):0;this.addPetal(-Math.PI/2+(t-0.5)*arc+(Math.random()-0.5)*0.22,6+layer*5+Math.random()*3,7.5+layer*2.8+Math.random()*2.3,layer,1.34+layer*0.08);}}
+                    for(let i=0;i<5;i++){this.addPetal(-Math.PI/2+(Math.random()-0.5)*1.0,3+Math.random()*3,4+Math.random()*2,0,1.15);}
+                    this.addCenterDots(6,0.8,4.2,1.2,2.2,this.darkColor);
+                } else if(this.type===1){
+                    this.petalDrawChance=0.56;this.coreSize=6.8*this.scale;this.calyxSize=8*this.scale;this.capWidth=32*this.scale;this.capHeight=22*this.scale;this.capLobes=7;this.capMode='wing';this.headLift=12*this.scale;
+                    const base=-Math.PI/2+(Math.random()-0.5)*0.24;
+                    this.addPetal(base-0.95,15,10.5,1,1.5);this.addPetal(base-0.35,19,13,1,1.35);this.addPetal(base+0.35,19,13,1,1.35);this.addPetal(base+0.95,15,10.5,1,1.5);this.addPetal(base+Math.PI,11,14.5,0,1.08);this.addPetal(base+Math.PI+0.15,8,9.5,0,1.02);
+                    this.addCenterDots(5,1,4.8,1.2,2.4,PALETTE.hearts);
+                } else if(this.type===2){
+                    this.petalDrawChance=0.58;this.coreSize=6.2*this.scale;this.calyxSize=9.4*this.scale;this.capWidth=25*this.scale;this.capHeight=22*this.scale;this.capLobes=6;this.capMode='cup';this.headLift=14*this.scale;
+                    const base=-Math.PI/2+(Math.random()-0.5)*0.2;
+                    this.addPetal(base-0.33,15,14,1,1.3);this.addPetal(base,18,16,2,1.22);this.addPetal(base+0.33,15,14,1,1.3);this.addPetal(base-0.7,11,8.2,0,1.14);this.addPetal(base+0.7,11,8.2,0,1.14);
+                    this.addCenterDots(4,1,3.8,1.1,1.8,STAMEN_COLOR);
+                } else if(this.type===3){
+                    this.petalDrawChance=0.55;this.maxAge=106+Math.random()*36;this.coreSize=8.4*this.scale;this.calyxSize=8.6*this.scale;this.capWidth=40*this.scale;this.capHeight=18*this.scale;this.capLobes=10;this.capMode='fan';this.headLift=12*this.scale;
+                    const count=7+((Math.random()*3)|0);
+                    for(let i=0;i<count;i++){const t=count>1?i/(count-1):0;this.addPetal(-Math.PI+t*Math.PI+(Math.random()-0.5)*0.2,15+Math.random()*12,11+Math.random()*4.5,1,1.58);}
+                    for(let i=0;i<3;i++){this.addPetal(-Math.PI/2+(Math.random()-0.5)*1.2,9+Math.random()*5,7.5+Math.random()*3,0,1.3);}
+                    this.addCenterDots(8,1.2,5.4,1,2,this.darkColor);
+                } else if(this.type===4){
+                    this.petalDrawChance=0.58;this.maxAge=112+Math.random()*42;this.coreSize=8*this.scale;this.calyxSize=9*this.scale;this.capWidth=34*this.scale;this.capHeight=24*this.scale;this.capLobes=11;this.capMode='cluster';this.headLift=10*this.scale;
+                    for(let layer=0;layer<4;layer++){const count=6+layer*3,arc=2.35+layer*0.12;for(let i=0;i<count;i++){const t=count>1?i/(count-1):0;this.addPetal(-Math.PI/2+(t-0.5)*arc+(Math.random()-0.5)*0.32,5+layer*4.8+Math.random()*2.8,6.4+layer*2.4+Math.random()*2.2,layer,1.24+layer*0.08);}}
+                    this.addCenterDots(7,1,4.8,1.4,2.5,this.darkColor);
+                } else {
+                    this.petalDrawChance=0.54;this.coreSize=6.8*this.scale;this.calyxSize=8.2*this.scale;this.capWidth=35*this.scale;this.capHeight=19*this.scale;this.capLobes=7;this.capMode='star';this.headLift=13*this.scale;
+                    const off=-Math.PI/2+(Math.random()-0.5)*0.18;
+                    for(let i=0;i<6;i++){this.addPetal(off+(Math.PI*2/6)*i+(Math.random()-0.5)*0.2,17+Math.random()*8,8.5+Math.random()*3,i%2,1.5);}
+                    this.addCenterDots(6,1.1,4.8,1.1,2,STAMEN_COLOR);
+                }
+            }
+            draw(br){
+                if(this.age>this.maxAge)return;this.age+=1;
+                const growth=this.age<68?this.age/68:1,bloom=0.2+growth*0.8;
+                const headX=this.x+this.headTilt*this.headLift*0.18*bloom;
+                const headY=this.y-this.headLift*bloom;
+                const flowerBaseX=headX+this.headTilt*4*this.scale*bloom;
+                const flowerBaseY=headY+this.capHeight*(this.capMode==='cup'?0.6:0.52);
+                if(this.age>3){
+                    const cg=Math.min(1,(this.age-3)/34),cw=this.capWidth*cg,ch=this.capHeight*cg;
+                    if(this.capMode==='cluster'){
+                        for(let i=0;i<this.capLobes;i++){if(Math.random()>0.8)continue;const a=(Math.PI*2/this.capLobes)*i+this.headTilt*0.3;const ring=ch*(0.2+Math.random()*0.55);br.blob(headX+Math.cos(a)*ring*(0.95+Math.random()*0.3),headY+Math.sin(a)*ring*0.72,ch*(0.34+Math.random()*0.2),Math.random()>0.6?this.lightColor:this.baseColor,0.032,a,1.45);}
+                    } else if(this.capMode==='star'){
+                        for(let i=0;i<this.capLobes;i++){const a=(Math.PI*2/this.capLobes)*i+this.headTilt*0.25;const r=ch*(0.46+Math.random()*0.3);br.blob(headX+Math.cos(a)*r,headY+Math.sin(a)*r*0.82,ch*0.28,this.baseColor,0.032,a,2.15);}
+                    } else if(this.capMode==='wing'){
+                        br.blob(headX-cw*0.26,headY-ch*0.18,ch*0.5,this.lightColor,0.03,-0.35,1.9);br.blob(headX+cw*0.26,headY-ch*0.18,ch*0.5,this.lightColor,0.03,0.35,1.9);br.blob(headX,headY-ch*0.26,ch*0.48,this.baseColor,0.034,0,1.7);br.blob(headX,headY+ch*0.15,ch*0.42,this.baseColor,0.034,0,1.35);
+                    } else {
+                        const spread=this.capMode==='cup'?0.9:1.0;
+                        for(let i=0;i<this.capLobes;i++){if(Math.random()>0.76)continue;const t=this.capLobes>1?i/(this.capLobes-1):0.5;const ts=this.headTilt*(0.5-Math.abs(t-0.5))*ch*1.25;const cx=headX+(t-0.5)*cw*spread+ts+(Math.random()-0.5)*cw*0.08;const cy=headY-Math.sin(t*Math.PI)*ch+this.headTilt*(t-0.5)*ch*0.2+(Math.random()-0.5)*ch*0.12;br.blob(cx,cy,ch*(0.42+Math.random()*0.26),Math.random()>0.6?this.lightColor:this.baseColor,0.034,this.headTilt*0.35,1.92);}
+                    }
+                }
+                for(let i=0;i<this.petals.length;i++){
+                    const p=this.petals[i];if(Math.random()>this.petalDrawChance)continue;
+                    const dist=p.distance*bloom,radius=p.radius*bloom*(1.02+p.layer*0.02);
+                    const px=headX+p.cos*dist,py=headY+p.sin*dist;
+                    const mx=headX+p.cos*dist*0.58,my=headY+p.sin*dist*0.58;
+                    const bx=headX+p.cos*dist*0.24,by=headY+p.sin*dist*0.24;
+                    const nx=-p.sin,ny=p.cos,side=radius*0.18;
+                    let tone=this.baseColor;
+                    if(p.layer===0)tone=this.darkColor;else if(p.layer>=3)tone=this.lightColor;else if(Math.random()>0.68)tone=this.altColor;
+                    const axis=(this.type===1||this.type===5)?p.angle+p.jitter:this.headTilt*0.35+(Math.random()-0.5)*0.12;
+                    br.blob(mx,my,radius*0.95,tone,0.05,axis,p.stretch);
+                    br.blob(px,py,radius*0.72,this.lightColor,0.034,axis+0.08,p.stretch*0.9);
+                    br.blob(bx,by,radius*0.46,this.darkColor,0.045,axis-0.06,p.stretch*0.84);
+                    if(Math.random()>0.64){br.blob(mx+nx*side,my+ny*side,radius*0.65,this.lightColor,0.03,p.angle+0.3,p.stretch*0.92);}
+                    if(Math.random()>0.76){br.stroke(flowerBaseX,flowerBaseY,px,py,this.darkColor,0.3*this.scale,0.04);}
+                }
+                if(this.age>4){const cg=Math.min(1,(this.age-4)/22);for(let i=0;i<3;i++){br.blob(headX+(Math.random()-0.5)*3.5*this.scale,headY+0.9*this.scale+(Math.random()-0.5)*2*this.scale,this.coreSize*cg*(0.65+Math.random()*0.45),this.darkColor,0.055,0,1.25);}}
+                if(this.age>6){
+                    const cg=Math.min(1,(this.age-6)/24);
+                    br.blob(flowerBaseX,flowerBaseY,this.calyxSize*cg,PALETTE.calyx,0.052,0,1.35);
+                    if(Math.random()>0.52){const sx=flowerBaseX+(Math.random()-0.5)*4*this.scale;const sy=flowerBaseY+(Math.random()-0.5)*2*this.scale;br.stroke(sx,sy,sx+(Math.random()-0.5)*10*this.scale,sy-(3+Math.random()*5)*this.scale,PALETTE.calyx,0.45*this.scale,0.06);}
+                }
+                if(this.age>10&&this.centerDots.length>0){
+                    const dg=Math.min(1,(this.age-10)/26);
+                    for(let i=0;i<this.centerDots.length;i++){const d=this.centerDots[i];if(Math.random()>this.speckChance)continue;const dist=d.distance*dg;br.wash(headX+d.cos*dist+(Math.random()-0.5)*1.5*this.scale,headY+d.sin*dist+(Math.random()-0.5)*1.5*this.scale,d.size*dg,d.color,0.075);}
+                }
+            }
+        }
+
+        class Vase {
+            constructor(x,y){this.x=x;this.y=y;this.drawn=false;}
+            draw(ctx){
+                if(this.drawn)return;
+                const c=PALETTE.vase;
+                for(let i=0;i<80;i++){
+                    const t=i/79,yPos=this.y+(1-t)*VASE_HEIGHT,profile=Math.sin(t*Math.PI),w=VASE_WIDTH*(VASE_MOUTH_RATIO+profile*0.68);
+                    ctx.beginPath();ctx.moveTo(this.x-w,yPos);ctx.lineTo(this.x+w,yPos);ctx.lineWidth=2.6+Math.random()*1.8;ctx.strokeStyle=`hsla(${c.h},${c.s}%,${c.l-Math.random()*10}%,0.1)`;ctx.stroke();
+                    if(Math.random()>0.35){ctx.beginPath();ctx.moveTo(this.x+w-10,yPos);ctx.lineTo(this.x+w,yPos);ctx.lineWidth=3.2;ctx.strokeStyle=`hsla(${c.h},${c.s}%,${c.l-30}%,0.09)`;ctx.stroke();}
+                }
+                this.drawn=true;
+            }
+        }
+
+        function init() {
+            cancelAnimationFrame(animationId);
+            resize();
+            paintCtx.clearRect(0,0,width,height);
+            renderFrame();
+            brush=new Brush(paintCtx);
+            stems=[];flowers=[];
+            const startX=width/2,startY=height*0.6;
+            vase=new Vase(startX,startY);vase.draw(paintCtx);
+            const count=width<600?8:width<1000?11:12;
+            const mouthHalf=VASE_WIDTH*VASE_MOUTH_RATIO*(width<600?0.95:1.05);
+            const typeOrder=[0,1,2,3,4,5];
+            for(let i=typeOrder.length-1;i>0;i--){const j=(Math.random()*(i+1))|0;const tmp=typeOrder[i];typeOrder[i]=typeOrder[j];typeOrder[j]=tmp;}
+            for(let i=0;i<count;i++){
+                const fan=count>1?(i/(count-1)-0.5):0;
+                const baseOffset=fan*mouthHalf*1.18+(Math.random()-0.5)*mouthHalf*0.28;
+                const stem=new Stem(startX+baseOffset,startY,height*0.16+Math.random()*(height*0.12),-Math.PI/2+fan*0.14+(Math.random()-0.5)*0.09);
+                stem.flowerTypeHint=Math.random()>0.82?pickFlowerType():typeOrder[i%FLOWER_TYPE_COUNT];
+                stems.push(stem);
+            }
+            loop();
+        }
+
+        function loop(){
+            let allStemsDone=true;
+            for(let i=0;i<stems.length;i++){const stem=stems[i];const done=stem.update();stem.draw(brush);if(!done)allStemsDone=false;else if(!stem.hasFlower){const ai=Math.max(1,stem.segments.length-2);const anchor=stem.segments[ai];flowers.push(new Flower(anchor.x,anchor.y,stem.flowerTypeHint,0.64+Math.random()*0.17));if(stem.segments.length>16&&Math.random()>0.62){const si=Math.max(4,stem.segments.length-(8+((Math.random()*8)|0)));const node=stem.segments[si];const side=Math.random()<0.5?-1:1;flowers.push(new Flower(node.x+(-node.sin*side)*(8+Math.random()*8),node.y+(node.cos*side)*(2+Math.random()*4)-(2+Math.random()*3),(stem.flowerTypeHint+2+((Math.random()*2)|0))%FLOWER_TYPE_COUNT,0.42+Math.random()*0.14));}stem.hasFlower=true;}}
+            let allFlowersDone=true;
+            for(let i=0;i<flowers.length;i++){const f=flowers[i];f.draw(brush);if(f.age<f.maxAge)allFlowersDone=false;}
+            renderFrame();
+            if(!allStemsDone||!allFlowersDone){animationId=requestAnimationFrame(loop);}
+        }
+
+        // init when section scrolls into view to avoid running offscreen
+        const wcObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting && stems.length === 0) {
+                    setTimeout(init, 100);
+                }
+            });
+        }, {threshold: 0.1});
+        wcObserver.observe(section);
+
+        window.addEventListener('resize', () => {
+            if(stems.length > 0) {
+                cancelAnimationFrame(animationId);
+                setTimeout(init, 200);
+            }
+        });
+    })();
+    </script>
+
 </body>
 </html>
