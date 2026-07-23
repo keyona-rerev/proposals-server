@@ -65,7 +65,7 @@
   .block { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 20px; margin-bottom:14px; }
   .block h2 { font-size:0.95rem; margin:0 0 8px; border:none; padding:0; text-transform:none; letter-spacing:normal; color:var(--ink); }
   .block p, .block li { margin:0 0 6px; }
-  .block ul { margin:6px 0 0; padding-left:20px; }
+  .block ul, .block ol { margin:6px 0 0; padding-left:20px; }
   footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--line); color:var(--soft); font-size:0.9rem; }
 </style>
 </head>
@@ -76,6 +76,7 @@
     <button class="tab-btn active" data-tab="your-day">Your Day</button>
     <button class="tab-btn" data-tab="mission-01">Mission 01</button>
     <button class="tab-btn" data-tab="mission-03">Mission 03</button>
+    <button class="tab-btn" data-tab="mission-04">Mission 04</button>
   </div>
 
   <!-- YOUR DAY -->
@@ -86,10 +87,14 @@
 
     <div class="working">
       <p class="lbl">What I'm working on today</p>
-      <p>Scoping call follow-up — turning a call into a fast, complete send within 48 hours. Inputs are gathered; it becomes a playbook in Mission 4.</p>
+      <p>Scoping call follow-up — turning a call into a fast, complete send within 48 hours. Now has a written Standard; next it becomes a skill in Mission 6.</p>
     </div>
 
     <h2>The day, mission by mission</h2>
+    <div class="mission" onclick="showTab('mission-04')">
+      <div class="top"><span class="name">Mission 4 — Write the Playbook</span><span class="when">July 23, 2026</span></div>
+      <p class="line">Wrote the Standard for scoping call follow-up — corrected the draft to center the real bottleneck (the thinking after the call, not the recap), and sharpened the quality bar into checkable lines.</p>
+    </div>
     <div class="mission" onclick="showTab('mission-03')">
       <div class="top"><span class="name">Mission 3 — Your First AI Employee</span><span class="when">July 23, 2026</span></div>
       <p class="line">Mapped the role into three buckets, picked scoping call follow-up as the task, set a real 48-hour standard, and gathered a real example from the Nicole Clarke call.</p>
@@ -264,6 +269,108 @@
     </div>
 
     <footer>You didn't automate your job today — you hired help for the task you know best, scoping call follow-up, now on your Your Day page with its inputs gathered and ready to become a playbook next.</footer>
+  </section>
+
+  <!-- MISSION 04 -->
+  <section id="mission-04" class="tab-panel">
+    <p class="hello" style="cursor:pointer" onclick="showTab('your-day')">← Your Day</p>
+    <header>
+      <h1 style="font-size:1.55rem;">Mission 4 — Write the Playbook</h1>
+      <p class="meta">July 23, 2026 · Cowork · Claude Desktop</p>
+    </header>
+
+    <div class="stats">
+      <div class="stat"><div class="n">9</div><div class="l">prompts you ran</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">pages touched</div></div>
+      <div class="stat"><div class="n">1</div><div class="l">skill used</div></div>
+    </div>
+
+    <h2>How it went</h2>
+
+    <div class="step">
+      <p class="who">You asked</p>
+      <div class="you"><p class="prompt">let's run mission four</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">interview</span>
+        <p>Claude walked the scoping-call-follow-up task through the five Standard fields, one question at a time — when it starts, what it needs, how it's done, what good looks like, and the one step worth reusing.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <p>First draft of "how you do it" came back too generic — a simple recap-then-attach sequence. You called it out: the real bottleneck isn't drafting, it's the thinking after the call, since the client library isn't big enough to just pattern-match a similar past project.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">it's not so much about pushing back as pulling out insights from me to figure it out, not just a contrarian</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">field sharpened</span>
+        <p>"How you do it" and "the one step worth reusing" got rewritten around a thinking conversation — one that pulls insight out of you using the transcript and past work together, not a recap generator. This is the piece Mission 6 turns into a skill.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">quality bar checked</span>
+        <p>Walked the four "what good looks like" lines. Three were already checkable. The fuzzy one — "reflects what was actually discussed, not boilerplate" — got sharpened to: every claim in the recap traces back to something actually said in the transcript.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">yep, is there anything left before closeout? if no, go for it</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">page built</span>
+        <p>Standard saved to <code>standards/scoping-call-follow-up.html</code> — the five fields, final, linked from Your Day.</p>
+      </div>
+    </div>
+
+    <h2>The Standard — Scoping Call Follow-Up</h2>
+    <div class="block">
+      <h2>When it starts</h2>
+      <p>Once notes or a transcript from the call exist.</p>
+    </div>
+    <div class="block">
+      <h2>What it needs</h2>
+      <p>The call notes/transcript, and past client work examples to think alongside.</p>
+    </div>
+    <div class="block">
+      <h2>How you do it</h2>
+      <ol>
+        <li>Read the transcript/notes.</li>
+        <li>Have a thinking conversation about this prospect — questions that pull the insight out of you (what's unique here, what it reminds you of), using the transcript and past work together. Not a contrarian pushing back — a partner pulling out what you already know.</li>
+        <li>From that thinking, write the recap and pick the intros, pitch, and materials that actually match.</li>
+        <li>Send within 48 hours.</li>
+      </ol>
+    </div>
+    <div class="block">
+      <h2>What good looks like</h2>
+      <ul>
+        <li>Sent within 48 hours of the call.</li>
+        <li>At least one specific past client example included, matched to their situation.</li>
+        <li>Named intro(s) offered where relevant — not generic.</li>
+        <li>Every claim in the recap traces back to something actually said in the transcript — nothing invented or assumed.</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h2>The one step worth reusing</h2>
+      <p>The thinking conversation itself — pulling out what's unique about this prospect using the transcript and past work together. This is the first skill built in Mission 6, not a recap generator.</p>
+    </div>
+
+    <footer>You now have a written spec for your own job — the seed for the tools (Mission 5), the skill (Mission 6), and the eval (Mission 7).</footer>
   </section>
 
 </div>
