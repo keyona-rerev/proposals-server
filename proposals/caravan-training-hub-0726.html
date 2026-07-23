@@ -1,10 +1,10 @@
-&lt;!doctype html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-&lt;meta charset="utf-8"&gt;
-&lt;title&gt;Keyona — Caravan Training&lt;/title&gt;
-&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
-&lt;style&gt;
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Keyona — Caravan Training</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
   :root {
     --bg: #f6f5f1; --card: #fffdf8; --ink: #23201b; --soft: #6f695e;
     --line: #e6e1d6; --accent: #b2603a; --accent-soft: #f2e4d8; --chip: #efeae0;
@@ -68,574 +68,574 @@
   .block ul, .block ol { margin:6px 0 0; padding-left:20px; }
   .note { font-size:0.85rem; color:var(--soft); margin:0 0 28px; }
   footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--line); color:var(--soft); font-size:0.9rem; }
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div class="wrap"&gt;
-
-  &lt;div class="tabs"&gt;
-    &lt;button class="tab-btn active" data-tab="your-day"&gt;Your Day&lt;/button&gt;
-    &lt;button class="tab-btn" data-tab="mission-01"&gt;Mission 01&lt;/button&gt;
-    &lt;button class="tab-btn" data-tab="mission-03"&gt;Mission 03&lt;/button&gt;
-    &lt;button class="tab-btn" data-tab="mission-04"&gt;Mission 04&lt;/button&gt;
-    &lt;button class="tab-btn" data-tab="mission-05"&gt;Mission 05&lt;/button&gt;
-    &lt;button class="tab-btn" data-tab="mission-06"&gt;Mission 06&lt;/button&gt;
-    &lt;button class="tab-btn" data-tab="mission-07"&gt;Mission 07&lt;/button&gt;
-  &lt;/div&gt;
-
-  &lt;!-- YOUR DAY --&gt;
-  &lt;section id="your-day" class="tab-panel active"&gt;
-    &lt;p class="hello"&gt;Your Day&lt;/p&gt;
-    &lt;h1&gt;Keyona&lt;/h1&gt;
-    &lt;p class="about"&gt;Founder at ReRev Labs, GP at BlackTech Capital.&lt;/p&gt;
-
-    &lt;div class="working"&gt;
-      &lt;p class="lbl"&gt;What I'm working on today&lt;/p&gt;
-      &lt;p&gt;Scoping call follow-up — turning a call into a fast, complete send within 48 hours. The Standard is written, the tools are connected and proven, and the thinking step is a saved Skill (prospect-thinking-partner) that now grades its own output before handing it back. Next: giving that skill a spin on a real transcript.&lt;/p&gt;
-    &lt;/div&gt;
-
-    &lt;h2&gt;The day, mission by mission&lt;/h2&gt;
-    &lt;div class="mission" onclick="showTab('mission-07')"&gt;
-      &lt;div class="top"&gt;&lt;span class="name"&gt;Mission 7 — The Feedback Loop&lt;/span&gt;&lt;span class="when"&gt;July 23, 2026&lt;/span&gt;&lt;/div&gt;
-      &lt;p class="line"&gt;Built a real bar for prospect-thinking-partner's output, picked a model grader for the judgment-heavy lines, saved the eval into the skill, and upgraded session-closeout to keep nudging every skill to improve.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class="mission" onclick="showTab('mission-06')"&gt;
-      &lt;div class="top"&gt;&lt;span class="name"&gt;Mission 6 — Teach Your Hire the Job&lt;/span&gt;&lt;span class="when"&gt;July 23, 2026&lt;/span&gt;&lt;/div&gt;
-      &lt;p class="line"&gt;Built your first Skill — prospect-thinking-partner — from your Standard, sharpened it against six outside sources, reshaped how it runs in your own voice, and saved it to reuse.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class="mission" onclick="showTab('mission-05')"&gt;
-      &lt;div class="top"&gt;&lt;span class="name"&gt;Mission 5 — Set Up Your Tools&lt;/span&gt;&lt;span class="when"&gt;July 23, 2026&lt;/span&gt;&lt;/div&gt;
-      &lt;p class="line"&gt;Confirmed sign-in as work-you, found the tools this task needs were already connected, and proved Google Calendar live with a real question about upcoming scoping calls.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class="mission" onclick="showTab('mission-04')"&gt;
-      &lt;div class="top"&gt;&lt;span class="name"&gt;Mission 4 — Write the Playbook&lt;/span&gt;&lt;span class="when"&gt;July 23, 2026&lt;/span&gt;&lt;/div&gt;
-      &lt;p class="line"&gt;Wrote the Standard for scoping call follow-up — corrected the draft to center the real bottleneck (the thinking after the call, not the recap), and sharpened the quality bar into checkable lines.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class="mission" onclick="showTab('mission-03')"&gt;
-      &lt;div class="top"&gt;&lt;span class="name"&gt;Mission 3 — Your First AI Employee&lt;/span&gt;&lt;span class="when"&gt;July 23, 2026&lt;/span&gt;&lt;/div&gt;
-      &lt;p class="line"&gt;Mapped the role into three buckets, picked scoping call follow-up as the task, set a real 48-hour standard, and gathered a real example from the Nicole Clarke call.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class="mission" onclick="showTab('mission-01')"&gt;
-      &lt;div class="top"&gt;&lt;span class="name"&gt;Mission 1 — It's Not the Model, It's You&lt;/span&gt;&lt;span class="when"&gt;July 23, 2026&lt;/span&gt;&lt;/div&gt;
-      &lt;p class="line"&gt;Felt the context and tools gaps live, ran the quick interview, updated CLAUDE.md, and saved session-closeout as a real, reusable skill.&lt;/p&gt;
-    &lt;/div&gt;
-
-    &lt;p class="oq"&gt;&lt;strong&gt;Still open:&lt;/strong&gt; giving the new skill a spin on a real transcript (the Nicole Clarke call is the one waiting). And Move 3 from Mission 1 (the instructions gap), parked to circle back to.&lt;/p&gt;
-  &lt;/section&gt;
-
-  &lt;!-- MISSION 01 --&gt;
-  &lt;section id="mission-01" class="tab-panel"&gt;
-    &lt;p class="hello" style="cursor:pointer" onclick="showTab('your-day')"&gt;← Your Day&lt;/p&gt;
-    &lt;header&gt;
-      &lt;h1 style="font-size:1.55rem;"&gt;Mission 1 — It's Not the Model, It's You&lt;/h1&gt;
-      &lt;p class="meta"&gt;July 23, 2026 · Cowork · Claude Desktop&lt;/p&gt;
-    &lt;/header&gt;
-
-    &lt;div class="stats"&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;3&lt;/div&gt;&lt;div class="l"&gt;prompts you ran&lt;/div&gt;&lt;/div&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;3&lt;/div&gt;&lt;div class="l"&gt;pages touched&lt;/div&gt;&lt;/div&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;2&lt;/div&gt;&lt;div class="l"&gt;skills used&lt;/div&gt;&lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;h2&gt;How it went&lt;/h2&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You asked&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;What do you know about me, my life, and my work?&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;context gap, felt&lt;/span&gt;
-        &lt;p&gt;Claude answered with specifics — your name, ReRev Labs, BlackTech Capital, your background — all pulled straight from what was already handed to it. Ten seconds earlier you'd guessed 0–3 out of 10. That gap was the whole lesson.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You asked&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;What tools and systems do you have access to right now?&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;tools gap, felt — and pushed back on&lt;/span&gt;
-        &lt;p&gt;The list came back long: your desktop, Chrome, Gmail, Calendar, Drive, Canva, Apollo, Goodword, Railway, Supabase, Netlify, and a stack of your own skills. You correctly called out that this isn't really a gap — a carpenter doesn't use every tool on the bench for every job. The sharper version: the gap is knowing which tool to pick up for a given task.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;parked, not skipped&lt;/span&gt;
-        &lt;p&gt;Move 3, the instructions gap, got set aside to circle back to later — you moved straight to naming the three levers: context, tools, and instructions.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;quick interview&lt;/span&gt;
-        &lt;p&gt;Three questions, three answers: recurring work you want help with is something from ReRev Labs; good work in your role means strategically sharp, not just correct; and what to always remember is your standards and what you never want repeated. CLAUDE.md was updated with all three.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You asked&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;Please use the SkillCreator skill to package up the SessionCloseout skill so that I can save it and reuse it in future projects.&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;skill saved&lt;/span&gt;
-        &lt;p&gt;Session-closeout got packaged into a real, reusable skill file and you saved it to your profile — before deciding to run it, you compared it against your existing retrospective skill to make sure they weren't stepping on each other. They're not: retrospective is for technical build sessions and lives in Drive; session-closeout is for this training day and stays local.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;footer&gt;You didn't get a smarter model this morning — you got a smarter setup. CLAUDE.md, this page, and the session-closeout habit all compound from here.&lt;/footer&gt;
-  &lt;/section&gt;
-
-  &lt;!-- MISSION 03 --&gt;
-  &lt;section id="mission-03" class="tab-panel"&gt;
-    &lt;p class="hello" style="cursor:pointer" onclick="showTab('your-day')"&gt;← Your Day&lt;/p&gt;
-    &lt;header&gt;
-      &lt;h1 style="font-size:1.55rem;"&gt;Mission 3 — Your First AI Employee&lt;/h1&gt;
-      &lt;p class="meta"&gt;July 23, 2026 · Cowork · Claude Desktop&lt;/p&gt;
-    &lt;/header&gt;
-
-    &lt;div class="stats"&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;5&lt;/div&gt;&lt;div class="l"&gt;prompts you ran&lt;/div&gt;&lt;/div&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;5&lt;/div&gt;&lt;div class="l"&gt;pages/files touched&lt;/div&gt;&lt;/div&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;1&lt;/div&gt;&lt;div class="l"&gt;skill used&lt;/div&gt;&lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;h2&gt;How it went&lt;/h2&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You asked&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;let's run mission three&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;confirmed&lt;/span&gt;
-        &lt;p&gt;Claude read back what it knew — ReRev Labs, BlackTech Capital, your background — and you confirmed it was accurate. The map starts from what's true.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;role map proposed&lt;/span&gt;
-        &lt;p&gt;Claude proposed three buckets — ReRev Labs Delivery, ReRev Labs Growth, and BlackTech Capital — each with three real tasks. You said it was close enough to keep.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;task picked&lt;/span&gt;
-        &lt;p&gt;Out of the growth bucket, you picked scoping call follow-up: turning a call into a fast, complete send with the recap, the right intros, and your pitch/website/client info. A few times a month, checkable, and doesn't need a live run to start.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You said&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;well there's options... here's a call that was originally a peer to peer intro chat and ended up in her offering me the opportunity to give a pitch to her&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;real example gathered&lt;/span&gt;
-        &lt;p&gt;You shared the Gemini notes from your call with Nicole Clarke — a peer intro that turned into a pitch invite. It's now saved to &lt;code&gt;exercise-files/scoping-call-nicole-clarke.docx&lt;/code&gt;, the real example Mission 4's playbook will be built from.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You said&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;I wnat to have scopes/propsal sent out within 48 hours going forward, this orignally took me like two weeks to make happen which was probalbly at aleast half the reaoson i didnt get the client&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;standard set&lt;/span&gt;
-        &lt;p&gt;That became the real bar for "good": out within 48 hours, not two weeks. The Nicole follow-up dragging that long was likely at least half of why the client didn't happen — a sharp reason to fix this one first.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;named and locked in&lt;/span&gt;
-        &lt;p&gt;The task, how you'll know it's good, and why this one got written up and you locked it in as-is.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;h2&gt;The Task, and the Role Map&lt;/h2&gt;
-    &lt;div class="block"&gt;
-      &lt;h2&gt;Role Map&lt;/h2&gt;
-      &lt;p&gt;&lt;strong&gt;ReRev Labs — Delivery:&lt;/strong&gt; client automation builds, ops audits/assessments, fractional leadership check-ins.&lt;/p&gt;
-      &lt;p&gt;&lt;strong&gt;ReRev Labs — Growth:&lt;/strong&gt; scoping calls, proposals, client outreach/follow-up.&lt;/p&gt;
-      &lt;p&gt;&lt;strong&gt;BlackTech Capital:&lt;/strong&gt; deal sourcing, portfolio company support, investment committee prep.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class="block"&gt;
-      &lt;h2&gt;My Task — Scoping call follow-up&lt;/h2&gt;
-      &lt;p&gt;Turn a scoping or intro call into a fast, complete follow-up: recap, the right intros, plus pitch, website, and client work info.&lt;/p&gt;
-      &lt;p&gt;&lt;strong&gt;Good looks like:&lt;/strong&gt; out within 48 hours, nothing missing.&lt;/p&gt;
-      &lt;p&gt;&lt;strong&gt;Why this one:&lt;/strong&gt; real, recurring work she knows cold — and slow turnaround already cost a client (the Nicole Clarke follow-up took two weeks instead of two days).&lt;/p&gt;
-    &lt;/div&gt;
-
-    &lt;footer&gt;You didn't automate your job today — you hired help for the task you know best, scoping call follow-up, now on your Your Day page with its inputs gathered and ready to become a playbook next.&lt;/footer&gt;
-  &lt;/section&gt;
-
-  &lt;!-- MISSION 04 --&gt;
-  &lt;section id="mission-04" class="tab-panel"&gt;
-    &lt;p class="hello" style="cursor:pointer" onclick="showTab('your-day')"&gt;← Your Day&lt;/p&gt;
-    &lt;header&gt;
-      &lt;h1 style="font-size:1.55rem;"&gt;Mission 4 — Write the Playbook&lt;/h1&gt;
-      &lt;p class="meta"&gt;July 23, 2026 · Cowork · Claude Desktop&lt;/p&gt;
-    &lt;/header&gt;
-
-    &lt;div class="stats"&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;9&lt;/div&gt;&lt;div class="l"&gt;prompts you ran&lt;/div&gt;&lt;/div&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;3&lt;/div&gt;&lt;div class="l"&gt;pages touched&lt;/div&gt;&lt;/div&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;1&lt;/div&gt;&lt;div class="l"&gt;skill used&lt;/div&gt;&lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;h2&gt;How it went&lt;/h2&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You asked&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;let's run mission four&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;interview&lt;/span&gt;
-        &lt;p&gt;Claude walked the scoping-call-follow-up task through the five Standard fields, one question at a time — when it starts, what it needs, how it's done, what good looks like, and the one step worth reusing.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;p&gt;First draft of "how you do it" came back too generic — a simple recap-then-attach sequence. You called it out: the real bottleneck isn't drafting, it's the thinking after the call, since the client library isn't big enough to just pattern-match a similar past project.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You said&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;it's not so much about pushing back as pulling out insights from me to figure it out, not just a contrarian&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;field sharpened&lt;/span&gt;
-        &lt;p&gt;"How you do it" and "the one step worth reusing" got rewritten around a thinking conversation — one that pulls insight out of you using the transcript and past work together, not a recap generator. This is the piece Mission 6 turns into a skill.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;quality bar checked&lt;/span&gt;
-        &lt;p&gt;Walked the four "what good looks like" lines. Three were already checkable. The fuzzy one — "reflects what was actually discussed, not boilerplate" — got sharpened to: every claim in the recap traces back to something actually said in the transcript.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You said&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;yep, is there anything left before closeout? if no, go for it&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;page built&lt;/span&gt;
-        &lt;p&gt;Standard saved to &lt;code&gt;standards/scoping-call-follow-up.html&lt;/code&gt; — the five fields, final, linked from Your Day.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;h2&gt;The Standard — Scoping Call Follow-Up&lt;/h2&gt;
-    &lt;div class="block"&gt;
-      &lt;h2&gt;When it starts&lt;/h2&gt;
-      &lt;p&gt;Once notes or a transcript from the call exist.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class="block"&gt;
-      &lt;h2&gt;What it needs&lt;/h2&gt;
-      &lt;p&gt;The call notes/transcript, and past client work examples to think alongside.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class="block"&gt;
-      &lt;h2&gt;How you do it&lt;/h2&gt;
-      &lt;ol&gt;
-        &lt;li&gt;Read the transcript/notes.&lt;/li&gt;
-        &lt;li&gt;Have a thinking conversation about this prospect — questions that pull the insight out of you (what's unique here, what it reminds you of), using the transcript and past work together. Not a contrarian pushing back — a partner pulling out what you already know.&lt;/li&gt;
-        &lt;li&gt;From that thinking, write the recap and pick the intros, pitch, and materials that actually match.&lt;/li&gt;
-        &lt;li&gt;Send within 48 hours.&lt;/li&gt;
-      &lt;/ol&gt;
-    &lt;/div&gt;
-    &lt;div class="block"&gt;
-      &lt;h2&gt;What good looks like&lt;/h2&gt;
-      &lt;ul&gt;
-        &lt;li&gt;Sent within 48 hours of the call.&lt;/li&gt;
-        &lt;li&gt;At least one specific past client example included, matched to their situation.&lt;/li&gt;
-        &lt;li&gt;Named intro(s) offered where relevant — not generic.&lt;/li&gt;
-        &lt;li&gt;Every claim in the recap traces back to something actually said in the transcript — nothing invented or assumed.&lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/div&gt;
-    &lt;div class="block"&gt;
-      &lt;h2&gt;The one step worth reusing&lt;/h2&gt;
-      &lt;p&gt;The thinking conversation itself — pulling out what's unique about this prospect using the transcript and past work together. This is the first skill built in Mission 6, not a recap generator.&lt;/p&gt;
-    &lt;/div&gt;
-
-    &lt;footer&gt;You now have a written spec for your own job — the seed for the tools (Mission 5), the skill (Mission 6), and the eval (Mission 7).&lt;/footer&gt;
-  &lt;/section&gt;
-
-  &lt;!-- MISSION 05 --&gt;
-  &lt;section id="mission-05" class="tab-panel"&gt;
-    &lt;p class="hello" style="cursor:pointer" onclick="showTab('your-day')"&gt;← Your Day&lt;/p&gt;
-    &lt;header&gt;
-      &lt;h1 style="font-size:1.55rem;"&gt;Mission 5 — Set Up Your Tools&lt;/h1&gt;
-      &lt;p class="meta"&gt;July 23, 2026 · Cowork · Claude Desktop&lt;/p&gt;
-    &lt;/header&gt;
-
-    &lt;div class="stats"&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;11&lt;/div&gt;&lt;div class="l"&gt;prompts you ran&lt;/div&gt;&lt;/div&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;3&lt;/div&gt;&lt;div class="l"&gt;pages touched&lt;/div&gt;&lt;/div&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;2&lt;/div&gt;&lt;div class="l"&gt;skills used&lt;/div&gt;&lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;h2&gt;How it went&lt;/h2&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You asked&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;we're on mission 5 now let's start!&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;moves listed&lt;/span&gt;
-        &lt;p&gt;Claude read the mission file, listed the four moves — sign in, connect your first tool, prove it, connect the rest — and confirmed you're signed into Claude.ai with the same account as Claude Desktop.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You said&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;my hire?&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;p&gt;Fair callout on jargon — "your hire" is just the Mission 3 shorthand for Claude. Claude dropped it and asked plainly which tool to connect first.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You said&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;everything you listed is already connected&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;mission reframed&lt;/span&gt;
-        &lt;p&gt;Real correction. Claude checked your connectors live and confirmed Gmail, Google Drive, Google Calendar, Goodword, and more were already wired in from before today. Moves 2 and 4 were already true — the mission collapsed to its real remaining value: proving one connector actually works on something real.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You said&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;im not sure tha instruction makes sense in this context&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;p&gt;Turned out the sticking point was simpler than it looked: what "prove" actually means. Claude defined it plainly — ask something you don't already know the answer to, get a real answer back, and check it yourself. Not a demo ping.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You said&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;you do it to show me what you mean&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You said&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;but i phasing out good word so it's not relevant&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;connector proven&lt;/span&gt;
-        &lt;p&gt;Switched to Google Calendar and asked it something real: any scoping or intro calls coming up this week? Real answer, straight from your calendar — none explicitly titled that way, with two loose candidates named. You confirmed it was right.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You said&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;yeah it did even tho that was a lil useless but what's nexy&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;p&gt;All four moves closed out — sign-in, tool connected, proven live, everything else already in place. A useful reminder that a "boring" real answer still counts as proof; it's the checkability that matters, not the excitement.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You said&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;reread the file, i dont see the propsal publsiher on ur closeout instructions&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;p&gt;You caught Claude conflating two separate things: session-closeout (which stays local, by its own rule) and the live hub push, which is a separate step defined in your CLAUDE.md, not part of the closeout skill itself.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You said&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;i want you to complete closeout in its enitreity and make sure the md file includes the proposal publisher as apart of closeout and not as an amendment&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;CLAUDE.md updated&lt;/span&gt;
-        &lt;p&gt;The two separate bullets in CLAUDE.md became one: closing out a mission now reads as a single motion — run session-closeout, then push the same update live — not a step tacked on after the fact.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;footer&gt;Your tools were already proven before today — this mission's real work was catching your own instructions up to match how you actually work.&lt;/footer&gt;
-  &lt;/section&gt;
-
-  &lt;!-- MISSION 06 --&gt;
-  &lt;section id="mission-06" class="tab-panel"&gt;
-    &lt;p class="hello" style="cursor:pointer" onclick="showTab('your-day')"&gt;← Your Day&lt;/p&gt;
-    &lt;header&gt;
-      &lt;h1 style="font-size:1.55rem;"&gt;Mission 6 — Teach Your Hire the Job&lt;/h1&gt;
-      &lt;p class="meta"&gt;July 23, 2026 · Cowork · Claude Desktop&lt;/p&gt;
-    &lt;/header&gt;
-
-    &lt;div class="stats"&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;1&lt;/div&gt;&lt;div class="l"&gt;skill built&lt;/div&gt;&lt;/div&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;6&lt;/div&gt;&lt;div class="l"&gt;sources weighed&lt;/div&gt;&lt;/div&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;2&lt;/div&gt;&lt;div class="l"&gt;skills used&lt;/div&gt;&lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;h2&gt;How it went&lt;/h2&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;Where we started&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;p&gt;The idea for the day: your hire already knows you, can reach your tools, and has your playbook. Mission 6 was teaching it one job it can do the same way every time — a Skill. You opened by browsing the Anthropic plugin marketplace in Claude Desktop, just a scan to feel the ecosystem before making your own.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;skill built&lt;/span&gt;
-        &lt;p&gt;Using the skill-creator skill, you built your first Skill: &lt;strong&gt;prospect-thinking-partner&lt;/strong&gt;. It captures the one step worth reusing from your Standard — the thinking you do after a scoping call, transcript in hand, to pull out the insights a proposal gets built from. Not a recap generator; the read that makes the proposal land.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You asked&lt;/p&gt;
-      &lt;div class="you"&gt;&lt;p class="prompt"&gt;i'm gonna dump in articles advising on this subject — take inspiration where it's appropriate and leave behind what's not useful&lt;/p&gt;&lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;sharpened it&lt;/span&gt;
-        &lt;p&gt;You fed in five articles and had each scored for relevance — most were about writing the proposal or chasing it after, which your skill deliberately stops before. The one that earned its keep was a consulting guide on scoping: the "problem behind the problem," using the prospect's own words, and writing the read back for you to correct. A quick web-research round added three more moves — weighting what a prospect returns to, spotting what they've already tried that failed, and reading the decision dynamics. A GitHub check turned up only lead-scoring tools, so nothing to borrow — your call to doubt it was right.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;You reshaped how it runs&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;your judgment&lt;/span&gt;
-        &lt;p&gt;Then you gave it the shape only you could: recap the call first so you and it are on the same page before diving in; hunt the transcript for the insights you said out loud on the call; your read comes first, then its analysis; center the specific transformation you deliver for &lt;em&gt;this&lt;/em&gt; prospect; adapt your proven work instead of reinventing each time; push back where your read is genuinely off, not pedantically; and let the session roll into a proposal draft when it's ready.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;skill saved&lt;/span&gt;
-        &lt;p&gt;The skill was re-bundled through skill-creator so the changes are actually live, and saved so it's yours to reuse in any project. It now shows up in your installed skills.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What you want to remember&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;p&gt;That the skill we made exists — a real job your hire now knows, built in your voice, waiting for the next call.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;footer&gt;Your hire learned its first job — and it'll do it the same way at 5pm on a Friday as it does right now. Still open: giving it a spin on a real transcript (the Nicole Clarke call is the one waiting).&lt;/footer&gt;
-  &lt;/section&gt;
-
-  &lt;!-- MISSION 07 --&gt;
-  &lt;section id="mission-07" class="tab-panel"&gt;
-    &lt;p class="hello" style="cursor:pointer" onclick="showTab('your-day')"&gt;← Your Day&lt;/p&gt;
-    &lt;header&gt;
-      &lt;h1 style="font-size:1.55rem;"&gt;Mission 7 — The Feedback Loop&lt;/h1&gt;
-      &lt;p class="meta"&gt;July 23, 2026 · Cowork · Claude Desktop&lt;/p&gt;
-    &lt;/header&gt;
-    &lt;p class="note"&gt;Written after the fact — the mission's work was done, but closeout got missed at the time. This entry reconstructs it from what actually got saved.&lt;/p&gt;
-
-    &lt;div class="stats"&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;3&lt;/div&gt;&lt;div class="l"&gt;pages/skills touched&lt;/div&gt;&lt;/div&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;2&lt;/div&gt;&lt;div class="l"&gt;skills used&lt;/div&gt;&lt;/div&gt;
-      &lt;div class="stat"&gt;&lt;div class="n"&gt;1&lt;/div&gt;&lt;div class="l"&gt;eval built&lt;/div&gt;&lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;h2&gt;How it went&lt;/h2&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;rubric written&lt;/span&gt;
-        &lt;p&gt;You put a real bar on prospect-thinking-partner's output — not "did it run," but whether the read it produces is actually good: specific to the prospect, the real problem named underneath the stated one, honest about what she'd already tried, an existing piece of your work actually fit to adapt, the decision-maker flagged, and every factual claim traceable back to the transcript.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;grader picked&lt;/span&gt;
-        &lt;p&gt;Each line got a way to check it. Most of this bar is judgment — is this transformation specific, is this really the fit problem — so it's graded by Claude itself, reading the synthesis against the transcript and scoring each line 1–5.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;eval built and saved&lt;/span&gt;
-        &lt;p&gt;That grader is now &lt;code&gt;scripts/grade_analysis_complete.md&lt;/code&gt; inside the skill itself — a real check, not a plan for one. It says plainly: if any line scores below 3, say what's missing before calling the synthesis done.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;skill updated&lt;/span&gt;
-        &lt;p&gt;prospect-thinking-partner was repackaged to carry the grader as its own last step — it now grades its own output before handing it back to you, every time it runs.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="step"&gt;
-      &lt;p class="who"&gt;What happened&lt;/p&gt;
-      &lt;div class="happened"&gt;
-        &lt;span class="tag"&gt;skill saved&lt;/span&gt;
-        &lt;p&gt;session-closeout was upgraded today to close the loop this mission opened: at the end of every mission from here on, it now asks whether a skill was used, whether one would've helped, and whether it's worth improving — the habit that keeps skills getting better instead of going stale.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;footer&gt;Your hire now gets reviewed on a bar you can name, in your own words — and the habit that keeps that bar sharp is now baked into how every mission closes.&lt;/footer&gt;
-  &lt;/section&gt;
-
-&lt;/div&gt;
-&lt;script&gt;
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="your-day">Your Day</button>
+    <button class="tab-btn" data-tab="mission-01">Mission 01</button>
+    <button class="tab-btn" data-tab="mission-03">Mission 03</button>
+    <button class="tab-btn" data-tab="mission-04">Mission 04</button>
+    <button class="tab-btn" data-tab="mission-05">Mission 05</button>
+    <button class="tab-btn" data-tab="mission-06">Mission 06</button>
+    <button class="tab-btn" data-tab="mission-07">Mission 07</button>
+  </div>
+
+  <!-- YOUR DAY -->
+  <section id="your-day" class="tab-panel active">
+    <p class="hello">Your Day</p>
+    <h1>Keyona</h1>
+    <p class="about">Founder at ReRev Labs, GP at BlackTech Capital.</p>
+
+    <div class="working">
+      <p class="lbl">What I'm working on today</p>
+      <p>Scoping call follow-up — turning a call into a fast, complete send within 48 hours. The Standard is written, the tools are connected and proven, and the thinking step is a saved Skill (prospect-thinking-partner) that now grades its own output before handing it back. Next: giving that skill a spin on a real transcript.</p>
+    </div>
+
+    <h2>The day, mission by mission</h2>
+    <div class="mission" onclick="showTab('mission-07')">
+      <div class="top"><span class="name">Mission 7 — The Feedback Loop</span><span class="when">July 23, 2026</span></div>
+      <p class="line">Built a real bar for prospect-thinking-partner's output, picked a model grader for the judgment-heavy lines, saved the eval into the skill, and upgraded session-closeout to keep nudging every skill to improve.</p>
+    </div>
+    <div class="mission" onclick="showTab('mission-06')">
+      <div class="top"><span class="name">Mission 6 — Teach Your Hire the Job</span><span class="when">July 23, 2026</span></div>
+      <p class="line">Built your first Skill — prospect-thinking-partner — from your Standard, sharpened it against six outside sources, reshaped how it runs in your own voice, and saved it to reuse.</p>
+    </div>
+    <div class="mission" onclick="showTab('mission-05')">
+      <div class="top"><span class="name">Mission 5 — Set Up Your Tools</span><span class="when">July 23, 2026</span></div>
+      <p class="line">Confirmed sign-in as work-you, found the tools this task needs were already connected, and proved Google Calendar live with a real question about upcoming scoping calls.</p>
+    </div>
+    <div class="mission" onclick="showTab('mission-04')">
+      <div class="top"><span class="name">Mission 4 — Write the Playbook</span><span class="when">July 23, 2026</span></div>
+      <p class="line">Wrote the Standard for scoping call follow-up — corrected the draft to center the real bottleneck (the thinking after the call, not the recap), and sharpened the quality bar into checkable lines.</p>
+    </div>
+    <div class="mission" onclick="showTab('mission-03')">
+      <div class="top"><span class="name">Mission 3 — Your First AI Employee</span><span class="when">July 23, 2026</span></div>
+      <p class="line">Mapped the role into three buckets, picked scoping call follow-up as the task, set a real 48-hour standard, and gathered a real example from the Nicole Clarke call.</p>
+    </div>
+    <div class="mission" onclick="showTab('mission-01')">
+      <div class="top"><span class="name">Mission 1 — It's Not the Model, It's You</span><span class="when">July 23, 2026</span></div>
+      <p class="line">Felt the context and tools gaps live, ran the quick interview, updated CLAUDE.md, and saved session-closeout as a real, reusable skill.</p>
+    </div>
+
+    <p class="oq"><strong>Still open:</strong> giving the new skill a spin on a real transcript (the Nicole Clarke call is the one waiting). And Move 3 from Mission 1 (the instructions gap), parked to circle back to.</p>
+  </section>
+
+  <!-- MISSION 01 -->
+  <section id="mission-01" class="tab-panel">
+    <p class="hello" style="cursor:pointer" onclick="showTab('your-day')">← Your Day</p>
+    <header>
+      <h1 style="font-size:1.55rem;">Mission 1 — It's Not the Model, It's You</h1>
+      <p class="meta">July 23, 2026 · Cowork · Claude Desktop</p>
+    </header>
+
+    <div class="stats">
+      <div class="stat"><div class="n">3</div><div class="l">prompts you ran</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">pages touched</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">skills used</div></div>
+    </div>
+
+    <h2>How it went</h2>
+
+    <div class="step">
+      <p class="who">You asked</p>
+      <div class="you"><p class="prompt">What do you know about me, my life, and my work?</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">context gap, felt</span>
+        <p>Claude answered with specifics — your name, ReRev Labs, BlackTech Capital, your background — all pulled straight from what was already handed to it. Ten seconds earlier you'd guessed 0–3 out of 10. That gap was the whole lesson.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You asked</p>
+      <div class="you"><p class="prompt">What tools and systems do you have access to right now?</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">tools gap, felt — and pushed back on</span>
+        <p>The list came back long: your desktop, Chrome, Gmail, Calendar, Drive, Canva, Apollo, Goodword, Railway, Supabase, Netlify, and a stack of your own skills. You correctly called out that this isn't really a gap — a carpenter doesn't use every tool on the bench for every job. The sharper version: the gap is knowing which tool to pick up for a given task.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">parked, not skipped</span>
+        <p>Move 3, the instructions gap, got set aside to circle back to later — you moved straight to naming the three levers: context, tools, and instructions.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">quick interview</span>
+        <p>Three questions, three answers: recurring work you want help with is something from ReRev Labs; good work in your role means strategically sharp, not just correct; and what to always remember is your standards and what you never want repeated. CLAUDE.md was updated with all three.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You asked</p>
+      <div class="you"><p class="prompt">Please use the SkillCreator skill to package up the SessionCloseout skill so that I can save it and reuse it in future projects.</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">skill saved</span>
+        <p>Session-closeout got packaged into a real, reusable skill file and you saved it to your profile — before deciding to run it, you compared it against your existing retrospective skill to make sure they weren't stepping on each other. They're not: retrospective is for technical build sessions and lives in Drive; session-closeout is for this training day and stays local.</p>
+      </div>
+    </div>
+
+    <footer>You didn't get a smarter model this morning — you got a smarter setup. CLAUDE.md, this page, and the session-closeout habit all compound from here.</footer>
+  </section>
+
+  <!-- MISSION 03 -->
+  <section id="mission-03" class="tab-panel">
+    <p class="hello" style="cursor:pointer" onclick="showTab('your-day')">← Your Day</p>
+    <header>
+      <h1 style="font-size:1.55rem;">Mission 3 — Your First AI Employee</h1>
+      <p class="meta">July 23, 2026 · Cowork · Claude Desktop</p>
+    </header>
+
+    <div class="stats">
+      <div class="stat"><div class="n">5</div><div class="l">prompts you ran</div></div>
+      <div class="stat"><div class="n">5</div><div class="l">pages/files touched</div></div>
+      <div class="stat"><div class="n">1</div><div class="l">skill used</div></div>
+    </div>
+
+    <h2>How it went</h2>
+
+    <div class="step">
+      <p class="who">You asked</p>
+      <div class="you"><p class="prompt">let's run mission three</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">confirmed</span>
+        <p>Claude read back what it knew — ReRev Labs, BlackTech Capital, your background — and you confirmed it was accurate. The map starts from what's true.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">role map proposed</span>
+        <p>Claude proposed three buckets — ReRev Labs Delivery, ReRev Labs Growth, and BlackTech Capital — each with three real tasks. You said it was close enough to keep.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">task picked</span>
+        <p>Out of the growth bucket, you picked scoping call follow-up: turning a call into a fast, complete send with the recap, the right intros, and your pitch/website/client info. A few times a month, checkable, and doesn't need a live run to start.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">well there's options... here's a call that was originally a peer to peer intro chat and ended up in her offering me the opportunity to give a pitch to her</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">real example gathered</span>
+        <p>You shared the Gemini notes from your call with Nicole Clarke — a peer intro that turned into a pitch invite. It's now saved to <code>exercise-files/scoping-call-nicole-clarke.docx</code>, the real example Mission 4's playbook will be built from.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">I wnat to have scopes/propsal sent out within 48 hours going forward, this orignally took me like two weeks to make happen which was probalbly at aleast half the reaoson i didnt get the client</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">standard set</span>
+        <p>That became the real bar for "good": out within 48 hours, not two weeks. The Nicole follow-up dragging that long was likely at least half of why the client didn't happen — a sharp reason to fix this one first.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">named and locked in</span>
+        <p>The task, how you'll know it's good, and why this one got written up and you locked it in as-is.</p>
+      </div>
+    </div>
+
+    <h2>The Task, and the Role Map</h2>
+    <div class="block">
+      <h2>Role Map</h2>
+      <p><strong>ReRev Labs — Delivery:</strong> client automation builds, ops audits/assessments, fractional leadership check-ins.</p>
+      <p><strong>ReRev Labs — Growth:</strong> scoping calls, proposals, client outreach/follow-up.</p>
+      <p><strong>BlackTech Capital:</strong> deal sourcing, portfolio company support, investment committee prep.</p>
+    </div>
+    <div class="block">
+      <h2>My Task — Scoping call follow-up</h2>
+      <p>Turn a scoping or intro call into a fast, complete follow-up: recap, the right intros, plus pitch, website, and client work info.</p>
+      <p><strong>Good looks like:</strong> out within 48 hours, nothing missing.</p>
+      <p><strong>Why this one:</strong> real, recurring work she knows cold — and slow turnaround already cost a client (the Nicole Clarke follow-up took two weeks instead of two days).</p>
+    </div>
+
+    <footer>You didn't automate your job today — you hired help for the task you know best, scoping call follow-up, now on your Your Day page with its inputs gathered and ready to become a playbook next.</footer>
+  </section>
+
+  <!-- MISSION 04 -->
+  <section id="mission-04" class="tab-panel">
+    <p class="hello" style="cursor:pointer" onclick="showTab('your-day')">← Your Day</p>
+    <header>
+      <h1 style="font-size:1.55rem;">Mission 4 — Write the Playbook</h1>
+      <p class="meta">July 23, 2026 · Cowork · Claude Desktop</p>
+    </header>
+
+    <div class="stats">
+      <div class="stat"><div class="n">9</div><div class="l">prompts you ran</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">pages touched</div></div>
+      <div class="stat"><div class="n">1</div><div class="l">skill used</div></div>
+    </div>
+
+    <h2>How it went</h2>
+
+    <div class="step">
+      <p class="who">You asked</p>
+      <div class="you"><p class="prompt">let's run mission four</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">interview</span>
+        <p>Claude walked the scoping-call-follow-up task through the five Standard fields, one question at a time — when it starts, what it needs, how it's done, what good looks like, and the one step worth reusing.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <p>First draft of "how you do it" came back too generic — a simple recap-then-attach sequence. You called it out: the real bottleneck isn't drafting, it's the thinking after the call, since the client library isn't big enough to just pattern-match a similar past project.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">it's not so much about pushing back as pulling out insights from me to figure it out, not just a contrarian</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">field sharpened</span>
+        <p>"How you do it" and "the one step worth reusing" got rewritten around a thinking conversation — one that pulls insight out of you using the transcript and past work together, not a recap generator. This is the piece Mission 6 turns into a skill.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">quality bar checked</span>
+        <p>Walked the four "what good looks like" lines. Three were already checkable. The fuzzy one — "reflects what was actually discussed, not boilerplate" — got sharpened to: every claim in the recap traces back to something actually said in the transcript.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">yep, is there anything left before closeout? if no, go for it</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">page built</span>
+        <p>Standard saved to <code>standards/scoping-call-follow-up.html</code> — the five fields, final, linked from Your Day.</p>
+      </div>
+    </div>
+
+    <h2>The Standard — Scoping Call Follow-Up</h2>
+    <div class="block">
+      <h2>When it starts</h2>
+      <p>Once notes or a transcript from the call exist.</p>
+    </div>
+    <div class="block">
+      <h2>What it needs</h2>
+      <p>The call notes/transcript, and past client work examples to think alongside.</p>
+    </div>
+    <div class="block">
+      <h2>How you do it</h2>
+      <ol>
+        <li>Read the transcript/notes.</li>
+        <li>Have a thinking conversation about this prospect — questions that pull the insight out of you (what's unique here, what it reminds you of), using the transcript and past work together. Not a contrarian pushing back — a partner pulling out what you already know.</li>
+        <li>From that thinking, write the recap and pick the intros, pitch, and materials that actually match.</li>
+        <li>Send within 48 hours.</li>
+      </ol>
+    </div>
+    <div class="block">
+      <h2>What good looks like</h2>
+      <ul>
+        <li>Sent within 48 hours of the call.</li>
+        <li>At least one specific past client example included, matched to their situation.</li>
+        <li>Named intro(s) offered where relevant — not generic.</li>
+        <li>Every claim in the recap traces back to something actually said in the transcript — nothing invented or assumed.</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h2>The one step worth reusing</h2>
+      <p>The thinking conversation itself — pulling out what's unique about this prospect using the transcript and past work together. This is the first skill built in Mission 6, not a recap generator.</p>
+    </div>
+
+    <footer>You now have a written spec for your own job — the seed for the tools (Mission 5), the skill (Mission 6), and the eval (Mission 7).</footer>
+  </section>
+
+  <!-- MISSION 05 -->
+  <section id="mission-05" class="tab-panel">
+    <p class="hello" style="cursor:pointer" onclick="showTab('your-day')">← Your Day</p>
+    <header>
+      <h1 style="font-size:1.55rem;">Mission 5 — Set Up Your Tools</h1>
+      <p class="meta">July 23, 2026 · Cowork · Claude Desktop</p>
+    </header>
+
+    <div class="stats">
+      <div class="stat"><div class="n">11</div><div class="l">prompts you ran</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">pages touched</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">skills used</div></div>
+    </div>
+
+    <h2>How it went</h2>
+
+    <div class="step">
+      <p class="who">You asked</p>
+      <div class="you"><p class="prompt">we're on mission 5 now let's start!</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">moves listed</span>
+        <p>Claude read the mission file, listed the four moves — sign in, connect your first tool, prove it, connect the rest — and confirmed you're signed into Claude.ai with the same account as Claude Desktop.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">my hire?</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <p>Fair callout on jargon — "your hire" is just the Mission 3 shorthand for Claude. Claude dropped it and asked plainly which tool to connect first.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">everything you listed is already connected</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">mission reframed</span>
+        <p>Real correction. Claude checked your connectors live and confirmed Gmail, Google Drive, Google Calendar, Goodword, and more were already wired in from before today. Moves 2 and 4 were already true — the mission collapsed to its real remaining value: proving one connector actually works on something real.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">im not sure tha instruction makes sense in this context</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <p>Turned out the sticking point was simpler than it looked: what "prove" actually means. Claude defined it plainly — ask something you don't already know the answer to, get a real answer back, and check it yourself. Not a demo ping.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">you do it to show me what you mean</p></div>
+    </div>
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">but i phasing out good word so it's not relevant</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">connector proven</span>
+        <p>Switched to Google Calendar and asked it something real: any scoping or intro calls coming up this week? Real answer, straight from your calendar — none explicitly titled that way, with two loose candidates named. You confirmed it was right.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">yeah it did even tho that was a lil useless but what's nexy</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <p>All four moves closed out — sign-in, tool connected, proven live, everything else already in place. A useful reminder that a "boring" real answer still counts as proof; it's the checkability that matters, not the excitement.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">reread the file, i dont see the propsal publsiher on ur closeout instructions</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <p>You caught Claude conflating two separate things: session-closeout (which stays local, by its own rule) and the live hub push, which is a separate step defined in your CLAUDE.md, not part of the closeout skill itself.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You said</p>
+      <div class="you"><p class="prompt">i want you to complete closeout in its enitreity and make sure the md file includes the proposal publisher as apart of closeout and not as an amendment</p></div>
+    </div>
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">CLAUDE.md updated</span>
+        <p>The two separate bullets in CLAUDE.md became one: closing out a mission now reads as a single motion — run session-closeout, then push the same update live — not a step tacked on after the fact.</p>
+      </div>
+    </div>
+
+    <footer>Your tools were already proven before today — this mission's real work was catching your own instructions up to match how you actually work.</footer>
+  </section>
+
+  <!-- MISSION 06 -->
+  <section id="mission-06" class="tab-panel">
+    <p class="hello" style="cursor:pointer" onclick="showTab('your-day')">← Your Day</p>
+    <header>
+      <h1 style="font-size:1.55rem;">Mission 6 — Teach Your Hire the Job</h1>
+      <p class="meta">July 23, 2026 · Cowork · Claude Desktop</p>
+    </header>
+
+    <div class="stats">
+      <div class="stat"><div class="n">1</div><div class="l">skill built</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">sources weighed</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">skills used</div></div>
+    </div>
+
+    <h2>How it went</h2>
+
+    <div class="step">
+      <p class="who">Where we started</p>
+      <div class="happened">
+        <p>The idea for the day: your hire already knows you, can reach your tools, and has your playbook. Mission 6 was teaching it one job it can do the same way every time — a Skill. You opened by browsing the Anthropic plugin marketplace in Claude Desktop, just a scan to feel the ecosystem before making your own.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">skill built</span>
+        <p>Using the skill-creator skill, you built your first Skill: <strong>prospect-thinking-partner</strong>. It captures the one step worth reusing from your Standard — the thinking you do after a scoping call, transcript in hand, to pull out the insights a proposal gets built from. Not a recap generator; the read that makes the proposal land.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You asked</p>
+      <div class="you"><p class="prompt">i'm gonna dump in articles advising on this subject — take inspiration where it's appropriate and leave behind what's not useful</p></div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">sharpened it</span>
+        <p>You fed in five articles and had each scored for relevance — most were about writing the proposal or chasing it after, which your skill deliberately stops before. The one that earned its keep was a consulting guide on scoping: the "problem behind the problem," using the prospect's own words, and writing the read back for you to correct. A quick web-research round added three more moves — weighting what a prospect returns to, spotting what they've already tried that failed, and reading the decision dynamics. A GitHub check turned up only lead-scoring tools, so nothing to borrow — your call to doubt it was right.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">You reshaped how it runs</p>
+      <div class="happened">
+        <span class="tag">your judgment</span>
+        <p>Then you gave it the shape only you could: recap the call first so you and it are on the same page before diving in; hunt the transcript for the insights you said out loud on the call; your read comes first, then its analysis; center the specific transformation you deliver for <em>this</em> prospect; adapt your proven work instead of reinventing each time; push back where your read is genuinely off, not pedantically; and let the session roll into a proposal draft when it's ready.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">skill saved</span>
+        <p>The skill was re-bundled through skill-creator so the changes are actually live, and saved so it's yours to reuse in any project. It now shows up in your installed skills.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What you want to remember</p>
+      <div class="happened">
+        <p>That the skill we made exists — a real job your hire now knows, built in your voice, waiting for the next call.</p>
+      </div>
+    </div>
+
+    <footer>Your hire learned its first job — and it'll do it the same way at 5pm on a Friday as it does right now. Still open: giving it a spin on a real transcript (the Nicole Clarke call is the one waiting).</footer>
+  </section>
+
+  <!-- MISSION 07 -->
+  <section id="mission-07" class="tab-panel">
+    <p class="hello" style="cursor:pointer" onclick="showTab('your-day')">← Your Day</p>
+    <header>
+      <h1 style="font-size:1.55rem;">Mission 7 — The Feedback Loop</h1>
+      <p class="meta">July 23, 2026 · Cowork · Claude Desktop</p>
+    </header>
+    <p class="note">Written after the fact — the mission's work was done, but closeout got missed at the time. This entry reconstructs it from what actually got saved.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="n">3</div><div class="l">pages/skills touched</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">skills used</div></div>
+      <div class="stat"><div class="n">1</div><div class="l">eval built</div></div>
+    </div>
+
+    <h2>How it went</h2>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">rubric written</span>
+        <p>You put a real bar on prospect-thinking-partner's output — not "did it run," but whether the read it produces is actually good: specific to the prospect, the real problem named underneath the stated one, honest about what she'd already tried, an existing piece of your work actually fit to adapt, the decision-maker flagged, and every factual claim traceable back to the transcript.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">grader picked</span>
+        <p>Each line got a way to check it. Most of this bar is judgment — is this transformation specific, is this really the fit problem — so it's graded by Claude itself, reading the synthesis against the transcript and scoring each line 1–5.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">eval built and saved</span>
+        <p>That grader is now <code>scripts/grade_analysis_complete.md</code> inside the skill itself — a real check, not a plan for one. It says plainly: if any line scores below 3, say what's missing before calling the synthesis done.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">skill updated</span>
+        <p>prospect-thinking-partner was repackaged to carry the grader as its own last step — it now grades its own output before handing it back to you, every time it runs.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <p class="who">What happened</p>
+      <div class="happened">
+        <span class="tag">skill saved</span>
+        <p>session-closeout was upgraded today to close the loop this mission opened: at the end of every mission from here on, it now asks whether a skill was used, whether one would've helped, and whether it's worth improving — the habit that keeps skills getting better instead of going stale.</p>
+      </div>
+    </div>
+
+    <footer>Your hire now gets reviewed on a bar you can name, in your own words — and the habit that keeps that bar sharp is now baked into how every mission closes.</footer>
+  </section>
+
+</div>
+<script>
   function showTab(id) {
     document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
     document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
@@ -645,6 +645,6 @@
   document.querySelectorAll('.tab-btn').forEach(function(btn){
     btn.addEventListener('click', function(){ showTab(btn.getAttribute('data-tab')); });
   });
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+</script>
+</body>
+</html>
