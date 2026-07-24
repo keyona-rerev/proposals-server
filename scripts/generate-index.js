@@ -8,11 +8,15 @@
  * remembers every card it already knows about (name, slug, date, which
  * venture bucket it lives under). Those are preserved exactly as-is.
  *
- * Only genuinely new files (never seen in index.html before) get an
- * auto-generated name/date/bucket guess. Files that no longer exist in
- * /proposals are dropped. Hand-edit a name/bucket once and it sticks on
- * every future run, because this script always reads its own prior output
- * as the source of truth for "known" entries.
+ * Only genuinely new files (never seen in index.html before) get their
+ * name/date/bucket resolved. For new files the order of precedence is:
+ *   1. a <!-- meta: ... --> comment at the top of the HTML file
+ *   2. the slug-based guess (legacy behaviour)
+ * Files that no longer exist in /proposals are dropped. Hand-edit a
+ * name/bucket once and it sticks on every future run, because this script
+ * always reads its own prior output as the source of truth for "known" entries.
+ *
+ * Gated documents (listed in protected.json) render with a "Protected" badge.
  *
  * Run from the repo root: node scripts/generate-index.js
  */
@@ -23,6 +27,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const PROPOSALS_DIR = path.join(ROOT, 'proposals');
 const INDEX_PATH = path.join(ROOT, 'index.html');
+const MANIFEST_PATH = path.join(ROOT, 'protected.json');
 
 const MONTHS = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTH_ABBR = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
@@ -35,11 +40,30 @@ const VENTURE_TITLES = {
   infra: 'Client Infrastructure Builds',
 };
 
+// ---------- 0. Which documents are gated ----------
+
+function loadGatedSlugs() {
+  try {
+    if (!fs.existsSync(MANIFEST_PATH)) return new Set();
+    const parsed = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
+    return new Set(Array.isArray(parsed.gated) ? parsed.gated : []);
+  } catch (err) {
+    console.warn(`protected.json unreadable (${err.message}) — badges omitted this run.`);
+    return new Set();
+  }
+}
+
+const GATED = loadGatedSlugs();
+
+function isGated(slug) {
+  return GATED.has(String(slug).replace(/\/$/, ''));
+}
+
 // ---------- 1. Discover what's actually on disk ----------
 
 function discoverProposals() {
   const entries = fs.readdirSync(PROPOSALS_DIR, { withFileTypes: true });
-  const found = []; // { href, slug }
+  const found = []; // { href, slug, file }
 
   for (const entry of entries) {
     if (entry.name.startsWith('.')) continue; // .gitkeep-noop, dotfiles
@@ -47,14 +71,14 @@ function discoverProposals() {
     if (entry.isDirectory()) {
       const indexFile = path.join(PROPOSALS_DIR, entry.name, 'index.html');
       if (fs.existsSync(indexFile)) {
-        found.push({ href: `/proposals/${entry.name}/`, slug: `${entry.name}/` });
+        found.push({ href: `/proposals/${entry.name}/`, slug: `${entry.name}/`, file: indexFile });
       }
       continue;
     }
 
     if (entry.isFile() && entry.name.toLowerCase().endsWith('.html')) {
       const slug = entry.name.replace(/\.html$/i, '');
-      found.push({ href: `/proposals/${entry.name}`, slug });
+      found.push({ href: `/proposals/${entry.name}`, slug, file: path.join(PROPOSALS_DIR, entry.name) });
     }
   }
 
@@ -70,7 +94,9 @@ function parseExistingIndex() {
 
   const html = fs.readFileSync(INDEX_PATH, 'utf8');
   const ventureBlockRe = /<div class="venture" data-venture="([^"]+)">\s*<div class="venture-title">([^<]*)<\/div>\s*<div class="grid">([\s\S]*?)<\/div>\s*<\/div>/g;
-  const cardRe = /<a class="card" href="([^"]+)"[^>]*>\s*<span class="card-name">([^<]*)<\/span>\s*<span class="card-slug">([^<]*)<\/span>\s*<span class="card-date">([^<]*)<\/span>\s*<\/a>/g;
+  // The trailing card-lock span is optional so cards written before gating
+  // existed still parse, and gated cards round-trip without being seen as new.
+  const cardRe = /<a class="card" href="([^"]+)"[^>]*>\s*<span class="card-name">([^<]*)<\/span>\s*<span class="card-slug">([^<]*)<\/span>\s*<span class="card-date">([^<]*)<\/span>\s*(?:<span class="card-lock">[^<]*<\/span>\s*)?<\/a>/g;
 
   let ventureMatch;
   while ((ventureMatch = ventureBlockRe.exec(html)) !== null) {
@@ -92,7 +118,50 @@ function parseExistingIndex() {
   return known;
 }
 
-// ---------- 3. Guess metadata for genuinely new entries ----------
+// ---------- 3. Resolve metadata for genuinely new entries ----------
+
+// Reads a <!-- meta: client=Acme; venture=rerev; title=Partnership Overview; date=2026-07 -->
+// comment from the head of the file. Any subset of keys is fine.
+function readMeta(filePath) {
+  try {
+    const fd = fs.openSync(filePath, 'r');
+    const buf = Buffer.alloc(2048);
+    const bytes = fs.readSync(fd, buf, 0, 2048, 0);
+    fs.closeSync(fd);
+    const head = buf.slice(0, bytes).toString('utf8');
+
+    const m = head.match(/<!--\s*meta:\s*([^>]*?)\s*-->/i);
+    if (!m) return null;
+
+    const meta = {};
+    for (const pair of m[1].split(';')) {
+      const eq = pair.indexOf('=');
+      if (eq === -1) continue;
+      const key = pair.slice(0, eq).trim().toLowerCase();
+      const val = pair.slice(eq + 1).trim();
+      if (key && val) meta[key] = val;
+    }
+    return Object.keys(meta).length ? meta : null;
+  } catch (err) {
+    return null;
+  }
+}
+
+function ventureFromMeta(meta) {
+  if (!meta || !meta.venture) return null;
+  const key = meta.venture.trim().toLowerCase();
+  return { key, title: VENTURE_TITLES[key] || meta.venture.trim() };
+}
+
+// Accepts "2026-07" or "2026-7"
+function dateFromMeta(meta) {
+  if (!meta || !meta.date) return null;
+  const m = meta.date.trim().match(/^(\d{4})-(\d{1,2})$/);
+  if (!m) return null;
+  const mm = parseInt(m[2], 10);
+  if (mm < 1 || mm > 12) return null;
+  return { label: `${MONTHS[mm]} ${m[1]}` };
+}
 
 function guessVenture(slug) {
   const clean = slug.replace(/\/$/, '');
@@ -152,20 +221,23 @@ function buildEntries() {
   const buckets = new Map(); // ventureKey -> { title, entries: [] }
   const newlyAdded = [];
 
-  for (const { href, slug } of onDisk) {
+  for (const { href, slug, file } of onDisk) {
     let record = known.get(href);
 
     if (!record) {
-      const venture = guessVenture(slug);
-      const dateGuess = guessDate(slug);
+      const meta = readMeta(file);
+      const venture = ventureFromMeta(meta) || guessVenture(slug);
+      const dateResolved = dateFromMeta(meta) || guessDate(slug);
+      const name = (meta && meta.title) ? meta.title : guessName(slug);
+
       record = {
-        name: guessName(slug),
+        name,
         slug,
-        date: dateGuess.label,
+        date: dateResolved.label,
         ventureKey: venture.key,
         ventureTitle: venture.title,
       };
-      newlyAdded.push({ href, name: record.name, venture: venture.title });
+      newlyAdded.push({ href, name: record.name, venture: venture.title, viaMeta: !!meta });
     }
 
     if (!buckets.has(record.ventureKey)) {
@@ -203,10 +275,13 @@ function escapeHtml(str) {
 }
 
 function renderCard(entry) {
+  const lock = isGated(entry.slug)
+    ? `\n          <span class="card-lock">Protected</span>`
+    : '';
   return `        <a class="card" href="${escapeHtml(entry.href)}" target="_blank">
           <span class="card-name">${escapeHtml(entry.name)}</span>
           <span class="card-slug">${escapeHtml(entry.slug)}</span>
-          <span class="card-date">${escapeHtml(entry.date)}</span>
+          <span class="card-date">${escapeHtml(entry.date)}</span>${lock}
         </a>`;
 }
 
@@ -286,6 +361,12 @@ function render(buckets, orderedKeys) {
   .card-name { font-family: var(--font-heading); font-size: 14px; font-weight: 600; }
   .card-slug { font-size: 11.5px; color: var(--body-text); opacity: 0.75; font-family: monospace; }
   .card-date { font-size: 11px; color: var(--cyan); font-weight: 500; }
+  .card-lock {
+    align-self: flex-start; margin-top: 2px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--purple); background: rgba(124,58,237,0.08);
+    border: 1px solid rgba(124,58,237,0.18); border-radius: 20px; padding: 2px 8px;
+  }
   .no-results { color: var(--body-text); font-size: 14px; display: none; }
   footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--card-border); font-size: 12px; color: var(--body-text); opacity: 0.7; }
 </style>
@@ -357,11 +438,11 @@ function main() {
   fs.writeFileSync(INDEX_PATH, html, 'utf8');
 
   const totalCards = [...buckets.values()].reduce((n, b) => n + b.entries.length, 0);
-  console.log(`index.html regenerated: ${totalCards} proposal(s) across ${buckets.size} venture bucket(s).`);
+  console.log(`index.html regenerated: ${totalCards} proposal(s) across ${buckets.size} venture bucket(s). ${GATED.size} gated.`);
   if (newlyAdded.length) {
-    console.log(`Newly added (auto-guessed name/venture — safe to hand-edit, will persist):`);
+    console.log(`Newly added (safe to hand-edit, will persist):`);
     for (const item of newlyAdded) {
-      console.log(`  + ${item.href}  →  "${item.name}" (${item.venture})`);
+      console.log(`  + ${item.href}  →  "${item.name}" (${item.venture})${item.viaMeta ? ' [from meta comment]' : ' [guessed from slug]'}`);
     }
   } else {
     console.log('No new proposals detected.');
