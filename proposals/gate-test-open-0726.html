@@ -1,0 +1,55 @@
+&lt;!-- meta: client=ReRev Labs; venture=infra; title=Gate Test — Open; date=2026-07 --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+&lt;title&gt;Gate Test — Open&lt;/title&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"&gt;
+&lt;style&gt;
+  :root {
+    --bg: #F0F7F7;
+    --primary: #0D1F2D;
+    --body-text: #3D5166;
+    --cyan: #1A9E9E;
+    --purple: #7C3AED;
+    --gradient: linear-gradient(90deg, #1A9E9E, #7C3AED);
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--primary); font-family: var(--font-body); line-height: 1.65; padding: 64px 24px; }
+  .wrap { max-width: 620px; margin: 0 auto; }
+  .bar { width: 40px; height: 4px; background: var(--gradient); border-radius: 2px; margin-bottom: 28px; }
+  .tag { display: inline-block; font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan); border: 1px solid rgba(26,158,158,0.3); background: rgba(26,158,158,0.07); border-radius: 20px; padding: 4px 12px; margin-bottom: 20px; }
+  h1 { font-family: var(--font-heading); font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 14px; }
+  p { color: var(--body-text); font-size: 16px; margin-bottom: 16px; }
+  .card { background: white; border: 1px solid rgba(13,31,45,0.08); border-radius: 12px; padding: 22px 24px; margin-top: 28px; }
+  .card h2 { font-family: var(--font-heading); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--purple); margin-bottom: 12px; }
+  .row { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid rgba(13,31,45,0.06); font-size: 14px; }
+  .row:last-child { border-bottom: none; }
+  .row span:first-child { color: var(--body-text); }
+  .row span:last-child { font-family: monospace; font-size: 13px; }
+  footer { margin-top: 40px; font-size: 12px; color: var(--body-text); opacity: 0.7; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="wrap"&gt;
+  &lt;div class="bar"&gt;&lt;/div&gt;
+  &lt;div class="tag"&gt;Test Page — Open&lt;/div&gt;
+  &lt;h1&gt;This page is not protected.&lt;/h1&gt;
+  &lt;p&gt;If you can read this without being asked for a username and password, the default open behaviour is intact. This is how the vast majority of published pages should behave.&lt;/p&gt;
+  &lt;p&gt;No credentials were requested. No login prompt appeared. Nothing changed about how this page is served.&lt;/p&gt;
+
+  &lt;div class="card"&gt;
+    &lt;h2&gt;Expected behaviour&lt;/h2&gt;
+    &lt;div class="row"&gt;&lt;span&gt;Listed in protected.json&lt;/span&gt;&lt;span&gt;no&lt;/span&gt;&lt;/div&gt;
+    &lt;div class="row"&gt;&lt;span&gt;Login prompt&lt;/span&gt;&lt;span&gt;none&lt;/span&gt;&lt;/div&gt;
+    &lt;div class="row"&gt;&lt;span&gt;HTTP status&lt;/span&gt;&lt;span&gt;200&lt;/span&gt;&lt;/div&gt;
+    &lt;div class="row"&gt;&lt;span&gt;Index badge&lt;/span&gt;&lt;span&gt;none&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;footer&gt;Test artifact — safe to delete once verified.&lt;/footer&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
