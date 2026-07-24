@@ -1,0 +1,4 @@
+{
+  "_note": "Slugs listed in \"gated\" require a username and password. Credentials are NEVER stored here. Each gated slug reads one Railway environment variable named GATE_<SLUG_UPPERCASED_UNDERSCORED> whose value is \"username:password\". Example: slug acme-partnership-0726 reads GATE_ACME_PARTNERSHIP_0726. If a slug is listed here but its variable is missing or malformed, access is DENIED (403) — it is never served open. Leave \"gated\" empty for a fully open server.",
+  "gated": []
+}
