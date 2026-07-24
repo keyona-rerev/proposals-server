@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Access Record — Gated Document Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F0F7F7;
+    --primary: #0D1F2D;
+    --body: #3D5166;
+    --cyan: #1A9E9E;
+    --cyan-deep: #0D7E7E;
+    --purple: #7C3AED;
+    --purple-deep: #5B21B6;
+    --gradient: linear-gradient(90deg, #1A9E9E, #7C3AED);
+    --rule: rgba(13, 31, 45, 0.10);
+    --font-heading: 'Outfit', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--body);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+  }
+
+  /* ---------- Signature element: the access record ---------- */
+
+  .record {
+    background: var(--primary);
+    border-radius: 14px;
+    padding: 32px 28px 28px;
+    color: #E8F2F2;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .record::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 3px;
+    background: var(--gradient);
+  }
+
+  .record-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6FD6D6;
+    margin: 0 0 18px;
+  }
+
+  .record h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 5.2vw, 40px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #FFFFFF;
+    margin: 0 0 10px;
+  }
+
+  .record p.lede {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(232, 242, 242, 0.78);
+    margin: 0 0 26px;
+    max-width: 52ch;
+  }
+
+  .fields {
+    display: grid;
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .field {
+    display: grid;
+    grid-template-columns: 168px 1fr;
+    gap: 12px;
+    background: #0D1F2D;
+    padding: 11px 14px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  .field dt {
+    color: rgba(232, 242, 242, 0.48);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 10.5px;
+    padding-top: 2px;
+    margin: 0;
+  }
+
+  .field dd {
+    margin: 0;
+    color: #E8F2F2;
+    word-break: break-word;
+  }
+
+  .ok { color: #5BE0B4; font-weight: 700; }
+
+  @media (max-width: 560px) {
+    .field { grid-template-columns: 1fr; gap: 2px; }
+  }
+
+  /* ---------- Body sections ---------- */
+
+  section { margin-top: 52px; }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--primary);
+    margin: 0 0 6px;
+  }
+
+  .sub {
+    font-size: 14.5px;
+    color: rgba(61, 81, 102, 0.82);
+    margin: 0 0 22px;
+    max-width: 62ch;
+  }
+
+  .rule {
+    height: 1px;
+    background: var(--rule);
+    border: 0;
+    margin: 0 0 22px;
+  }
+
+  /* ---------- Flow: what the server did ---------- */
+
+  .flow { list-style: none; margin: 0; padding: 0; }
+
+  .flow li {
+    display: grid;
+    grid-template-columns: 62px 1fr;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+
+  .flow li:first-child { border-top: 1px solid var(--rule); }
+
+  .code {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cyan-deep);
+    padding-top: 1px;
+    letter-spacing: -0.01em;
+  }
+
+  .code.denied { color: var(--purple-deep); }
+
+  .flow strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 2px;
+  }
+
+  .flow span { font-size: 14.5px; }
+
+  .flow code {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    background: rgba(26, 158, 158, 0.12);
+    color: var(--cyan-deep);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  @media (max-width: 560px) {
+    .flow li { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  /* ---------- Checks ---------- */
+
+  .checks { list-style: none; margin: 0; padding: 0; }
+
+  .checks li {
+    position: relative;
+    padding: 0 0 14px 30px;
+    font-size: 14.5px;
+  }
+
+  .checks li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gradient);
+  }
+
+  .checks strong { color: var(--primary); font-weight: 600; }
+
+  /* ---------- Note panel ---------- */
+
+  .note {
+    background: rgba(124, 58, 237, 0.06);
+    border-left: 3px solid var(--purple);
+    border-radius: 0 8px 8px 0;
+    padding: 18px 20px;
+    font-size: 14.5px;
+  }
+
+  .note p { margin: 0 0 10px; }
+  .note p:last-child { margin: 0; }
+  .note b { color: var(--purple-deep); font-weight: 600; }
+
+  .note code, .inline-code {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    background: rgba(13, 31, 45, 0.06);
+    color: var(--primary);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  /* ---------- Footer ---------- */
+
+  footer {
+    margin-top: 60px;
+    padding-top: 22px;
+    border-top: 1px solid var(--rule);
+    font-size: 12.5px;
+    color: rgba(61, 81, 102, 0.6);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    justify-content: space-between;
+  }
+
+  footer span { font-family: var(--font-mono); font-size: 11.5px; }
+
+  a { color: var(--cyan-deep); }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--purple);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .record, section { animation: rise 0.5s ease-out both; }
+    section:nth-of-type(1) { animation-delay: 0.06s; }
+    section:nth-of-type(2) { animation-delay: 0.12s; }
+    section:nth-of-type(3) { animation-delay: 0.18s; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: none; }
+    }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <div class="record">
+    <p class="record-eyebrow">Access record · proposals-server</p>
+    <h1>You're through the gate.</h1>
+    <p class="lede">This page is unreachable without valid credentials. Seeing it means the server checked your username and password before a single byte of this document was sent.</p>
+
+    <dl class="fields">
+      <div class="field">
+        <dt>Document</dt>
+        <dd>rerev-gated-test-doc-0726</dd>
+      </div>
+      <div class="field">
+        <dt>Protection</dt>
+        <dd>HTTP Basic — server-side, per document</dd>
+      </div>
+      <div class="field">
+        <dt>Credential source</dt>
+        <dd>Railway environment variable</dd>
+      </div>
+      <div class="field">
+        <dt>Status</dt>
+        <dd><span class="ok">200 OK</span> — authenticated</dd>
+      </div>
+    </dl>
+  </div>
+
+  <section>
+    <h2>What just happened</h2>
+    <p class="sub">The gate runs before the static file handler, so an unauthenticated request never touches this file.</p>
+    <ol class="flow">
+      <li>
+        <span class="code">GET</span>
+        <span><strong>You requested the document</strong>The server pulled the slug off the URL and checked it against <code>protected.json</code>.</span>
+      </li>
+      <li>
+        <span class="code denied">401</span>
+        <span><strong>The gate answered first</strong>Slug is on the protected list, so the server returned a challenge and your browser showed the login prompt.</span>
+      </li>
+      <li>
+        <span class="code">AUTH</span>
+        <span><strong>Your credentials were compared</strong>Against a value held only in Railway, using a timing-safe comparison. Nothing is stored in the repo.</span>
+      </li>
+      <li>
+        <span class="code">200</span>
+        <span><strong>The file was released</strong>Only after the match. That's this page.</span>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Confirm it yourself</h2>
+    <p class="sub">Three quick checks that prove the gate is real and not decoration.</p>
+    <hr class="rule">
+    <ul class="checks">
+      <li><strong>Open the link in a private window.</strong> You should be stopped at a login prompt, not the page.</li>
+      <li><strong>Enter a wrong password.</strong> The prompt reappears. It does not let you through and does not reveal which field was wrong.</li>
+      <li><strong>Try viewing the page source without logging in.</strong> There is nothing to view — the document is never sent, so it can't be read from the network tab or a cached copy.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>How the protection is wired</h2>
+    <p class="sub">Two pieces, kept deliberately separate.</p>
+    <div class="note">
+      <p><b>The repo says what is protected.</b> <code>protected.json</code> lists the slugs that require a login. That's all it holds — a list of names.</p>
+      <p><b>Railway holds who can get in.</b> Each protected slug reads one environment variable named <code>GATE_&lt;SLUG&gt;</code> containing the username and password. Credentials are never committed and never appear in the HTML.</p>
+      <p><b>It fails closed.</b> If a document is listed as protected but its credentials are missing, the server refuses the request instead of serving it openly. A protected page cannot accidentally become public.</p>
+      <p>To share this document, send the link, the username, and the password separately from each other.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>ReRev Labs · proposals-server</span>
+    <span>Test document · July 2026</span>
+  </footer>
+
+</main>
+</body>
+</html>
