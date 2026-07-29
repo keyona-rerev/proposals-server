@@ -100,17 +100,18 @@ function parseExistingIndex() {
 
   let ventureMatch;
   while ((ventureMatch = ventureBlockRe.exec(html)) !== null) {
-    const [, ventureKey, ventureTitle, gridHtml] = ventureMatch;
+    const [, ventureKey, ventureTitleRaw, gridHtml] = ventureMatch;
+    const ventureTitle = unescapeHtml(ventureTitleRaw.trim());
     let cardMatch;
     cardRe.lastIndex = 0;
     while ((cardMatch = cardRe.exec(gridHtml)) !== null) {
       const [, href, name, slug, date] = cardMatch;
       known.set(href, {
-        name: name.trim(),
-        slug: slug.trim(),
-        date: date.trim(),
+        name: unescapeHtml(name.trim()),
+        slug: unescapeHtml(slug.trim()),
+        date: unescapeHtml(date.trim()),
         ventureKey,
-        ventureTitle: ventureTitle.trim(),
+        ventureTitle,
       });
     }
   }
@@ -272,6 +273,42 @@ function escapeHtml(str) {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+}
+
+// Reverses escapeHtml. Needed because parseExistingIndex() reads back text
+// that was already escaped on a prior run — if it's stored as-is and then
+// escaped again on the next render, every regeneration adds one more layer
+// of "&amp;" (e.g. "Tiers & Journeys" -> "&amp;" -> "&amp;amp;" -> ...).
+// Decoding one entity per pass (up to the first ';') and looping until
+// stable exactly undoes however many layers have accumulated.
+const NAMED_ENTITIES = {
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+  '#39': "'",
+  times: '\u00D7',
+  mdash: '\u2014',
+  ndash: '\u2013',
+  hellip: '\u2026',
+  copy: '\u00A9',
+  reg: '\u00AE',
+  trade: '\u2122',
+  nbsp: '\u00A0',
+};
+
+function unescapeHtml(str) {
+  let prev = String(str);
+  for (let i = 0; i < 1000; i++) {
+    const next = prev.replace(/&([a-zA-Z0-9#]+?);/g, (full, ent) => {
+      const key = ent.toLowerCase();
+      return Object.prototype.hasOwnProperty.call(NAMED_ENTITIES, key) ? NAMED_ENTITIES[key] : full;
+    });
+    if (next === prev) break;
+    prev = next;
+  }
+  return prev;
 }
 
 function renderCard(entry) {
