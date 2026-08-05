@@ -168,6 +168,54 @@
   .capsule-callout { background: var(--primary); border-radius: 8px; padding: 16px 22px; font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.6; }
   .capsule-callout strong { color: var(--lime); }
 </style>
+<style>
+  /* FOUNDER PRODUCTIVITY — DELIVERY TRACKS */
+  .track-legend { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; margin-bottom: 22px; }
+  .track-legend-label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+  .track-legend-item { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+  .lg-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .lg-dot.done { background: var(--green); }
+  .lg-dot.current { background: var(--surface); border: 2px solid var(--lime); }
+  .lg-dot.next { background: var(--border); }
+  .track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  @media (max-width: 900px) { .track-grid { grid-template-columns: 1fr; } }
+  .track-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px 26px; }
+  .track-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 4px; }
+  .track-name { font-family: var(--font-head); font-size: 15px; font-weight: 600; color: var(--primary); }
+  .track-owner-pill { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 9px; border-radius: 100px; white-space: nowrap; }
+  .track-owner-pill.kay { background: var(--partial-bg); color: var(--partial); }
+  .track-owner-pill.km { background: var(--green-light); color: var(--green); }
+  .track-what { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 6px; }
+  .track-count { font-family: var(--font-mono); font-size: 10px; color: var(--muted); margin-bottom: 14px; }
+  .track-toggle-btn { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 7px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; width: 100%; }
+  .track-toggle-btn:hover { background: var(--border); }
+  .track-toggle-btn .toggle-arrow { transition: transform 0.2s; display: inline-block; }
+  .track-toggle-btn.open .toggle-arrow { transform: rotate(90deg); }
+  .track-detail { display: none; padding-top: 20px; }
+  .track-detail.open { display: block; }
+  .steps { list-style: none; }
+  .step { display: grid; grid-template-columns: 22px 1fr; gap: 12px; padding-bottom: 16px; }
+  .step:last-child { padding-bottom: 0; }
+  .step-marker { display: flex; flex-direction: column; align-items: center; }
+  .step-dot { width: 13px; height: 13px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
+  .step-line { width: 2px; flex: 1; margin-top: 4px; background: var(--border); }
+  .step:last-child .step-line { display: none; }
+  .step.done .step-dot { background: var(--green); }
+  .step.done .step-line { background: var(--green); }
+  .step.current .step-dot { background: var(--surface); border: 3px solid var(--lime); width: 15px; height: 15px; margin-top: 2px; }
+  .step.next .step-dot { background: var(--surface); border: 2px solid var(--border); }
+  .step-label { font-size: 12.5px; line-height: 1.5; color: var(--text); }
+  .step.next .step-label { color: var(--muted); }
+  .step.current .step-label { font-weight: 600; color: var(--primary); }
+  .step-meta { display: flex; align-items: center; gap: 8px; margin-top: 3px; flex-wrap: wrap; }
+  .step-tag { font-family: var(--font-mono); font-size: 9px; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.04em; }
+  .step-tag.k { background: var(--partial-bg); color: var(--partial); }
+  .step-tag.km { background: var(--green-light); color: var(--green); }
+  .step-date { font-family: var(--font-mono); font-size: 9px; color: var(--muted); }
+  .step-now { font-family: var(--font-mono); font-size: 9px; color: var(--primary); background: #F2F8E8; border: 1px solid var(--lime); padding: 2px 6px; border-radius: 3px; letter-spacing: 0.04em; }
+  .track-foot { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--muted); line-height: 1.6; }
+  .track-foot b { color: var(--primary); font-weight: 600; }
+</style>
 </head>
 <body>
 
@@ -182,7 +230,7 @@
   <button class="tab-btn" onclick="switchTab('marketing', this)">Marketing</button>
   <button class="tab-btn" onclick="switchTab('cx', this)">Customer Experience <span class="coming">coming</span></button>
   <button class="tab-btn" onclick="switchTab('team', this)">Team Efficiency <span class="coming">coming</span></button>
-  <button class="tab-btn" onclick="switchTab('founder', this)">Founder Productivity <span class="coming">coming</span></button>
+  <button class="tab-btn" onclick="switchTab('founder', this)">Founder Productivity</button>
   <button class="tab-btn" onclick="switchTab('finance', this)">Financial Operations <span class="coming">coming</span></button>
 </div>
 
@@ -599,7 +647,143 @@
   <div class="coming-soon"><div class="coming-soon-icon">◎</div><h2>Team Efficiency</h2><p>This facet is queued. Content will be populated in a future working session.</p></div>
 </div>
 <div id="tab-founder" class="tab-content">
-  <div class="coming-soon"><div class="coming-soon-icon">◎</div><h2>Founder Productivity</h2><p>This facet is queued. Content will be populated in a future working session.</p></div>
+  <div class="section-header">
+    <div>
+      <div class="section-title">Founder Productivity</div>
+      <div class="section-subtitle">Infrastructure that lets you publish, ship, and operate without waiting on anyone. Each track shows every step from start to working, what is finished, and who the next step belongs to. Click a track to see the full sequence.</div>
+    </div>
+  </div>
+
+  <div class="track-legend">
+    <span class="track-legend-label">Legend</span>
+    <span class="track-legend-item"><span class="lg-dot done"></span> Done</span>
+    <span class="track-legend-item"><span class="lg-dot current"></span> Current step</span>
+    <span class="track-legend-item"><span class="lg-dot next"></span> Not started</span>
+    <span class="track-legend-item"><span class="step-tag k">KAY</span> your step</span>
+    <span class="track-legend-item"><span class="step-tag km">RR</span> ReRev's step</span>
+  </div>
+
+  <div class="track-grid">
+    <div class="track-card">
+      <div class="track-head">
+        <div class="track-name">Publishing System</div>
+        <span class="track-owner-pill kay">Waiting on you</span>
+      </div>
+      <div class="track-what">Turn any document into a live, shareable link by asking Claude. Optional password protection per document. No dashboards.</div>
+      <div class="track-count">2 of 7 complete</div>
+      <button class="track-toggle-btn" onclick="toggleTrack(this)"><span class="toggle-arrow">&#9654;</span> View steps (7)</button>
+      <div class="track-detail">
+      <ul class="steps">
+        <li class="step done">
+          <div class="step-marker"><span class="step-dot"></span><span class="step-line"></span></div>
+          <div class="step-body">
+            <div class="step-label">Publisher template built and tested</div>
+            <div class="step-meta"><span class="step-tag km">RR</span><span class="step-date">Jul 24</span></div>
+          </div>
+        </li>
+        <li class="step done">
+          <div class="step-marker"><span class="step-dot"></span><span class="step-line"></span></div>
+          <div class="step-body">
+            <div class="step-label">Repository forked to your GitHub</div>
+            <div class="step-meta"><span class="step-tag k">KAY</span><span class="step-date">Jul 31</span></div>
+          </div>
+        </li>
+        <li class="step current">
+          <div class="step-marker"><span class="step-dot"></span><span class="step-line"></span></div>
+          <div class="step-body">
+            <div class="step-label">Enable GitHub Actions on the fork</div>
+            <div class="step-meta"><span class="step-tag k">KAY</span><span class="step-now">YOU ARE HERE</span></div>
+          </div>
+        </li>
+        <li class="step next">
+          <div class="step-marker"><span class="step-dot"></span><span class="step-line"></span></div>
+          <div class="step-body">
+            <div class="step-label">Deploy to Railway and generate a domain</div>
+            <div class="step-meta"><span class="step-tag k">KAY</span></div>
+          </div>
+        </li>
+        <li class="step next">
+          <div class="step-marker"><span class="step-dot"></span><span class="step-line"></span></div>
+          <div class="step-body">
+            <div class="step-label">Send the domain to ReRev</div>
+            <div class="step-meta"><span class="step-tag k">KAY</span></div>
+          </div>
+        </li>
+        <li class="step next">
+          <div class="step-marker"><span class="step-dot"></span><span class="step-line"></span></div>
+          <div class="step-body">
+            <div class="step-label">Publishing skill configured and installed</div>
+            <div class="step-meta"><span class="step-tag km">RR</span></div>
+          </div>
+        </li>
+        <li class="step next">
+          <div class="step-marker"><span class="step-dot"></span><span class="step-line"></span></div>
+          <div class="step-body">
+            <div class="step-label">First document published as proof</div>
+            <div class="step-meta"><span class="step-tag k">KAY</span></div>
+          </div>
+        </li>
+      </ul>
+      <div class="track-foot"><b>Next:</b> enable Actions in the Actions tab of your fork. GitHub switches automation off on every forked repo, and skipping it leaves your index page permanently empty with no warning.</div>
+      </div>
+    </div>
+    <div class="track-card">
+      <div class="track-head">
+        <div class="track-name">GitHub Connector</div>
+        <span class="track-owner-pill kay">Waiting on you</span>
+      </div>
+      <div class="track-what">A private server that lets Claude read and write your repositories directly. Everything the publishing system pushes travels through it.</div>
+      <div class="track-count">2 of 6 complete</div>
+      <button class="track-toggle-btn" onclick="toggleTrack(this)"><span class="toggle-arrow">&#9654;</span> View steps (6)</button>
+      <div class="track-detail">
+      <ul class="steps">
+        <li class="step done">
+          <div class="step-marker"><span class="step-dot"></span><span class="step-line"></span></div>
+          <div class="step-body">
+            <div class="step-label">Server built and access-secured</div>
+            <div class="step-meta"><span class="step-tag km">RR</span><span class="step-date">Jul 29</span></div>
+          </div>
+        </li>
+        <li class="step done">
+          <div class="step-marker"><span class="step-dot"></span><span class="step-line"></span></div>
+          <div class="step-body">
+            <div class="step-label">Repository forked to your GitHub</div>
+            <div class="step-meta"><span class="step-tag k">KAY</span><span class="step-date">Jul 31</span></div>
+          </div>
+        </li>
+        <li class="step current">
+          <div class="step-marker"><span class="step-dot"></span><span class="step-line"></span></div>
+          <div class="step-body">
+            <div class="step-label">Sync fork, then create both access tokens</div>
+            <div class="step-meta"><span class="step-tag k">KAY</span><span class="step-now">YOU ARE HERE</span></div>
+          </div>
+        </li>
+        <li class="step next">
+          <div class="step-marker"><span class="step-dot"></span><span class="step-line"></span></div>
+          <div class="step-body">
+            <div class="step-label">Add tokens to Railway and generate a domain</div>
+            <div class="step-meta"><span class="step-tag k">KAY</span></div>
+          </div>
+        </li>
+        <li class="step next">
+          <div class="step-marker"><span class="step-dot"></span><span class="step-line"></span></div>
+          <div class="step-body">
+            <div class="step-label">Add the connector in Claude</div>
+            <div class="step-meta"><span class="step-tag k">KAY</span></div>
+          </div>
+        </li>
+        <li class="step next">
+          <div class="step-marker"><span class="step-dot"></span><span class="step-line"></span></div>
+          <div class="step-body">
+            <div class="step-label">Run the three verification checks</div>
+            <div class="step-meta"><span class="step-tag k">KAY</span></div>
+          </div>
+        </li>
+      </ul>
+      <div class="track-foot"><b>Next:</b> sync your fork so you are working from the current setup guide, then follow SETUP.md from step 1. The publishing system cannot finish until this one does.</div>
+      </div>
+    </div>
+  </div>
 </div>
 <div id="tab-finance" class="tab-content">
   <div class="coming-soon"><div class="coming-soon-icon">◎</div><h2>Financial Operations</h2><p>This facet is queued. Content will be populated in a future working session.</p></div>
@@ -612,7 +796,15 @@
     document.getElementById('tab-' + name).classList.add('active');
     btn.classList.add('active');
   }
-  function togglePieces(btn) {
+  function toggleTrack(btn) {
+const detail = btn.nextElementSibling;
+const isOpen = detail.classList.contains('open');
+detail.classList.toggle('open', !isOpen);
+btn.classList.toggle('open', !isOpen);
+const count = btn.textContent.match(/\(\d+\)/)?.[0] || '';
+btn.innerHTML = `<span class="toggle-arrow">&#9654;</span> ${isOpen ? 'View' : 'Hide'} steps ${count}`;
+}
+function togglePieces(btn) {
     const pieces = btn.nextElementSibling;
     const isOpen = pieces.classList.contains('open');
     pieces.classList.toggle('open', !isOpen);
