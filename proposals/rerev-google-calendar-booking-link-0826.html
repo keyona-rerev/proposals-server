@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make a booking link with Google Calendar</title>
+<meta name="description" content="A short walkthrough for creating a bookable appointment schedule in Google Calendar, with no scheduling tool required.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F0F7F7; --primary:#0D1F2D; --cyan:#1A9E9E; --purple:#7C3AED;
+  --gradient:linear-gradient(90deg,#1A9E9E,#7C3AED);
+  --font-heading:'Outfit',sans-serif; --font-body:'Inter',sans-serif;
+  --muted:#53656F; --rule:#D2E3E3; --card:#FFFFFF;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--primary);font-family:var(--font-body);font-size:17px;line-height:1.65}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+header{padding:64px 0 0}
+.kicker{font-family:var(--font-body);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+h1{font-family:var(--font-heading);font-weight:700;font-size:clamp(32px,5.2vw,46px);line-height:1.1;letter-spacing:-.02em;margin:14px 0 0}
+.standfirst{font-size:19px;color:var(--muted);margin:18px 0 0;max-width:60ch}
+.meta{margin:26px 0 0;padding:16px 0 0;border-top:1px solid var(--rule);font-size:14px;color:var(--muted)}
+.divider{height:3px;background:var(--gradient);margin:44px 0 0;border-radius:2px}
+h2{font-family:var(--font-heading);font-weight:700;font-size:26px;letter-spacing:-.01em;margin:52px 0 0;display:flex;align-items:baseline;gap:14px}
+.num{font-family:var(--font-heading);font-weight:700;font-size:14px;color:#fff;background:var(--primary);width:28px;height:28px;min-width:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;letter-spacing:0}
+p{margin:14px 0 0}
+figure{margin:26px 0 0;background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:14px;text-align:center}
+figure img{max-width:100%;height:auto;border-radius:6px;display:block;margin:0 auto}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:12px;text-align:left}
+.narrow img{max-width:300px}
+.wide img{max-width:460px}
+.note{background:var(--card);border-left:4px solid var(--cyan);padding:18px 20px;margin:26px 0 0;border-radius:0 8px 8px 0;font-size:16px}
+.note strong{font-family:var(--font-heading)}
+ul{margin:14px 0 0;padding-left:22px}
+li{margin-bottom:8px}
+footer{margin:64px 0 0;padding:26px 0 60px;border-top:1px solid var(--rule);font-size:14px;color:var(--muted)}
+footer a{color:var(--cyan);text-decoration:none}
+footer a:hover{text-decoration:underline}
+@media(max-width:600px){h2{font-size:22px}.standfirst{font-size:17px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="kicker">Tutorial</span>
+  <h1>Make a booking link with Google Calendar</h1>
+  <p class="standfirst">If you have Google Workspace, you already have a scheduling tool. Here is how to set up a bookable link in a couple of minutes, without paying for a separate one.</p>
+  <p class="meta">Requires a Google Workspace account. Appointment schedules are not available on free personal Gmail accounts.</p>
+  <div class="divider"></div>
+</header>
+
+<h2><span class="num">1</span> Open Booking pages</h2>
+<p>In Google Calendar, look at the left sidebar under the mini calendar. Find <strong>Booking pages</strong> and click the <strong>+</strong> next to it.</p>
+<figure class="narrow">
+  <img src="img/gcal-booking-1.jpg" alt="Google Calendar left sidebar with the Booking pages heading and its plus button circled in red.">
+  <figcaption>The Booking pages section sits below Meet with. Any schedules you have already made are listed underneath it.</figcaption>
+</figure>
+
+<h2><span class="num">2</span> Set the duration and your hours</h2>
+<p>A panel opens on the left. Fill in three things:</p>
+<ul>
+  <li><strong>Title.</strong> This is what people see when they book, so name it for them, not for you. Discovery Call works better than Intro.</li>
+  <li><strong>Appointment duration.</strong> How long each booking runs.</li>
+  <li><strong>General availability.</strong> The days and hours you are bookable. Set a day to unavailable with the circle icon, add a second block of hours with the plus, or copy one day's hours to the rest with the copy icon.</li>
+</ul>
+<p>Click <strong>Next</strong> when those are set.</p>
+<figure class="wide">
+  <img src="img/gcal-booking-2.jpg" alt="The bookable appointment schedule panel showing title, appointment duration and general availability with weekday hour ranges.">
+  <figcaption>Your existing calendar events are checked automatically, so anything already booked is never offered as a free slot.</figcaption>
+</figure>
+
+<h2><span class="num">3</span> Finish and copy the link</h2>
+<p>The next screen covers the details around the booking: which calendar it checks, how much notice you need before someone can book, how far ahead they can book, buffer time between appointments, and what you want to ask them when they book.</p>
+<p>Save when you are done. Open the schedule again and use the share option to copy the booking link. That link is what goes in your email signature, on your site, and anywhere you currently paste a scheduling URL.</p>
+
+<div class="note">
+  <p style="margin:0"><strong>Worth doing while you are in there:</strong> the questions you add to the booking form are the only structured information you get about someone before you meet them. Ask for the two or three things that actually change how you run the call, and nothing else. Every extra field is another reason for someone to abandon the booking.</p>
+</div>
+
+<footer>
+  Published by <a href="https://rerev.io">ReRev Labs</a>. Google occasionally changes this interface, so if a label has moved, the sequence is still the same: sidebar, then duration and hours, then booking details.
+</footer>
+</div>
+</body>
+</html>
