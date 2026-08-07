@@ -3,838 +3,670 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Capacity You Don't Have to Fundraise For — ReRev Labs</title>
+<title>Capacity — ReRev Labs Nonprofit Session</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230D1F2D'/%3E%3Cpath d='M6.5 8H9.5L12 19H23L25.5 11H10.5' fill='none' stroke='%231A9E9E' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='13.5' cy='23.5' r='1.9' fill='%237C3AED'/%3E%3Ccircle cx='21.5' cy='23.5' r='1.9' fill='%237C3AED'/%3E%3C/svg%3E">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #F0F7F7;
-    --primary: #0D1F2D;
-    --body-text: #3D5166;
-    --cyan: #1A9E9E;
-    --purple: #7C3AED;
-    --gradient: linear-gradient(90deg, #1A9E9E, #7C3AED);
-    --font-heading: 'Outfit', sans-serif;
-    --font-body: 'Inter', sans-serif;
+  :root{
+    --bg:#F0F7F7;--primary:#0D1F2D;--body-text:#3D5166;
+    --cyan:#1A9E9E;--cyan-deep:#0D7E7E;--purple:#7C3AED;--purple-deep:#5B21B6;
+    --amber:#B45309;
+    --gradient:linear-gradient(90deg,#1A9E9E,#7C3AED);
+    --fh:'Outfit',sans-serif;--fb:'Inter',sans-serif;--fm:'IBM Plex Mono',monospace;
   }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--fb);background:var(--bg);color:var(--primary);overflow-x:hidden}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--font-body); background: var(--bg); color: var(--primary); overflow-x: hidden; }
+  .slide{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:72px 7vw;position:relative;border-bottom:1px solid rgba(13,31,45,.08)}
+  .slide-dark{background:var(--primary);color:#fff}
+  .slide-dark h1,.slide-dark h2,.slide-dark h3{color:#fff}
+  .slide-dark .lead,.slide-dark p{color:rgba(255,255,255,.62)}
+  .glow{position:absolute;right:-140px;top:50%;transform:translateY(-50%);width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(26,158,158,.16),transparent 70%);pointer-events:none}
+  .grad{background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 
-  /* SLIDE SYSTEM */
-  .slide { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 80px 10vw; position: relative; border-bottom: 1px solid rgba(13,31,45,0.08); }
-  .slide-number { font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan); margin-bottom: 32px; }
+  .kicker{font-family:var(--fh);font-size:clamp(13px,1.15vw,17px);font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:28px}
+  h1{font-family:var(--fh);font-size:clamp(52px,8.5vw,124px);font-weight:800;line-height:.98;letter-spacing:-.025em;margin-bottom:32px}
+  h2{font-family:var(--fh);font-size:clamp(38px,5.4vw,80px);font-weight:700;line-height:1.05;letter-spacing:-.02em;margin-bottom:36px}
+  h3{font-family:var(--fh);font-size:clamp(21px,1.9vw,28px);font-weight:600;margin-bottom:10px}
+  .lead{font-size:clamp(20px,2.05vw,30px);font-weight:300;line-height:1.45;max-width:22ch;color:var(--body-text)}
+  .lead.wide{max-width:32ch}
+  .lead strong{font-weight:600;color:var(--primary)}
+  .slide-dark .lead strong{color:#fff}
 
-  /* DARK SLIDES (title, demo, ship it) */
-  .slide-dark { background: var(--primary); color: white; }
-  .slide-dark h1, .slide-dark h2 { color: white; }
-  .slide-dark .subtitle, .slide-dark p { color: rgba(255,255,255,0.6); }
-  .gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .title-bg-accent { position: absolute; right: -100px; top: 50%; transform: translateY(-50%); width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(26,158,158,0.15) 0%, transparent 70%); pointer-events: none; }
+  .bullets{list-style:none;display:flex;flex-direction:column;gap:22px;max-width:28ch}
+  .bullets.wide{max-width:40ch}
+  .bullets li{display:flex;gap:20px;align-items:flex-start;font-size:clamp(19px,1.9vw,27px);font-weight:300;line-height:1.35;color:var(--body-text)}
+  .slide-dark .bullets li{color:rgba(255,255,255,.7)}
+  .bullets li b{font-weight:600;color:var(--primary)}
+  .slide-dark .bullets li b{color:#fff}
+  .num{font-family:var(--fh);font-size:15px;font-weight:700;width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .slide-dark .num{background:var(--cyan)}
 
-  /* EYEBROW / LABELS */
-  .eyebrow { font-family: var(--font-heading); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 24px; }
+  .tags{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px;max-width:46ch}
+  .tag{font-family:var(--fh);font-size:clamp(14px,1.3vw,19px);font-weight:600;padding:11px 22px;border-radius:100px;background:rgba(26,158,158,.1);color:var(--cyan-deep);border:1px solid rgba(26,158,158,.22)}
+  .tag.p{background:rgba(124,58,237,.08);color:var(--purple-deep);border-color:rgba(124,58,237,.2)}
+  .slide-dark .tag{background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.16)}
 
-  /* HEADINGS */
-  h1 { font-family: var(--font-heading); font-size: clamp(48px, 7vw, 96px); font-weight: 800; line-height: 1.0; margin-bottom: 32px; letter-spacing: -0.02em; }
-  h2 { font-family: var(--font-heading); font-size: clamp(28px, 3.5vw, 48px); font-weight: 700; margin-bottom: 40px; }
-  h3 { font-family: var(--font-heading); font-size: 20px; font-weight: 600; margin-bottom: 6px; }
-  .subtitle { font-family: var(--font-body); font-size: clamp(16px, 2vw, 20px); font-weight: 300; max-width: 560px; line-height: 1.6; }
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
 
-  /* PAIN LIST */
-  .pain-list { list-style: none; display: flex; flex-direction: column; gap: 16px; max-width: 600px; }
-  .pain-list li { display: flex; align-items: flex-start; gap: 16px; font-size: 18px; color: var(--body-text); line-height: 1.5; }
-  .pain-list li .icon { width: 28px; height: 28px; border-radius: 50%; background: rgba(124,58,237,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; font-size: 13px; }
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:12px}
+  .cards.two{grid-template-columns:repeat(2,1fr)}
+  .card{background:#fff;border-radius:18px;padding:32px 28px;border:1px solid rgba(13,31,45,.08);position:relative;overflow:hidden}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gradient)}
+  .card.g::before{background:#16A34A}.card.y::before{background:#D97706}.card.r::before{background:#DC2626}
+  .card .lbl{font-family:var(--fh);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan-deep);margin-bottom:12px}
+  .card.g .lbl{color:#15803D}.card.y .lbl{color:#B45309}.card.r .lbl{color:#B91C1C}
+  .card p{font-size:clamp(15px,1.35vw,19px);color:var(--body-text);line-height:1.5;font-weight:300}
 
-  /* BIG STATEMENT + USE CASE TAGS */
-  .big-statement { font-family: var(--font-heading); font-size: clamp(20px, 2.5vw, 32px); font-weight: 600; line-height: 1.4; max-width: 700px; margin-bottom: 48px; color: var(--body-text); }
-  .big-statement strong { color: var(--primary); }
-  .use-case-grid { display: flex; flex-wrap: wrap; gap: 12px; max-width: 640px; }
-  .use-case-tag { font-family: var(--font-heading); font-size: 14px; font-weight: 600; padding: 8px 18px; border-radius: 100px; background: rgba(26,158,158,0.1); color: #0D7E7E; border: 1px solid rgba(26,158,158,0.2); }
+  table{width:100%;border-collapse:collapse;font-size:clamp(15px,1.35vw,20px)}
+  th{font-family:var(--fh);font-size:clamp(12px,1.05vw,15px);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--body-text);text-align:left;padding:0 14px 14px;border-bottom:2px solid rgba(13,31,45,.12)}
+  th.c,td.c{text-align:center}
+  td{padding:14px;border-bottom:1px solid rgba(13,31,45,.07);color:var(--body-text);font-weight:300}
+  td b{font-weight:600;color:var(--primary)}
+  tr.flag td{background:rgba(220,38,38,.05)}
+  tr.watch td{background:rgba(217,119,6,.05)}
+  .dot{font-size:20px;line-height:1}
 
-  /* HOW IT WORKS STEPS */
-  .steps { display: flex; flex-direction: column; gap: 0; max-width: 680px; position: relative; }
-  .steps::before { content: ''; position: absolute; left: 20px; top: 40px; bottom: 40px; width: 2px; background: linear-gradient(180deg, var(--cyan), var(--purple)); }
-  .step { display: flex; gap: 32px; align-items: flex-start; padding: 20px 0; position: relative; }
-  .step-dot { width: 42px; height: 42px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: white; flex-shrink: 0; position: relative; z-index: 1; }
-  .step-dot.cyan { background: var(--cyan); }
-  .step-dot.purple { background: var(--purple); }
-  .step-content p { font-size: 15px; color: var(--body-text); line-height: 1.5; }
+  .qr-box{display:flex;align-items:center;gap:28px;padding:28px;background:#fff;border-radius:20px;border:1px solid rgba(13,31,45,.08)}
+  .qr{width:156px;height:156px;flex-shrink:0}
+  .qr-url{font-family:var(--fh);font-size:clamp(22px,2.2vw,32px);font-weight:700;line-height:1.1;margin-bottom:8px}
 
-  /* UNDER THE HOOD CARDS */
-  .pieces-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 860px; }
-  .piece-card { background: white; border-radius: 16px; padding: 32px 28px; border: 1px solid rgba(13,31,45,0.08); position: relative; overflow: hidden; }
-  .piece-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-  .piece-card.accent-cyan::before { background: var(--gradient); }
-  .piece-card.accent-dark::before { background: var(--primary); }
-  .piece-card.accent-purple::before { background: var(--purple); }
-  .piece-label { font-family: var(--font-heading); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
-  .piece-card p { font-size: 14px; color: var(--body-text); line-height: 1.6; }
+  .callout{margin-top:36px;padding:22px 26px;background:rgba(124,58,237,.07);border:1px solid rgba(124,58,237,.2);border-radius:14px;display:flex;gap:16px;align-items:flex-start;max-width:50ch}
+  .callout .ic{font-size:22px;flex-shrink:0}
+  .callout p{font-size:clamp(16px,1.45vw,21px);color:var(--body-text);line-height:1.45;font-weight:300}
+  .callout b{color:var(--purple-deep);font-weight:600}
+  .slide-dark .callout{background:rgba(124,58,237,.16);border-color:rgba(124,58,237,.34)}
+  .slide-dark .callout p{color:rgba(255,255,255,.78)}
+  .slide-dark .callout b{color:#a78bfa}
 
-  /* DEMO BADGE */
-  .demo-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(26,158,158,0.2); border: 1px solid rgba(26,158,158,0.4); border-radius: 100px; padding: 8px 20px; font-family: var(--font-heading); font-size: 13px; font-weight: 600; color: var(--cyan); letter-spacing: 0.05em; margin-bottom: 32px; }
-  .demo-badge::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); animation: pulse 1.5s infinite; }
-  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+  .flow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}
+  .node{background:#fff;border-radius:16px;padding:20px 24px;border:1px solid rgba(13,31,45,.08);min-width:132px}
+  .node.zero{background:var(--primary)}
+  .node.zero .n-t{color:#fff}.node.zero .n-s{color:rgba(255,255,255,.55)}
+  .node.out{border-color:rgba(124,58,237,.35);background:rgba(124,58,237,.05)}
+  .n-t{font-family:var(--fh);font-size:clamp(15px,1.4vw,20px);font-weight:700}
+  .n-s{font-size:13px;color:var(--body-text);margin-top:3px}
+  .arrow{font-size:28px;color:var(--cyan);font-weight:300}
 
-  /* SETUP INTRO */
-  .setup-intro-sub { font-size: 20px; color: var(--body-text); margin-bottom: 56px; }
-  .setup-overview { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-  .overview-item { background: white; border-radius: 14px; padding: 24px 28px; border: 1px solid rgba(13,31,45,0.08); min-width: 160px; }
-  .overview-num { font-family: var(--font-heading); font-size: 28px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
-  .overview-label { font-family: var(--font-heading); font-size: 14px; font-weight: 600; color: var(--primary); }
-  .overview-arrow { font-size: 24px; color: var(--cyan); font-weight: 300; }
+  .mock{background:#fff;border-radius:18px;border:1px solid rgba(13,31,45,.1);overflow:hidden;box-shadow:0 10px 40px rgba(13,31,45,.09)}
+  .mock-bar{background:var(--primary);color:rgba(255,255,255,.6);font-family:var(--fh);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:14px 22px}
+  .mock-body{padding:24px 22px;display:flex;flex-direction:column;gap:12px}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:13px 16px;background:var(--bg);border-radius:10px;border:1px solid rgba(13,31,45,.07)}
+  .row .k{font-family:var(--fh);font-size:14px;font-weight:600;color:var(--body-text)}
+  .row .v{font-family:var(--fh);font-size:15px;font-weight:600;color:var(--primary)}
+  .note{font-size:14px;padding:12px 16px;border-radius:10px;background:rgba(26,158,158,.07);border:1px solid rgba(26,158,158,.2);color:var(--body-text);line-height:1.45}
 
-  /* STEP SLIDES */
-  .step-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-  .instruction-list { display: flex; flex-direction: column; gap: 20px; }
-  .instruction-item { display: flex; gap: 16px; align-items: flex-start; font-size: 15px; color: var(--body-text); line-height: 1.6; }
-  .instruction-item strong { color: var(--primary); }
-  .instruction-num { width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: white; font-family: var(--font-heading); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .cmd{font-family:var(--fm);font-size:clamp(15px,1.5vw,21px);background:var(--primary);color:#fff;padding:20px 24px;border-radius:12px;margin-top:28px;max-width:44ch;line-height:1.6;word-break:break-word}
+  .cmd .hl{color:var(--cyan);font-weight:500}
+  .cmd .ph{color:#f59e0b}
+  .slide-dark .cmd{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14)}
 
-  /* SCREENSHOT PLACEHOLDER */
-  .screenshot-placeholder { background: white; border-radius: 16px; border: 1px solid rgba(13,31,45,0.1); overflow: hidden; box-shadow: 0 8px 32px rgba(13,31,45,0.08); }
-  .screenshot-label { background: var(--primary); color: rgba(255,255,255,0.6); font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 20px; }
-  .screenshot-fields { padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; }
-  .mock-field { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--bg); border-radius: 8px; border: 1px solid rgba(13,31,45,0.08); }
-  .mock-label { font-family: var(--font-heading); font-size: 12px; font-weight: 600; color: var(--body-text); }
-  .mock-value { font-family: var(--font-heading); font-size: 13px; font-weight: 600; color: var(--primary); }
-  .mock-btn { background: var(--primary); color: white; font-family: var(--font-heading); font-size: 13px; font-weight: 600; padding: 10px 20px; border-radius: 8px; text-align: center; margin-top: 4px; }
-  .mock-warning { font-size: 12px; color: var(--purple); font-weight: 600; text-align: center; padding: 8px; background: rgba(124,58,237,0.08); border-radius: 8px; }
-  .mock-scope { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--body-text); padding: 10px 14px; background: rgba(26,158,158,0.06); border-radius: 8px; border: 1px solid rgba(26,158,158,0.2); }
-  .mock-badge { font-family: var(--font-heading); font-size: 12px; font-weight: 600; padding: 8px 14px; border-radius: 100px; border: 1px solid; text-align: center; }
-  .mock-code { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--primary); border-radius: 6px; gap: 12px; }
-  .mock-key { font-family: monospace; font-size: 12px; color: var(--cyan); flex-shrink: 0; }
-  .mock-value-code { font-family: monospace; font-size: 12px; color: rgba(255,255,255,0.7); text-align: right; }
+  .nav{position:fixed;right:22px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:100}
+  .nav a{width:7px;height:7px;border-radius:50%;background:rgba(13,31,45,.18);transition:.2s}
+  .nav a:hover,.nav a.on{background:var(--cyan);transform:scale(1.5)}
 
-  /* QR */
-  .qr-block { display: flex; align-items: center; gap: 24px; margin-bottom: 20px; padding: 24px; background: white; border-radius: 16px; border: 1px solid rgba(13,31,45,0.08); }
-  .qr-code { width: 132px; height: 132px; flex-shrink: 0; }
-  .qr-text .qr-url { font-family: var(--font-heading); font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 6px; letter-spacing: -0.01em; line-height: 1.15; }
-  .qr-text p { font-size: 14px; color: var(--body-text); line-height: 1.5; }
-
-  /* TOGGLE BLOCKS */
-  .toggle-block { margin-top: 20px; border-radius: 12px; border: 1px solid rgba(26,158,158,0.25); overflow: hidden; }
-  .toggle-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; background: rgba(26,158,158,0.08); cursor: pointer; user-select: none; gap: 12px; }
-  .toggle-header:hover { background: rgba(26,158,158,0.14); }
-  .toggle-label { font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0D7E7E; display: flex; align-items: center; gap: 8px; }
-  .toggle-label .tag { background: rgba(26,158,158,0.15); border: 1px solid rgba(26,158,158,0.3); border-radius: 4px; padding: 2px 8px; font-size: 10px; }
-  .toggle-arrow { font-size: 12px; color: var(--cyan); transition: transform 0.2s; flex-shrink: 0; }
-  .toggle-block.open .toggle-arrow { transform: rotate(180deg); }
-  .toggle-body { display: none; background: var(--primary); padding: 0; }
-  .toggle-block.open .toggle-body { display: block; }
-  .toggle-copy-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 18px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-  .toggle-copy-bar span { font-family: var(--font-heading); font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.05em; }
-  .copy-btn { font-family: var(--font-heading); font-size: 11px; font-weight: 600; color: var(--cyan); background: rgba(26,158,158,0.15); border: 1px solid rgba(26,158,158,0.3); border-radius: 6px; padding: 4px 12px; cursor: pointer; letter-spacing: 0.05em; transition: all 0.15s; }
-  .copy-btn:hover { background: rgba(26,158,158,0.25); }
-  .copy-btn.copied { color: #4ade80; border-color: #4ade80; background: rgba(74,222,128,0.1); }
-  .toggle-code { padding: 16px 18px; font-family: monospace; font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.85); white-space: pre-wrap; word-break: break-all; overflow-x: auto; }
-  .toggle-code .placeholder { color: #f59e0b; font-weight: 700; }
-  .toggle-code .comment { color: rgba(255,255,255,0.3); }
-
-  /* PAUSE CALLOUT */
-  .pause-callout { margin-top: 24px; padding: 16px 20px; background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2); border-radius: 12px; display: flex; align-items: flex-start; gap: 12px; }
-  .pause-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-  .pause-callout p { font-size: 13px; color: var(--body-text); line-height: 1.5; }
-  .pause-callout strong { color: var(--purple); }
-
-  /* SHIP IT */
-  .slide-ship { align-items: center; text-align: center; }
-  .slide-ship h2 { font-family: var(--font-heading); font-size: clamp(56px, 10vw, 128px); font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin-bottom: 24px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .slide-ship p { font-size: 20px; color: rgba(255,255,255,0.5); font-weight: 300; }
-
-  /* NAV DOTS */
-  .nav { position: fixed; right: 32px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 100; }
-  .nav a { width: 8px; height: 8px; border-radius: 50%; background: rgba(13,31,45,0.2); display: block; transition: all 0.2s; }
-  .nav a:hover, .nav a.active { background: var(--cyan); transform: scale(1.4); }
-
-  @media (max-width: 768px) {
-    .slide { padding: 60px 6vw; }
-    .pieces-grid { grid-template-columns: 1fr; }
-    .step-layout { grid-template-columns: 1fr; }
-    .setup-overview { flex-direction: column; }
-    .overview-arrow { transform: rotate(90deg); }
-    .nav { display: none; }
+  @media (max-width:900px){
+    .slide{padding:56px 6vw}
+    .cols{grid-template-columns:1fr;gap:34px}
+    .cards,.cards.two{grid-template-columns:1fr}
+    .flow{flex-direction:column;align-items:stretch}
+    .arrow{transform:rotate(90deg);text-align:center}
+    .nav{display:none}
+    .lead,.bullets,.cmd{max-width:none}
   }
 </style>
 </head>
 <body>
+<nav class="nav" id="nav"></nav>
 
-<nav class="nav">
-  <a href="#s1"></a><a href="#s2"></a><a href="#s3"></a><a href="#s4"></a><a href="#s5"></a><a href="#s5b"></a>
-  <a href="#s6"></a><a href="#s7"></a><a href="#s8"></a><a href="#s9"></a><a href="#s10"></a><a href="#s10b"></a>
-  <a href="#s11"></a><a href="#s12"></a><a href="#s13"></a><a href="#s14"></a><a href="#s15"></a>
-  <a href="#s16"></a><a href="#s17"></a><a href="#s18"></a><a href="#s19"></a><a href="#s20"></a>
-  <a href="#s21"></a><a href="#s22"></a>
-</nav>
-
-<!-- 1 TITLE -->
+<!-- 1 -->
 <section class="slide slide-dark" id="s1">
-  <div class="title-bg-accent"></div>
-  <div class="eyebrow">ReRev Labs · Nonprofit Workshop</div>
-  <h1>Capacity you don't have to <span class="gradient-text">fundraise for</span></h1>
-  <p class="subtitle">One hour. Six parts of your organization. You'll leave with a plan in your inbox that you didn't have when you walked in.</p>
+  <div class="glow"></div>
+  <div class="kicker">ReRev Labs · Nonprofit Session</div>
+  <h1>Capacity you don't have to <span class="grad">fundraise for</span></h1>
+  <p class="lead wide">One hour. We'll find the data you're already sitting on, and what it would take to get hours back.</p>
 </section>
 
-<!-- 2 OPEN YOUR CART -->
+<!-- 2 HANDS UP -->
 <section class="slide" id="s2">
-  <div class="slide-number">Step 01 — Open Your Cart Before We Start</div>
-  <h2>Open this on your laptop now</h2>
-  <div class="step-layout">
-    <div class="step-instructions">
-      <div class="instruction-list">
-        <div class="instruction-item">
-          <div class="instruction-num">1</div>
-          <div>Go to <strong>capacitycart.netlify.app</strong> in your browser.</div>
-        </div>
-        <div class="instruction-item">
-          <div class="instruction-num">2</div>
-          <div>Enter your <strong>first name and email</strong>. The page unlocks and everything after that says your name on it.</div>
-        </div>
-        <div class="instruction-item">
-          <div class="instruction-num">3</div>
-          <div>Answer the <strong>four questions</strong> at the top and hit save. Take the last one seriously — it's the one I'll read out loud.</div>
-        </div>
-        <div class="instruction-item">
-          <div class="instruction-num">4</div>
-          <div>Then <strong>stop and leave it open</strong>. Don't scroll ahead. We'll shop together.</div>
-        </div>
-      </div>
-      <div class="pause-callout">
-        <div class="pause-icon">⏸</div>
-        <p><strong>Pause here.</strong> Everyone gets to the four questions before we move on. Raise a hand if the page won't load.</p>
-      </div>
-    </div>
-    <div class="step-screenshot">
-      <div class="qr-block">
-        <div class="qr-code"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" width="100%" height="100%" shape-rendering="crispEdges"><path stroke="#0d1f2d" d="M2 2.5h7m2 0h1m1 0h1m2 0h1m2 0h2m2 0h2m1 0h1m1 0h7m-33 1h1m5 0h1m3 0h1m1 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m5 0h1m1 0h4m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h1m5 0h6m1 0h2m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m2 0h4m1 0h2m2 0h4m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m2 0h4m1 0h2m1 0h1m1 0h1m3 0h2m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-23 1h1m1 0h1m3 0h2m2 0h1m3 0h1m-22 1h2m1 0h2m2 0h2m1 0h1m1 0h1m2 0h2m9 0h2m-29 1h2m3 0h1m2 0h2m4 0h5m1 0h2m1 0h1m1 0h2m1 0h1m-29 1h2m1 0h3m2 0h1m1 0h1m1 0h2m4 0h2m1 0h1m2 0h2m2 0h3m-33 1h3m7 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h3m-31 1h6m2 0h1m1 0h2m4 0h1m1 0h4m2 0h2m3 0h2m-33 1h1m7 0h7m1 0h2m2 0h2m1 0h1m1 0h1m1 0h1m1 0h3m-31 1h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h2m1 0h1m9 0h2m-25 1h2m2 0h3m3 0h1m1 0h2m1 0h3m3 0h1m2 0h1m1 0h2m1 0h1m-33 1h1m3 0h3m1 0h1m2 0h1m3 0h1m1 0h1m1 0h1m5 0h4m3 0h1m-32 1h1m3 0h1m1 0h1m1 0h1m3 0h1m2 0h1m4 0h2m1 0h1m1 0h1m1 0h2m2 0h1m-33 1h2m3 0h5m1 0h2m4 0h1m1 0h5m1 0h6m1 0h1m-33 1h4m3 0h1m4 0h4m1 0h2m1 0h1m1 0h3m1 0h2m1 0h2m1 0h1m-32 1h2m2 0h6m1 0h2m3 0h4m6 0h1m1 0h1m1 0h2m-33 1h3m2 0h1m1 0h3m1 0h2m1 0h1m1 0h8m1 0h1m1 0h2m1 0h1m-31 1h1m3 0h1m1 0h1m4 0h1m2 0h2m2 0h1m1 0h5m1 0h2m2 0h3m-33 1h1m2 0h2m3 0h1m1 0h6m2 0h1m1 0h1m1 0h3m3 0h1m1 0h3m-33 1h5m1 0h1m1 0h2m3 0h2m1 0h2m5 0h6m2 0h2m-25 1h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m2 0h1m3 0h1m1 0h2m-32 1h7m1 0h1m1 0h2m1 0h1m3 0h1m5 0h2m1 0h1m1 0h1m-29 1h1m5 0h1m2 0h2m2 0h2m1 0h3m1 0h5m3 0h4m-32 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h3m4 0h8m2 0h1m-32 1h1m1 0h3m1 0h1m1 0h2m1 0h1m3 0h1m2 0h1m3 0h2m1 0h1m1 0h1m1 0h1m2 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m1 0h1m5 0h1m1 0h1m1 0h1m6 0h1m1 0h3m-33 1h1m5 0h1m2 0h1m2 0h6m1 0h2m1 0h1m2 0h2m3 0h3m-33 1h7m2 0h1m7 0h1m1 0h1m1 0h4m1 0h1m1 0h1"/></svg></div>
-        <div class="qr-text">
-          <div class="qr-url">capacitycart<br>.netlify.app</div>
-          <p>Point your phone camera at this, or type it into your laptop. Either works — the laptop is easier for what we're about to do.</p>
-        </div>
-      </div>
-      <div class="screenshot-placeholder">
-        <div class="screenshot-label">capacitycart.netlify.app</div>
-        <div class="screenshot-fields">
-          <div class="mock-field"><span class="mock-label">First name</span><span class="mock-value">Shantell</span></div>
-          <div class="mock-field"><span class="mock-label">Email</span><span class="mock-value">you@org.org</span></div>
-          <div class="mock-btn">Start shopping</div>
-          <div class="mock-scope">Nothing is shared with the room. Your cart is yours.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 3 PROBLEM -->
-<section class="slide" id="s3">
-  <div class="slide-number">The Problem</div>
-  <h2>You are not short on ideas</h2>
-  <ul class="pain-list">
-    <li><span class="icon">01</span><div>The report is due Friday and the data was never collected, so you're rebuilding nine months from memory and email.</div></li>
-    <li><span class="icon">02</span><div>A participant had a breakthrough in March. Nobody wrote it down. It's not in the annual report.</div></li>
-    <li><span class="icon">03</span><div>The one person who knows how the intake process works is on vacation.</div></li>
-    <li><span class="icon">04</span><div>You know which donors went quiet. You have not had one free hour to call them.</div></li>
-    <li><span class="icon">05</span><div>The board packet takes two days, every time, and it's the same two days.</div></li>
+  <div class="kicker">Hands up · no wrong answers</div>
+  <h2>Where is this room?</h2>
+  <ul class="bullets wide">
+    <li><span class="num">1</span><div>Used an AI tool <b>at all this week</b></div></li>
+    <li><span class="num">2</span><div><b>Uploaded a document</b> into one</div></li>
+    <li><span class="num">3</span><div>Used it to write something that <b>actually went out</b></div></li>
+    <li><span class="num">4</span><div>Used it to <b>build or fix something with code</b></div></li>
+    <li><span class="num">5</span><div>Set something up <b>once and reused it</b></div></li>
   </ul>
 </section>
 
-<!-- 4 WHAT IT IS -->
-<section class="slide" id="s4">
-  <div class="slide-number">The Frame</div>
-  <h2>You don't need a strategy. You need a sentence.</h2>
-  <div class="big-statement">
-    Every automation worth building starts as one of these, said out loud by someone who was tired:
-    <br><br>
-    <strong>"It would be great if we didn't have to do this."</strong><br>
-    <strong>"I spend too much time on this instead of the actual work."</strong><br>
-    <strong>"We're about to hire for this, and we shouldn't have to."</strong>
-  </div>
-  <div class="use-case-grid">
-    <div class="use-case-tag">Not a strategic plan</div>
-    <div class="use-case-tag">Not a tech roadmap</div>
-    <div class="use-case-tag">Not a new system to learn</div>
-    <div class="use-case-tag">Just the sentence</div>
-  </div>
-</section>
-
-<!-- 5 SHARPENING INTRO -->
-<section class="slide slide-dark" id="s5">
-  <div class="title-bg-accent"></div>
-  <div class="demo-badge">Live — watch my screen</div>
-  <h2>First, sharpen the tool</h2>
-  <p class="subtitle">Seven things that change how well this works for you. None of them are settings. All of them are habits. Fifteen minutes, then we shop.</p>
-</section>
-
-<!-- 5b READ THE ROOM -->
-<section class="slide" id="s5b">
-  <div class="slide-number">First — A Read of the Room</div>
-  <h2>Hands up. No wrong answers.</h2>
-  <div class="instruction-list" style="max-width:700px">
-    <div class="instruction-item">
-      <div class="instruction-num">1</div>
-      <div>Who has used an AI tool <strong>at all this week</strong>?</div>
+<!-- 3 OPEN CART -->
+<section class="slide" id="s3">
+  <div class="kicker">Open this now</div>
+  <h2>Get your laptop out</h2>
+  <div class="cols">
+    <div>
+      <ul class="bullets">
+        <li><span class="num">1</span><div>Go to <b>capacitycart.netlify.app</b></div></li>
+        <li><span class="num">2</span><div>Enter your <b>name and email</b></div></li>
+        <li><span class="num">3</span><div>Answer the <b>four questions</b>, then stop</div></li>
+      </ul>
+      <div class="callout"><div class="ic">⏸</div><p><b>Pause here.</b> Everyone gets to the four questions before we move.</p></div>
     </div>
-    <div class="instruction-item">
-      <div class="instruction-num">2</div>
-      <div>Who has <strong>uploaded a document</strong> into one, instead of only typing into the box?</div>
-    </div>
-    <div class="instruction-item">
-      <div class="instruction-num">3</div>
-      <div>Who has used it to write something that <strong>actually went out</strong> — a real email, a real report section?</div>
-    </div>
-    <div class="instruction-item">
-      <div class="instruction-num">4</div>
-      <div>Who has used it to <strong>build or fix something with code</strong>, even a formula you didn't understand?</div>
-    </div>
-    <div class="instruction-item">
-      <div class="instruction-num">5</div>
-      <div>Who has set something up <strong>once and reused it</strong>, rather than starting from a blank chat every time?</div>
-    </div>
-  </div>
-  <div class="pause-callout">
-    <div class="pause-icon">⏸</div>
-    <p><strong>Pause here.</strong> This is not a test — it tells me where to spend the next fifteen minutes. If most hands drop after question two, that's the useful information.</p>
-  </div>
-</section>
-
-<!-- 6 -->
-<section class="slide" id="s6">
-  <div class="slide-number">Sharpening 01 — Talk, Don't Type</div>
-  <h2>Stop typing. Start talking.</h2>
-  <div class="big-statement">
-    Turn on dictation and <strong>ramble</strong>. Say the messy version — the one with the background, the frustration, the thing you tried last year that didn't work.
-    <br><br>
-    Your spoken version carries three times the context of your tidy typed version. Context is what makes the output good. Typing makes you compress, and compression is exactly what you don't want here.
-  </div>
-  <div class="use-case-grid">
-    <div class="use-case-tag">Windows — Win + H</div>
-    <div class="use-case-tag">Mac — press Fn twice</div>
-    <div class="use-case-tag">Phone — the mic on your keyboard</div>
-  </div>
-</section>
-
-<!-- 7 -->
-<section class="slide" id="s7">
-  <div class="slide-number">Sharpening 02 — Delete a Phrase</div>
-  <h2>Delete "prompt engineering" from your vocabulary</h2>
-  <div class="big-statement">
-    It's a conversation, not an incantation. There is no magic wording you're failing to guess.
-    <br><br>
-    <strong>You would never engineer a prompt to a colleague.</strong> You'd tell them what you need, they'd ask a question, you'd clarify, and you'd go back and forth until it was right. Do that. If the first answer is wrong, say what's wrong with it.
-  </div>
-  <div class="use-case-grid">
-    <div class="use-case-tag">"That's too formal"</div>
-    <div class="use-case-tag">"You missed the part about the grant"</div>
-    <div class="use-case-tag">"Shorter, and less like a brochure"</div>
-  </div>
-</section>
-
-<!-- 8 -->
-<section class="slide" id="s8">
-  <div class="slide-number">Sharpening 03 — Context Is the Whole Game</div>
-  <h2>Feed it your actual documents</h2>
-  <div class="big-statement">
-    Most bad output is a <strong>context problem wearing a prompt costume</strong>. The model isn't guessing badly. It's guessing without your last grant report, your board deck, your program description.
-    <br><br>
-    Upload the real thing. Every time.
-  </div>
-  <div class="pause-callout">
-    <div class="pause-icon">⏸</div>
-    <p><strong>Pause here.</strong> Open a document you'd normally start from scratch — a past report, a program description. Have it ready. You'll use it in the aisles.</p>
-  </div>
-  <div class="toggle-block" id="toggle-context">
-    <div class="toggle-header" onclick="toggleBlock('toggle-context')">
-      <div class="toggle-label"><span>The context habit</span><span class="tag">paste into Claude</span></div>
-      <span class="toggle-arrow">▼</span>
-    </div>
-    <div class="toggle-body">
-      <div class="toggle-copy-bar">
-        <span>Swap the amber value, attach your file, send</span>
-        <button class="copy-btn" onclick="copyToggle('toggle-context', this)">Copy</button>
+    <div class="qr-box">
+      <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" width="100%" height="100%" shape-rendering="crispEdges"><path stroke="#0d1f2d" d="M2 2.5h7m2 0h1m1 0h1m2 0h1m2 0h2m2 0h2m1 0h1m1 0h7m-33 1h1m5 0h1m3 0h1m1 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m5 0h1m1 0h4m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h1m5 0h6m1 0h2m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m2 0h4m1 0h2m2 0h4m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m2 0h4m1 0h2m1 0h1m1 0h1m3 0h2m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-23 1h1m1 0h1m3 0h2m2 0h1m3 0h1m-22 1h2m1 0h2m2 0h2m1 0h1m1 0h1m2 0h2m9 0h2m-29 1h2m3 0h1m2 0h2m4 0h5m1 0h2m1 0h1m1 0h2m1 0h1m-29 1h2m1 0h3m2 0h1m1 0h1m1 0h2m4 0h2m1 0h1m2 0h2m2 0h3m-33 1h3m7 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h3m-31 1h6m2 0h1m1 0h2m4 0h1m1 0h4m2 0h2m3 0h2m-33 1h1m7 0h7m1 0h2m2 0h2m1 0h1m1 0h1m1 0h1m1 0h3m-31 1h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h2m1 0h1m9 0h2m-25 1h2m2 0h3m3 0h1m1 0h2m1 0h3m3 0h1m2 0h1m1 0h2m1 0h1m-33 1h1m3 0h3m1 0h1m2 0h1m3 0h1m1 0h1m1 0h1m5 0h4m3 0h1m-32 1h1m3 0h1m1 0h1m1 0h1m3 0h1m2 0h1m4 0h2m1 0h1m1 0h1m1 0h2m2 0h1m-33 1h2m3 0h5m1 0h2m4 0h1m1 0h5m1 0h6m1 0h1m-33 1h4m3 0h1m4 0h4m1 0h2m1 0h1m1 0h3m1 0h2m1 0h2m1 0h1m-32 1h2m2 0h6m1 0h2m3 0h4m6 0h1m1 0h1m1 0h2m-33 1h3m2 0h1m1 0h3m1 0h2m1 0h1m1 0h8m1 0h1m1 0h2m1 0h1m-31 1h1m3 0h1m1 0h1m4 0h1m2 0h2m2 0h1m1 0h5m1 0h2m2 0h3m-33 1h1m2 0h2m3 0h1m1 0h6m2 0h1m1 0h1m1 0h3m3 0h1m1 0h3m-33 1h5m1 0h1m1 0h2m3 0h2m1 0h2m5 0h6m2 0h2m-25 1h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m2 0h1m3 0h1m1 0h2m-32 1h7m1 0h1m1 0h2m1 0h1m3 0h1m5 0h2m1 0h1m1 0h1m-29 1h1m5 0h1m2 0h2m2 0h2m1 0h3m1 0h5m3 0h4m-32 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h3m4 0h8m2 0h1m-32 1h1m1 0h3m1 0h1m1 0h2m1 0h1m3 0h1m2 0h1m3 0h2m1 0h1m1 0h1m1 0h1m2 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m1 0h1m5 0h1m1 0h1m1 0h1m6 0h1m1 0h3m-33 1h1m5 0h1m2 0h1m2 0h6m1 0h2m1 0h1m2 0h2m3 0h3m-33 1h7m2 0h1m7 0h1m1 0h1m1 0h4m1 0h1m1 0h1"/></svg></div>
+      <div>
+        <div class="qr-url">capacitycart<br>.netlify.app</div>
+        <p style="font-size:16px;color:var(--body-text);font-weight:300">Phone camera works. Laptop is easier.</p>
       </div>
-      <div class="toggle-code" id="toggle-context-code">I've attached <span class="placeholder">[the document]</span>.
-
-Before you write anything, read it and tell me back:
-1. What this organization actually does, in your words
-2. Who it serves
-3. The three things it seems to care most about
-4. Anything that's unclear or missing
-
-<span class="comment">// Getting this right first means everything after it is right too.</span>
-<span class="comment">// If the summary is wrong, correct it before moving on.</span></div>
     </div>
   </div>
+</section>
+
+<!-- 4 -->
+<section class="slide" id="s4">
+  <div class="kicker">The problem · one of two</div>
+  <h2>AI overwhelm</h2>
+  <p class="lead">A new tool every week. Everyone says you should be using it. <strong>Nobody says for what.</strong></p>
+  <div class="tags"><div class="tag">Try nine things badly</div><div class="tag">Or freeze and do nothing</div></div>
+</section>
+
+<!-- 5 -->
+<section class="slide" id="s5">
+  <div class="kicker">The problem · two of two</div>
+  <h2>A <span class="grad">capacity</span> problem</h2>
+  <p class="lead wide">You're not short on ideas. You're short on <strong>capacity</strong> — and the capacity you do have is going to operations instead of program.</p>
+  <div class="tags"><div class="tag p">Capacity you can't fundraise for</div></div>
+</section>
+
+<!-- 6 BUILD TO ITERATE -->
+<section class="slide slide-dark" id="s6">
+  <div class="glow"></div>
+  <div class="kicker">The cornerstone · everything else follows from this</div>
+  <h2>Build to iterate.<br>Not to scale.</h2>
+  <p class="lead wide">This field changes every few weeks. A six-month build is a bad bet — whatever you designed against has already moved.</p>
+  <div class="callout"><div class="ic">⚡</div><p><b>Build the small version. Change it when you learn something.</b> The cost of changing your mind just dropped to almost nothing.</p></div>
+</section>
+
+<!-- 7 THE GOAL -->
+<section class="slide" id="s7">
+  <div class="kicker">The only goal that matters</div>
+  <h2>Capacity moves from <span class="grad">ops</span> to <span class="grad">program</span></h2>
+  <p class="lead wide">Not efficiency. Not being AI-forward. <strong>Hours. Moved.</strong> That's the number your board should ask you for.</p>
+</section>
+
+<!-- 8 NO-ZONES -->
+<section class="slide slide-dark" id="s8">
+  <div class="glow"></div>
+  <div class="kicker">First, draw the line</div>
+  <h2>Where does a human decide?</h2>
+  <p class="lead wide">Everything we're about to look at runs on captured information. Cheaper to draw this line <strong>now</strong> than to redraw it after something is running.</p>
 </section>
 
 <!-- 9 -->
 <section class="slide" id="s9">
-  <div class="slide-number">Sharpening 04 — Partner, Not Replacement</div>
-  <h2>Thought partner, not thought replacement</h2>
-  <div class="big-statement">
-    <strong>Argue with it.</strong> Ask it what's wrong with your plan. Ask what a skeptical funder would push back on. Ask what you're not seeing.
-    <br><br>
-    If it agrees with everything you say, you're using it wrong. Agreement is not help. You already had your opinion before you opened the tab.
+  <div class="kicker">Step one · classify your data</div>
+  <h2>What does a leak cost the person?</h2>
+  <div class="cards">
+    <div class="card g"><div class="lbl">Tier 1 · Public</div><h3>Costs nothing</h3><p>Program descriptions. Aggregate numbers. Stories you already published.</p></div>
+    <div class="card y"><div class="lbl">Tier 2 · Recoverable</div><h3>Real, survivable</h3><p>Names. Addresses. Attendance. Grades. A breach of trust — and life goes on.</p></div>
+    <div class="card r"><div class="lbl">Tier 3 · Life-altering</div><h3>Not recoverable</h3><p>Social Security numbers. Immigration status. Health records. Safety and court matters.</p></div>
   </div>
-  <div class="use-case-grid">
-    <div class="use-case-tag">"What's the weakest part of this?"</div>
-    <div class="use-case-tag">"Argue the other side"</div>
-    <div class="use-case-tag">"What would a funder ask that I can't answer?"</div>
-  </div>
+  <div class="callout"><div class="ic">⚠</div><p><b>Tier 3 usually lives in the same spreadsheet as Tier 2.</b> That's the actual problem.</p></div>
 </section>
 
 <!-- 10 -->
 <section class="slide" id="s10">
-  <div class="slide-number">Sharpening 05 — You Can Build Now</div>
-  <h2>Code stopped being the barrier</h2>
-  <div class="big-statement">
-    The tool your organization needs may not exist as software you can buy. It used to be that the answer was a developer you couldn't afford, so you used a spreadsheet instead.
-    <br><br>
-    <strong>That's over.</strong> The barrier now is knowing clearly what you want. Which is why we spent the first ten minutes on the sentence.
+  <div class="kicker">Step two · one example, together</div>
+  <h2>Fact sheets on your students</h2>
+  <div class="cards two">
+    <div class="card y"><div class="lbl">As described</div><h3>🟡 Yellow</h3><p>Touches names and program history. Tier 2. AI formats it, a human checks before it leaves the building.</p></div>
+    <div class="card r"><div class="lbl">Change one thing</div><h3>🔴 Red</h3><p>Now the sheet carries their Social Security number for a scholarship. Same task. Same tool. Different answer.</p></div>
   </div>
-  <div class="use-case-grid">
-    <div class="use-case-tag">The tracker nobody sells</div>
-    <div class="use-case-tag">The form that feeds your report</div>
-    <div class="use-case-tag">The dashboard your board asks for</div>
-  </div>
-</section>
-
-<!-- 10b -->
-<section class="slide" id="s10b">
-  <div class="slide-number">Sharpening 06 — Deep, Not Wide</div>
-  <h2>Go deep with your tools, not wide</h2>
-  <div class="big-statement">
-    There is a new AI tool every week promising to do something magical for your organization. <strong>Almost none of them will matter to you.</strong> Chasing them is how you end up with eleven subscriptions and no capacity.
-    <br><br>
-    This field is also moving fast enough that sinking months into one big build is a bad bet — whatever you built against will have moved by the time you finish. So keep the stack <strong>lean</strong>, and get good at what's in it.
-    <br><br>
-    I specialize in two things: Claude and Google Workspace. Not because nothing else is good, but because <strong>Workspace is far more powerful than most people who use it daily realize.</strong> The automation available inside that one ecosystem — before you connect a single outside tool — covers most of what a nonprofit actually needs.
-    <br><br>
-    Be more excited about deepening what you already have than about finding what's next.
-  </div>
-  <div class="use-case-grid">
-    <div class="use-case-tag">Two tools, known well</div>
-    <div class="use-case-tag">Not the newest thing</div>
-    <div class="use-case-tag">Most of it is already in your Workspace</div>
-  </div>
+  <p class="lead wide" style="margin-top:36px"><strong>The color lives in the data, not the task.</strong></p>
 </section>
 
 <!-- 11 -->
 <section class="slide" id="s11">
-  <div class="slide-number">Sharpening 07 — Human in the Loop</div>
-  <h2>You are the editor. Permanently.</h2>
-  <div class="big-statement">
-    This is not a phase you graduate from. Nothing leaves your organization without a person reading it. Not because the tool is bad, but because <strong>your name is on it</strong>.
-    <br><br>
-    And while we're here: every one of these tools has a training setting that decides whether your conversations improve the model. <strong>Go find yours today.</strong> If you are putting participant data anywhere near a chatbot, a personal account is not the right container — you need a business account with an actual agreement behind it.
-  </div>
-  <div class="use-case-grid">
-    <div class="use-case-tag">Find your training setting</div>
-    <div class="use-case-tag">Business account for participant data</div>
-    <div class="use-case-tag">A human reads it before it ships</div>
-  </div>
+  <div class="kicker">Step three · thumbs up, thumbs down</div>
+  <h2>Green, yellow, or red?</h2>
+  <ul class="bullets wide">
+    <li><span class="num">1</span><div>Thank-you to a donor who gave <b>$50</b></div></li>
+    <li><span class="num">2</span><div>Thank-you to a donor who gave <b>$50,000</b></div></li>
+    <li><span class="num">3</span><div>Summarizing a case note about a <b>student's home situation</b></div></li>
+    <li><span class="num">4</span><div>Deciding which applicants <b>meet eligibility</b></div></li>
+    <li><span class="num">5</span><div>Writing a participant's <b>story for the annual report</b></div></li>
+    <li><span class="num">6</span><div>Drafting <b>this month's social posts</b></div></li>
+  </ul>
 </section>
 
-<!-- 12 NO-ZONES -->
-<section class="slide" id="s12">
-  <div class="slide-number">Before The Aisles — Draw the Line</div>
-  <h2>Decide your no-zones first</h2>
-  <div class="big-statement">
-    Everything we're about to shop for runs on <strong>captured information</strong>. So before you look at a single aisle, name the places where a human decides and a machine doesn't.
-    <br><br>
-    It is much cheaper to draw this line now than to redraw it after something is already running.
-  </div>
-  <div class="use-case-grid">
-    <div class="use-case-tag">A participant's name on it</div>
-    <div class="use-case-tag">A funder will audit it</div>
-    <div class="use-case-tag">It involves a minor</div>
-    <div class="use-case-tag">It goes out under a signature</div>
-  </div>
-  <div class="pause-callout">
-    <div class="pause-icon">⏸</div>
-    <p><strong>Pause here.</strong> This is the first thing in your cart. Add <strong>"Help us define our no-zones"</strong> if your organization has never written this down.</p>
-  </div>
-  <div class="toggle-block" id="toggle-policy">
-    <div class="toggle-header" onclick="toggleBlock('toggle-policy')">
-      <div class="toggle-label"><span>Draft your AI policy</span><span class="tag">2 values to swap</span></div>
-      <span class="toggle-arrow">▼</span>
-    </div>
-    <div class="toggle-body">
-      <div class="toggle-copy-bar">
-        <span>Do this back at the office, not now</span>
-        <button class="copy-btn" onclick="copyToggle('toggle-policy', this)">Copy</button>
-      </div>
-      <div class="toggle-code" id="toggle-policy-code">I run a nonprofit called <span class="placeholder">[organization name]</span>. We serve <span class="placeholder">[who you serve]</span>.
-
-Help me write a short, plain-language AI use policy for our staff. Ask me questions one at a time before you write anything.
-
-It needs to cover:
-- What staff may and may not put into an AI tool
-- How we handle participant data specifically
-- Which decisions always require a human
-- What we tell participants and funders about our use of AI
-
-Keep it under two pages. Write it so a new hire understands it on day one.
-
-<span class="comment">// Don't accept the first draft. Tell it what your org would actually never do.</span></div>
-    </div>
-  </div>
+<!-- 12 -->
+<section class="slide slide-dark" id="s12">
+  <div class="glow"></div>
+  <div class="kicker">The rule to take home</div>
+  <h2>Organize freely.<br>Expose nothing.</h2>
+  <p class="lead wide">You can absolutely use AI to <strong>organize and format</strong> information about the people you serve. You cannot put information that would <strong>ruin someone's life</strong> somewhere that creates outsized risk.</p>
 </section>
 
-<!-- 13 SIX AISLES OVERVIEW -->
+<!-- 13 BUDGET -->
 <section class="slide" id="s13">
-  <div class="slide-number">The Six Aisles</div>
-  <h2>Every nonprofit is these six things</h2>
-  <p class="setup-intro-sub">We'll walk each one. Add anything that makes you sigh.</p>
-  <div class="setup-overview">
-    <div class="overview-item"><div class="overview-num">01</div><div class="overview-label">Program</div></div>
-    <div class="overview-arrow">→</div>
-    <div class="overview-item"><div class="overview-num">02</div><div class="overview-label">Development</div></div>
-    <div class="overview-arrow">→</div>
-    <div class="overview-item"><div class="overview-num">03</div><div class="overview-label">Grant Reporting</div></div>
-    <div class="overview-arrow">→</div>
-    <div class="overview-item"><div class="overview-num">04</div><div class="overview-label">Operations</div></div>
-    <div class="overview-arrow">→</div>
-    <div class="overview-item"><div class="overview-num">05</div><div class="overview-label">Communications</div></div>
-    <div class="overview-arrow">→</div>
-    <div class="overview-item"><div class="overview-num">06</div><div class="overview-label">Board &amp; Volunteers</div></div>
-  </div>
+  <div class="kicker">Where the money already goes</div>
+  <h2>A nonprofit budget, honestly</h2>
+  <table>
+    <thead><tr><th>Function</th><th>Line item</th><th class="c">Annual</th><th class="c">Verdict</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="2"><b>Program</b></td><td>Program staff, 2 FTE</td><td class="c">$96,000</td><td class="c"><span class="dot">🟢</span></td></tr>
+      <tr class="watch"><td>Participant tracking software</td><td class="c">$3,600</td><td class="c"><span class="dot">🟡</span></td></tr>
+      <tr class="watch"><td rowspan="2"><b>Development</b></td><td>Grant writer, contract</td><td class="c">$18,000</td><td class="c"><span class="dot">🟡</span></td></tr>
+      <tr><td>Donor CRM</td><td class="c">$4,800</td><td class="c"><span class="dot">🟢</span></td></tr>
+      <tr class="watch"><td rowspan="2"><b>Reporting</b></td><td>Evaluation consultant</td><td class="c">$12,000</td><td class="c"><span class="dot">🟡</span></td></tr>
+      <tr><td>Survey + reporting tool</td><td class="c">$1,800</td><td class="c"><span class="dot">🟢</span></td></tr>
+      <tr><td rowspan="2"><b>Operations</b></td><td>Bookkeeper</td><td class="c">$9,600</td><td class="c"><span class="dot">🟢</span></td></tr>
+      <tr class="flag"><td>Overlapping subscriptions</td><td class="c">$2,400</td><td class="c"><span class="dot">🔴</span></td></tr>
+      <tr class="flag"><td rowspan="2"><b>Communications</b></td><td><b>Webmaster retainer</b></td><td class="c">$7,200</td><td class="c"><span class="dot">🔴</span></td></tr>
+      <tr><td>Design contractor</td><td class="c">$4,000</td><td class="c"><span class="dot">🟢</span></td></tr>
+      <tr class="flag"><td rowspan="2"><b>Board &amp; Volunteers</b></td><td>Volunteer platform</td><td class="c">$2,400</td><td class="c"><span class="dot">🔴</span></td></tr>
+      <tr class="flag"><td>Board portal software</td><td class="c">$1,800</td><td class="c"><span class="dot">🔴</span></td></tr>
+    </tbody>
+  </table>
 </section>
 
-<!-- 14 AISLE 1 -->
+<!-- 14 -->
 <section class="slide" id="s14">
-  <div class="slide-number">Aisle 01 — Program &amp; Mission Delivery</div>
-  <h2>The work, and the people it lands on</h2>
-  <div class="pieces-grid">
-    <div class="piece-card accent-cyan">
-      <div class="piece-label">Do it yourself</div>
-      <h3>Program toolkit</h3>
-      <p>Logic models, evaluation plans, and resource guides for something you're about to launch.</p>
-    </div>
-    <div class="piece-card accent-cyan">
-      <div class="piece-label">Do it yourself</div>
-      <h3>Theory of change</h3>
-      <p>You know what you do. This draws why it works, with the assumption behind every arrow.</p>
-    </div>
-    <div class="piece-card accent-purple">
-      <div class="piece-label">Needs building</div>
-      <h3>Capture at the source</h3>
-      <p>Intake that screens itself. Attendance that feeds reporting. Notes that land on the right file.</p>
-    </div>
+  <div class="kicker">One line, read twice</div>
+  <h2>The designer stays.<br>The retainer doesn't.</h2>
+  <div class="cards two">
+    <div class="card g"><div class="lbl">Keep · $4,000</div><h3>Design contractor</h3><p>Pay people for judgment. Design, brand, the initial build — that's work only a person does.</p></div>
+    <div class="card r"><div class="lbl">Replace · $7,200</div><h3>Webmaster retainer</h3><p>$7,200 a year so someone else can type a date change into a page. That's now a $20 subscription.</p></div>
   </div>
-  <div class="pause-callout">
-    <div class="pause-icon">⏸</div>
-    <p><strong>Pause here.</strong> Aisle 01 in your cart. Ten seconds — add what you recognize, then we move.</p>
-  </div>
+  <p class="lead wide" style="margin-top:36px">Red plus yellow: roughly <strong>$25,000</strong>. On $485K, that's a part-time program person. <strong>Not savings. Capacity.</strong></p>
 </section>
 
-<!-- 15 AISLE 2 DEEP -->
-<section class="slide" id="s15">
-  <div class="slide-number">Aisle 02 — Development &amp; Fundraising</div>
-  <h2>The nonprofit version of sales</h2>
-  <div class="step-layout">
-    <div class="step-instructions">
-      <div class="instruction-list">
-        <div class="instruction-item">
-          <div class="instruction-num">1</div>
-          <div><strong>The gift pyramid.</strong> Type a campaign goal and see what it actually requires — the tiers, the number of gifts, the prospects you'd need to have.</div>
-        </div>
-        <div class="instruction-item">
-          <div class="instruction-num">2</div>
-          <div><strong>Retention beats acquisition.</strong> A small bump in keeping donors outperforms doubling what you spend to find new ones. Most boards have never seen this drawn.</div>
-        </div>
-        <div class="instruction-item">
-          <div class="instruction-num">3</div>
-          <div><strong>What needs building:</strong> thank-yous drafted the day a gift lands, and a pipeline that flags the donor you meant to call four months ago.</div>
-        </div>
-      </div>
-      <div class="pause-callout">
-        <div class="pause-icon">⏸</div>
-        <p><strong>Pause here.</strong> Try the gift pyramid prompt with a real number — one you're actually carrying this year.</p>
-      </div>
-      <div class="toggle-block" id="toggle-pyramid">
-        <div class="toggle-header" onclick="toggleBlock('toggle-pyramid')">
-          <div class="toggle-label"><span>Gift pyramid</span><span class="tag">2 values to swap</span></div>
-          <span class="toggle-arrow">▼</span>
-        </div>
-        <div class="toggle-body">
-          <div class="toggle-copy-bar">
-            <span>Paste into Claude, swap the amber values</span>
-            <button class="copy-btn" onclick="copyToggle('toggle-pyramid', this)">Copy</button>
-          </div>
-          <div class="toggle-code" id="toggle-pyramid-code">We're trying to raise <span class="placeholder">[$ goal]</span> for <span class="placeholder">[what it's for]</span>.
-
-Build me a gift pyramid for this campaign. Show it as a visual I can look at, tiered from the lead gift down.
-
-For each tier, show me:
-- The gift size
-- How many gifts we need at that size
-- How many qualified prospects that realistically takes
-
-Then tell me honestly whether this goal looks feasible, and what would have to be true for it to work.
-
-<span class="comment">// Then say: "make the goal 20% smaller" and watch what changes.</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="step-screenshot">
-      <div class="screenshot-placeholder">
-        <div class="screenshot-label">What you should see</div>
-        <div class="screenshot-fields">
-          <div class="mock-field"><span class="mock-label">Lead gift</span><span class="mock-value">1 × $50,000</span></div>
-          <div class="mock-field"><span class="mock-label">Major gifts</span><span class="mock-value">4 × $25,000</span></div>
-          <div class="mock-field"><span class="mock-label">Mid-level</span><span class="mock-value">12 × $10,000</span></div>
-          <div class="mock-field"><span class="mock-label">Broad base</span><span class="mock-value">180 × $500</span></div>
-          <div class="mock-warning">Prospects needed: roughly 4× the gifts at every tier</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- 15 CATEGORY ZERO -->
+<section class="slide slide-dark" id="s15">
+  <div class="glow"></div>
+  <div class="kicker">Category Zero</div>
+  <h1 style="font-size:clamp(46px,7vw,104px)">Data collection</h1>
+  <p class="lead wide">Know what your data is and how to capture it, and <strong>you can automate almost anything.</strong> Nothing else in this hour works without it.</p>
 </section>
 
-<!-- 16 AISLE 3 DEEP -->
+<!-- 16 -->
 <section class="slide" id="s16">
-  <div class="slide-number">Aisle 03 — Grant Reporting &amp; Compliance</div>
-  <h2>The writing was never the hard part</h2>
-  <div class="step-layout">
-    <div class="step-instructions">
-      <div class="instruction-list">
-        <div class="instruction-item">
-          <div class="instruction-num">1</div>
-          <div><strong>Name the real problem.</strong> Reporting is painful because the data was never captured, not because writing is hard. You are reconstructing, not reporting.</div>
-        </div>
-        <div class="instruction-item">
-          <div class="instruction-num">2</div>
-          <div><strong>Build the library.</strong> Your past winning proposals are modular. Program description, need statement, evaluation plan — pull them apart once, reassemble per funder forever.</div>
-        </div>
-        <div class="instruction-item">
-          <div class="instruction-num">3</div>
-          <div><strong>What needs building:</strong> capture during the grant period, and one dataset that translates into every funder's format.</div>
-        </div>
-      </div>
-      <div class="pause-callout">
-        <div class="pause-icon">⏸</div>
-        <p><strong>Pause here.</strong> If you brought a past report, this is the moment to use it. Upload it and run the prompt.</p>
-      </div>
-      <div class="toggle-block" id="toggle-grant">
-        <div class="toggle-header" onclick="toggleBlock('toggle-grant')">
-          <div class="toggle-label"><span>Build your content library</span><span class="tag">paste into Claude</span></div>
-          <span class="toggle-arrow">▼</span>
-        </div>
-        <div class="toggle-body">
-          <div class="toggle-copy-bar">
-            <span>Attach a past proposal or report first</span>
-            <button class="copy-btn" onclick="copyToggle('toggle-grant', this)">Copy</button>
-          </div>
-          <div class="toggle-code" id="toggle-grant-code">I've attached <span class="placeholder">[a proposal or report we've submitted before]</span>.
-
-Break it into reusable blocks I can pull from for future applications. For each block, give me:
-- A label (organizational background, need statement, program description, evaluation plan, budget narrative)
-- The text itself, lightly cleaned up
-- A note on what I'd need to change per funder
-
-Then tell me which blocks are strong and which ones read like we wrote them at 11pm the night before it was due.
-
-<span class="comment">// That last line is the useful one. Ask for it every time.</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="step-screenshot">
-      <div class="screenshot-placeholder">
-        <div class="screenshot-label">Your library, after one pass</div>
-        <div class="screenshot-fields">
-          <div class="mock-field"><span class="mock-label">Org background</span><span class="mock-value">Reusable</span></div>
-          <div class="mock-field"><span class="mock-label">Need statement</span><span class="mock-value">Reusable</span></div>
-          <div class="mock-field"><span class="mock-label">Program description</span><span class="mock-value">Per funder</span></div>
-          <div class="mock-field"><span class="mock-label">Evaluation plan</span><span class="mock-value">Reusable</span></div>
-          <div class="mock-warning">Next application starts at 60% written</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="kicker">Three questions</div>
+  <h2>Where does it come from, and what does it cost you?</h2>
+  <table>
+    <thead><tr><th>Source</th><th>What you get</th><th class="c">Risk</th></tr></thead>
+    <tbody>
+      <tr><td><b>Forms</b></td><td>Only what you asked for. They consented.</td><td class="c"><span class="dot">🟢</span></td></tr>
+      <tr><td><b>Calendar</b></td><td>Who met whom, when.</td><td class="c"><span class="dot">🟢</span></td></tr>
+      <tr><td><b>Spreadsheets you already keep</b></td><td>Whatever someone has been maintaining.</td><td class="c"><span class="dot">🟢</span></td></tr>
+      <tr class="watch"><td><b>Documents</b></td><td>Depends entirely on the document.</td><td class="c"><span class="dot">🟡</span></td></tr>
+      <tr class="watch"><td><b>Email</b></td><td>Everything. It's all already in there.</td><td class="c"><span class="dot">🟡</span></td></tr>
+      <tr class="flag"><td><b>Meeting transcripts</b></td><td>Verbatim — including people who never consented.</td><td class="c"><span class="dot">🔴</span></td></tr>
+    </tbody>
+  </table>
+  <p class="lead wide" style="margin-top:32px">The richest sources are the riskiest. <strong>That isn't a coincidence.</strong></p>
 </section>
 
-<!-- 17 AISLE 4 -->
-<section class="slide" id="s17">
-  <div class="slide-number">Aisle 04 — Internal Operations</div>
-  <h2>Everything nobody is assigned to</h2>
-  <div class="pieces-grid">
-    <div class="piece-card accent-cyan">
-      <div class="piece-label">Do it yourself</div>
-      <h3>Workflow fix</h3>
-      <p>Turn the process that annoys you most into a structured plan for changing it.</p>
-    </div>
-    <div class="piece-card accent-cyan">
-      <div class="piece-label">Do it yourself</div>
-      <h3>Budget scenarios</h3>
-      <p>Three futures side by side, with an honest read on where the pressure actually lands.</p>
-    </div>
-    <div class="piece-card accent-purple">
-      <div class="piece-label">Needs building</div>
-      <h3>Meetings that finish themselves</h3>
-      <p>Notes become decisions and action items that reach the right inbox without anyone retyping them.</p>
-    </div>
-  </div>
-  <div class="pause-callout">
-    <div class="pause-icon">⏸</div>
-    <p><strong>Pause here.</strong> Aisle 04. Ten seconds.</p>
-  </div>
+<!-- 17 -->
+<section class="slide slide-dark" id="s17">
+  <div class="glow"></div>
+  <div class="kicker">The move that resolves it</div>
+  <h2>You control what gets <span class="grad">extracted</span>, not what gets read</h2>
+  <p class="lead wide">The script reads the whole thread. What lands in your report is <strong>last contact, topic, days since</strong> — never the message itself.</p>
+  <div class="callout"><div class="ic">🔒</div><p><b>Nothing sensitive moves anywhere new.</b> That's the answer to everything we just worried about.</p></div>
 </section>
 
-<!-- 18 AISLE 5 -->
+<!-- 18 APPS SCRIPT -->
 <section class="slide" id="s18">
-  <div class="slide-number">Aisle 05 — Communications &amp; Storytelling</div>
-  <h2>Everyone who isn't writing you a check</h2>
-  <div class="pieces-grid">
-    <div class="piece-card accent-cyan">
-      <div class="piece-label">Do it yourself</div>
-      <h3>Impact, made public</h3>
-      <p>The version your community reads, not the version the funder reads. They are different documents.</p>
+  <div class="kicker">The tool you already pay for</div>
+  <h2>Google Apps Script</h2>
+  <div class="cols">
+    <div>
+      <p class="lead">It reads your inbox, sheets, calendar and drive — <strong>inside your own Workspace.</strong> No new vendor. Nothing leaves.</p>
+      <div class="callout"><div class="ic">👋</div><p><b>You are not going to write this.</b> You're going to know it's possible, and know what to ask for.</p></div>
     </div>
-    <div class="piece-card accent-purple">
-      <div class="piece-label">Needs building</div>
-      <h3>A story bank</h3>
-      <p>Participant wins captured the week they happen, so they're findable in November when you need them.</p>
+    <div class="mock">
+      <div class="mock-bar">Already included in Workspace</div>
+      <div class="mock-body">
+        <div class="row"><span class="k">Extra cost</span><span class="v">$0</span></div>
+        <div class="row"><span class="k">New vendor</span><span class="v">None</span></div>
+        <div class="row"><span class="k">Where data sits</span><span class="v">Where it already sits</span></div>
+        <div class="note">Most nonprofits pay for tools that do less than what's already switched off inside their Workspace.</div>
+      </div>
     </div>
-    <div class="piece-card accent-purple">
-      <div class="piece-label">Needs building</div>
-      <h3>Newsletter from the month you had</h3>
-      <p>Drafted from what actually happened, instead of from a blank page on a Thursday.</p>
-    </div>
-  </div>
-  <div class="pause-callout">
-    <div class="pause-icon">⏸</div>
-    <p><strong>Pause here.</strong> Aisle 05. Ten seconds.</p>
   </div>
 </section>
 
-<!-- 19 AISLE 6 -->
+<!-- 19 -->
 <section class="slide" id="s19">
-  <div class="slide-number">Aisle 06 — Board &amp; Volunteers</div>
-  <h2>The people with power who aren't on payroll</h2>
-  <div class="pieces-grid">
-    <div class="piece-card accent-cyan">
-      <div class="piece-label">Do it yourself</div>
-      <h3>Volunteer system</h3>
-      <p>Role descriptions, onboarding, communication templates, and tracking — written once, used forever.</p>
-    </div>
-    <div class="piece-card accent-purple">
-      <div class="piece-label">Needs building</div>
-      <h3>Board packet from live data</h3>
-      <p>Assembled the week before, not the night before, from numbers that were already there.</p>
-    </div>
-    <div class="piece-card accent-purple">
-      <div class="piece-label">Needs building</div>
-      <h3>Minutes → decisions → follow-up</h3>
-      <p>What the board decided becomes what someone is actually doing, without a chase.</p>
-    </div>
-  </div>
-  <div class="pause-callout">
-    <div class="pause-icon">⏸</div>
-    <p><strong>Pause here.</strong> Last aisle. Then we look at what you built.</p>
-  </div>
+  <div class="kicker">Worked example · steps 1 and 2</div>
+  <h2>Label, then pull</h2>
+  <ul class="bullets wide">
+    <li><span class="num">1</span><div><b>Label.</b> Every email from a donor gets tagged as it arrives. Nobody changes how they work.</div></li>
+    <li><span class="num">2</span><div><b>Pull.</b> A script reads the labeled threads. It's your inbox — you're not connecting anything new.</div></li>
+  </ul>
 </section>
 
-<!-- 20 CONNECTED ORG -->
+<!-- 20 -->
 <section class="slide" id="s20">
-  <div class="slide-number">Under the Hood</div>
-  <h2>These are not six projects</h2>
-  <div class="big-statement">
-    Every failure in every aisle traces to the same root. <strong>The data lived in someone's inbox, a spreadsheet nobody owns, and one person's head.</strong>
-  </div>
-  <div class="pieces-grid">
-    <div class="piece-card accent-dark">
-      <div class="piece-label">The substrate</div>
-      <h3>Information capture</h3>
-      <p>One place where what happened gets recorded, the moment it happens.</p>
+  <div class="kicker">Worked example · step 3 · the human step</div>
+  <h2>What does a <span class="grad">healthy</span> donor relationship look like?</h2>
+  <div class="cols">
+    <div>
+      <p class="lead">No tool can answer that for your organization. <strong>You've known this for years.</strong> The machine only counts what you've defined.</p>
+      <div class="callout"><div class="ic">🟢</div><p><b>This is the green zone</b> — sitting right in the middle of an automated system.</p></div>
     </div>
-    <div class="piece-card accent-cyan">
-      <div class="piece-label">Six views</div>
-      <h3>Same data, different questions</h3>
-      <p>The funder asks one thing. The board asks another. Your newsletter asks a third. Same underlying record.</p>
-    </div>
-    <div class="piece-card accent-purple">
-      <div class="piece-label">The real goal</div>
-      <h3>Ten seconds</h3>
-      <p>You can answer any question about your own work in ten seconds. That's the whole vision.</p>
+    <div class="mock">
+      <div class="mock-bar">Your report card — you write this</div>
+      <div class="mock-body">
+        <div class="row"><span class="k">Heard from us in 90 days</span><span class="v">+2</span></div>
+        <div class="row"><span class="k">Got an update on their gift</span><span class="v">+2</span></div>
+        <div class="row"><span class="k">We asked before we thanked</span><span class="v">−3</span></div>
+        <div class="row"><span class="k">Silent since last gift</span><span class="v">−4</span></div>
+        <div class="note">Change these numbers and you've changed your strategy. That's the whole edit.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 21 INDUCED DEMAND -->
+<!-- 21 -->
 <section class="slide" id="s21">
-  <div class="slide-number">What Happens After You Leave</div>
-  <h2>It's going to feel busier before it feels lighter</h2>
-  <div class="big-statement">
-    Add a lane to a highway and you get <strong>more</strong> traffic, not less. Same thing here. Clearing a bottleneck reveals work that was always there, queued up behind it.
-    <br><br>
-    Month one often feels busier. <strong>That is the system working, not failing.</strong> It settles.
-    <br><br>
-    And then something stranger happens: these become invisible. Within a few weeks you won't remember what it was like without them, which means nobody will ever thank you for building them. Build them anyway.
+  <div class="kicker">Worked example · steps 4 and 5</div>
+  <h2>Report, then change it</h2>
+  <ul class="bullets wide">
+    <li><span class="num">4</span><div><b>Report.</b> Quarterly digest to the team. Who's warm, who's quiet, who hasn't heard from you since the gift.</div></li>
+    <li><span class="num">5</span><div><b>Change it.</b> Approach didn't land? Edit the report card. <b>Not the system.</b></div></li>
+  </ul>
+  <div class="callout"><div class="ic">⚡</div><p><b>That's build-to-iterate.</b> Not a twenty-page retention plan you're beholden to for eighteen months.</p></div>
+</section>
+
+<!-- 22 -->
+<section class="slide" id="s22">
+  <div class="kicker">A rule about reports</div>
+  <h2>Match reporting cadence to <span class="grad">decision</span> cadence</h2>
+  <p class="lead wide">Quarterly isn't a technical limit. It's when you'd actually change donor strategy. <strong>A weekly report nobody acts on is just more inbox.</strong></p>
+</section>
+
+<!-- 23 THE SHAPE -->
+<section class="slide" id="s23">
+  <div class="kicker">How it all fits</div>
+  <h2>Collect once. Communicate many.</h2>
+  <div class="flow">
+    <div class="node zero"><div class="n-t">Participant</div><div class="n-s">🔴 Tier 3</div></div>
+    <div class="node"><div class="n-t">Donor</div><div class="n-s">🟡</div></div>
+    <div class="node"><div class="n-t">Money</div><div class="n-s">🟡</div></div>
+    <div class="node"><div class="n-t">Activity</div><div class="n-s">🟢</div></div>
+    <div class="node"><div class="n-t">Story</div><div class="n-s">🟡 consent</div></div>
+    <span class="arrow">→</span>
+    <div class="node out"><div class="n-t">Communications</div><div class="n-s">The output layer</div></div>
+  </div>
+  <p class="lead wide" style="margin-top:36px">Five streams in. Everything your organization produces comes out of them. <strong>Communications isn't a department — it's the output.</strong></p>
+</section>
+
+<!-- 24 -->
+<section class="slide" id="s24">
+  <div class="kicker">Stream 01 · 🔴 Tier 3 · highest risk</div>
+  <h2>Participant data</h2>
+  <p class="lead wide">The most valuable stream you have, and the one that can hurt someone.</p>
+  <div class="tags">
+    <div class="tag">Intake that feeds the record</div>
+    <div class="tag">Attendance captured once</div>
+    <div class="tag p">Session notes, dictated</div>
+    <div class="tag p">Outcomes on a schedule</div>
   </div>
 </section>
 
-<!-- 22 CHECKOUT -->
-<section class="slide slide-dark slide-ship" id="s22">
-  <div class="title-bg-accent"></div>
-  <div class="slide-number">Checkout</div>
-  <h2>Check out</h2>
-  <p>Scroll to the bottom of your cart and hit <strong>Email me my plan</strong>. It lands in your inbox with a link you can save as a PDF.</p>
-  <div style="margin-top:44px;max-width:640px;text-align:left;width:100%">
-    <div class="pause-callout" style="background:rgba(124,58,237,0.14);border-color:rgba(124,58,237,0.35)">
-      <div class="pause-icon">⏸</div>
-      <p style="color:rgba(255,255,255,0.75)"><strong style="color:#a78bfa">Before you close the laptop.</strong> Pick <em>one</em> item. The smallest thing on your list that you would actually notice being gone. Start there Monday.</p>
+<!-- 25 -->
+<section class="slide" id="s25">
+  <div class="kicker">Stream 02 · 🟡 Tier 2</div>
+  <h2>Donor data</h2>
+  <p class="lead wide">Already sitting in your inbox, uncounted. <strong>The biggest untapped database most nonprofits own.</strong></p>
+  <div class="tags">
+    <div class="tag">Auto-label donor email</div>
+    <div class="tag">Last contact and topic</div>
+    <div class="tag p">Donor health scoring</div>
+    <div class="tag p">Gift → thank-you, same day</div>
+  </div>
+</section>
+
+<!-- 26 -->
+<section class="slide" id="s26">
+  <div class="kicker">Stream 03 · 🟡 Tier 2</div>
+  <h2>Money data</h2>
+  <p class="lead wide">Almost always captured late. <strong>Everything downstream inherits that lateness</strong> — the board packet, the funder report, the 990.</p>
+  <div class="tags">
+    <div class="tag">Receipt capture at point of spend</div>
+    <div class="tag">Expense coding as it lands</div>
+    <div class="tag p">Budget vs. actual, live</div>
+    <div class="tag p">Restricted funds per grant</div>
+  </div>
+</section>
+
+<!-- 27 -->
+<section class="slide" id="s27">
+  <div class="kicker">Stream 04 · 🟢 Tier 1</div>
+  <h2>Activity data</h2>
+  <p class="lead wide">What your organization did and decided. Cheap to capture, and <strong>almost nobody does it.</strong></p>
+  <div class="tags">
+    <div class="tag">Meetings → decisions and owners</div>
+    <div class="tag">A searchable decision log</div>
+    <div class="tag p">Volunteer hours at sign-out</div>
+    <div class="tag p">Board packet from live data</div>
+  </div>
+</section>
+
+<!-- 28 -->
+<section class="slide" id="s28">
+  <div class="kicker">Stream 05 · 🟡 consent risk</div>
+  <h2>Story data</h2>
+  <p class="lead wide">The stuff that wins grants and moves donors. <strong>Almost always lost</strong>, because nobody captures it the week it happens.</p>
+  <div class="tags">
+    <div class="tag">A story bank</div>
+    <div class="tag">Consent tracked with the story</div>
+    <div class="tag p">Photo library, tagged</div>
+    <div class="tag p">Quotes pulled into reports</div>
+  </div>
+</section>
+
+<!-- 29 DONOR PORTAL -->
+<section class="slide slide-dark" id="s29">
+  <div class="glow"></div>
+  <div class="kicker">Deep dive · think outside the box</div>
+  <h2>Give every donor their own page</h2>
+  <p class="lead wide">Not an email. A <strong>link</strong>. Theirs. Showing what their money did.</p>
+  <div class="callout"><div class="ic">💡</div><p><b>Two years ago this was a $15,000 project.</b> It is now an afternoon.</p></div>
+</section>
+
+<!-- 30 -->
+<section class="slide" id="s30">
+  <div class="kicker">Deep dive · what's on the page</div>
+  <h2>Same content. Feels personal. Built once.</h2>
+  <div class="cols">
+    <div>
+      <ul class="bullets">
+        <li><span class="num">•</span><div>Their giving history</div></li>
+        <li><span class="num">•</span><div>What <b>their</b> gift funded</div></li>
+        <li><span class="num">•</span><div>Photos and updates from that program</div></li>
+        <li><span class="num">•</span><div>Tax receipts, downloadable</div></li>
+      </ul>
+      <div class="callout"><div class="ic">🔁</div><p><b>Even your biggest donors expect standard communications.</b> One build replaces forty individual emails — and lands warmer than all of them.</p></div>
     </div>
-    <div class="toggle-block" id="toggle-monday">
-      <div class="toggle-header" onclick="toggleBlock('toggle-monday')">
-        <div class="toggle-label"><span>Your Monday morning prompt</span><span class="tag">1 value to swap</span></div>
-        <span class="toggle-arrow">▼</span>
-      </div>
-      <div class="toggle-body">
-        <div class="toggle-copy-bar">
-          <span>Save this one. It's the whole method.</span>
-          <button class="copy-btn" onclick="copyToggle('toggle-monday', this)">Copy</button>
-        </div>
-        <div class="toggle-code" id="toggle-monday-code">Here's something that eats my week: <span class="placeholder">[describe it out loud — ramble, don't summarize]</span>
-
-Before you suggest anything, ask me questions one at a time until you actually understand how it works today, who touches it, and where it breaks.
-
-Then show me:
-1. The smallest possible change that would help this week
-2. What it would take to fix it properly
-3. What I should NOT automate here, and why
-
-<span class="comment">// Use dictation for the first line. The messy version is the useful one.</span></div>
+    <div class="mock">
+      <div class="mock-bar">yourorg.org/donors/mrs-whitfield</div>
+      <div class="mock-body">
+        <div class="row"><span class="k">Given since 2019</span><span class="v">$4,250</span></div>
+        <div class="row"><span class="k">Your gift funded</span><span class="v">6 tutoring slots</span></div>
+        <div class="row"><span class="k">Students served</span><span class="v">14</span></div>
+        <div class="row"><span class="k">2025 tax receipt</span><span class="v">Download</span></div>
+        <div class="note">Built the way I build client portals: a sheet for the data, a page that reads it, one link per person.</div>
       </div>
     </div>
   </div>
+</section>
+
+<!-- 31 -->
+<section class="slide" id="s31">
+  <div class="kicker">Deep dive · work backwards</div>
+  <h2>Three documents. Six data points.</h2>
+  <table>
+    <thead><tr><th>What it needs</th><th class="c">Impact report</th><th class="c">Board quarterly</th><th class="c">Funder report</th></tr></thead>
+    <tbody>
+      <tr><td><b>Program numbers</b></td><td class="c">✓</td><td class="c">✓</td><td class="c">✓</td></tr>
+      <tr><td><b>Outcomes vs. targets</b></td><td class="c">✓</td><td class="c"></td><td class="c">✓</td></tr>
+      <tr><td><b>Participant stories</b></td><td class="c">✓</td><td class="c"></td><td class="c">✓</td></tr>
+      <tr><td><b>Demographics</b></td><td class="c"></td><td class="c"></td><td class="c">✓</td></tr>
+      <tr><td><b>Financials</b></td><td class="c"></td><td class="c">✓</td><td class="c">✓</td></tr>
+      <tr><td><b>What went wrong</b></td><td class="c"></td><td class="c">✓</td><td class="c"></td></tr>
+    </tbody>
+  </table>
+  <p class="lead wide" style="margin-top:32px"><strong>Four of six appear more than once.</strong> Collect them once, or collect them three times a year forever.</p>
+</section>
+
+<!-- 32 -->
+<section class="slide" id="s32">
+  <div class="kicker">Your homework</div>
+  <h2>Last year already told you what to fix</h2>
+  <ul class="bullets wide">
+    <li><span class="num">1</span><div>List <b>every communication</b> that went out last year, and to whom</div></li>
+    <li><span class="num">2</span><div>Mark what went out <b>later than you wanted</b></div></li>
+    <li><span class="num">3</span><div>Mark what took <b>more orchestration than it needed</b></div></li>
+  </ul>
+  <div class="callout"><div class="ic">⭐</div><p><b>Those marks are the plan.</b> You don't have to decide what to automate. You already know.</p></div>
+</section>
+
+<!-- 33 -->
+<section class="slide slide-dark" id="s33">
+  <div class="glow"></div>
+  <div class="kicker">Under the hood</div>
+  <h2>These aren't five projects</h2>
+  <p class="lead wide">Every failure traces to the same root. <strong>The data lived in someone's inbox, a spreadsheet nobody owns, and one person's head.</strong></p>
+</section>
+
+<!-- 34 -->
+<section class="slide" id="s34">
+  <div class="kicker">What happens after you leave</div>
+  <h2>It gets busier before it gets lighter</h2>
+  <p class="lead wide">Add a lane to a highway, you get <strong>more</strong> traffic. Clearing a bottleneck reveals work that was queued behind it.</p>
+  <div class="callout"><div class="ic">🛣</div><p><b>Month one feels busier. That's the system working.</b> It settles.</p></div>
+</section>
+
+<!-- 35 SHARPENING -->
+<section class="slide slide-dark" id="s35">
+  <div class="glow"></div>
+  <div class="kicker">Now the tool itself</div>
+  <h2>Sharpen the sword</h2>
+  <p class="lead wide">You know what you're building toward. <strong>Now here's how to actually work with these things.</strong></p>
+</section>
+
+<!-- 36 -->
+<section class="slide" id="s36">
+  <div class="kicker">Principle 01</div>
+  <h2>Talk. Don't type.</h2>
+  <p class="lead wide">Turn on dictation and <strong>ramble</strong>. Your messy spoken version carries three times the context of your tidy typed one.</p>
+  <div class="tags"><div class="tag">Windows · Win + H</div><div class="tag">Mac · Fn twice</div></div>
+</section>
+
+<!-- 37 -->
+<section class="slide" id="s37">
+  <div class="kicker">Principle 02</div>
+  <h2>Delete "prompt engineering"</h2>
+  <p class="lead wide">It's a conversation, not an incantation. <strong>You'd never engineer a prompt to a colleague.</strong></p>
+  <div class="tags"><div class="tag">"That's too formal"</div><div class="tag">"You missed the grant part"</div></div>
+</section>
+
+<!-- 38 -->
+<section class="slide" id="s38">
+  <div class="kicker">Principle 03</div>
+  <h2>Context is the whole game</h2>
+  <p class="lead wide">Most bad output is a <strong>context problem wearing a prompt costume</strong>. Upload the real document. Every time.</p>
+</section>
+
+<!-- 39 -->
+<section class="slide" id="s39">
+  <div class="kicker">Principle 04</div>
+  <h2>Thought partner, not thought replacement</h2>
+  <p class="lead wide"><strong>Argue with it.</strong> If it agrees with everything you say, you're doing it wrong.</p>
+  <div class="tags"><div class="tag">"What's the weakest part of this?"</div><div class="tag">"Argue the other side"</div></div>
+</section>
+
+<!-- 40 -->
+<section class="slide" id="s40">
+  <div class="kicker">Principle 05</div>
+  <h2>Go deep, not wide</h2>
+  <p class="lead wide">A new tool every week and <strong>almost none of them matter to you</strong>. Chasing them is how you end up with eleven subscriptions and no capacity.</p>
+  <div class="tags"><div class="tag">Two tools, known well</div><div class="tag">Most of it is already in your Workspace</div></div>
+</section>
+
+<!-- 41 -->
+<section class="slide" id="s41">
+  <div class="kicker">Principle 06</div>
+  <h2>You can build software now</h2>
+  <p class="lead wide">The tool your organization needs may not exist to buy. <strong>Code stopped being the barrier.</strong> Knowing what you want is.</p>
+</section>
+
+<!-- 42 -->
+<section class="slide" id="s42">
+  <div class="kicker">Principle 07</div>
+  <h2>Human in the loop. Permanently.</h2>
+  <p class="lead wide">Not a phase you graduate from. <strong>Your name is on it.</strong></p>
+  <div class="callout"><div class="ic">🔐</div><p><b>Go find your training setting today.</b> And participant data needs a business account, not a personal one.</p></div>
+</section>
+
+<!-- 43 LOOPS -->
+<section class="slide" id="s43">
+  <div class="kicker">One level up</div>
+  <h2>Loops</h2>
+  <p class="lead wide" style="margin-bottom:34px">An agent repeating cycles of work until a stop condition is met. Four kinds, by <strong>what you hand off</strong>.</p>
+  <table>
+    <thead><tr><th>Loop</th><th>You hand off</th><th>Use it when</th></tr></thead>
+    <tbody>
+      <tr><td><b>Turn-based</b></td><td>The check</td><td>You're exploring or deciding. Every prompt you send is already one of these.</td></tr>
+      <tr class="watch"><td><b>Goal-based</b></td><td>The stop condition</td><td>You know what done looks like and can measure it.</td></tr>
+      <tr><td><b>Time-based</b></td><td>The trigger</td><td>The work recurs on a schedule, or watches something outside your project.</td></tr>
+      <tr><td><b>Proactive</b></td><td>The prompt itself</td><td>The work is recurring, well-defined, and you're not in the room.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 44 GOAL LOOPS -->
+<section class="slide slide-dark" id="s44">
+  <div class="glow"></div>
+  <div class="kicker">The one to learn first</div>
+  <h2>Goal loops</h2>
+  <div class="cols">
+    <div>
+      <p class="lead">One turn often isn't enough. A goal loop keeps working until <strong>your</strong> condition is met — not until it decides it's good enough.</p>
+      <div class="cmd">/goal <span class="hl">get every student record in the sheet to have a complete intake date</span>, <span class="ph">stop after 5 tries</span></div>
+    </div>
+    <div>
+      <ul class="bullets">
+        <li><span class="num">1</span><div><b>Define done.</b> Deterministic beats vague — a count, a threshold, a passing check.</div></li>
+        <li><span class="num">2</span><div><b>Cap the turns.</b> "Stop after five tries" is the whole safety mechanism.</div></li>
+        <li><span class="num">3</span><div><b>Let it check itself.</b> The clearer the criteria, the less you referee.</div></li>
+      </ul>
+      <div class="callout"><div class="ic">🎯</div><p><b>If you can't say what done looks like, you don't want a loop yet.</b> You want a conversation.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 45 CHECKOUT -->
+<section class="slide slide-dark" id="s45" style="align-items:center;text-align:center">
+  <div class="glow"></div>
+  <div class="kicker">Finish</div>
+  <h1 class="grad" style="font-size:clamp(50px,9.5vw,124px)">Send your plan</h1>
+  <p class="lead wide" style="max-width:36ch">Scroll to the bottom of your cart and hit <strong>Email me my plan</strong>.</p>
+  <div class="callout" style="max-width:42ch;text-align:left"><div class="ic">⏸</div><p><b>Pick one stream.</b> The one where you answered <em>"not at all"</em> is usually the one costing you the most. Start there Monday.</p></div>
 </section>
 
 <script>
-  function toggleBlock(id) {
-    document.getElementById(id).classList.toggle('open');
-  }
-
-  function copyToggle(id, btn) {
-    const text = document.getElementById(id + '-code').innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      btn.textContent = 'Copied!';
-      btn.classList.add('copied');
-      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
-    });
-  }
-
-  const slides = document.querySelectorAll('.slide');
-  const dots = document.querySelectorAll('.nav a');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const index = Array.from(slides).findIndex(s => s.id === entry.target.id);
-        dots.forEach((d, i) => d.classList.toggle('active', i === index));
-      }
-    });
-  }, { threshold: 0.5 });
-  slides.forEach(s => observer.observe(s));
+  const slides=[...document.querySelectorAll('.slide')];
+  document.getElementById('nav').innerHTML=slides.map(s=>`<a href="#${s.id}"></a>`).join('');
+  const dots=[...document.querySelectorAll('.nav a')];
+  slides.forEach((s,i)=>new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting)dots.forEach((d,j)=>d.classList.toggle('on',i===j));
+  }),{threshold:.5}).observe(s));
 </script>
 </body>
 </html>
