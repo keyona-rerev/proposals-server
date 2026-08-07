@@ -5,8 +5,6 @@ const crypto = require('crypto');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(express.json({ limit: '256kb' }));
-
 // ---------------------------------------------------------------------------
 // Optional per-document gating
 //
@@ -103,81 +101,6 @@ app.use('/proposals', (req, res, next) => {
   // Realm scoped per document so browsers don't reuse one doc's credentials on another.
   res.set('WWW-Authenticate', `Basic realm="${slug.replace(/"/g, '')}"`);
   return res.status(401).send(noticePage('Protected document', 'Enter the username and password provided with this link.'));
-});
-
-// ---------------------------------------------------------------------------
-// Capacity Cart intake — workshop cart submissions
-//
-// POST /api/capacity-cart
-// Emails the participant their plan and copies Keyona. Requires RESEND_API_KEY.
-// Fails soft: a bad send never blocks the participant's confirmation screen.
-// ---------------------------------------------------------------------------
-
-const CART_FROM = process.env.CART_FROM || 'ReRev Labs <hello@rerev.io>';
-const CART_BCC = process.env.CART_BCC || 'keyona@rerev.io';
-
-function esc(v) {
-  return String(v == null ? '' : v).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-}
-
-function cartEmailHtml(b) {
-  const items = Array.isArray(b.cart_items) ? b.cart_items : [];
-  const diy = items.filter(i => i.type === 'diy');
-  const build = items.filter(i => i.type !== 'diy');
-  const list = (rows, color) => rows.length
-    ? `<ul style="margin:0 0 22px;padding-left:18px;color:#3D5166;font-size:15px;line-height:1.7">${rows.map(r => `<li><strong style="color:#0D1F2D">${esc(r.title)}</strong> <span style="color:#8b9bab;font-size:13px">— ${esc(r.aisle)}</span></li>`).join('')}</ul>`
-    : '';
-  return `<div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;padding:32px 24px">
-    <p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#1A9E9E;margin:0 0 10px">ReRev Labs</p>
-    <h1 style="font-size:26px;color:#0D1F2D;margin:0 0 6px">${esc(b.name)}'s capacity plan</h1>
-    <p style="color:#3D5166;font-size:15px;line-height:1.6;margin:0 0 28px">${esc(b.organization)}</p>
-    ${diy.length ? `<h2 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#0D7E7E;margin:0 0 10px">Doing myself</h2>${list(diy)}` : ''}
-    ${build.length ? `<h2 style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#5B21B6;margin:0 0 10px">Want built</h2>${list(build)}` : ''}
-    <p style="color:#3D5166;font-size:14px;line-height:1.7;border-top:1px solid #e6eef0;padding-top:20px;margin:0">
-      Start with one. The smallest item on this list that you'd notice being gone.<br><br>
-      Reply to this email if you want help with anything under <em>Want built</em>.<br><br>
-      — Keyona
-    </p>
-  </div>`;
-}
-
-app.post('/api/capacity-cart', async (req, res) => {
-  const b = req.body || {};
-  console.log('[capacity-cart]', JSON.stringify({ ...b, stage: b.stage }));
-
-  // Confirm immediately. The room never waits on an email provider.
-  res.json({ ok: true });
-
-  if (b.stage !== 'checkout') return;
-  if (!process.env.RESEND_API_KEY) {
-    return console.warn('[capacity-cart] RESEND_API_KEY not set — logged only, no email sent.');
-  }
-
-  const to = [];
-  if (b.email && /.+@.+\..+/.test(b.email)) to.push(b.email);
-  if (!to.length) to.push(CART_BCC);
-
-  try {
-    const r = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        from: CART_FROM,
-        to,
-        bcc: [CART_BCC],
-        reply_to: CART_BCC,
-        subject: `${b.name || 'Your'} capacity plan — ${(Array.isArray(b.cart_items) ? b.cart_items.length : 0)} items`,
-        html: cartEmailHtml(b)
-      })
-    });
-    if (!r.ok) console.error('[capacity-cart] resend failed', r.status, await r.text());
-    else console.log('[capacity-cart] emailed', to.join(', '));
-  } catch (err) {
-    console.error('[capacity-cart] resend threw', err.message);
-  }
 });
 
 // Serve assets (images, etc.) from /assets folder
