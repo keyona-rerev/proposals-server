@@ -337,6 +337,18 @@
     border:1px solid var(--rule);border-radius:2px;padding:4px 9px;
   }
 
+  /* per-company ask — only renders when a company actually has one */
+  .co-ask{
+    margin-top:16px;padding:13px 15px;
+    background:var(--tintbg,#E6F7F9);border-radius:3px;
+  }
+  .co-ask .k{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;
+    letter-spacing:.11em;text-transform:uppercase;
+    color:var(--tinttx,#0E6E78);display:block;margin-bottom:5px;
+  }
+  .co-ask p{margin:0;font-size:14px;line-height:1.5;color:var(--ink);}
+
   /* ---------- impact ---------- */
   .commit{
     background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--cyan);
@@ -497,7 +509,6 @@
     <a href="#pipeline">Pipeline</a>
     <a href="#impact">Impact</a>
     <a href="#operations">Operations</a>
-    <a href="#ask">The ask</a>
     <a href="#documents">Documents</a>
   </div>
 </nav>
@@ -685,6 +696,10 @@
         </div>
         <p class="co-update ph">[Placeholder — two to three sentences on traction, headcount, and milestones this quarter.]</p>
         <span class="flag">No change in carrying value</span>
+        <div class="co-ask">
+          <span class="k">Where a connection would help</span>
+          <p>Process engineering interns for the spring term, Toronto area. A connection at U of T Engineering would be useful.</p>
+        </div>
       </div>
 
       <div class="co" style="--tint:#D98E24;--tintbg:#FDF3E3;--tinttx:#8A5A0C;">
@@ -821,31 +836,6 @@
     </div>
   </section>
 
-  <!-- ASK -->
-  <section id="ask">
-    <div class="ask">
-      <div class="eyebrow eyebrow-light">09 — What would help</div>
-      <h2>The ask</h2>
-      <div class="ask-list">
-        <div class="ask-item">
-          <div class="k">Deal flow</div>
-          <p>Pre-seed climate founders in Canada or the US, particularly hardware and industrial decarbonization.</p>
-        </div>
-        <div class="ask-item">
-          <div class="k">Series A introductions</div>
-          <p>Funds writing first institutional cheques in climate. Two portfolio companies will be raising within twelve months.</p>
-        </div>
-        <div class="ask-item">
-          <div class="k">LP introductions</div>
-          <p>We are open through the balance of the raise. An introduction is more useful to us than anything else on this page.</p>
-        </div>
-      </div>
-      <div class="contact">
-        Reply to this report or reach us directly — <a href="#">keyona@blacktechcapital.com</a> · <a href="#">bryan@blacktechcapital.com</a>
-      </div>
-    </div>
-  </section>
-
   <!-- DOCUMENTS -->
   <section id="documents">
     <div class="sec-head">
@@ -873,6 +863,7 @@
       This report is provided to limited partners of the fund for informational purposes. It is not an offer to sell or a solicitation to buy any security. Valuations are unaudited and prepared by the general partners. Past performance does not indicate future results. All figures in Canadian dollars.
     </p>
     <p class="f" style="margin-top:16px;color:#5C7595;">
+      Questions on anything in this report — <a href="#" style="color:#22C7D6;">keyona@blacktechcapital.com</a> · <a href="#" style="color:#22C7D6;">bryan@blacktechcapital.com</a><br>
       Mockup · <span class="num">2026-08-17</span> · placeholder figures throughout
     </p>
   </div>
