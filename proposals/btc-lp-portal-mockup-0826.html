@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Catalyst Fund — LP Portal (Mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-900:#06172E;
+    --navy-800:#0B2647;
+    --navy-700:#123763;
+    --cyan:#22C7D6;
+    --cyan-dim:#0E8C99;
+    --paper:#F7F9FB;
+    --card:#FFFFFF;
+    --ink:#0E1B2A;
+    --slate:#5B6B7F;
+    --slate-light:#8797A8;
+    --rule:#DCE4EC;
+    --amber:#D98E24;
+    --green:#2E9E6B;
+    --maxw:1120px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- shared type devices ---------- */
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--cyan-dim);
+  }
+  .eyebrow-light{color:var(--cyan);}
+  .num{
+    font-family:'IBM Plex Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    font-feature-settings:"tnum";
+  }
+  h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.015em;}
+  h2{font-size:clamp(22px,2.4vw,29px);line-height:1.2;}
+  h3{font-size:17px;}
+  p{margin:0 0 14px;}
+  a{color:var(--navy-700);}
+  .ph{
+    color:var(--slate-light);
+    font-style:italic;
+  }
+  .ph::before{content:"";}
+
+  /* ---------- mock banner ---------- */
+  .mockbar{
+    background:var(--amber);
+    color:#2B1A00;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    text-align:center;
+    padding:7px 16px;
+    font-weight:600;
+  }
+
+  /* ---------- gate ---------- */
+  #gate{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:var(--navy-900);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  #gate.hidden{display:none;}
+  .gate-inner{
+    width:100%;
+    max-width:380px;
+    animation:rise .6s cubic-bezier(.2,.7,.3,1) both;
+  }
+  .gate-mark{
+    display:flex;align-items:baseline;gap:10px;margin-bottom:38px;
+  }
+  .gate-mark .bt{
+    font-weight:700;font-size:20px;color:#fff;letter-spacing:-.02em;
+  }
+  .gate-mark .rule{
+    flex:1;height:1px;background:rgba(255,255,255,.18);
+  }
+  .gate-inner h1{color:#fff;font-size:26px;margin-bottom:6px;}
+  .gate-sub{color:#8FA6C2;font-size:14px;margin-bottom:30px;}
+  .field{margin-bottom:14px;}
+  .field label{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+    color:#7E97B5;margin-bottom:7px;
+  }
+  .field input{
+    width:100%;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:3px;
+    padding:11px 13px;
+    color:#fff;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:14px;
+  }
+  .field input:focus{
+    outline:2px solid var(--cyan);
+    outline-offset:1px;
+    border-color:transparent;
+  }
+  .gate-btn{
+    width:100%;
+    margin-top:10px;
+    background:var(--cyan);
+    color:var(--navy-900);
+    border:0;border-radius:3px;
+    padding:12px;
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:15px;font-weight:600;
+    cursor:pointer;
+  }
+  .gate-btn:hover{background:#3AD8E6;}
+  .gate-btn:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+  .gate-note{
+    margin-top:24px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;line-height:1.7;color:#6B84A3;
+  }
+
+  @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    background:var(--navy-900);
+    color:#fff;
+    padding:44px 0 0;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .mast-top{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    gap:24px;flex-wrap:wrap;padding-bottom:34px;
+  }
+  .mast-title h1{font-size:clamp(28px,3.6vw,42px);line-height:1.08;margin:8px 0 10px;}
+  .mast-period{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;color:#8FA6C2;
+  }
+  .lp-card{
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:4px;
+    padding:16px 18px;
+    min-width:250px;
+    background:rgba(255,255,255,.03);
+  }
+  .lp-card .who{font-size:16px;font-weight:600;margin:6px 0 2px;}
+  .lp-card .ent{font-size:13px;color:#8FA6C2;}
+  .lp-card .idline{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;color:#6B84A3;margin-top:10px;
+    padding-top:10px;border-top:1px solid rgba(255,255,255,.12);
+  }
+
+  /* ---------- signature: capital ledger ---------- */
+  .ledger{padding-bottom:40px;}
+  .ledger-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:12px;flex-wrap:wrap;gap:8px;
+  }
+  .ledger-head .target{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:#8FA6C2;
+  }
+  .bar{
+    display:flex;height:38px;border-radius:3px;overflow:hidden;
+    background:rgba(255,255,255,.07);
+  }
+  .seg{
+    height:100%;
+    transition:width 1.1s cubic-bezier(.2,.7,.3,1);
+    width:0;
+  }
+  .seg.deployed{background:var(--cyan);}
+  .seg.reserved{background:var(--cyan-dim);}
+  .seg.uncalled{background:#2C4C74;}
+  .seg.unraised{background:transparent;border-right:0;}
+  .legend{
+    display:flex;gap:26px;flex-wrap:wrap;margin-top:14px;
+  }
+  .legend div{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#A7BDD4;}
+  .legend .sw{
+    display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:7px;
+  }
+  .legend .val{color:#fff;font-weight:500;}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(247,249,251,.94);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+  }
+  .navwrap{
+    max-width:var(--maxw);margin:0 auto;padding:0 28px;
+    display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+  }
+  .navwrap::-webkit-scrollbar{display:none;}
+  .navwrap a{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--slate);text-decoration:none;
+    padding:14px 13px;white-space:nowrap;
+    border-bottom:2px solid transparent;
+  }
+  .navwrap a:hover{color:var(--navy-800);border-bottom-color:var(--cyan);}
+  .navwrap a:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px;}
+
+  /* ---------- sections ---------- */
+  section{padding:56px 0;border-bottom:1px solid var(--rule);}
+  section:last-of-type{border-bottom:0;}
+  .sec-head{margin-bottom:26px;}
+  .sec-head h2{margin-top:7px;}
+  .sec-head .note{color:var(--slate);font-size:14.5px;margin-top:8px;max-width:62ch;}
+
+  /* ---------- stat grid ---------- */
+  .stats{
+    display:grid;gap:1px;background:var(--rule);
+    border:1px solid var(--rule);border-radius:4px;overflow:hidden;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  }
+  .stat{background:var(--card);padding:18px 20px;}
+  .stat .k{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--slate);margin-bottom:9px;
+  }
+  .stat .v{
+    font-family:'IBM Plex Mono',monospace;
+    font-variant-numeric:tabular-nums;
+    font-size:23px;font-weight:500;color:var(--navy-800);letter-spacing:-.01em;
+  }
+  .stat .sub{font-size:12.5px;color:var(--slate-light);margin-top:5px;}
+  .stat.accent{background:var(--navy-800);}
+  .stat.accent .k{color:#8FA6C2;}
+  .stat.accent .v{color:#fff;}
+  .stat.accent .sub{color:#8FA6C2;}
+
+  /* ---------- tables ---------- */
+  .tbl{width:100%;border-collapse:collapse;font-size:14.5px;}
+  .tbl caption{
+    text-align:left;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--slate);padding-bottom:11px;
+  }
+  .tbl th{
+    text-align:left;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--slate);font-weight:500;
+    padding:9px 12px;border-bottom:1px solid var(--navy-800);
+  }
+  .tbl td{padding:11px 12px;border-bottom:1px solid var(--rule);vertical-align:top;}
+  .tbl td.r,.tbl th.r{text-align:right;}
+  .tbl tr.total td{
+    border-top:1px solid var(--navy-800);border-bottom:0;
+    font-weight:600;background:#EEF3F7;
+  }
+  .tbl .num{font-size:14px;}
+  .tbl-scroll{overflow-x:auto;}
+
+  /* ---------- letter ---------- */
+  .letter{
+    background:var(--card);border:1px solid var(--rule);border-radius:4px;
+    padding:30px 32px;max-width:74ch;
+  }
+  .letter p{font-size:16.5px;line-height:1.66;}
+  .sig{
+    margin-top:26px;padding-top:18px;border-top:1px solid var(--rule);
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--slate);line-height:1.9;
+  }
+
+  /* ---------- portfolio ---------- */
+  .co-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));}
+  .co{
+    background:var(--card);border:1px solid var(--rule);border-radius:4px;
+    padding:22px 24px;border-top:3px solid var(--tint,var(--cyan));
+  }
+  .co-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+  .co h3{font-size:18px;}
+  .co .loc{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);
+    letter-spacing:.06em;margin-top:4px;
+  }
+  .co .chk{
+    font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;
+    font-size:17px;font-weight:500;color:var(--navy-800);white-space:nowrap;
+  }
+  .co .sector{
+    display:inline-block;margin-top:12px;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    letter-spacing:.1em;text-transform:uppercase;
+    padding:4px 9px;border-radius:2px;
+    background:var(--tintbg,#E6F7F9);color:var(--tinttx,#0E6E78);
+  }
+  .co-meta{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:10px 16px;
+    margin:18px 0;padding:16px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  }
+  .co-meta div{font-size:13px;}
+  .co-meta .k{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--slate);display:block;margin-bottom:3px;
+  }
+  .co-update{font-size:14.5px;line-height:1.6;}
+  .flag{
+    display:inline-block;margin-top:14px;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--slate);
+    border:1px solid var(--rule);border-radius:2px;padding:4px 9px;
+  }
+
+  /* ---------- impact ---------- */
+  .commit{
+    background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--cyan);
+    border-radius:4px;padding:20px 24px;margin-top:18px;
+  }
+  .commit .k{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    letter-spacing:.11em;text-transform:uppercase;color:var(--slate);
+  }
+  .commit .track{
+    display:flex;align-items:baseline;gap:14px;margin-top:10px;flex-wrap:wrap;
+  }
+  .commit .big{
+    font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;
+    font-size:32px;font-weight:500;color:var(--navy-800);
+  }
+  .commit .against{font-size:14px;color:var(--slate);}
+
+  /* ---------- ask ---------- */
+  .ask{
+    background:var(--navy-800);color:#fff;border-radius:4px;padding:34px 36px;
+  }
+  .ask h2{color:#fff;}
+  .ask-list{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:24px;}
+  .ask-item{border-top:1px solid rgba(255,255,255,.2);padding-top:14px;}
+  .ask-item .k{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    letter-spacing:.11em;text-transform:uppercase;color:var(--cyan);margin-bottom:7px;
+  }
+  .ask-item p{font-size:14.5px;color:#C9D8E8;margin:0;}
+  .ask .contact{
+    margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.2);
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#8FA6C2;
+  }
+  .ask .contact a{color:var(--cyan);}
+
+  /* ---------- docs ---------- */
+  .docs{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden;}
+  .doc{
+    background:var(--card);padding:15px 20px;
+    display:flex;justify-content:space-between;align-items:center;gap:14px;
+    text-decoration:none;color:var(--ink);
+  }
+  .doc:hover{background:#EEF3F7;}
+  .doc .t{font-size:15px;font-weight:500;}
+  .doc .m{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);margin-top:3px;}
+  .doc .arrow{font-family:'IBM Plex Mono',monospace;color:var(--cyan-dim);font-size:14px;}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--navy-900);color:#7E97B5;padding:40px 0;}
+  footer .f{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.9;max-width:78ch;
+  }
+  footer strong{color:#C9D8E8;font-weight:500;}
+
+  /* ---------- build note ---------- */
+  .buildnote{
+    background:#FFF8EC;border:1px solid #EBD3A6;border-radius:4px;
+    padding:16px 20px;margin-top:22px;
+  }
+  .buildnote .k{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    letter-spacing:.11em;text-transform:uppercase;color:#96690F;margin-bottom:7px;
+  }
+  .buildnote p{font-size:14px;color:#5C4409;margin:0;}
+
+  @media (max-width:640px){
+    .wrap,.navwrap{padding:0 18px;}
+    .co-meta{grid-template-columns:1fr;}
+    section{padding:40px 0;}
+    .ask{padding:26px 22px;}
+    .letter{padding:22px 20px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+    html{scroll-behavior:auto;}
+    .seg{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ GATE ============ -->
+<div id="gate">
+  <div class="gate-inner">
+    <div class="gate-mark">
+      <span class="bt">BlackTech Capital</span>
+      <span class="rule"></span>
+    </div>
+    <div class="eyebrow eyebrow-light">Limited Partner Access</div>
+    <h1>Catalyst Fund</h1>
+    <p class="gate-sub">Quarterly reporting portal</p>
+
+    <div class="field">
+      <label for="u">Username</label>
+      <input id="u" type="text" autocomplete="username" value="catalyst-lp">
+    </div>
+    <div class="field">
+      <label for="p">Password</label>
+      <input id="p" type="password" autocomplete="current-password" value="mockup">
+    </div>
+    <button class="gate-btn" id="enter">Open report</button>
+
+    <p class="gate-note">
+      Mockup only — any credentials will open the report.<br>
+      Shared credentials rotate each reporting cycle.
+    </p>
+  </div>
+</div>
+
+<!-- ============ REPORT ============ -->
+<div class="mockbar">Mockup — placeholder figures, not actual fund data</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <div class="mast-title">
+        <div class="eyebrow eyebrow-light">Quarterly Report · Q3 2026</div>
+        <h1>Catalyst Fund</h1>
+        <div class="mast-period">Period ending September 30, 2026 · Issued October 15, 2026 · All figures CAD</div>
+      </div>
+
+      <div class="lp-card">
+        <div class="eyebrow eyebrow-light">Prepared for</div>
+        <div class="who">Jordan Rivera</div>
+        <div class="ent">Rivera Holdings Ltd.</div>
+        <div class="idline">LP-0042 · Admitted 2026-07-31 · Equivesto</div>
+      </div>
+    </div>
+
+    <div class="ledger">
+      <div class="ledger-head">
+        <div class="eyebrow eyebrow-light">Capital Ledger</div>
+        <div class="target">Target <span class="num">$2,000,000</span></div>
+      </div>
+      <div class="bar" id="bar">
+        <div class="seg deployed"  data-w="15"></div>
+        <div class="seg reserved"  data-w="2.5"></div>
+        <div class="seg uncalled"  data-w="7.5"></div>
+      </div>
+      <div class="legend">
+        <div><span class="sw" style="background:#22C7D6"></span>Deployed <span class="val num">$300,000</span></div>
+        <div><span class="sw" style="background:#0E8C99"></span>Reserved <span class="val num">$50,000</span></div>
+        <div><span class="sw" style="background:#2C4C74"></span>Uncalled <span class="val num">$150,000</span></div>
+        <div><span class="sw" style="background:rgba(255,255,255,.12)"></span>Unraised <span class="val num">$1,500,000</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="navwrap">
+    <a href="#position">Your position</a>
+    <a href="#letter">GP letter</a>
+    <a href="#financials">Financials</a>
+    <a href="#performance">Performance</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#impact">Impact</a>
+    <a href="#operations">Operations</a>
+    <a href="#ask">The ask</a>
+    <a href="#documents">Documents</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- POSITION -->
+  <section id="position">
+    <div class="sec-head">
+      <div class="eyebrow">01 — Capital account</div>
+      <h2>Your position</h2>
+      <p class="note">Your individual capital account as of the period end. Statements of record are issued by Equivesto.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat accent">
+        <div class="k">Commitment</div>
+        <div class="v">$25,000</div>
+        <div class="sub">Subscribed July 31, 2026</div>
+      </div>
+      <div class="stat">
+        <div class="k">Called to date</div>
+        <div class="v">$17,500</div>
+        <div class="sub">70% of commitment</div>
+      </div>
+      <div class="stat">
+        <div class="k">Uncalled</div>
+        <div class="v">$7,500</div>
+        <div class="sub">No call scheduled this quarter</div>
+      </div>
+      <div class="stat">
+        <div class="k">Fund interest</div>
+        <div class="v">5.00%</div>
+        <div class="sub">Of first close</div>
+      </div>
+      <div class="stat">
+        <div class="k">NAV of interest</div>
+        <div class="v">$16,360</div>
+        <div class="sub">Held at cost</div>
+      </div>
+      <div class="stat">
+        <div class="k">Distributions</div>
+        <div class="v">$0</div>
+        <div class="sub">None to date</div>
+      </div>
+    </div>
+
+    <div class="buildnote">
+      <div class="k">Build note — not for LPs</div>
+      <p>This section is the only one that cannot run on a shared username and password. Either Equivesto delivers these statements directly and the portal drops this block, or the portal needs per-LP logins. Worth confirming before anything gets built.</p>
+    </div>
+  </section>
+
+  <!-- LETTER -->
+  <section id="letter">
+    <div class="sec-head">
+      <div class="eyebrow">02 — From the general partners</div>
+      <h2>GP letter</h2>
+    </div>
+
+    <div class="letter">
+      <p class="ph">[Placeholder — paragraph one. What moved this quarter. First close completed, four companies deployed, the shape of the portfolio taking form.]</p>
+      <p class="ph">[Placeholder — paragraph two. What we are seeing in the market and how it is affecting our sourcing and pace.]</p>
+      <p class="ph">[Placeholder — paragraph three. What happens next quarter. Two remaining deployments, progress on the balance of the $2M.]</p>
+      <div class="sig">
+        Keyona Meeks · General Partner<br>
+        Bryan Duarte · Managing Partner<br>
+        BlackTech Capital · Toronto
+      </div>
+    </div>
+  </section>
+
+  <!-- FINANCIALS -->
+  <section id="financials">
+    <div class="sec-head">
+      <div class="eyebrow">03 — Fund financials</div>
+      <h2>Capital and expenses</h2>
+      <p class="note">Portfolio positions are held at cost. The fund marks to a priced round only when a subsequent financing establishes a new price.</p>
+    </div>
+
+    <div class="stats" style="margin-bottom:26px;">
+      <div class="stat">
+        <div class="k">Committed</div><div class="v">$500,000</div>
+        <div class="sub">First close July 31, 2026</div>
+      </div>
+      <div class="stat">
+        <div class="k">Called</div><div class="v">$350,000</div>
+        <div class="sub">70% of commitments</div>
+      </div>
+      <div class="stat">
+        <div class="k">Deployed</div><div class="v">$300,000</div>
+        <div class="sub">Four companies</div>
+      </div>
+      <div class="stat">
+        <div class="k">Cash on hand</div><div class="v">$27,200</div>
+      </div>
+      <div class="stat">
+        <div class="k">Net asset value</div><div class="v">$327,200</div>
+        <div class="sub">Cost basis plus cash</div>
+      </div>
+      <div class="stat">
+        <div class="k">Average check</div><div class="v">$75,000</div>
+      </div>
+    </div>
+
+    <div class="tbl-scroll">
+      <table class="tbl">
+        <caption>Fund expenses</caption>
+        <thead>
+          <tr>
+            <th>Line item</th>
+            <th class="r">Quarter</th>
+            <th class="r">Inception to date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Management fee</td><td class="r num">$2,500</td><td class="r num">$2,500</td></tr>
+          <tr><td>Legal and formation</td><td class="r num">$11,400</td><td class="r num">$11,400</td></tr>
+          <tr><td>Fund administration</td><td class="r num">$4,200</td><td class="r num">$4,200</td></tr>
+          <tr><td>Audit and tax</td><td class="r num">$2,000</td><td class="r num">$2,000</td></tr>
+          <tr><td>Other operating</td><td class="r num">$2,700</td><td class="r num">$2,700</td></tr>
+          <tr class="total"><td>Total</td><td class="r num">$22,800</td><td class="r num">$22,800</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="buildnote">
+      <div class="k">Build note — not for LPs</div>
+      <p>Expense line items and the split between fund expenses and management company expenses come out of the LPA. Same for the valuation policy wording above. Both are placeholders until we read it.</p>
+    </div>
+  </section>
+
+  <!-- PERFORMANCE -->
+  <section id="performance">
+    <div class="sec-head">
+      <div class="eyebrow">04 — Performance</div>
+      <h2>Return metrics</h2>
+      <p class="note">These will read flat for the next several years. We report them from the first quarter so the series is unbroken.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="k">TVPI</div><div class="v">0.94×</div>
+        <div class="sub">Total value to paid-in</div>
+      </div>
+      <div class="stat">
+        <div class="k">DPI</div><div class="v">0.00×</div>
+        <div class="sub">Distributed to paid-in</div>
+      </div>
+      <div class="stat">
+        <div class="k">RVPI</div><div class="v">0.94×</div>
+        <div class="sub">Residual value to paid-in</div>
+      </div>
+      <div class="stat">
+        <div class="k">Net IRR</div><div class="v">n/m</div>
+        <div class="sub">Not meaningful — under 12 months</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="sec-head">
+      <div class="eyebrow">05 — Portfolio</div>
+      <h2>Four companies deployed</h2>
+      <p class="note">Two further deployments are expected before December 31, 2026.</p>
+    </div>
+
+    <div class="co-grid">
+
+      <div class="co" style="--tint:#22C7D6;--tintbg:#E6F7F9;--tinttx:#0E6E78;">
+        <div class="co-top">
+          <div>
+            <h3>Mars Materials</h3>
+            <div class="loc">Houston, TX</div>
+          </div>
+          <div class="chk">$50,000</div>
+        </div>
+        <span class="sector">Carbon utilization</span>
+        <div class="co-meta">
+          <div><span class="k">Instrument</span><span class="ph">[—]</span></div>
+          <div><span class="k">Valuation cap</span><span class="ph">[—]</span></div>
+          <div><span class="k">Discount</span><span class="ph">[—]</span></div>
+          <div><span class="k">Stage</span>Pre-seed</div>
+        </div>
+        <p class="co-update ph">[Placeholder — two to three sentences on traction, headcount, and milestones this quarter.]</p>
+        <span class="flag">No change in carrying value</span>
+      </div>
+
+      <div class="co" style="--tint:#D98E24;--tintbg:#FDF3E3;--tinttx:#8A5A0C;">
+        <div class="co-top">
+          <div>
+            <h3>Serenity Power</h3>
+            <div class="loc">Toronto &amp; Calgary, ON/AB</div>
+          </div>
+          <div class="chk">$100,000</div>
+        </div>
+        <span class="sector">Clean energy</span>
+        <div class="co-meta">
+          <div><span class="k">Instrument</span><span class="ph">[—]</span></div>
+          <div><span class="k">Valuation cap</span><span class="ph">[—]</span></div>
+          <div><span class="k">Discount</span><span class="ph">[—]</span></div>
+          <div><span class="k">Stage</span>Pre-seed</div>
+        </div>
+        <p class="co-update ph">[Placeholder — two to three sentences on traction, headcount, and milestones this quarter.]</p>
+        <span class="flag">No change in carrying value</span>
+      </div>
+
+      <div class="co" style="--tint:#2E9E6B;--tintbg:#E6F5EE;--tinttx:#1B6444;">
+        <div class="co-top">
+          <div>
+            <h3>Resiliocs Intelligence</h3>
+            <div class="loc">Hamilton, ON</div>
+          </div>
+          <div class="chk">$100,000</div>
+        </div>
+        <span class="sector">Climate resilience</span>
+        <div class="co-meta">
+          <div><span class="k">Instrument</span><span class="ph">[—]</span></div>
+          <div><span class="k">Valuation cap</span><span class="ph">[—]</span></div>
+          <div><span class="k">Discount</span><span class="ph">[—]</span></div>
+          <div><span class="k">Stage</span>Pre-seed</div>
+        </div>
+        <p class="co-update ph">[Placeholder — two to three sentences on traction, headcount, and milestones this quarter.]</p>
+        <span class="flag">No change in carrying value</span>
+      </div>
+
+      <div class="co" style="--tint:#6D6BD9;--tintbg:#EDEDFB;--tinttx:#403EA0;">
+        <div class="co-top">
+          <div>
+            <h3>Kiwi Charge</h3>
+            <div class="loc">Toronto, ON</div>
+          </div>
+          <div class="chk">$50,000</div>
+        </div>
+        <span class="sector">EV charging</span>
+        <div class="co-meta">
+          <div><span class="k">Instrument</span><span class="ph">[—]</span></div>
+          <div><span class="k">Valuation cap</span><span class="ph">[—]</span></div>
+          <div><span class="k">Discount</span><span class="ph">[—]</span></div>
+          <div><span class="k">Stage</span>Pre-seed</div>
+        </div>
+        <p class="co-update ph">[Placeholder — two to three sentences on traction, headcount, and milestones this quarter.]</p>
+        <span class="flag">No change in carrying value</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section id="pipeline">
+    <div class="sec-head">
+      <div class="eyebrow">06 — Pipeline</div>
+      <h2>Sourcing and committee activity</h2>
+    </div>
+
+    <div class="stats" style="margin-bottom:26px;">
+      <div class="stat"><div class="k">Reviewed</div><div class="v">48</div><div class="sub">This quarter</div></div>
+      <div class="stat"><div class="k">To committee</div><div class="v">7</div></div>
+      <div class="stat"><div class="k">Invest</div><div class="v">2</div></div>
+      <div class="stat"><div class="k">Further diligence</div><div class="v">3</div></div>
+      <div class="stat"><div class="k">Pass</div><div class="v">2</div></div>
+      <div class="stat accent"><div class="k">Deployments remaining</div><div class="v">2</div><div class="sub">By December 31, 2026</div></div>
+    </div>
+
+    <p class="note ph">[Placeholder — one paragraph on what the committee is seeing and where the remaining two checks are likely to land.]</p>
+  </section>
+
+  <!-- IMPACT -->
+  <section id="impact">
+    <div class="sec-head">
+      <div class="eyebrow">07 — Impact and diversity</div>
+      <h2>Against our commitments</h2>
+      <p class="note">Climate outcomes at pre-seed are early and mostly projected. We report what is measurable and mark the rest as forward-looking.</p>
+    </div>
+
+    <div class="commit">
+      <div class="k">Women-led portfolio commitment</div>
+      <div class="track">
+        <div class="big">50%</div>
+        <div class="against">2 of 4 companies · against a 50% commitment across the fund</div>
+      </div>
+    </div>
+
+    <div class="stats" style="margin-top:18px;">
+      <div class="stat"><div class="k">Underrepresented founders</div><div class="v">4 of 4</div><div class="sub">Companies with at least one</div></div>
+      <div class="stat"><div class="k">Jobs supported</div><div class="v ph">[—]</div><div class="sub">Across the portfolio</div></div>
+      <div class="stat accent"><div class="k">Follow-on capital unlocked</div><div class="v ph">[—]</div><div class="sub">Raised after our check</div></div>
+      <div class="stat"><div class="k">Canadian companies</div><div class="v">3 of 4</div></div>
+    </div>
+
+    <div class="buildnote">
+      <div class="k">Build note — not for LPs</div>
+      <p>Follow-on capital unlocked is the strongest number a pre-seed fund can put in front of an LP. It is worth the effort to track it properly from the first report rather than backfilling it in year three.</p>
+    </div>
+  </section>
+
+  <!-- OPERATIONS -->
+  <section id="operations">
+    <div class="sec-head">
+      <div class="eyebrow">08 — Fund operations</div>
+      <h2>Since last report</h2>
+    </div>
+
+    <div class="tbl-scroll">
+      <table class="tbl">
+        <thead>
+          <tr><th>Item</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Progress toward $2,000,000 target</td><td><span class="num">$500,000</span> closed · 25%</td></tr>
+          <tr><td>New closes this quarter</td><td>First close completed July 31, 2026</td></tr>
+          <tr><td>Investment committee</td><td>Nicholas Parker, Bryan Watson — no changes</td></tr>
+          <tr><td>Advisory changes</td><td>None</td></tr>
+          <tr><td>Material events</td><td>None</td></tr>
+          <tr><td>Related party transactions</td><td>None</td></tr>
+          <tr><td>Fund listings</td><td>SVX Impact Index+</td></tr>
+          <tr><td>Next report</td><td>February 15, 2027 — annual financial statement included</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ASK -->
+  <section id="ask">
+    <div class="ask">
+      <div class="eyebrow eyebrow-light">09 — What would help</div>
+      <h2>The ask</h2>
+      <div class="ask-list">
+        <div class="ask-item">
+          <div class="k">Deal flow</div>
+          <p>Pre-seed climate founders in Canada or the US, particularly hardware and industrial decarbonization.</p>
+        </div>
+        <div class="ask-item">
+          <div class="k">Series A introductions</div>
+          <p>Funds writing first institutional cheques in climate. Two portfolio companies will be raising within twelve months.</p>
+        </div>
+        <div class="ask-item">
+          <div class="k">LP introductions</div>
+          <p>We are open through the balance of the raise. An introduction is more useful to us than anything else on this page.</p>
+        </div>
+      </div>
+      <div class="contact">
+        Reply to this report or reach us directly — <a href="#">keyona@blacktechcapital.com</a> · <a href="#">bryan@blacktechcapital.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOCUMENTS -->
+  <section id="documents">
+    <div class="sec-head">
+      <div class="eyebrow">10 — Standing documents</div>
+      <h2>Always available here</h2>
+      <p class="note">These do not change quarter to quarter. Keeping them on the portal is what lets the quarterly report stay short.</p>
+    </div>
+
+    <div class="docs">
+      <a class="doc" href="#"><div><div class="t">Limited Partnership Agreement</div><div class="m">PDF · Executed 2026</div></div><span class="arrow">→</span></a>
+      <a class="doc" href="#"><div><div class="t">Subscription documents</div><div class="m">PDF · Via Equivesto</div></div><span class="arrow">→</span></a>
+      <a class="doc" href="#"><div><div class="t">Fund thesis and strategy</div><div class="m">PDF</div></div><span class="arrow">→</span></a>
+      <a class="doc" href="#"><div><div class="t">Team and investment committee</div><div class="m">Page</div></div><span class="arrow">→</span></a>
+      <a class="doc" href="#"><div><div class="t">Portfolio directory</div><div class="m">Page</div></div><span class="arrow">→</span></a>
+      <a class="doc" href="#"><div><div class="t">Report archive</div><div class="m">Q3 2026 is the first report</div></div><span class="arrow">→</span></a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="f">
+      <strong>BlackTech Capital · Catalyst Fund · Toronto</strong><br>
+      This report is provided to limited partners of the fund for informational purposes. It is not an offer to sell or a solicitation to buy any security. Valuations are unaudited and prepared by the general partners. Past performance does not indicate future results. All figures in Canadian dollars.
+    </p>
+    <p class="f" style="margin-top:16px;color:#5C7595;">
+      Mockup · <span class="num">2026-08-17</span> · placeholder figures throughout
+    </p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var gate = document.getElementById('gate');
+    var btn  = document.getElementById('enter');
+    var bar  = document.getElementById('bar');
+
+    function fillBar(){
+      var segs = bar.querySelectorAll('.seg');
+      segs.forEach(function(s){
+        requestAnimationFrame(function(){
+          s.style.width = s.dataset.w + '%';
+        });
+      });
+    }
+
+    function open(){
+      gate.classList.add('hidden');
+      document.body.style.overflow = '';
+      setTimeout(fillBar, 120);
+      window.scrollTo(0,0);
+    }
+
+    document.body.style.overflow = 'hidden';
+    btn.addEventListener('click', open);
+    document.getElementById('p').addEventListener('keydown', function(e){
+      if(e.key === 'Enter') open();
+    });
+    document.getElementById('u').addEventListener('keydown', function(e){
+      if(e.key === 'Enter') open();
+    });
+  })();
+</script>
+
+</body>
+</html>
