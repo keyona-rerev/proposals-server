@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SisterGolf August Issue — Rebuilt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#EF67A5;
+    --green:#00A650;
+    --bg:#FAF7F2;
+    --ink:#1A1A1A;
+    --muted:#6B6459;
+    --rule:#E4DED4;
+    --paper:#FFFFFF;
+    --shell:#EDE8E0;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--shell);color:var(--ink);
+    font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.55;
+  }
+
+  /* ================= control bar ================= */
+  .bar{
+    position:sticky;top:0;z-index:60;
+    background:var(--ink);color:var(--bg);
+    padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  .bar-id{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.75;}
+  .bar-id b{color:var(--pink);font-weight:500;}
+  .toggle{display:flex;background:rgba(255,255,255,.1);border-radius:3px;padding:3px;}
+  .toggle button{
+    font-family:Inter,sans-serif;font-size:13px;font-weight:500;
+    background:none;border:none;color:var(--bg);opacity:.65;
+    padding:8px 18px;border-radius:2px;cursor:pointer;transition:.15s;
+  }
+  .toggle button:hover{opacity:1;}
+  .toggle button.on{background:var(--bg);color:var(--ink);opacity:1;}
+  .toggle button:focus-visible{outline:2px solid var(--pink);outline-offset:2px;}
+
+  /* ================= legend ================= */
+  .legend{
+    background:var(--bg);border-bottom:1px solid var(--rule);
+    padding:18px 24px;display:none;
+  }
+  body.anno .legend{display:block;}
+  .legend-inner{max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+  .legend-lead{font-size:13px;color:var(--muted);margin-right:6px;}
+  .chip{
+    display:inline-flex;align-items:center;gap:8px;background:var(--paper);
+    border:1px solid var(--rule);padding:7px 13px;border-radius:2px;font-size:12.5px;
+  }
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .dot.g{background:var(--green);}
+  .dot.p{background:var(--pink);}
+  .chip span{color:var(--muted);}
+
+  /* ================= canvas ================= */
+  .canvas{padding:44px 20px 80px;}
+  .email{
+    max-width:600px;margin:0 auto;background:var(--paper);
+    box-shadow:0 1px 3px rgba(0,0,0,.08),0 8px 28px rgba(0,0,0,.06);
+  }
+
+  /* ================= email type ================= */
+  .em-pad{padding:34px 36px;}
+  .kicker{
+    font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--pink);margin:0 0 14px;font-weight:500;
+  }
+  .over{
+    font-family:Inter,sans-serif;font-size:13px;letter-spacing:.02em;
+    color:var(--muted);margin:0 0 6px;font-weight:500;
+  }
+  h2.hl{
+    font-family:Fraunces,Georgia,serif;font-weight:600;
+    font-size:1.72rem;line-height:1.14;margin:0 0 18px;letter-spacing:-.015em;
+  }
+  h3.sub{
+    font-family:Fraunces,Georgia,serif;font-weight:600;
+    font-size:1.12rem;margin:26px 0 10px;line-height:1.25;
+  }
+  .em-pad p{margin:0 0 15px;font-size:15px;line-height:1.62;}
+  .em-pad p:last-child{margin-bottom:0;}
+  .lede{font-size:16px;color:var(--ink);}
+  .cta{
+    display:block;text-align:center;background:var(--green);color:#fff;
+    text-decoration:none;font-weight:600;font-size:14.5px;letter-spacing:.02em;
+    padding:15px 24px;margin-top:24px;border-radius:3px;
+  }
+  .cta.alt{background:var(--pink);}
+  .cta.ink{background:var(--ink);}
+  .times{
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    margin:22px 0;padding:16px 0;
+  }
+  .time-row{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;}
+  .time-row b{font-family:Fraunces,Georgia,serif;font-size:1.02rem;font-weight:600;}
+  .time-row span{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted);}
+  .whatyouget{list-style:none;padding:0;margin:20px 0 0;}
+  .whatyouget li{
+    padding:11px 0 11px 26px;border-bottom:1px solid var(--rule);
+    position:relative;font-size:14.5px;
+  }
+  .whatyouget li:last-child{border-bottom:none;}
+  .whatyouget li::before{
+    content:"";position:absolute;left:4px;top:18px;
+    width:7px;height:7px;border-radius:50%;background:var(--pink);
+  }
+  .askline{
+    font-family:Fraunces,Georgia,serif;font-size:1.25rem;font-weight:600;
+    text-align:center;padding:18px 0 4px;color:var(--ink);
+  }
+
+  /* banded sections */
+  .band-cream{background:var(--bg);}
+  .band-ink{background:var(--ink);color:#fff;}
+  .band-ink h2.hl,.band-ink h3.sub{color:#fff;}
+  .band-ink .over{color:rgba(255,255,255,.6);}
+  .band-ink .kicker{color:var(--pink);}
+  .band-ink .whatyouget li{border-bottom-color:rgba(255,255,255,.16);}
+  .band-ink .times{border-color:rgba(255,255,255,.2);}
+
+  /* photo slot */
+  .photo{
+    background:var(--bg);border:1px dashed #CFC7BA;
+    height:190px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:6px;
+  }
+  .photo em{
+    font-style:normal;font-family:"IBM Plex Mono",monospace;
+    font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#A79E90;
+  }
+  .photo strong{font-family:Fraunces,serif;font-size:.95rem;font-weight:600;color:#8C8375;}
+
+  /* masthead + footer */
+  .masthead{padding:30px 36px 26px;text-align:center;border-bottom:3px solid var(--ink);}
+  .logo{font-family:Fraunces,Georgia,serif;font-size:1.7rem;font-weight:700;letter-spacing:-.02em;}
+  .logo i{font-style:normal;color:var(--pink);}
+  .foot{background:var(--ink);color:rgba(255,255,255,.62);padding:34px 36px;text-align:center;}
+  .foot .tag{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.3em;
+    color:#fff;margin:0 0 18px;
+  }
+  .foot p{font-size:12px;margin:0 0 6px;line-height:1.6;}
+  .ph{background:rgba(239,103,165,.28);padding:1px 6px;border-radius:2px;color:#fff;}
+
+  /* ================= annotation ================= */
+  .blk{position:relative;}
+  body.anno .blk{cursor:help;}
+  body.anno .blk::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:5px;z-index:3;
+  }
+  body.anno .blk.ever::before{background:var(--green);}
+  body.anno .blk.per::before{background:var(--pink);}
+  body.anno .blk:hover,body.anno .blk.open{outline:2px solid rgba(26,26,26,.35);outline-offset:-2px;}
+
+  .tagmark{
+    display:none;position:absolute;top:0;right:0;z-index:6;
+    font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:#fff;padding:5px 9px;
+  }
+  body.anno .tagmark{display:block;}
+  .blk.ever .tagmark{background:var(--green);}
+  .blk.per .tagmark{background:var(--pink);}
+
+  .note{
+    display:none;position:absolute;z-index:40;
+    left:calc(100% + 18px);top:14px;width:290px;
+    background:var(--ink);color:var(--bg);padding:18px 20px 19px;
+    border-radius:3px;box-shadow:0 10px 34px rgba(0,0,0,.28);
+    font-size:13px;line-height:1.5;text-align:left;
+  }
+  body.anno .blk:hover > .note,body.anno .blk.open > .note{display:block;}
+  .note dt{
+    font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--pink);margin:0 0 4px;
+  }
+  .note dd{margin:0 0 13px;}
+  .note dd:last-child{margin-bottom:0;}
+  .note .src-g{color:#5FE39B;font-weight:600;}
+  .note .src-p{color:#FFA8CE;font-weight:600;}
+
+  .missing{
+    display:none;margin:0;padding:24px 36px;
+    background:repeating-linear-gradient(45deg,var(--bg),var(--bg) 10px,#F2ECE3 10px,#F2ECE3 20px);
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    position:relative;
+  }
+  body.anno .missing{display:block;}
+  .missing h4{
+    font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--pink);margin:0 0 7px;
+  }
+  .missing p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.55;}
+  .missing p b{color:var(--ink);font-weight:600;}
+
+  .hint{
+    display:none;max-width:600px;margin:0 auto 18px;
+    font-size:12.5px;color:var(--muted);text-align:center;
+    font-family:"IBM Plex Mono",monospace;letter-spacing:.05em;
+  }
+  body.anno .hint{display:block;}
+
+  @media (max-width:1080px){
+    .note{left:auto;right:10px;top:auto;bottom:10px;width:auto;max-width:min(340px,calc(100% - 20px));}
+  }
+  @media (max-width:560px){
+    .em-pad{padding:26px 22px;}
+    .masthead,.foot{padding-left:22px;padding-right:22px;}
+    .missing{padding:20px 22px;}
+    h2.hl{font-size:1.45rem;}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-id">SisterGolf &nbsp;<b>/</b>&nbsp; August 2026 issue &nbsp;<b>/</b>&nbsp; rebuilt</div>
+  <div class="toggle" role="group" aria-label="View mode">
+    <button id="btnClean" class="on" onclick="setMode(false)">Newsletter</button>
+    <button id="btnAnno" onclick="setMode(true)">How it works</button>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-inner">
+    <span class="legend-lead">Every block is filled from one of two places:</span>
+    <span class="chip"><span class="dot g"></span><b>Standing</b><span>Lives in your content doc. Always there.</span></span>
+    <span class="chip"><span class="dot p"></span><b>This month</b><span>Comes from what you send in.</span></span>
+  </div>
+</div>
+
+<div class="canvas">
+  <p class="hint">Hover or tap any block to see where it comes from</p>
+
+  <div class="email">
+
+    <!-- masthead -->
+    <div class="blk ever">
+      <span class="tagmark">Standing</span>
+      <div class="masthead">
+        <div class="logo">Sister<i>G</i>olf</div>
+      </div>
+      <dl class="note">
+        <dt>Source</dt><dd><span class="src-g">Your content doc</span></dd>
+        <dt>What happens</dt><dd>Logo, colors and type are fixed in the template. They render the same way every month with no input.</dd>
+        <dt>What you do</dt><dd>Nothing.</dd>
+      </dl>
+    </div>
+
+    <!-- fall cohort -->
+    <div class="blk ever">
+      <span class="tagmark">Standing</span>
+      <div class="em-pad">
+        <p class="kicker">August Newsletter</p>
+        <p class="over">This Fall</p>
+        <h2 class="hl">Learn to play golf with confidence</h2>
+        <p class="lede">Ready to finally learn the game, not just how to swing a club?</p>
+        <p>This fall, the SisterGolf Signature Experience returns with a complete learning journey designed for women who are brand new to golf or still don't feel comfortable stepping onto the course.</p>
+        <p>From your first putt to confidently walking nine holes, you'll learn the skills, rules, etiquette, strategy, and golf language you need to feel prepared to actually play the game.</p>
+        <h3 class="sub">More than lessons: a complete golf experience</h3>
+        <p>Your Fall Cohort includes 4 Virtual Education Sessions and 5 In-Person Group Lessons, covering putting, chipping, pitching, full swing and driver through to scoring, handicap, pace of play, course management, and preparing for tournaments and corporate outings.</p>
+        <p>You'll also receive the SisterGolf Course Guide, access to the SisterGolf community, and opportunities to keep growing through optional Practice Sessions and Play Dates.</p>
+        <p>By the end, the goal is simple: feel ready to step onto the course and play nine holes with confidence.</p>
+        <a class="cta" href="#">View the full cohort and register</a>
+      </div>
+      <dl class="note">
+        <dt>Source</dt><dd><span class="src-g">Your content doc</span></dd>
+        <dt>What happens</dt><dd>Your cohort description lives in one Google Doc. Every issue pulls the current version of it, so this block is never blank and never needs rewriting.</dd>
+        <dt>What you do</dt><dd>Edit the doc when the program changes. That is the only time you touch it.</dd>
+      </dl>
+    </div>
+
+    <!-- this weekend -->
+    <div class="blk per band-cream">
+      <span class="tagmark">This month</span>
+      <div class="photo"><em>Photo slot</em><strong>From your Drive folder</strong></div>
+      <div class="em-pad">
+        <p class="over">Keep your game moving</p>
+        <h2 class="hl">This weekend</h2>
+        <p>Learning is only the beginning. Practice Sessions give you time to work on your skills, and Play Dates let you take those skills onto the course in a welcoming SisterGolf environment.</p>
+        <p>Join us this Saturday. A low pressure way to focus on your game in a supportive room.</p>
+        <div class="times">
+          <div class="time-row"><b>Practice Session</b><span>8:30 AM</span></div>
+          <div class="time-row"><b>Play Date</b><span>9:30 AM</span></div>
+        </div>
+        <p>SisterGolf members get special pricing. Visit your Membership Portal for discount codes before registering.</p>
+        <a class="cta alt" href="#">Register now</a>
+      </div>
+      <dl class="note">
+        <dt>Source</dt><dd><span class="src-p">What you send in</span></dd>
+        <dt>What happens</dt><dd>You forward the dates and times, or a photo from a past session. The times get pulled out and formatted. The photo comes from your Drive folder.</dd>
+        <dt>What you do</dt><dd>Forward one email with the weekend details. It does not need to be written up.</dd>
+      </dl>
+    </div>
+
+    <!-- gap 1 -->
+    <div class="missing">
+      <h4>Empty in August</h4>
+      <p><b>Member win.</b> A photo of someone who hit a milestone, plus one line about what happened. Nothing came in for August, so the block was left out rather than filled with something generic.</p>
+    </div>
+
+    <!-- gap 2 -->
+    <div class="missing">
+      <h4>Empty in August</h4>
+      <p><b>A note from you.</b> Anything timely in your own voice. A question you keep getting asked, something you noticed at a session, a thought worth passing on. This is the only block where your voice shows up directly rather than program copy.</p>
+    </div>
+
+    <!-- roadmap -->
+    <div class="blk ever">
+      <span class="tagmark">Standing</span>
+      <div class="em-pad">
+        <p class="over">Not sure where you fit?</p>
+        <h2 class="hl">Start here</h2>
+        <p>New to golf? Returning after some time away? Already playing but looking for the right way to improve?</p>
+        <p>Your golf journey doesn't have to look like anyone else's. The SisterGolf Golf Journey Roadmap helps you understand where you are today and find the experience that supports where you want to go next.</p>
+        <p>A few minutes gives you a much clearer answer to one important question:</p>
+        <p class="askline">What is my next step?</p>
+        <a class="cta ink" href="#">Find your golf journey</a>
+      </div>
+      <dl class="note">
+        <dt>Source</dt><dd><span class="src-g">Your content doc</span></dd>
+        <dt>What happens</dt><dd>The Roadmap is always available, so this block runs in every issue automatically.</dd>
+        <dt>What you do</dt><dd>Nothing, unless you want to change the wording.</dd>
+      </dl>
+    </div>
+
+    <!-- membership -->
+    <div class="blk ever band-ink">
+      <span class="tagmark">Standing</span>
+      <div class="em-pad">
+        <p class="kicker">Become a member</p>
+        <h2 class="hl">Golf is not a one-time skill. It is a long-term access tool.</h2>
+        <p>SisterGolf Membership keeps you in the game, building confidence and connections that last.</p>
+        <ul class="whatyouget">
+          <li>Member pricing and perks</li>
+          <li>Community and access</li>
+          <li>Priority opportunities</li>
+        </ul>
+        <a class="cta" href="#">Learn more</a>
+      </div>
+      <dl class="note">
+        <dt>Source</dt><dd><span class="src-g">Your content doc</span></dd>
+        <dt>What happens</dt><dd>Closes every issue. Never blank, never needs a decision from you.</dd>
+        <dt>What you do</dt><dd>Nothing.</dd>
+      </dl>
+    </div>
+
+    <!-- footer -->
+    <div class="blk ever">
+      <span class="tagmark">Standing</span>
+      <div class="foot">
+        <p class="tag">LEARN &nbsp; PLAY &nbsp; CONNECT &nbsp; BELONG</p>
+        <p>See you on the course</p>
+        <p>&copy; 2026 SisterGolf Inc.</p>
+        <p><span class="ph">contact address to confirm</span></p>
+        <p>Unsubscribe</p>
+      </div>
+      <dl class="note">
+        <dt>Source</dt><dd><span class="src-g">Your content doc</span></dd>
+        <dt>What happens</dt><dd>Contact details and unsubscribe are handled automatically on every send.</dd>
+        <dt>What you do</dt><dd>Confirm the contact address you want listed.</dd>
+      </dl>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function setMode(anno){
+    document.body.classList.toggle('anno', anno);
+    document.getElementById('btnAnno').classList.toggle('on', anno);
+    document.getElementById('btnClean').classList.toggle('on', !anno);
+    if(!anno) document.querySelectorAll('.blk.open').forEach(function(b){b.classList.remove('open');});
+  }
+  document.querySelectorAll('.blk').forEach(function(b){
+    b.addEventListener('click', function(e){
+      if(!document.body.classList.contains('anno')) return;
+      if(e.target.closest('a')) return;
+      var wasOpen = b.classList.contains('open');
+      document.querySelectorAll('.blk.open').forEach(function(o){o.classList.remove('open');});
+      if(!wasOpen) b.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
