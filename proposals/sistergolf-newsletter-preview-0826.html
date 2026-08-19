@@ -207,6 +207,54 @@
   }
   body.anno .hint{display:block;}
 
+  /* ================= process flow ================= */
+  .flow{display:none;max-width:940px;margin:0 auto 52px;}
+  body.anno .flow{display:block;}
+  .flow-head{text-align:center;margin-bottom:26px;}
+  .flow-head h2{
+    font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1.5rem;
+    margin:0 0 8px;letter-spacing:-.015em;
+  }
+  .flow-head p{margin:0;color:var(--muted);font-size:14px;}
+  .flow-head b{color:var(--pink);font-weight:600;}
+  .steps{display:flex;align-items:stretch;gap:0;flex-wrap:nowrap;}
+  .step{
+    flex:1 1 0;background:var(--paper);border:1px solid var(--rule);
+    padding:18px 15px 20px;position:relative;min-width:0;
+  }
+  .step.you{border-color:var(--pink);border-width:2px;background:#FFF6FA;}
+  .step-who{
+    font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.13em;
+    text-transform:uppercase;margin:0 0 9px;color:var(--muted);
+  }
+  .step.you .step-who{color:var(--pink);font-weight:500;}
+  .step h3{
+    font-family:Fraunces,Georgia,serif;font-size:1rem;font-weight:600;
+    margin:0 0 7px;line-height:1.2;
+  }
+  .step p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.45;}
+  .step-when{
+    display:block;margin-top:10px;font-family:"IBM Plex Mono",monospace;
+    font-size:9.5px;letter-spacing:.06em;color:#A79E90;
+  }
+  .arw{
+    flex:0 0 26px;display:flex;align-items:center;justify-content:center;
+    color:#C4BBAC;font-size:15px;
+  }
+  .flow-foot{
+    margin-top:22px;text-align:center;font-size:13.5px;color:var(--muted);
+  }
+  .flow-foot b{color:var(--ink);font-weight:600;}
+
+  @media (max-width:900px){
+    .steps{flex-wrap:wrap;gap:10px;}
+    .step{flex:1 1 44%;}
+    .arw{display:none;}
+  }
+  @media (max-width:520px){
+    .step{flex:1 1 100%;}
+  }
+
   @media (max-width:1080px){
     .note{left:auto;right:10px;top:auto;bottom:10px;width:auto;max-width:min(340px,calc(100% - 20px));}
   }
@@ -238,6 +286,67 @@
 </div>
 
 <div class="canvas">
+
+  <div class="flow">
+    <div class="flow-head">
+      <h2>How an issue gets made</h2>
+      <p>Six steps. <b>Two of them are yours.</b></p>
+    </div>
+    <div class="steps">
+
+      <div class="step you">
+        <p class="step-who">You</p>
+        <h3>Send things in</h3>
+        <p>Forward an email, label something, drop a photo in Drive.</p>
+        <span class="step-when">All month</span>
+      </div>
+      <div class="arw">&#9654;</div>
+
+      <div class="step">
+        <p class="step-who">Automatic</p>
+        <h3>Filed</h3>
+        <p>Photos to Drive, details to your content library. Nothing to sort.</p>
+        <span class="step-when">As it arrives</span>
+      </div>
+      <div class="arw">&#9654;</div>
+
+      <div class="step">
+        <p class="step-who">Automatic</p>
+        <h3>Drafted</h3>
+        <p>Your material plus your standing program copy, written into the format.</p>
+        <span class="step-when">One week out</span>
+      </div>
+      <div class="arw">&#9654;</div>
+
+      <div class="step you">
+        <p class="step-who">You</p>
+        <h3>Review and reply</h3>
+        <p>It lands in your inbox. Reply with any changes, in plain English.</p>
+        <span class="step-when">A few minutes</span>
+      </div>
+      <div class="arw">&#9654;</div>
+
+      <div class="step">
+        <p class="step-who">Automatic</p>
+        <h3>Revised</h3>
+        <p>Your notes get applied and the updated version comes back.</p>
+        <span class="step-when">Same day</span>
+      </div>
+      <div class="arw">&#9654;</div>
+
+      <div class="step">
+        <p class="step-who">On your approval</p>
+        <h3>Sent</h3>
+        <p>Goes out to your list. Nothing sends until you say so.</p>
+        <span class="step-when">Month end</span>
+      </div>
+
+    </div>
+    <div class="flow-foot">
+      If nothing comes in for a section, <b>it gets left out rather than filled with filler.</b> You will see the gap in the draft.
+    </div>
+  </div>
+
   <p class="hint">Hover or tap any block to see where it comes from</p>
 
   <div class="email">
