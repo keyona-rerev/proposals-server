@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SisterGolf — System Architecture and Build Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F0F7F7;
+  --ink:#0D1F2D;
+  --cyan:#1A9E9E;
+  --purple:#7C3AED;
+  --pink:#EF67A5;
+  --green:#00A650;
+  --line:#CFE2E2;
+  --muted:#5A7078;
+  --card:#FFFFFF;
+  --grad:linear-gradient(90deg,#1A9E9E,#7C3AED);
+  --fh:'Outfit',sans-serif;
+  --fb:'Inter',sans-serif;
+  --fm:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+
+/* header */
+header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--fm);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin:0 0 18px}
+h1{font-family:var(--fh);font-weight:700;font-size:clamp(34px,5.4vw,60px);line-height:1.04;letter-spacing:-.025em;margin:0 0 20px;max-width:16ch}
+h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{font-size:19px;color:var(--muted);max-width:62ch;margin:0 0 32px}
+.meta{display:flex;flex-wrap:wrap;gap:10px}
+.tag{font-family:var(--fm);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--muted)}
+.tag b{color:var(--ink);font-weight:500}
+
+/* sections */
+section{padding:64px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+.snum{font-family:var(--fm);font-size:12px;color:var(--cyan);letter-spacing:.14em;margin:0 0 12px}
+h2{font-family:var(--fh);font-weight:600;font-size:clamp(26px,3.4vw,36px);letter-spacing:-.02em;margin:0 0 14px}
+.sub{color:var(--muted);max-width:66ch;margin:0 0 34px}
+
+/* diagram */
+.figure{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 20px;overflow-x:auto}
+.figure svg{display:block;min-width:940px;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:20px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.lg{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted)}
+.sw{width:13px;height:13px;border-radius:3px;flex:none}
+
+/* tables */
+.tbl{width:100%;border-collapse:collapse;font-size:15px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tbl th{font-family:var(--fm);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:15px 18px;background:#E7F2F2;border-bottom:1px solid var(--line);font-weight:500}
+.tbl td{padding:15px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td:first-child{font-weight:600;white-space:nowrap}
+.mono{font-family:var(--fm);font-size:13px}
+.scroll{overflow-x:auto}
+
+/* decisions */
+.decks{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+.dk{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--cyan);border-radius:12px;padding:20px 22px}
+.dk h3{font-family:var(--fh);font-weight:600;font-size:17px;margin:0 0 8px;letter-spacing:-.01em}
+.dk p{margin:0;font-size:14.5px;color:var(--muted)}
+.dk.alt{border-left-color:var(--purple)}
+.dk.sg{border-left-color:var(--pink)}
+
+/* sequence */
+.seq{list-style:none;margin:0;padding:0;counter-reset:s}
+.seq li{counter-increment:s;position:relative;padding:20px 0 20px 62px;border-bottom:1px solid var(--line)}
+.seq li:last-child{border-bottom:none}
+.seq li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:20px;font-family:var(--fm);font-size:13px;color:#fff;background:var(--ink);width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center}
+.seq h3{font-family:var(--fh);font-weight:600;font-size:18px;margin:0 0 5px;letter-spacing:-.01em}
+.seq p{margin:0;font-size:14.5px;color:var(--muted)}
+.dep{font-family:var(--fm);font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--purple);display:block;margin-top:7px}
+.blocked li::before{background:var(--pink)}
+
+/* open items */
+.ol{list-style:none;margin:0;padding:0}
+.ol li{padding:16px 0 16px 30px;border-bottom:1px solid var(--line);position:relative;font-size:15.5px}
+.ol li:last-child{border-bottom:none}
+.ol li::before{content:"";position:absolute;left:2px;top:24px;width:8px;height:8px;border-radius:50%;border:2px solid var(--pink)}
+
+/* boundary */
+.bound{background:var(--ink);color:#DCEDED;border-radius:16px;padding:38px 34px}
+.bound h2{color:#fff;margin-bottom:10px}
+.bound .sub{color:#8FB0B4}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:26px;margin-top:8px}
+.bgrid h3{font-family:var(--fh);font-weight:600;font-size:16px;color:#fff;margin:0 0 8px}
+.bgrid p{margin:0;font-size:14.5px;color:#8FB0B4}
+
+footer{padding:44px 0 72px;color:var(--muted);font-size:13.5px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer .mono{color:var(--cyan)}
+
+@media(max-width:640px){
+  header{padding:48px 0 32px}
+  section{padding:48px 0}
+  .wrap{padding:0 20px}
+  .bound{padding:30px 22px}
+}
+@media(prefers-reduced-motion:no-preference){
+  .dk,.seq li{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">ReRev Labs &middot; SisterGolf engagement</p>
+  <h1>One backend, <em>one send path</em>, nothing fires until she says so.</h1>
+  <p class="lede">The architecture for SisterGolf's newsletter system, membership portal, and site, and the order the pieces get built in. Every decision below has been made. What is left open is listed at the bottom, honestly.</p>
+  <div class="meta">
+    <span class="tag">Updated <b>21 Aug 2026</b></span>
+    <span class="tag">Status <b>Architecture locked</b></span>
+    <span class="tag">Send state <b>ARMED = false</b></span>
+  </div>
+</header>
+
+<section>
+  <p class="snum">01 &mdash; ARCHITECTURE</p>
+  <h2>How it fits together</h2>
+  <p class="sub">Shella emails the system the same way she emails her team. The agent sorts it, Supabase holds it, the dashboard lets her arrange it, and one gate stands between the finished draft and anyone's inbox.</p>
+
+  <div class="figure">
+    <svg viewBox="0 0 1240 640" role="img" aria-label="Architecture diagram: Shella's inbox feeds an Apps Script agent, which writes to Supabase. The dashboard assembles a Gmail draft, which passes an ARMED gate before YAMM sends to subscribers. Supabase also serves the membership portal, InsightForge, and a people layer.">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#5A7078"/>
+        </marker>
+        <marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#7C3AED"/>
+        </marker>
+        <linearGradient id="hub" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1A9E9E"/><stop offset="100%" stop-color="#7C3AED"/>
+        </linearGradient>
+      </defs>
+
+      <!-- band labels -->
+      <text x="14" y="30" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="#1A9E9E" letter-spacing="1.6">NEWSLETTER PIPELINE</text>
+      <text x="14" y="418" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="#7C3AED" letter-spacing="1.6">SHARED BACKEND, OTHER CONSUMERS</text>
+      <line x1="14" y1="42" x2="1226" y2="42" stroke="#CFE2E2"/>
+      <line x1="14" y1="430" x2="1226" y2="430" stroke="#CFE2E2"/>
+
+      <!-- 1. intake -->
+      <rect x="16" y="70" width="212" height="232" rx="12" fill="#FFFFFF" stroke="#CFE2E2"/>
+      <text x="34" y="98" font-family="Outfit,sans-serif" font-size="15" font-weight="600" fill="#0D1F2D">Shella's inbox</text>
+      <text x="34" y="118" font-family="Inter,sans-serif" font-size="11.5" fill="#5A7078">She forwards. Address = category.</text>
+      <rect x="34" y="132" width="176" height="27" rx="6" fill="#F0F7F7" stroke="#CFE2E2"/>
+      <text x="45" y="150" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="#0D1F2D">events@</text>
+      <rect x="34" y="165" width="176" height="27" rx="6" fill="#F0F7F7" stroke="#CFE2E2"/>
+      <text x="45" y="183" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="#0D1F2D">wins@</text>
+      <rect x="34" y="198" width="176" height="27" rx="6" fill="#F0F7F7" stroke="#CFE2E2"/>
+      <text x="45" y="216" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="#0D1F2D">note@</text>
+      <rect x="34" y="231" width="176" height="27" rx="6" fill="#F0F7F7" stroke="#CFE2E2"/>
+      <text x="45" y="249" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="#0D1F2D">newsletter@</text>
+      <text x="34" y="281" font-family="Inter,sans-serif" font-size="11.5" fill="#5A7078">Standing blocks: Google Doc</text>
+
+      <path d="M232 186 L286 186" stroke="#5A7078" stroke-width="1.6" marker-end="url(#ar)"/>
+
+      <!-- 2. agent -->
+      <rect x="292" y="106" width="186" height="160" rx="12" fill="#FFFFFF" stroke="#CFE2E2"/>
+      <text x="310" y="134" font-family="Outfit,sans-serif" font-size="15" font-weight="600" fill="#0D1F2D">Newsletter agent</text>
+      <text x="310" y="153" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#1A9E9E">GOOGLE APPS SCRIPT</text>
+      <text x="310" y="180" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Reads the alias</text>
+      <text x="310" y="200" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Tags the block type</text>
+      <text x="310" y="220" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Writes the record</text>
+      <text x="310" y="246" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Empty blocks are dropped</text>
+
+      <path d="M482 186 L536 186" stroke="#5A7078" stroke-width="1.6" marker-end="url(#ar)"/>
+
+      <!-- 3. supabase hub -->
+      <rect x="542" y="70" width="196" height="232" rx="12" fill="#FFFFFF" stroke="url(#hub)" stroke-width="2"/>
+      <text x="562" y="100" font-family="Outfit,sans-serif" font-size="16" font-weight="700" fill="#0D1F2D">Supabase</text>
+      <text x="562" y="119" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#7C3AED">SINGLE BACKEND</text>
+      <line x1="562" y1="132" x2="718" y2="132" stroke="#CFE2E2"/>
+      <text x="562" y="156" font-family="Inter,sans-serif" font-size="12.5" fill="#0D1F2D">Content library</text>
+      <text x="562" y="174" font-family="Inter,sans-serif" font-size="11" fill="#5A7078">blocks, drafts, send log</text>
+      <text x="562" y="200" font-family="Inter,sans-serif" font-size="12.5" fill="#0D1F2D">Member records</text>
+      <text x="562" y="218" font-family="Inter,sans-serif" font-size="11" fill="#5A7078">auth, entitlement, status</text>
+      <text x="562" y="244" font-family="Inter,sans-serif" font-size="12.5" fill="#0D1F2D">Storage</text>
+      <text x="562" y="262" font-family="Inter,sans-serif" font-size="11" fill="#5A7078">images, upload and share links</text>
+      <text x="562" y="288" font-family="IBM Plex Mono,monospace" font-size="10" fill="#5A7078">SEPARATE SCHEMAS PER CONSUMER</text>
+
+      <path d="M742 186 L796 186" stroke="#5A7078" stroke-width="1.6" marker-end="url(#ar)"/>
+
+      <!-- 4. dashboard -->
+      <rect x="802" y="106" width="178" height="160" rx="12" fill="#FFFFFF" stroke="#CFE2E2"/>
+      <text x="820" y="134" font-family="Outfit,sans-serif" font-size="15" font-weight="600" fill="#0D1F2D">Dashboard</text>
+      <text x="820" y="153" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#1A9E9E">HTMLSERVICE APP</text>
+      <text x="820" y="180" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Pick a template</text>
+      <text x="820" y="200" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Reorder blocks</text>
+      <text x="820" y="220" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Preview and approve</text>
+      <text x="820" y="246" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Writes the Gmail draft</text>
+
+      <!-- gate -->
+      <path d="M984 186 L1024 186" stroke="#5A7078" stroke-width="1.6"/>
+      <rect x="1024" y="128" width="10" height="116" rx="3" fill="#EF67A5"/>
+      <circle cx="1029" cy="186" r="17" fill="#FFFFFF" stroke="#EF67A5" stroke-width="2.4"/>
+      <path d="M1023 186 h12 M1029 180 v12" stroke="#EF67A5" stroke-width="2.4" stroke-linecap="round"/>
+      <text x="1029" y="116" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#EF67A5">ARMED = FALSE</text>
+      <text x="1029" y="266" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#5A7078">Shella flips it. Once.</text>
+      <path d="M1040 186 L1074 186" stroke="#5A7078" stroke-width="1.6" marker-end="url(#ar)"/>
+
+      <!-- 5. send -->
+      <rect x="1080" y="126" width="146" height="120" rx="12" fill="#FFFFFF" stroke="#CFE2E2"/>
+      <text x="1096" y="154" font-family="Outfit,sans-serif" font-size="15" font-weight="600" fill="#0D1F2D">YAMM</text>
+      <text x="1096" y="173" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#1A9E9E">SENDS FROM DRAFT</text>
+      <text x="1096" y="200" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Merges the list</text>
+      <text x="1096" y="220" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Sends the HTML</text>
+      <text x="1096" y="240" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Tracks opens</text>
+
+      <!-- fan out -->
+      <path d="M640 306 L640 340 L300 340 L300 458" stroke="#7C3AED" stroke-width="1.5" fill="none" marker-end="url(#arp)"/>
+      <path d="M640 306 L640 458" stroke="#7C3AED" stroke-width="1.5" fill="none" marker-end="url(#arp)"/>
+      <path d="M640 306 L640 340 L980 340 L980 458" stroke="#7C3AED" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#arp)"/>
+
+      <rect x="182" y="464" width="236" height="120" rx="12" fill="#FFFFFF" stroke="#CFE2E2"/>
+      <text x="202" y="494" font-family="Outfit,sans-serif" font-size="15" font-weight="600" fill="#0D1F2D">Membership portal</text>
+      <text x="202" y="513" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#1A9E9E">NETLIFY, TANSTACK START</text>
+      <text x="202" y="539" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Magic link sign in, no passwords</text>
+      <text x="202" y="559" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Access checked against Stripe</text>
+
+      <rect x="522" y="464" width="236" height="120" rx="12" fill="#FFFFFF" stroke="#CFE2E2"/>
+      <text x="542" y="494" font-family="Outfit,sans-serif" font-size="15" font-weight="600" fill="#0D1F2D">InsightForge</text>
+      <text x="542" y="513" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#1A9E9E">SAME CONTENT LIBRARY</text>
+      <text x="542" y="539" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Reads the same blocks the</text>
+      <text x="542" y="559" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">newsletter reads. One source.</text>
+
+      <rect x="862" y="464" width="236" height="120" rx="12" fill="#FFFFFF" stroke="#CFE2E2" stroke-dasharray="5 4"/>
+      <text x="882" y="494" font-family="Outfit,sans-serif" font-size="15" font-weight="600" fill="#0D1F2D">People layer</text>
+      <text x="882" y="513" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#EF67A5">UNDER EVALUATION</text>
+      <text x="882" y="539" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Labels and notes Shella reads.</text>
+      <text x="882" y="559" font-family="Inter,sans-serif" font-size="12" fill="#5A7078">Never holds machine state.</text>
+    </svg>
+  </div>
+
+  <div class="legend">
+    <span class="lg"><span class="sw" style="background:linear-gradient(90deg,#1A9E9E,#7C3AED)"></span>Supabase is the only place data lives</span>
+    <span class="lg"><span class="sw" style="background:#EF67A5"></span>The one gate between draft and send</span>
+    <span class="lg"><span class="sw" style="background:#fff;border:1px dashed #5A7078"></span>Dashed means not yet committed</span>
+  </div>
+</section>
+
+<section>
+  <p class="snum">02 &mdash; STACK</p>
+  <h2>What each piece does</h2>
+  <p class="sub">Every layer has one job and one owner. Anything Shella cannot access on her own is a failure of this table, not a feature of it.</p>
+  <div class="scroll">
+  <table class="tbl">
+    <thead><tr><th>Layer</th><th>Tool</th><th>Job</th><th>Owner</th></tr></thead>
+    <tbody>
+      <tr><td>Public site</td><td>TanStack Start on Netlify</td><td>The website itself, deployed on every push</td><td>Shella</td></tr>
+      <tr><td>Site copy</td><td>The repo, edited through Claude</td><td>Headlines and page text live in code, versioned, no CMS needed</td><td>Shella</td></tr>
+      <tr><td>Backend</td><td>Supabase</td><td>Content library, member records, image storage</td><td>Shella</td></tr>
+      <tr><td>Intake</td><td>Gmail aliases</td><td>The address a note is sent to decides which block it becomes</td><td>Shella</td></tr>
+      <tr><td>Agent</td><td>Google Apps Script</td><td>Reads the inbox, classifies, writes to Supabase, assembles the draft</td><td>Shella</td></tr>
+      <tr><td>Control panel</td><td>Bound Google Sheet</td><td>ARMED flag, send log, approval state</td><td>Shella</td></tr>
+      <tr><td>Dashboard</td><td>HtmlService web app</td><td>Template choice, block order, preview, approve</td><td>Shella</td></tr>
+      <tr><td>Sending</td><td>YAMM</td><td>Merges the list and sends the HTML sitting in the Gmail draft</td><td>Shella</td></tr>
+      <tr><td>Payments</td><td>Stripe</td><td>Subscriptions and access status. Already owned outright</td><td>Shella</td></tr>
+      <tr><td>People layer</td><td>Less Annoying CRM</td><td>Labels, notes, last contacted. Under evaluation</td><td>Undecided</td></tr>
+      <tr><td>Prospecting</td><td>Apollo</td><td>Cold outreach. Separate system, separate infrastructure</td><td>ReRev</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <p class="snum">03 &mdash; DECISIONS</p>
+  <h2>Locked, with the reason</h2>
+  <p class="sub">These are settled. Each one closed a question that was genuinely open, and the reasoning is here so nobody relitigates it in three weeks.</p>
+  <div class="decks">
+    <div class="dk"><h3>Supabase is the only backend</h3><p>Images, member records, and the content library all live in one system. A second storage provider would mean two places to look and two things to hand over.</p></div>
+    <div class="dk"><h3>Site copy stays in the repo</h3><p>Shella opens Claude, says what to change, Claude edits the file, Netlify rebuilds. That is already a CMS with better version history than most CMSes have.</p></div>
+    <div class="dk alt"><h3>The alias is the classification</h3><p>The agent never guesses which block a forwarded note belongs to, because the address it was sent to already said.</p></div>
+    <div class="dk alt"><h3>Template picker, not a page builder</h3><p>A free-form drag and drop builder is where brand constraints go to die. She arranges blocks that were written on brand. She does not author new markup.</p></div>
+    <div class="dk"><h3>Sequences are built, not bought</h3><p>A sequence is three facts: who is in it, what step they are on, when the next one fires. Apps Script is the clock. No CRM needs to own that.</p></div>
+    <div class="dk alt"><h3>The monthly send is not a sequence</h3><p>It is a broadcast on a calendar. Same content, same time, everyone. Only the welcome flow is an actual sequence, and it is two or three emails.</p></div>
+    <div class="dk sg"><h3>Machine state and human labels stay apart</h3><p>Step counters and send dates live in Supabase where nothing is hand edited. Labels and notes live where Shella can change them without breaking a send.</p></div>
+    <div class="dk sg"><h3>Magic links, no passwords</h3><p>Members sign in with a link to the email they already use. Nothing to create, forget, or reset, and no credentials for anyone to hold.</p></div>
+    <div class="dk sg"><h3>ARMED defaults to false</h3><p>Every trigger checks it before acting. The system is complete and tested and still cannot email a single person until Shella changes one value.</p></div>
+  </div>
+</section>
+
+<section>
+  <p class="snum">04 &mdash; SEQUENCE</p>
+  <h2>Build order</h2>
+  <p class="sub">Ordered by dependency, not by topic. Steps four and nine are the only two that wait on someone outside the room, which is why they are staged early.</p>
+  <ol class="seq">
+    <li><h3>Send the vendor extraction letter</h3><p>Unblocks member data, the suppression list, and analytics access at the same time. Shella signs.</p><span class="dep">Depends on nothing</span></li>
+    <li><h3>Stand up Supabase</h3><p>Schemas, tables, storage buckets, row level security. Nothing user facing yet.</p><span class="dep">Depends on nothing</span></li>
+    <li><h3>Install the newsletter agent</h3><p>Aliases, bound script, dashboard, Supabase connection. ARMED stays false throughout.</p><span class="dep">Needs step 2</span></li>
+    <li><h3>Confirm YAMM renders the HTML intact</h3><p>The one test that decides whether YAMM stays or Resend becomes the fallback.</p><span class="dep">Needs step 3</span></li>
+    <li><h3>Receive the member export and analytics</h3><p>Reconcile the list against Stripe. Vendor accounts get dropped, not migrated.</p><span class="dep">Waits on step 1</span></li>
+    <li><h3>Build membership on Stripe and Supabase</h3><p>Magic link auth, access tied to live subscription status.</p><span class="dep">Needs steps 2 and 5</span></li>
+    <li><h3>Deploy the site to a temporary Netlify URL</h3><p>Real hosting, real build, no domain change yet.</p><span class="dep">Depends on nothing</span></li>
+    <li><h3>Migrate members and review</h3><p>Shella walks the portal and the site on the temp URL and signs off.</p><span class="dep">Needs steps 6 and 7</span></li>
+    <li><h3>Get the registrar login</h3><p>The last thing that requires someone else to act.</p><span class="dep">Waits on step 8</span></li>
+    <li><h3>Cut DNS over</h3><p>Last, deliberately. Everything above must be confirmed first.</p><span class="dep">Needs everything</span></li>
+    <li><h3>Shella flips ARMED</h3><p>The first newsletter sends. One deliberate action, taken by her.</p><span class="dep">Needs steps 4 and 10</span></li>
+  </ol>
+</section>
+
+<section>
+  <p class="snum">05 &mdash; OPEN</p>
+  <h2>Still undecided</h2>
+  <p class="sub">Not oversights. Each one needs an answer before the piece it touches gets built.</p>
+  <ul class="ol">
+    <li>Does the people layer earn its place, or does the dashboard cover what Shella needs to see about a subscriber?</li>
+    <li>Does the agent write assembled HTML into the content library, or does the dashboard assemble at draft time? This changes the schema.</li>
+    <li>Do historical portal posts migrate, or does the new portal open clean with only the Monday Mulligan archive imported?</li>
+    <li>Does the nine level system carry over as it stands, get redesigned, or get dropped? Every member is currently stuck in the bottom two levels.</li>
+    <li>Where do the webinar replay video files actually live, and does anyone besides the vendor have them?</li>
+    <li>Are the published promo codes reissued or carried across?</li>
+    <li>Which email address wins when the portal export and Stripe disagree about a member?</li>
+  </ul>
+</section>
+
+<section>
+  <div class="bound">
+    <p class="snum" style="color:#EF67A5">06 &mdash; BOUNDARIES</p>
+    <h2>What this system does not do</h2>
+    <p class="sub">Stated plainly, because the failure mode here is scope arriving quietly.</p>
+    <div class="bgrid">
+      <div><h3>It does not own deliverability</h3><p>Broadcast email sends through YAMM from Gmail. That liability stays rented, never owned.</p></div>
+      <div><h3>It does not touch cold outreach</h3><p>Prospecting runs on Apollo, on separate infrastructure. Marketing and sales never share a sending domain.</p></div>
+      <div><h3>It does not manage a pipeline</h3><p>The audience is subscribers and paying members. Nobody in this system is a lead.</p></div>
+      <div><h3>It does not need ReRev to run</h3><p>Every layer is installed in Shella's accounts, under her login. The handoff is the point.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>ReRev Labs &middot; SisterGolf engagement</span>
+  <span class="mono">sistergolf-architecture-0826</span>
+</footer>
+
+</div>
+</body>
+</html>
