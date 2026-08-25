@@ -3,404 +3,215 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lanyard nurture system, live working map</title>
+<title>Lanyard nurture system, architecture</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
 --bg:#F0F7F7; --primary:#0D1F2D; --cyan:#1A9E9E; --purple:#7C3AED;
 --amber:#BA7517; --amberbg:#FAEEDA; --green:#3B6D11; --greenbg:#EAF3DE;
 --line:#D6E4E4; --muted:#5A6B75; --white:#fff;
---font-heading:'Outfit',sans-serif; --font-body:'Inter',sans-serif;
+--fh:'Outfit',sans-serif; --fb:'Inter',sans-serif;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--primary);font-family:var(--font-body);line-height:1.6;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--primary);font-family:var(--fb);line-height:1.65;-webkit-font-smoothing:antialiased}
 .wrap{max-width:1120px;margin:0 auto;padding:40px 24px 80px}
-h1{font-family:var(--font-heading);font-size:32px;font-weight:600;margin:0 0 6px;letter-spacing:-0.02em}
-h2{font-family:var(--font-heading);font-size:22px;font-weight:600;margin:0 0 4px}
-h3{font-family:var(--font-heading);font-size:17px;font-weight:600;margin:0}
-.sub{color:var(--muted);font-size:15px;margin:0 0 32px}
-.bar{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:14px 18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:28px;position:sticky;top:0;z-index:20}
-.bar strong{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-right:4px}
-.chip{font-size:13px;font-weight:500;padding:5px 12px;border-radius:999px;background:var(--amberbg);color:#633806;border:1px solid #EF9F27}
-.chip.done{background:var(--greenbg);color:#27500A;border-color:#97C459}
-.panel{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:28px}
-.maphead{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-.maphead p{margin:0;font-size:14px;color:var(--muted)}
+h1{font-family:var(--fh);font-size:32px;font-weight:600;margin:0 0 6px;letter-spacing:-0.02em}
+h2{font-family:var(--fh);font-size:22px;font-weight:600;margin:0 0 12px}
+h3{font-family:var(--fh);font-size:16px;font-weight:600;margin:0 0 6px}
+.sub{color:var(--muted);font-size:15px;margin:0 0 28px}
+.panel{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:26px;margin-bottom:26px}
+.locked{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.pill{font-size:13px;font-weight:500;padding:5px 12px;border-radius:999px;background:var(--greenbg);color:#27500A;border:1px solid #97C459}
+.pill.open{background:var(--amberbg);color:#633806;border-color:#EF9F27}
 svg{width:100%;height:auto;display:block}
-.legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;font-size:13px;color:var(--muted)}
+.legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:18px;font-size:13px;color:var(--muted)}
 .legend span{display:flex;align-items:center;gap:7px}
 .sw{width:14px;height:14px;border-radius:4px;border:1px solid;display:inline-block}
-.gatecard{background:var(--white);border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:0 12px 12px 0;padding:22px 24px;margin-bottom:18px}
-.gatecard.locked{border-left-color:var(--green)}
-.gtop{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
-.gnum{width:30px;height:30px;border-radius:50%;background:var(--amberbg);color:#633806;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;flex:none}
-.gatecard.locked .gnum{background:var(--greenbg);color:#27500A}
-.blocks{font-size:12px;font-weight:500;color:var(--muted);margin:6px 0 18px}
-.forks{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
-@media(max-width:760px){.forks{grid-template-columns:1fr}}
-.fork{border:1px solid var(--line);border-radius:10px;padding:16px;cursor:pointer;transition:border-color .15s,background .15s}
-.fork:hover{border-color:var(--cyan)}
-.fork.sel{border-color:var(--green);background:var(--greenbg)}
-.fork h4{font-family:var(--font-heading);font-size:15px;font-weight:600;margin:0 0 8px}
-.fork p{margin:0;font-size:14px;color:var(--muted)}
-.fork .cons{margin-top:10px;font-size:13px;color:var(--primary);border-top:1px dashed var(--line);padding-top:10px}
-.fork .cons b{font-weight:600;color:var(--cyan)}
-.ask{background:#F7FBFB;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
-.ask strong{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--cyan);margin-bottom:8px}
-.ask ul{margin:0;padding-left:18px}
-.ask li{margin-bottom:6px;font-size:15px}
-.ask li:last-child{margin-bottom:0}
-.note{background:var(--amberbg);border-radius:8px;padding:12px 14px;font-size:14px;color:#633806;margin-bottom:18px}
-.settled li{margin-bottom:10px;font-size:15px}
-.settled b{font-weight:600}
-textarea{width:100%;min-height:80px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-family:var(--font-body);font-size:14px;resize:vertical;margin-top:12px;color:var(--primary)}
-textarea:focus{outline:none;border-color:var(--cyan)}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-button{font-family:var(--font-body);font-size:14px;font-weight:500;padding:9px 18px;border-radius:8px;border:1px solid var(--primary);background:transparent;color:var(--primary);cursor:pointer}
-button:hover{background:var(--primary);color:var(--white)}
-button.ghost{border-color:var(--line);color:var(--muted)}
-button.ghost:hover{background:var(--line);color:var(--primary)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+th{text-align:left;font-family:var(--fh);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:0 12px 10px 0;border-bottom:1px solid var(--line)}
+td{padding:12px 12px 12px 0;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#F7FBFB;padding:2px 6px;border-radius:4px;color:#0D1F2D}
+ol{padding-left:22px;margin:0}
+ol li{margin-bottom:12px}
+ol li b{font-weight:600}
+ol li span{display:block;color:var(--muted);font-size:14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+@media(max-width:820px){.two{grid-template-columns:1fr}}
+.risk{border-left:3px solid var(--amber);padding-left:16px;margin-bottom:18px}
+.risk:last-child{margin-bottom:0}
+.risk p{margin:4px 0 0;font-size:14px;color:var(--muted)}
 .foot{font-size:13px;color:var(--muted);text-align:center;margin-top:40px}
+.lead{font-size:15px;color:var(--muted);margin:0 0 18px}
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <h1>Lanyard nurture system</h1>
-<p class="sub">Live working map. Five gates decide the build. Answers save in this browser as you go.</p>
+<p class="sub">Architecture as decided. Apps Script owns timing, Cowork owns judgment, the Sheet is the only thing they share.</p>
 
-<div class="bar" id="bar">
-  <strong>Gates</strong>
-  <span class="chip" id="c1">1. Booking link</span>
-  <span class="chip" id="c2">2. Transcript</span>
-  <span class="chip" id="c3">3. Classifier</span>
-  <span class="chip" id="c4">4. Copy</span>
-  <span class="chip" id="c5">5. Sender</span>
+<div class="locked">
+  <span class="pill">Booking: Google scheduling link</span>
+  <span class="pill">Transcript: Granola</span>
+  <span class="pill">Classify: Cowork, not API</span>
+  <span class="pill">Sender: Gmail as Kay, Nurture label</span>
+  <span class="pill">Google auth: in hand</span>
+  <span class="pill open">Copy: not signed off</span>
 </div>
 
 <div class="panel">
-  <div class="maphead">
-    <h2>The whole system</h2>
-    <p>Redraw this on the board. Everything hangs off one trigger.</p>
-  </div>
+  <h2>The architecture</h2>
+  <p class="lead">Two systems that never talk to each other. Apps Script runs on a clock and does only deterministic work. Cowork runs when it runs and does the reading. The Sheet is the handoff, so if either side is down the other keeps working and picks the rows back up later.</p>
 
-<svg viewBox="0 0 1100 620" role="img" aria-label="Lanyard nurture system flow with five decision gates">
+<svg viewBox="0 0 1100 640" role="img" aria-label="Nurture system architecture: Apps Script lane, Sheet state store, Cowork lane">
 <defs>
-<marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
 <path d="M2 1L8 5L2 9" fill="none" stroke="#5A6B75" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
 </marker>
 </defs>
 
-<rect x="40" y="50" width="200" height="54" rx="8" fill="#fff" stroke="#D6E4E4"/>
-<text x="140" y="82" text-anchor="middle" font-family="Inter" font-size="14" fill="#0D1F2D">Website button</text>
+<rect x="70" y="20" width="220" height="56" rx="8" fill="#fff" stroke="#D6E4E4"/>
+<text x="180" y="44" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#0D1F2D">Google scheduling link</text>
+<text x="180" y="62" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">the single trigger</text>
 
-<rect x="40" y="124" width="200" height="54" rx="8" fill="#fff" stroke="#D6E4E4"/>
-<text x="140" y="156" text-anchor="middle" font-family="Inter" font-size="14" fill="#0D1F2D">Email signature</text>
+<rect x="830" y="20" width="200" height="56" rx="8" fill="#fff" stroke="#D6E4E4"/>
+<text x="930" y="52" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#0D1F2D">Prospect inbox</text>
 
-<rect x="40" y="198" width="200" height="54" rx="8" fill="#fff" stroke="#D6E4E4"/>
-<text x="140" y="230" text-anchor="middle" font-family="Inter" font-size="14" fill="#0D1F2D">LinkedIn, referral</text>
+<line x1="180" y1="78" x2="180" y2="126" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
+<line x1="960" y1="128" x2="960" y2="80" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
+<path d="M828 48 L690 48 L690 126" fill="none" stroke="#BA7517" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="758" y="40" text-anchor="middle" font-family="Inter" font-size="12" fill="#BA7517">reply</text>
 
-<line x1="242" y1="77" x2="296" y2="140" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
-<line x1="242" y1="151" x2="296" y2="151" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
-<line x1="242" y1="225" x2="296" y2="163" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="40" y="90" width="1020" height="140" rx="10" fill="#F7FBFB" stroke="#1A9E9E" stroke-dasharray="6 4"/>
+<text x="56" y="110" font-family="Inter" font-size="12" font-weight="600" fill="#1A9E9E">APPS SCRIPT, HER ACCOUNT, DAILY TIME TRIGGER</text>
 
-<rect id="g1" x="300" y="124" width="200" height="54" rx="8" fill="#FAEEDA" stroke="#EF9F27" stroke-width="1.5"/>
-<text x="400" y="149" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#633806">1. Booking link</text>
-<text x="400" y="167" text-anchor="middle" font-family="Inter" font-size="12" fill="#854F0B">the single trigger</text>
+<rect x="70" y="130" width="220" height="70" rx="8" fill="#fff" stroke="#1A9E9E"/>
+<text x="180" y="158" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#0D1F2D">Intake.gs</text>
+<text x="180" y="178" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">booking makes a row</text>
 
-<line x1="502" y1="151" x2="556" y2="151" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
+<line x1="292" y1="165" x2="326" y2="165" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
 
-<rect x="560" y="124" width="200" height="54" rx="8" fill="#fff" stroke="#D6E4E4"/>
-<text x="660" y="156" text-anchor="middle" font-family="Inter" font-size="14" fill="#0D1F2D">Calendar event</text>
+<rect x="330" y="130" width="220" height="70" rx="8" fill="#fff" stroke="#1A9E9E"/>
+<text x="440" y="158" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#0D1F2D">Runner.gs</text>
+<text x="440" y="178" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">is a step due today</text>
 
-<path d="M720 124 L720 77 L814 77" fill="none" stroke="#7C3AED" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#a)"/>
-<rect x="820" y="50" width="200" height="54" rx="8" fill="#F4EEFE" stroke="#AFA9EC" stroke-dasharray="5 4"/>
-<text x="920" y="74" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#3C3489">Pre-call research brief</text>
-<text x="920" y="92" text-anchor="middle" font-family="Inter" font-size="12" fill="#534AB7">the other automation</text>
+<line x1="552" y1="165" x2="586" y2="165" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
 
-<line x1="762" y1="151" x2="814" y2="151" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
-<rect x="820" y="124" width="200" height="54" rx="8" fill="#fff" stroke="#D6E4E4"/>
-<text x="920" y="156" text-anchor="middle" font-family="Inter" font-size="14" fill="#0D1F2D">Discovery call</text>
+<rect x="590" y="130" width="200" height="70" rx="8" fill="#fff" stroke="#BA7517" stroke-width="1.5"/>
+<text x="690" y="158" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#633806">Reply check</text>
+<text x="690" y="178" text-anchor="middle" font-family="Inter" font-size="12" fill="#854F0B">runs before every send</text>
 
-<line x1="920" y1="180" x2="920" y2="226" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
+<line x1="792" y1="165" x2="826" y2="165" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
 
-<rect id="g2" x="820" y="230" width="200" height="54" rx="8" fill="#FAEEDA" stroke="#EF9F27" stroke-width="1.5"/>
-<text x="920" y="255" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#633806">2. Transcript</text>
-<text x="920" y="273" text-anchor="middle" font-family="Inter" font-size="12" fill="#854F0B">Fathom or Granola</text>
+<rect x="830" y="130" width="200" height="70" rx="8" fill="#fff" stroke="#1A9E9E"/>
+<text x="930" y="158" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#0D1F2D">Gmail send</text>
+<text x="930" y="178" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">as Kay, Nurture label</text>
 
-<line x1="818" y1="257" x2="764" y2="257" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
+<line x1="180" y1="202" x2="180" y2="276" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
+<line x1="440" y1="276" x2="440" y2="202" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
+<line x1="690" y1="202" x2="690" y2="276" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
+<line x1="930" y1="202" x2="930" y2="276" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
 
-<rect id="g3" x="560" y="230" width="200" height="54" rx="8" fill="#FAEEDA" stroke="#EF9F27" stroke-width="1.5"/>
-<text x="660" y="255" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#633806">3. Classifier</text>
-<text x="660" y="273" text-anchor="middle" font-family="Inter" font-size="12" fill="#854F0B">picks the archetype</text>
+<rect x="40" y="280" width="1020" height="86" rx="10" fill="#EAF3DE" stroke="#3B6D11" stroke-width="1.5"/>
+<text x="550" y="312" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#173404">The Sheet, one row per prospect, the only shared state</text>
+<text x="550" y="336" text-anchor="middle" font-family="Inter" font-size="12" fill="#27500A">email, name, booked_at, call_at, archetype, status, thread_id, step, last_sent_at, replied_at, stopped_reason</text>
+<text x="550" y="354" text-anchor="middle" font-family="Inter" font-size="12" fill="#3B6D11">plus a Log tab, every action appended</text>
 
-<line x1="558" y1="257" x2="504" y2="257" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
+<line x1="460" y1="368" x2="460" y2="454" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
+<text x="452" y="416" text-anchor="end" font-family="Inter" font-size="12" fill="#5A6B75">claims rows</text>
+<line x1="640" y1="454" x2="640" y2="370" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
+<text x="650" y="416" font-family="Inter" font-size="12" fill="#5A6B75">writes archetype</text>
 
-<rect x="300" y="230" width="200" height="54" rx="8" fill="#fff" stroke="#0D1F2D"/>
-<text x="400" y="255" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#0D1F2D">Contract signed?</text>
-<text x="400" y="273" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">the only real fork</text>
+<rect x="40" y="430" width="1020" height="150" rx="10" fill="#F4EEFE" stroke="#7C3AED" stroke-dasharray="6 4"/>
+<text x="56" y="450" font-family="Inter" font-size="12" font-weight="600" fill="#7C3AED">COWORK, JOB BOARD PATTERN, NO METERED API</text>
 
-<path d="M298 257 L270 257 L270 331 L244 331" fill="none" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
-<text x="256" y="300" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">yes</text>
-<rect x="40" y="304" width="200" height="54" rx="8" fill="#fff" stroke="#D6E4E4"/>
-<text x="140" y="336" text-anchor="middle" font-family="Inter" font-size="14" fill="#0D1F2D">Onboarding</text>
+<rect x="80" y="470" width="220" height="70" rx="8" fill="#fff" stroke="#7C3AED"/>
+<text x="190" y="498" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#0D1F2D">Granola</text>
+<text x="190" y="518" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">call transcript</text>
 
-<line x1="400" y1="286" x2="400" y2="316" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
-<text x="418" y="306" font-family="Inter" font-size="12" fill="#5A6B75">no</text>
+<line x1="302" y1="505" x2="368" y2="505" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
 
-<rect x="300" y="320" width="200" height="54" rx="8" fill="#fff" stroke="#1A9E9E"/>
-<text x="400" y="345" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#0D1F2D">Sequence selector</text>
-<text x="400" y="363" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">one of four</text>
+<rect x="372" y="470" width="330" height="70" rx="8" fill="#fff" stroke="#7C3AED"/>
+<text x="537" y="498" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#0D1F2D">Classify job</text>
+<text x="537" y="518" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">reads the call, picks one of four</text>
 
-<line x1="502" y1="347" x2="556" y2="347" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="760" y="470" width="270" height="70" rx="8" fill="#fff" stroke="#D6E4E4" stroke-dasharray="4 3"/>
+<text x="895" y="498" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#5A6B75">Kay overrides</text>
+<text x="895" y="518" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">dropdown in the Sheet, always wins</text>
 
-<rect id="g4" x="560" y="320" width="200" height="54" rx="8" fill="#FAEEDA" stroke="#EF9F27" stroke-width="1.5"/>
-<text x="660" y="345" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#633806">4. Copy library</text>
-<text x="660" y="363" text-anchor="middle" font-family="Inter" font-size="12" fill="#854F0B">not signed off</text>
-
-<line x1="762" y1="347" x2="814" y2="347" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
-
-<rect id="g5" x="820" y="320" width="200" height="54" rx="8" fill="#FAEEDA" stroke="#EF9F27" stroke-width="1.5"/>
-<text x="920" y="345" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#633806">5. Sender</text>
-<text x="920" y="363" text-anchor="middle" font-family="Inter" font-size="12" fill="#854F0B">whose mailbox</text>
-
-<line x1="920" y1="376" x2="920" y2="406" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
-<rect x="820" y="410" width="200" height="54" rx="8" fill="#fff" stroke="#D6E4E4"/>
-<text x="920" y="442" text-anchor="middle" font-family="Inter" font-size="14" fill="#0D1F2D">Prospect inbox</text>
-
-<line x1="818" y1="437" x2="764" y2="437" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
-<rect x="560" y="410" width="200" height="54" rx="8" fill="#fff" stroke="#D6E4E4"/>
-<text x="660" y="442" text-anchor="middle" font-family="Inter" font-size="14" fill="#0D1F2D">Reply detected</text>
-
-<path d="M558 437 L400 437 L400 380" fill="none" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#a)"/>
-<text x="470" y="428" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">kills the sequence</text>
-
-<rect x="40" y="500" width="980" height="60" rx="8" fill="#F7FBFB" stroke="#1A9E9E" stroke-dasharray="6 4"/>
-<text x="530" y="524" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#0D1F2D">State store, one Google Sheet row per prospect</text>
-<text x="530" y="544" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">booked at, archetype, sequence, step, last sent, replied at, stopped reason</text>
-
-<line x1="140" y1="360" x2="140" y2="496" stroke="#1A9E9E" stroke-width="1" stroke-dasharray="3 4"/>
-<line x1="400" y1="376" x2="400" y2="496" stroke="#1A9E9E" stroke-width="1" stroke-dasharray="3 4"/>
-<line x1="660" y1="466" x2="660" y2="496" stroke="#1A9E9E" stroke-width="1" stroke-dasharray="3 4"/>
-<line x1="920" y1="466" x2="920" y2="496" stroke="#1A9E9E" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="758" y1="505" x2="706" y2="505" stroke="#5A6B75" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ar)"/>
 </svg>
 
   <div class="legend">
-    <span><i class="sw" style="background:#FAEEDA;border-color:#EF9F27"></i>Open gate, decide today</span>
-    <span><i class="sw" style="background:#F4EEFE;border-color:#AFA9EC"></i>Second automation, same trigger</span>
-    <span><i class="sw" style="background:#F7FBFB;border-color:#1A9E9E"></i>State store</span>
+    <span><i class="sw" style="background:#F7FBFB;border-color:#1A9E9E"></i>Apps Script, deterministic</span>
+    <span><i class="sw" style="background:#F4EEFE;border-color:#7C3AED"></i>Cowork, judgment</span>
+    <span><i class="sw" style="background:#EAF3DE;border-color:#3B6D11"></i>Shared state</span>
+    <span><i class="sw" style="background:#fff;border-color:#BA7517"></i>The step that protects her</span>
   </div>
-</div>
-
-<h2 style="margin-bottom:14px">Gate by gate</h2>
-
-<div class="gatecard" id="k1">
-  <div class="gtop"><div class="gnum">1</div><h3>Which booking link is live</h3></div>
-  <p class="blocks">Blocks: everything. Both automations fire off this one event.</p>
-  <div class="note">You built her the Google booking link on Aug 6 and she sent it back the same day. Her email signature and website still serve HubSpot links. Her HubSpot startup discount lapsed July 23 and she was disputing a $545 charge.</div>
-  <div class="forks">
-    <div class="fork" data-g="1" data-v="Google Calendar booking">
-      <h4>Google Calendar booking</h4>
-      <p>Swap the link on the website and in her signature today.</p>
-      <div class="cons"><b>Consequence:</b> Apps Script reads Calendar directly. No API keys, no subscription risk, no vendor in the middle. Requires her to edit two places.</div>
-    </div>
-    <div class="fork" data-g="1" data-v="Stay on HubSpot">
-      <h4>Stay on HubSpot</h4>
-      <p>Keep the existing meetings links, build against HubSpot.</p>
-      <div class="cons"><b>Consequence:</b> Trigger depends on a paid plan she wants to drop. If billing lapses, both automations go dark with no warning.</div>
-    </div>
-  </div>
-  <div class="ask"><strong>Ask her</strong><ul>
-    <li>Is HubSpot still active, and what happened with the $545 dispute?</li>
-    <li>Pull up the website right now. Which link is on it?</li>
-    <li>Where else does a booking link live that we have not listed?</li>
-  </ul></div>
-</div>
-
-<div class="gatecard" id="k2">
-  <div class="gtop"><div class="gnum">2</div><h3>What captures the transcript</h3></div>
-  <p class="blocks">Blocks: gate 3. No transcript means no automatic classification.</p>
-  <div class="forks">
-    <div class="fork" data-g="2" data-v="Fathom">
-      <h4>Fathom</h4>
-      <p>Has a real API and webhooks.</p>
-      <div class="cons"><b>Consequence:</b> Transcript lands in the Sheet automatically. Classification can run unattended.</div>
-    </div>
-    <div class="fork" data-g="2" data-v="Granola">
-      <h4>Granola</h4>
-      <p>Notes are emailed and app-local.</p>
-      <div class="cons"><b>Consequence:</b> Pull the notes out of Gmail, or Kay pastes them. Adds a manual hop unless she forwards to a dedicated address.</div>
-    </div>
-  </div>
-  <div class="ask"><strong>Ask her</strong><ul>
-    <li>Open your last discovery call. What recorded it?</li>
-    <li>Does it join automatically, or do you start it?</li>
-    <li>Do you get the transcript by email, or only inside the app?</li>
-  </ul></div>
-</div>
-
-<div class="gatecard" id="k3">
-  <div class="gtop"><div class="gnum">3</div><h3>Who picks the archetype</h3></div>
-  <p class="blocks">Blocks: nothing downstream. This is the architecture call of the session.</p>
-  <div class="forks">
-    <div class="fork" data-g="3" data-v="Model reads the transcript">
-      <h4>Model reads the transcript</h4>
-      <p>Classification runs on the call text.</p>
-      <div class="cons"><b>Consequence:</b> Fully hands off, but it is only as good as the archetype definitions, which have not been tested live yet. A wrong tag sends the wrong sequence to a real prospect.</div>
-    </div>
-    <div class="fork" data-g="3" data-v="Kay tags it herself">
-      <h4>Kay tags it herself</h4>
-      <p>One click in the Sheet after the call.</p>
-      <div class="cons"><b>Consequence:</b> Ships today, no transcript dependency, and every tag becomes training data. Costs her about thirty seconds per call. Swap in the model later without touching anything downstream.</div>
-    </div>
-  </div>
-  <div class="ask"><strong>Ask her</strong><ul>
-    <li>After a call, do you already know which of the four it was?</li>
-    <li>How wrong would a mistagged prospect feel to you?</li>
-    <li>How many discovery calls are you actually running per week right now?</li>
-  </ul></div>
-</div>
-
-<div class="gatecard" id="k4">
-  <div class="gtop"><div class="gnum">4</div><h3>Copy sign off</h3></div>
-  <p class="blocks">Blocks: sending. Routing can be built and tested without it.</p>
-  <div class="note">She answered the pricing homework on July 17 with the five inputs and sent her calculator. She never came back on the copy itself.</div>
-  <div class="forks">
-    <div class="fork" data-g="4" data-v="Review in the room">
-      <h4>Review in the room</h4>
-      <p>Walk the archetype doc together now.</p>
-      <div class="cons"><b>Consequence:</b> Sequences can arm this week. Costs most of the session, so the build gets demoed rather than finished.</div>
-    </div>
-    <div class="fork" data-g="4" data-v="Build dark, arm later">
-      <h4>Build dark, arm later</h4>
-      <p>Wire everything with sends disabled.</p>
-      <div class="cons"><b>Consequence:</b> Full pipeline runs end to end today with drafts instead of sends. Flipping one flag turns it on once copy lands.</div>
-    </div>
-  </div>
-  <div class="ask"><strong>Ask her</strong><ul>
-    <li>Did you get through the archetype doc?</li>
-    <li>Which of these emails would you be embarrassed to have sent?</li>
-    <li>What does a prospect need to hear to feel like a buyer rather than a lead?</li>
-  </ul></div>
-</div>
-
-<div class="gatecard" id="k5">
-  <div class="gtop"><div class="gnum">5</div><h3>Whose mailbox sends</h3></div>
-  <p class="blocks">Blocks: nothing today, but changing it later means rewriting the copy and the sender config.</p>
-  <div class="note">On Aug 3 she said she is bringing on an offshore VA and a customer success specialist.</div>
-  <div class="forks">
-    <div class="fork" data-g="5" data-v="Kay personally">
-      <h4>Kay personally</h4>
-      <p>Sends from kay@lanyardhealth.com, first person.</p>
-      <div class="cons"><b>Consequence:</b> Highest reply rate at this stage. Does not survive delegation. Handing it to a VA means rewriting every email.</div>
-    </div>
-    <div class="fork" data-g="5" data-v="Lanyard shared voice">
-      <h4>Lanyard shared voice</h4>
-      <p>Written as the company, delegated send.</p>
-      <div class="cons"><b>Consequence:</b> A VA can run it on day one. Slightly cooler tone. Needs a Workspace group or delegation set up before the copy is written, not after.</div>
-    </div>
-  </div>
-  <div class="ask"><strong>Ask her</strong><ul>
-    <li>What is the actual start date on the VA and the CS hire?</li>
-    <li>Will they answer replies, or only send?</li>
-    <li>Do you want prospects to think they are talking to you, or to Lanyard?</li>
-  </ul></div>
-</div>
-
-<div class="panel settled">
-  <h2 style="margin-bottom:12px">Already settled, do not reopen</h2>
-  <ul>
-    <li><b>Substrate is Google Apps Script.</b> You evaluated her real CRM usage on Aug 5 and found 99% of it lives in Google Workspace. Full team is on Gmail, Calendar and Drive daily.</li>
-    <li><b>She wants off HubSpot.</b> Her words: too enterprise at this stage. She wants the stack slim.</li>
-    <li><b>Pricing inputs are locked.</b> Provider count, payer count, state count, expansion plans, and whether compliance tracking matters. She sent her calculator as an HTML file on July 17.</li>
-    <li><b>Sequences fire only when a call does not end in a signed contract.</b> A signed contract goes straight to onboarding.</li>
-    <li><b>Best outcome is still a calendar invite before hanging up.</b> Nurture is the fallback, not the plan.</li>
-    <li><b>Loop in Branden, possibly Amanda and Isaiah,</b> on anything new that gets built.</li>
-  </ul>
 </div>
 
 <div class="panel">
-  <h2 style="margin-bottom:4px">Session notes</h2>
-  <p style="margin:0;font-size:14px;color:var(--muted)">Saves in this browser. Copy it out at the end.</p>
-  <textarea id="notes" placeholder="What she said, what changed, what to build next."></textarea>
-  <div class="actions">
-    <button onclick="copyOut()">Copy decisions and notes</button>
-    <button class="ghost" onclick="resetAll()">Reset</button>
+  <h2>Threading by archetype</h2>
+  <p class="lead">A Gmail reply inherits its subject line, so threaded and fresh subjects are mutually exclusive. This is set per sequence in <code>Config.gs</code>, not per email.</p>
+  <table>
+    <tr><th>Archetype</th><th>Threading</th><th>Why</th></tr>
+    <tr><td><b>Ready Now</b></td><td>Threaded</td><td>Two or three touches over a short window. Same conversation keeps the momentum from the call.</td></tr>
+    <tr><td><b>Frustrated Switcher</b></td><td>Fresh subjects</td><td>They forward internally while evaluating. Each email has to stand on its own as a forwardable artifact.</td></tr>
+    <tr><td><b>Complex or Contingent</b></td><td>Fresh subjects</td><td>Horizon is months. A Re: chain with three week gaps reads stale.</td></tr>
+    <tr><td><b>No Urgency</b></td><td>Fresh subjects</td><td>Longest horizon, lowest engagement. An unanswered Re: chain reads as nagging.</td></tr>
+  </table>
+</div>
+
+<div class="two">
+  <div class="panel">
+    <h2>Build order</h2>
+    <ol>
+      <li><b>Sheet schema</b><span>Both lanes read and write this, so it locks first.</span></li>
+      <li><b>Config.gs</b><span>Sequences, step timings, threading flag per archetype, DRY_RUN on.</span></li>
+      <li><b>Runner.gs</b><span>Due check, reply check, send, advance. The bulk of the code.</span></li>
+      <li><b>Test on your account</b><span>Seeded rows, backdated, drafts only.</span></li>
+      <li><b>Cowork classify job</b><span>Job board pattern against the same Sheet.</span></li>
+      <li><b>Copy load in</b><span>Whenever Kay signs off. Config change, no code.</span></li>
+      <li><b>Port to her workspace</b><span>She authorizes and installs her own triggers.</span></li>
+      <li><b>Flip DRY_RUN</b></li>
+    </ol>
+  </div>
+
+  <div class="panel">
+    <h2>What actually breaks</h2>
+    <div class="risk">
+      <h3>Reply detection missing one</h3>
+      <p>The only genuinely bad outcome. Someone replies yes and still gets a scripted email. Runs before every send, on every pass.</p>
+    </div>
+    <div class="risk">
+      <h3>Double sends</h3>
+      <p>Manual run plus the daily trigger, or a send that succeeds before the counter write fails. Guard on last_sent_at being today.</p>
+    </div>
+    <div class="risk">
+      <h3>Date math</h3>
+      <p>Weekends, month boundaries, and script timezone not matching hers. Not dangerous, just sloppy.</p>
+    </div>
+    <div class="risk">
+      <h3>Wrong sender on port</h3>
+      <p>Apps Script triggers run as whoever installed them. If she never installs her own, mail goes out from your address.</p>
+    </div>
   </div>
 </div>
 
-<p class="foot">ReRev LLC. Working document for the Lanyard Health nurture install.</p>
+<div class="panel">
+  <h2>Test plan</h2>
+  <p class="lead">You cannot test this by booking and waiting, the sequences run over weeks. Seed rows and backdate instead. Four passes, about twenty minutes, no framework.</p>
+  <table>
+    <tr><th>Pass</th><th>Setup</th><th>Looking for</th></tr>
+    <tr><td><b>1. Copy and routing</b></td><td>One row per archetype, backdated, DRY_RUN on</td><td>Four different drafts, right copy, right threading behavior for each</td></tr>
+    <tr><td><b>2. Reply kill</b></td><td>Seed a row, reply from another address, run again</td><td>Sequence stops, stopped_reason written. Watch this one.</td></tr>
+    <tr><td><b>3. Idempotency</b></td><td>Run the runner twice on the same rows</td><td>Second pass sends nothing</td></tr>
+    <tr><td><b>4. Live intake</b></td><td>One real booking through her link</td><td>Row created with the right fields, DRY_RUN still on</td></tr>
+  </table>
 </div>
 
-<script>
-var KEY='lanyard-nurture-gates-0826';
-var state=JSON.parse(localStorage.getItem(KEY)||'{}');
-var names={1:'Booking link',2:'Transcript',3:'Classifier',4:'Copy',5:'Sender'};
-
-function paint(){
-  for(var g=1;g<=5;g++){
-    var v=state['g'+g];
-    var chip=document.getElementById('c'+g);
-    var card=document.getElementById('k'+g);
-    var rect=document.getElementById('g'+g);
-    if(v){
-      chip.className='chip done';
-      chip.textContent=g+'. '+v;
-      card.classList.add('locked');
-      if(rect){rect.setAttribute('fill','#EAF3DE');rect.setAttribute('stroke','#97C459');}
-    }else{
-      chip.className='chip';
-      chip.textContent=g+'. '+names[g];
-      card.classList.remove('locked');
-      if(rect){rect.setAttribute('fill','#FAEEDA');rect.setAttribute('stroke','#EF9F27');}
-    }
-  }
-  var forks=document.querySelectorAll('.fork');
-  for(var i=0;i<forks.length;i++){
-    var f=forks[i];
-    if(state['g'+f.getAttribute('data-g')]===f.getAttribute('data-v')){f.classList.add('sel');}
-    else{f.classList.remove('sel');}
-  }
-  document.getElementById('notes').value=state.notes||'';
-}
-
-var allForks=document.querySelectorAll('.fork');
-for(var i=0;i<allForks.length;i++){
-  allForks[i].addEventListener('click',function(){
-    var g='g'+this.getAttribute('data-g');
-    var v=this.getAttribute('data-v');
-    state[g]=(state[g]===v)?null:v;
-    localStorage.setItem(KEY,JSON.stringify(state));
-    paint();
-  });
-}
-
-document.getElementById('notes').addEventListener('input',function(){
-  state.notes=this.value;
-  localStorage.setItem(KEY,JSON.stringify(state));
-});
-
-function copyOut(){
-  var out='Lanyard nurture, decisions locked\n\n';
-  for(var g=1;g<=5;g++){
-    out+=g+'. '+names[g]+': '+(state['g'+g]||'still open')+'\n';
-  }
-  out+='\nNotes\n'+(state.notes||'');
-  if(navigator.clipboard){
-    navigator.clipboard.writeText(out).then(function(){alert('Copied.');},function(){alert('Copy failed. Select the notes manually.');});
-  }else{
-    alert('Clipboard not available. Select the notes manually.');
-  }
-}
-
-function resetAll(){
-  if(!confirm('Clear all decisions and notes?'))return;
-  state={};
-  localStorage.removeItem(KEY);
-  paint();
-}
-
-paint();
-</script>
+<p class="foot">ReRev LLC. Working architecture for the Lanyard Health nurture install. Updated Aug 25, 2026.</p>
+</div>
 </body>
 </html>
