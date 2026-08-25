@@ -180,16 +180,24 @@ button.gh{font-family:var(--fb);font-size:14px;font-weight:500;padding:9px 18px;
   <div class="card">
     <h2>Safety</h2>
     <div class="grid2">
-      <div class="field">
-        <label>Never email these</label>
-        <textarea style="min-height:80px" onchange="save()">lanyardhealth.com
-rerev.io
-builddesignstudio.com</textarea>
-        <p class="hint">One domain or address per line. Blocks your own team, partners, and current clients.</p>
+      <div>
+        <div class="field">
+          <label>What happens when a step comes due</label>
+          <select id="delMode" onchange="delChange()">
+            <option value="draft">Draft it and wait for me</option>
+            <option value="hold" selected>Draft it, then send on its own unless I stop it</option>
+            <option value="send">Just send it</option>
+          </select>
+        </div>
+        <div class="field" id="holdWrap">
+          <label>Give me this long to step in</label>
+          <select onchange="save()"><option>2 hours</option><option selected>4 hours</option><option>Until 9am tomorrow</option><option>24 hours</option></select>
+          <p class="hint" id="delHint"></p>
+        </div>
       </div>
       <div>
-        <div class="field"><label class="toggle" onclick="flip(this)"><span class="tr on"><span class="tk"></span></span> Draft mode, create drafts instead of sending</label><p class="hint">Leave this on until the copy is signed off.</p></div>
         <div class="field"><label class="toggle" onclick="flip(this)"><span class="tr on"><span class="tk"></span></span> Email me when a prospect replies</label></div>
+        <div class="field"><label class="toggle" onclick="flip(this)"><span class="tr on"><span class="tk"></span></span> Email me every draft that is waiting</label></div>
         <div class="field"><label class="toggle" onclick="flip(this)"><span class="tr"><span class="tk"></span></span> Email me a summary every Monday</label></div>
         <div class="field"><label>Gmail label</label><input type="text" value="Nurture" onchange="save()"></div>
       </div>
@@ -340,6 +348,16 @@ function addStep(){
 }
 function delStep(k,i){SEQ[k].steps.splice(i,1);renderSeq();save();}
 function flip(el){el.querySelector('.tr').classList.toggle('on');save();}
+function delChange(){
+  var v=document.getElementById('delMode').value;
+  document.getElementById('holdWrap').style.display=(v==='hold')?'block':'none';
+  var b=document.getElementById('modeBadge');
+  if(v==='draft'){b.className='badge b-dry';b.textContent='Drafts only, you send them';}
+  else if(v==='hold'){b.className='badge b-dry';b.textContent='Drafts send themselves after 4 hours';}
+  else{b.className='badge b-live';b.textContent='Sending automatically';}
+  document.getElementById('delHint').textContent='Every draft lands in your Nurture label. Open it, edit it, send it early, or delete it and nothing goes out.';
+  save();
+}
 function cp(el){
   if(navigator.clipboard)navigator.clipboard.writeText(el.textContent);
   var o=el.textContent;el.textContent='copied';setTimeout(function(){el.textContent=o;},900);
@@ -377,7 +395,7 @@ function runTest(){
   setTimeout(next,600);
 }
 
-renderPipe();renderLog();renderSeq();
+renderPipe();renderLog();renderSeq();delChange();
 </script>
 </body>
 </html>
