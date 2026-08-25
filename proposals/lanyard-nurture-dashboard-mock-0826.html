@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lanyard nurture, control dashboard mock</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F0F7F7;--pri:#0D1F2D;--cyan:#1A9E9E;--purple:#7C3AED;--amber:#BA7517;--amberbg:#FAEEDA;--green:#3B6D11;--greenbg:#EAF3DE;--red:#A32D2D;--redbg:#FCEBEB;--line:#D6E4E4;--mut:#5A6B75;--w:#fff;--fh:'Outfit',sans-serif;--fb:'Inter',sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--pri);font-family:var(--fb);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 70px}
+h1{font-family:var(--fh);font-size:26px;font-weight:600;margin:0;letter-spacing:-.02em}
+h2{font-family:var(--fh);font-size:19px;font-weight:600;margin:0 0 4px}
+h3{font-family:var(--fh);font-size:15px;font-weight:600;margin:0 0 8px}
+.mock{background:var(--amberbg);border:1px solid #EF9F27;color:#633806;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:20px}
+.top{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;margin-bottom:18px}
+.stat{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{font-size:12px;font-weight:500;padding:5px 11px;border-radius:999px;border:1px solid}
+.b-live{background:var(--greenbg);color:#27500A;border-color:#97C459}
+.b-dry{background:var(--amberbg);color:#633806;border-color:#EF9F27}
+.b-off{background:var(--redbg);color:#791F1F;border-color:#F09595}
+.kill{font-family:var(--fb);font-size:13px;font-weight:500;padding:8px 16px;border-radius:8px;border:1px solid var(--red);background:transparent;color:var(--red);cursor:pointer}
+.kill:hover{background:var(--red);color:#fff}
+.kill.on{background:var(--red);color:#fff}
+nav{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:22px}
+nav button{font-family:var(--fb);font-size:14px;font-weight:500;padding:10px 16px;border:none;background:none;color:var(--mut);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+nav button:hover{color:var(--pri)}
+nav button.on{color:var(--pri);border-bottom-color:var(--cyan)}
+.tab{display:none}.tab.on{display:block}
+.card{background:var(--w);border:1px solid var(--line);border-radius:12px;padding:22px;margin-bottom:20px}
+.lead{font-size:14px;color:var(--mut);margin:0 0 16px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);font-weight:600;padding:0 10px 9px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 10px 11px 0;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scroll table{min-width:760px}
+select,input[type=text],input[type=number],input[type=time],textarea{font-family:var(--fb);font-size:14px;padding:7px 10px;border:1px solid var(--line);border-radius:7px;background:var(--w);color:var(--pri);width:100%}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--cyan)}
+textarea{resize:vertical;min-height:110px;line-height:1.6}
+label{display:block;font-size:13px;font-weight:500;color:var(--mut);margin-bottom:5px}
+.field{margin-bottom:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+button.act{font-family:var(--fb);font-size:13px;font-weight:500;padding:6px 12px;border-radius:7px;border:1px solid var(--line);background:var(--w);color:var(--mut);cursor:pointer;margin-right:5px}
+button.act:hover{border-color:var(--pri);color:var(--pri)}
+button.pri{font-family:var(--fb);font-size:14px;font-weight:500;padding:9px 18px;border-radius:8px;border:1px solid var(--pri);background:var(--pri);color:#fff;cursor:pointer}
+button.pri:hover{opacity:.85}
+button.gh{font-family:var(--fb);font-size:14px;font-weight:500;padding:9px 18px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer}
+.tag{font-size:12px;font-weight:500;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.t-ready{background:#FCEBEB;color:#791F1F}
+.t-switch{background:#FAEEDA;color:#633806}
+.t-complex{background:#F4EEFE;color:#3C3489}
+.t-nourg{background:#E6F1FB;color:#0C447C}
+.t-wait{background:#F1EFE8;color:#444441}
+.t-stop{background:#EAF3DE;color:#27500A}
+.saved{font-size:13px;color:var(--green);opacity:0;transition:opacity .2s;margin-left:12px}
+.saved.on{opacity:1}
+.steps{margin-top:6px}
+.step{border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:12px}
+.stephead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.stepnum{font-family:var(--fh);font-weight:600;font-size:14px}
+.toggle{display:flex;align-items:center;gap:9px;font-size:14px;cursor:pointer;user-select:none}
+.tr{width:38px;height:22px;border-radius:999px;background:#D3D1C7;position:relative;flex:none;transition:background .15s}
+.tr.on{background:var(--cyan)}
+.tk{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s}
+.tr.on .tk{transform:translateX(16px)}
+.testbtn{width:100%;font-family:var(--fh);font-size:19px;font-weight:600;padding:22px;border-radius:12px;border:none;background:var(--red);color:#fff;cursor:pointer;letter-spacing:.01em}
+.testbtn:hover{background:#791F1F}
+.testbtn:disabled{background:#B4B2A9;cursor:not-allowed}
+.console{background:#0D1F2D;color:#C0DD97;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.75;padding:16px;border-radius:10px;margin-top:18px;max-height:340px;overflow-y:auto;white-space:pre-wrap}
+.console .d{color:#888780}.console .w{color:#FAC775}.console .s{color:#9FE1CB}
+.hint{font-size:13px;color:var(--mut);margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#F7FBFB;border:1px solid var(--line);border-radius:6px;padding:3px 8px;cursor:pointer;color:var(--pri)}
+.chip:hover{border-color:var(--cyan)}
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+@media(max-width:700px){.kpi{grid-template-columns:repeat(2,1fr)}}
+.kpi div{background:var(--w);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi span{display:block;font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;font-weight:500}
+.kpi strong{font-family:var(--fh);font-size:26px;font-weight:600;display:block;margin-top:2px}
+.foot{font-size:13px;color:var(--mut);text-align:center;margin-top:36px}
+.q{border-left:3px solid var(--purple);padding-left:14px;margin-bottom:14px}
+.q b{font-weight:600}.q p{margin:2px 0 0;font-size:14px;color:var(--mut)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+  <div><h1>Nurture control</h1><p style="margin:2px 0 0;font-size:14px;color:var(--mut)">Lanyard Health</p></div>
+  <div class="stat">
+    <span class="badge b-dry" id="modeBadge">Draft mode, nothing sends</span>
+    <span class="badge b-live" id="runBadge">Running</span>
+    <button class="kill" id="killBtn" onclick="toggleKill()">Pause everything</button>
+  </div>
+</div>
+
+<div class="mock"><b>Mock.</b> Clickable prototype so Keyona can decide what Kay actually needs. Data is fake, saves to this browser only.</div>
+
+<nav>
+  <button class="on" onclick="tab(0,this)">Pipeline</button>
+  <button onclick="tab(1,this)">Sequences</button>
+  <button onclick="tab(2,this)">Settings</button>
+  <button onclick="tab(3,this)">Test mode</button>
+  <button onclick="tab(4,this)">Log</button>
+  <button onclick="tab(5,this)">Open questions</button>
+</nav>
+
+<div class="tab on">
+  <div class="kpi">
+    <div><span>In sequence</span><strong>7</strong></div>
+    <div><span>Sending today</span><strong>2</strong></div>
+    <div><span>Replied this week</span><strong>3</strong></div>
+    <div><span>Awaiting archetype</span><strong>1</strong></div>
+  </div>
+  <div class="card">
+    <h2>Prospects in flight</h2>
+    <p class="lead">Change an archetype here and it takes effect on the next pass. Your choice always beats the automatic one.</p>
+    <div class="scroll"><table id="pipe"></table></div>
+  </div>
+</div>
+
+<div class="tab">
+  <div class="card">
+    <h2>Sequence editor</h2>
+    <p class="lead">Edit the emails and the timing. Changes apply to everyone already in the sequence from their next step onward.</p>
+    <div class="field" style="max-width:340px">
+      <label>Archetype</label>
+      <select id="seqPick" onchange="renderSeq()">
+        <option value="ready">Ready Now</option>
+        <option value="switch">Frustrated Switcher</option>
+        <option value="complex">Complex or Contingent</option>
+        <option value="nourg">No Urgency</option>
+      </select>
+    </div>
+    <div class="grid2">
+      <div class="field">
+        <label class="toggle" onclick="flipThread()"><span class="tr" id="thrTog"><span class="tk"></span></span> Send as replies on the call thread</label>
+        <p class="hint" id="thrHint"></p>
+      </div>
+      <div class="field">
+        <label>Stop the sequence after</label>
+        <select id="capSel" onchange="save()"><option>the prospect replies</option><option>a reply or a booked meeting</option><option>a reply, a meeting, or 90 days</option></select>
+      </div>
+    </div>
+    <div class="steps" id="steps"></div>
+    <button class="gh" onclick="addStep()">Add a step</button>
+    <span class="saved" id="sv1">Saved</span>
+    <div class="field" style="margin-top:20px">
+      <label>Merge fields, click to copy</label>
+      <div class="chips">
+        <span class="chip" onclick="cp(this)">{{first_name}}</span>
+        <span class="chip" onclick="cp(this)">{{company}}</span>
+        <span class="chip" onclick="cp(this)">{{call_date}}</span>
+        <span class="chip" onclick="cp(this)">{{provider_count}}</span>
+        <span class="chip" onclick="cp(this)">{{states}}</span>
+        <span class="chip" onclick="cp(this)">{{booking_link}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tab">
+  <div class="card">
+    <h2>Sending</h2>
+    <div class="grid3">
+      <div class="field"><label>Send only between</label><input type="time" value="09:00" onchange="save()"></div>
+      <div class="field"><label>and</label><input type="time" value="16:30" onchange="save()"></div>
+      <div class="field"><label>Time zone</label><select onchange="save()"><option>America/New_York</option><option>America/Chicago</option></select></div>
+    </div>
+    <div class="grid3">
+      <div class="field"><label class="toggle" onclick="flip(this)"><span class="tr on"><span class="tk"></span></span> Skip weekends</label></div>
+      <div class="field"><label class="toggle" onclick="flip(this)"><span class="tr on"><span class="tk"></span></span> Skip US holidays</label></div>
+      <div class="field"><label>Max emails per day</label><input type="number" value="25" onchange="save()"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Safety</h2>
+    <div class="grid2">
+      <div class="field">
+        <label>Never email these</label>
+        <textarea style="min-height:80px" onchange="save()">lanyardhealth.com
+rerev.io
+builddesignstudio.com</textarea>
+        <p class="hint">One domain or address per line. Blocks your own team, partners, and current clients.</p>
+      </div>
+      <div>
+        <div class="field"><label class="toggle" onclick="flip(this)"><span class="tr on"><span class="tk"></span></span> Draft mode, create drafts instead of sending</label><p class="hint">Leave this on until the copy is signed off.</p></div>
+        <div class="field"><label class="toggle" onclick="flip(this)"><span class="tr on"><span class="tk"></span></span> Email me when a prospect replies</label></div>
+        <div class="field"><label class="toggle" onclick="flip(this)"><span class="tr"><span class="tk"></span></span> Email me a summary every Monday</label></div>
+        <div class="field"><label>Gmail label</label><input type="text" value="Nurture" onchange="save()"></div>
+      </div>
+    </div>
+    <span class="saved" id="sv2">Saved</span>
+  </div>
+</div>
+
+<div class="tab">
+  <div class="card">
+    <h2>Test mode</h2>
+    <p class="lead">Runs a whole sequence compressed into minutes so you can feel the pacing before a real prospect does. Emails go to you, never to anyone in the pipeline.</p>
+    <div class="grid3">
+      <div class="field"><label>Sequence</label><select id="tArch"><option value="ready">Ready Now</option><option value="switch">Frustrated Switcher</option><option value="complex">Complex or Contingent</option><option value="nourg">No Urgency</option></select></div>
+      <div class="field"><label>Compress into</label><select id="tMins"><option value="20">20 minutes</option><option value="30">30 minutes</option><option value="60">1 hour</option></select></div>
+      <div class="field"><label>Send the test to</label><input type="text" value="kay@lanyardhealth.com"></div>
+    </div>
+    <button class="testbtn" id="tBtn" onclick="runTest()">Run test sequence</button>
+    <div class="console" id="tOut">Ready. Nothing has run yet.</div>
+  </div>
+</div>
+
+<div class="tab">
+  <div class="card">
+    <h2>Activity log</h2>
+    <p class="lead">Every action the system takes. This is what gets checked when something looks wrong.</p>
+    <div class="scroll"><table id="log"></table></div>
+  </div>
+</div>
+
+<div class="tab">
+  <div class="card">
+    <h2>Things this mock is asking you to decide</h2>
+    <div class="q"><b>Does Kay edit copy here, or in a doc?</b><p>A textarea is fine for tweaks but bad for real writing. The alternative is each step pointing at a Google Doc she drafts in, and the dashboard just shows which doc.</p></div>
+    <div class="q"><b>Can she add and remove steps, or only edit existing ones?</b><p>Adding steps is easy to build and easy to misuse. A four step sequence quietly becoming nine is how nurture turns into spam.</p></div>
+    <div class="q"><b>Does changing a sequence affect people already in it?</b><p>Right now it does, from their next step onward. The other option is that changes only apply to new entrants, which is safer and more confusing.</p></div>
+    <div class="q"><b>Should she be able to write a one off email from here?</b><p>Would stop her leaving the dashboard to do the thing she actually wants, but it starts turning this into a CRM.</p></div>
+    <div class="q"><b>Who else sees this?</b><p>The VA and the CS hire. If they get access, the pipeline table needs an owner column and the settings tab probably needs locking.</p></div>
+    <div class="q"><b>What happens at the end of a sequence?</b><p>Nobody has decided. Options are silently done, back to a list for manual follow up, or a task on her calendar.</p></div>
+  </div>
+</div>
+
+<p class="foot">ReRev LLC. Dashboard mock for the Lanyard Health nurture system.</p>
+</div>
+
+<script>
+var SEQ={
+ready:{name:'Ready Now',thread:true,steps:[
+{d:1,s:'Recap and next step',b:'Hi {{first_name}},\n\nGood talking today. Quick recap of what we covered and the timeline we landed on.\n\nI have a draft agreement ready. Want me to send it over so you can look before we speak again?'},
+{d:3,s:'',b:'Following up on the agreement. Anything you want changed before you circulate it internally?'},
+{d:6,s:'',b:'Checking in once more. If the timing moved, tell me and I will get out of your way.'}]},
+switch:{name:'Frustrated Switcher',thread:false,steps:[
+{d:1,s:'What we do differently for {{company}}',b:'Hi {{first_name}},\n\nYou described exactly what we built this to fix. Here is the specific difference in how we handle it.'},
+{d:4,s:'How a switch actually works',b:'The part people worry about is the transition. Here is what it looks like week by week.'},
+{d:9,s:'A group that moved from a similar setup',b:'Similar size to {{company}}, same complaint. Here is what changed for them.'},
+{d:16,s:'Still worth a conversation?',b:'If you are staying put for now that is a fine answer. Just let me know.'}]},
+complex:{name:'Complex or Contingent',thread:false,steps:[
+{d:2,s:'Where things stand',b:'Hi {{first_name}},\n\nSummarizing what has to be true before this makes sense, so we are both tracking the same thing.'},
+{d:21,s:'Checking on the delegation timeline',b:'Any movement on the piece we were waiting on?'},
+{d:60,s:'Quarterly check in',b:'Circling back. Has anything shifted on your end?'}]},
+nourg:{name:'No Urgency',thread:false,steps:[
+{d:3,s:'The credentialing timeline nobody plans for',b:'Hi {{first_name}},\n\nNot a pitch. This is the thing that surprises most groups when they finally do move.'},
+{d:14,s:'What good looks like',b:'A short breakdown of what a well run credentialing process actually produces.'},
+{d:45,s:'Still here when you need us',b:'No action needed. Keeping the door open.'}]}};
+
+var PIPE=[
+['Riverbend Family Med','riverbend','ready',2,'Tomorrow'],
+['Coastal Behavioral','coastal','switch',1,'Thu Aug 27'],
+['Summit Ortho Group','summit','complex',1,'Sep 15'],
+['New Leaf Pediatrics','newleaf','nourg',3,'Sep 8'],
+['Harbor Point Clinic','harbor','ready',3,'Today'],
+['Westside Therapy','westside','switch',2,'Today'],
+['Anders Family Practice','anders','','','Awaiting archetype']];
+
+var TAGS={ready:['Ready Now','t-ready'],switch:['Frustrated Switcher','t-switch'],complex:['Complex or Contingent','t-complex'],nourg:['No Urgency','t-nourg'],'':['Not classified','t-wait']};
+
+var LOG=[
+['Aug 25, 9:14a','Harbor Point Clinic','Draft created','step 3 of 3'],
+['Aug 25, 9:14a','Westside Therapy','Draft created','step 2 of 4'],
+['Aug 25, 9:12a','Anders Family Practice','Row created','booking received'],
+['Aug 24, 4:31p','Delton Medical','Sequence stopped','prospect replied'],
+['Aug 24, 9:11a','Delton Medical','Draft created','step 2 of 3'],
+['Aug 23, 9:10a','Riverbend Family Med','Archetype set','Ready Now, by Cowork'],
+['Aug 22, 2:02p','Summit Ortho Group','Archetype changed','Kay override, was Ready Now']];
+
+var killed=false;
+
+function tab(i,b){
+  var ts=document.querySelectorAll('.tab'),ns=document.querySelectorAll('nav button');
+  for(var j=0;j<ts.length;j++){ts[j].classList.toggle('on',j===i);}
+  for(var j=0;j<ns.length;j++){ns[j].classList.remove('on');}
+  b.classList.add('on');
+}
+
+function toggleKill(){
+  killed=!killed;
+  var b=document.getElementById('killBtn'),r=document.getElementById('runBadge');
+  b.classList.toggle('on',killed);
+  b.textContent=killed?'Resume':'Pause everything';
+  r.className='badge '+(killed?'b-off':'b-live');
+  r.textContent=killed?'Paused, nothing will send':'Running';
+}
+
+function renderPipe(){
+  var h='<tr><th>Prospect</th><th>Archetype</th><th>Step</th><th>Next</th><th></th></tr>';
+  for(var i=0;i<PIPE.length;i++){
+    var p=PIPE[i],t=TAGS[p[2]];
+    var sel='<select onchange="save()" style="min-width:180px"><option value="">Not classified</option>';
+    for(var k in TAGS){if(k)sel+='<option value="'+k+'"'+(k===p[2]?' selected':'')+'>'+TAGS[k][0]+'</option>';}
+    sel+='</select>';
+    h+='<tr><td><b>'+p[0]+'</b></td><td>'+sel+'</td><td>'+(p[3]?p[3]:'<span class="tag t-wait">waiting</span>')+'</td><td>'+p[4]+'</td>'+
+    '<td style="white-space:nowrap"><button class="act">Preview</button><button class="act">Snooze</button><button class="act">Stop</button></td></tr>';
+  }
+  document.getElementById('pipe').innerHTML=h;
+}
+
+function renderLog(){
+  var h='<tr><th>When</th><th>Prospect</th><th>Action</th><th>Detail</th></tr>';
+  for(var i=0;i<LOG.length;i++){
+    h+='<tr><td style="color:#5A6B75;white-space:nowrap">'+LOG[i][0]+'</td><td><b>'+LOG[i][1]+'</b></td><td>'+LOG[i][2]+'</td><td style="color:#5A6B75">'+LOG[i][3]+'</td></tr>';
+  }
+  document.getElementById('log').innerHTML=h;
+}
+
+function renderSeq(){
+  var k=document.getElementById('seqPick').value,s=SEQ[k];
+  document.getElementById('thrTog').classList.toggle('on',s.thread);
+  document.getElementById('thrHint').textContent=s.thread?'Replies keep the original subject line, so you cannot change it per step.':'Each email starts its own thread with its own subject line.';
+  var h='';
+  for(var i=0;i<s.steps.length;i++){
+    var st=s.steps[i];
+    h+='<div class="step"><div class="stephead"><span class="stepnum">Step '+(i+1)+'</span>'+
+    '<span style="display:flex;align-items:center;gap:8px;font-size:14px;color:#5A6B75">send <input type="number" value="'+st.d+'" onchange="save()" style="width:74px"> days after the call <button class="act" onclick="delStep(\''+k+'\','+i+')">Remove</button></span></div>';
+    if(!s.thread)h+='<div class="field"><label>Subject</label><input type="text" value="'+st.s+'" onchange="save()"></div>';
+    h+='<div class="field" style="margin-bottom:0"><label>Body</label><textarea onchange="save()">'+st.b+'</textarea></div></div>';
+  }
+  document.getElementById('steps').innerHTML=h;
+}
+
+function flipThread(){
+  var k=document.getElementById('seqPick').value;
+  SEQ[k].thread=!SEQ[k].thread;renderSeq();save();
+}
+function addStep(){
+  var k=document.getElementById('seqPick').value,s=SEQ[k];
+  var last=s.steps.length?s.steps[s.steps.length-1].d:0;
+  s.steps.push({d:last+7,s:'',b:''});renderSeq();save();
+}
+function delStep(k,i){SEQ[k].steps.splice(i,1);renderSeq();save();}
+function flip(el){el.querySelector('.tr').classList.toggle('on');save();}
+function cp(el){
+  if(navigator.clipboard)navigator.clipboard.writeText(el.textContent);
+  var o=el.textContent;el.textContent='copied';setTimeout(function(){el.textContent=o;},900);
+}
+function save(){
+  var els=document.querySelectorAll('.saved');
+  for(var i=0;i<els.length;i++){
+    var e=els[i];e.classList.add('on');
+    (function(x){setTimeout(function(){x.classList.remove('on');},1400);})(e);
+  }
+}
+
+function runTest(){
+  var k=document.getElementById('tArch').value,s=SEQ[k];
+  var mins=parseInt(document.getElementById('tMins').value,10);
+  var span=s.steps[s.steps.length-1].d||1;
+  var out=document.getElementById('tOut'),btn=document.getElementById('tBtn');
+  btn.disabled=true;btn.textContent='Running';
+  out.innerHTML='<span class="d">Compressing '+span+' days of '+s.name+' into '+mins+' minutes.</span>\n<span class="d">Ratio 1 day = '+(mins*60/span).toFixed(1)+' seconds. Recipient is you.</span>\n\n';
+  var i=0;
+  function next(){
+    if(i>=s.steps.length){
+      out.innerHTML+='\n<span class="s">Done. '+s.steps.length+' emails delivered. Nothing in the real pipeline was touched.</span>';
+      out.scrollTop=out.scrollHeight;
+      btn.disabled=false;btn.textContent='Run test sequence';
+      if(i===s.steps.length)i++;
+      return;
+    }
+    var st=s.steps[i];
+    var at=(st.d/span*mins).toFixed(1);
+    out.innerHTML+='<span class="w">+'+at+'m</span>  step '+(i+1)+', day '+st.d+'  '+(s.thread?'reply on thread':'"'+st.s+'"')+'\n';
+    out.scrollTop=out.scrollHeight;i++;
+    setTimeout(next,900);
+  }
+  setTimeout(next,600);
+}
+
+renderPipe();renderLog();renderSeq();
+</script>
+</body>
+</html>
