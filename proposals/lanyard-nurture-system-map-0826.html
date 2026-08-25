@@ -62,7 +62,7 @@ ol li span{display:block;color:var(--muted);font-size:14px}
 
 <div class="panel">
   <h2>The architecture</h2>
-  <p class="lead">Two systems that never talk to each other. Apps Script runs on a clock and does only deterministic work. Cowork runs when it runs and does the reading. The Sheet is the handoff, so if either side is down the other keeps working and picks the rows back up later.</p>
+  <p class="lead">Two systems that never talk to each other. Apps Script runs on a clock and does only deterministic work. A Workspace Studio agent does the reading and classifying, unattended, on her existing Workspace plan. The Sheet is the handoff, so if either side is down the other keeps working and picks the rows back up later. Email copy lives in a Google Doc with one nested tab per email, so Kay edits words in Docs and timing in the dashboard, never both in the same place.</p>
 
 <svg viewBox="0 0 1100 640" role="img" aria-label="Nurture system architecture: Apps Script lane, Sheet state store, Cowork lane">
 <defs>
@@ -82,6 +82,11 @@ ol li span{display:block;color:var(--muted);font-size:14px}
 <line x1="960" y1="128" x2="960" y2="80" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
 <path d="M828 48 L690 48 L690 126" fill="none" stroke="#BA7517" stroke-width="1.4" marker-end="url(#ar)"/>
 <text x="758" y="40" text-anchor="middle" font-family="Inter" font-size="12" fill="#BA7517">reply</text>
+
+<rect x="390" y="20" width="230" height="56" rx="8" fill="#fff" stroke="#D6E4E4"/>
+<text x="505" y="44" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#0D1F2D">Copy doc</text>
+<text x="505" y="62" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">13 nested tabs, formatted</text>
+<line x1="490" y1="78" x2="455" y2="126" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
 
 <rect x="40" y="90" width="1020" height="140" rx="10" fill="#F7FBFB" stroke="#1A9E9E" stroke-dasharray="6 4"/>
 <text x="56" y="110" font-family="Inter" font-size="12" font-weight="600" fill="#1A9E9E">APPS SCRIPT, HER ACCOUNT, DAILY TIME TRIGGER</text>
@@ -116,7 +121,7 @@ ol li span{display:block;color:var(--muted);font-size:14px}
 <rect x="40" y="280" width="1020" height="86" rx="10" fill="#EAF3DE" stroke="#3B6D11" stroke-width="1.5"/>
 <text x="550" y="312" text-anchor="middle" font-family="Inter" font-size="15" font-weight="600" fill="#173404">The Sheet, one row per prospect, the only shared state</text>
 <text x="550" y="336" text-anchor="middle" font-family="Inter" font-size="12" fill="#27500A">email, name, booked_at, call_at, archetype, status, thread_id, step, last_sent_at, replied_at, stopped_reason</text>
-<text x="550" y="354" text-anchor="middle" font-family="Inter" font-size="12" fill="#3B6D11">plus a Log tab, every action appended</text>
+<text x="550" y="354" text-anchor="middle" font-family="Inter" font-size="12" fill="#3B6D11">plus a Sequences tab holding step timing and doc tab IDs, and a Log tab</text>
 
 <line x1="460" y1="368" x2="460" y2="454" stroke="#5A6B75" stroke-width="1.2" marker-end="url(#ar)"/>
 <text x="452" y="416" text-anchor="end" font-family="Inter" font-size="12" fill="#5A6B75">claims rows</text>
@@ -124,7 +129,7 @@ ol li span{display:block;color:var(--muted);font-size:14px}
 <text x="650" y="416" font-family="Inter" font-size="12" fill="#5A6B75">writes archetype</text>
 
 <rect x="40" y="430" width="1020" height="150" rx="10" fill="#F4EEFE" stroke="#7C3AED" stroke-dasharray="6 4"/>
-<text x="56" y="450" font-family="Inter" font-size="12" font-weight="600" fill="#7C3AED">COWORK, JOB BOARD PATTERN, NO METERED API</text>
+<text x="56" y="450" font-family="Inter" font-size="12" font-weight="600" fill="#7C3AED">WORKSPACE STUDIO AGENT, UNATTENDED, NO EXTRA COST</text>
 
 <rect x="80" y="470" width="220" height="70" rx="8" fill="#fff" stroke="#7C3AED"/>
 <text x="190" y="498" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#0D1F2D">Granola</text>
@@ -134,7 +139,7 @@ ol li span{display:block;color:var(--muted);font-size:14px}
 
 <rect x="372" y="470" width="330" height="70" rx="8" fill="#fff" stroke="#7C3AED"/>
 <text x="537" y="498" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#0D1F2D">Classify job</text>
-<text x="537" y="518" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">reads the call, picks one of four</text>
+<text x="537" y="518" text-anchor="middle" font-family="Inter" font-size="12" fill="#5A6B75">Gemini reads the call, picks one of four</text>
 
 <rect x="760" y="470" width="270" height="70" rx="8" fill="#fff" stroke="#D6E4E4" stroke-dasharray="4 3"/>
 <text x="895" y="498" text-anchor="middle" font-family="Inter" font-size="14" font-weight="600" fill="#5A6B75">Kay overrides</text>
@@ -145,7 +150,7 @@ ol li span{display:block;color:var(--muted);font-size:14px}
 
   <div class="legend">
     <span><i class="sw" style="background:#F7FBFB;border-color:#1A9E9E"></i>Apps Script, deterministic</span>
-    <span><i class="sw" style="background:#F4EEFE;border-color:#7C3AED"></i>Cowork, judgment</span>
+    <span><i class="sw" style="background:#F4EEFE;border-color:#7C3AED"></i>Workspace Studio, judgment</span>
     <span><i class="sw" style="background:#EAF3DE;border-color:#3B6D11"></i>Shared state</span>
     <span><i class="sw" style="background:#fff;border-color:#BA7517"></i>The step that protects her</span>
   </div>
@@ -171,7 +176,7 @@ ol li span{display:block;color:var(--muted);font-size:14px}
       <li><b>Config.gs</b><span>Sequences, step timings, threading flag per archetype, DRY_RUN on.</span></li>
       <li><b>Runner.gs</b><span>Due check, reply check, send, advance. The bulk of the code.</span></li>
       <li><b>Test on your account</b><span>Seeded rows, backdated, drafts only.</span></li>
-      <li><b>Cowork classify job</b><span>Job board pattern against the same Sheet.</span></li>
+      <li><b>Classify agent</b><span>Workspace Studio, against the same Sheet.</span></li>
       <li><b>Copy load in</b><span>Whenever Kay signs off. Config change, no code.</span></li>
       <li><b>Port to her workspace</b><span>She authorizes and installs her own triggers.</span></li>
       <li><b>Flip DRY_RUN</b></li>
