@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Agent — System Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'IBM Plex Mono', monospace;
+    background:#f5e000;
+    color:#000;
+    text-transform:uppercase;
+    letter-spacing:-0.02em;
+    padding:28px 20px 60px;
+  }
+  p, .normal { text-transform:none; letter-spacing:0; }
+
+  .wrap { max-width:1000px; margin:0 auto; }
+
+  /* ---------- HEADER ---------- */
+  .header-bar {
+    border:2px solid #000;
+    background:#fff;
+    box-shadow:4px 4px 0 #000;
+    padding:16px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:8px;
+  }
+  .header-bar h1 { font-size:22px; font-weight:700; line-height:1.1; }
+  .header-kicker { font-size:9px; opacity:0.5; margin-bottom:5px; }
+  .header-meta { font-size:9px; text-align:right; line-height:1.7; opacity:0.7; }
+
+  .subline {
+    font-size:11px;
+    line-height:1.6;
+    max-width:640px;
+    margin-bottom:26px;
+    text-transform:none;
+    letter-spacing:0;
+  }
+
+  .section-head {
+    font-size:11px;
+    font-weight:700;
+    border-bottom:2px solid #000;
+    padding-bottom:6px;
+    margin-bottom:14px;
+    display:flex;
+    justify-content:space-between;
+  }
+  .section-head span:last-child { opacity:0.45; font-weight:400; }
+
+  /* ---------- TOPOLOGY ---------- */
+  .topo { display:flex; gap:14px; margin-bottom:44px; align-items:stretch; }
+
+  .legend {
+    width:150px;
+    flex-shrink:0;
+    border:2px solid #000;
+    background:#fff;
+    box-shadow:4px 4px 0 #000;
+    padding:12px;
+  }
+  .legend h3 { font-size:9px; margin-bottom:10px; opacity:0.5; }
+  .legend-item { display:flex; align-items:center; gap:7px; margin-bottom:9px; font-size:8.5px; }
+  .swatch { width:13px; height:13px; border:2px solid #000; flex-shrink:0; }
+  .sw-white { background:#fff; }
+  .sw-teal  { background:#1a9e9e; }
+  .sw-red   { background:#e63329; }
+  .sw-dash  { background:#fff; border-style:dashed; }
+  .legend-note {
+    font-size:8px; line-height:1.6; opacity:0.6;
+    border-top:1px solid #000; padding-top:10px; margin-top:12px;
+    text-transform:none; letter-spacing:0;
+  }
+
+  .canvas {
+    flex:1;
+    position:relative;
+    border:2px solid #000;
+    background:#fff;
+    box-shadow:4px 4px 0 #000;
+    height:470px;
+    overflow:hidden;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size:22px 22px;
+  }
+  .col-div { position:absolute; top:0; bottom:0; width:1px; background:rgba(0,0,0,0.11); }
+  .col-label {
+    position:absolute; top:8px; font-size:8px; font-weight:600; opacity:0.4;
+  }
+
+  svg.links { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+  .connection-line { fill:none; stroke:#000; stroke-width:1.5; opacity:0.35; }
+  .connection-line.lit {
+    stroke:#e63329; stroke-width:3; opacity:1;
+    stroke-dasharray:7 4;
+    animation:march 0.7s linear infinite;
+  }
+  @keyframes march { to { stroke-dashoffset:-22; } }
+  .packet { fill:#e63329; }
+  .packet-teal { fill:#1a9e9e; }
+
+  .node-card {
+    position:absolute;
+    border:2px solid #000;
+    background:#fff;
+    box-shadow:4px 4px 0 #000;
+    padding:8px 9px;
+    cursor:pointer;
+    transition:transform 0.1s, background 0.1s, color 0.1s;
+    z-index:3;
+  }
+  .node-card:hover { transform:translate(-1px,-1px); box-shadow:5px 5px 0 #000; }
+  .node-card.active-path { background:#e63329; color:#fff; }
+  .node-card.active-path .node-label,
+  .node-card.active-path .node-sub { opacity:0.85; }
+  .node-card.ai { background:#1a9e9e; color:#fff; }
+  .node-card.enduser { border-style:dashed; }
+
+  .node-label { font-size:7.5px; opacity:0.5; margin-bottom:3px; }
+  .node-title { font-size:10.5px; font-weight:700; line-height:1.2; margin-bottom:3px; }
+  .node-sub {
+    font-size:8px; opacity:0.68; line-height:1.4;
+    text-transform:none; letter-spacing:0;
+  }
+
+  .hint {
+    font-size:9px; opacity:0.5; margin-top:10px;
+    text-transform:none; letter-spacing:0;
+  }
+
+  /* ---------- LIFECYCLE ---------- */
+  .step-row {
+    border:2px solid #000;
+    background:#fff;
+    box-shadow:4px 4px 0 #000;
+    margin-bottom:9px;
+    cursor:pointer;
+  }
+  .step-trigger { display:flex; align-items:center; gap:12px; padding:11px 14px; }
+  .step-num { font-size:17px; font-weight:700; opacity:0.22; width:26px; flex-shrink:0; }
+  .step-title { font-size:11px; font-weight:700; flex:1; }
+  .step-tag {
+    font-size:7.5px; border:1.5px solid rgba(0,0,0,0.35);
+    padding:2.5px 6px; opacity:0.75; white-space:nowrap;
+  }
+  .step-arrow { font-size:17px; opacity:0.35; transition:transform 0.15s; }
+  .step-row.open .step-arrow { transform:rotate(90deg); }
+  .step-body { max-height:0; overflow:hidden; transition:max-height 0.2s ease; }
+  .step-row.open .step-body { max-height:220px; }
+  .step-content {
+    padding:0 14px 14px 52px;
+    font-size:10.5px; line-height:1.7;
+    text-transform:none; letter-spacing:0;
+  }
+  .step-row.final { background:#e63329; color:#fff; border-color:#000; }
+  .step-row.final .step-num { opacity:0.4; }
+
+  .footer {
+    margin-top:34px; border-top:2px solid #000; padding-top:12px;
+    font-size:8.5px; opacity:0.55;
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+
+  @media (max-width:820px) {
+    .topo { flex-direction:column; }
+    .legend { width:100%; }
+    .canvas { height:520px; overflow-x:auto; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== HEADER ===== -->
+  <div class="header-bar">
+    <div>
+      <div class="header-kicker">ReRev Labs · Internal Systems</div>
+      <h1>Task Agent</h1>
+    </div>
+    <div class="header-meta">
+      Build v2 — follow-up + verification<br>
+      Apps Script · Sheets · Gmail · Claude Cowork<br>
+      August 2026
+    </div>
+  </div>
+
+  <p class="subline">
+    Work that gets parked does not get forgotten. Every open job is chased on its own
+    email thread until each named deliverable is confirmed to exist — a sent email, a
+    created file, an updated doc. Nothing closes on someone's word that it is done.
+  </p>
+
+  <!-- ===== TOPOLOGY ===== -->
+  <div class="section-head"><span>System Topology</span><span>Click any node to trace its path</span></div>
+
+  <div class="topo">
+    <div class="legend">
+      <h3>Legend</h3>
+      <div class="legend-item"><div class="swatch sw-white"></div><div>System component</div></div>
+      <div class="legend-item"><div class="swatch sw-teal"></div><div>Reasoning layer</div></div>
+      <div class="legend-item"><div class="swatch sw-red"></div><div>Active path</div></div>
+      <div class="legend-item"><div class="swatch sw-dash"></div><div>Human</div></div>
+      <div class="legend-note">
+        The board is the only state. Apps Script is the only sender. Cowork is the only
+        worker — it never sends mail, and it never decides a job is finished.
+      </div>
+    </div>
+
+    <div class="canvas" id="canvas">
+      <div class="col-div" style="left:25%;"></div>
+      <div class="col-div" style="left:50%;"></div>
+      <div class="col-div" style="left:75%;"></div>
+
+      <div class="col-label" style="left:14px;">① INTAKE</div>
+      <div class="col-label" style="left:26%;">② WATCHER + BOARD</div>
+      <div class="col-label" style="left:51%;">③ WORKER</div>
+      <div class="col-label" style="left:76%;">④ HUMAN LOOP</div>
+
+      <svg class="links" viewBox="0 0 940 470" preserveAspectRatio="none">
+        <path id="p-cal-gas"      class="connection-line" d="M 197 92  C 222 92, 228 120, 250 148"/>
+        <path id="p-gmail-gas"    class="connection-line" d="M 197 212 C 222 212, 228 184, 250 160"/>
+        <path id="p-gas-board"    class="connection-line" d="M 305 186 C 305 224, 312 244, 312 276"/>
+        <path id="p-board-cowork" class="connection-line" d="M 425 300 C 472 300, 474 200, 496 154"/>
+        <path id="p-cowork-board" class="connection-line" d="M 496 178 C 468 214, 452 262, 425 292"/>
+        <path id="p-cowork-deliv" class="connection-line" d="M 512 186 C 486 262, 458 348, 425 392"/>
+        <path id="p-gas-inbox"    class="connection-line" d="M 425 132 C 556 52, 646 52, 736 140"/>
+        <path id="p-inbox-nudge"  class="connection-line" d="M 824 184 C 824 244, 712 292, 668 322"/>
+        <path id="p-nudge-inbox"  class="connection-line" d="M 668 306 C 730 262, 800 232, 838 186"/>
+        <path id="p-nudge-deliv"  class="connection-line" d="M 496 348 C 466 362, 448 378, 425 396"/>
+        <path id="p-nudge-board"  class="connection-line" d="M 496 312 C 470 302, 448 302, 425 312"/>
+
+        <circle r="5.5" class="packet">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M 197 92 C 240 108, 270 130, 305 186 C 305 224, 312 244, 312 276"/>
+        </circle>
+        <circle r="5.5" class="packet" begin="1.5s">
+          <animateMotion dur="4.2s" begin="1.2s" repeatCount="indefinite"
+            path="M 425 132 C 556 52, 646 52, 736 140"/>
+        </circle>
+        <circle r="5.5" class="packet-teal">
+          <animateMotion dur="5.4s" begin="2.4s" repeatCount="indefinite"
+            path="M 425 300 C 472 300, 474 200, 496 154"/>
+        </circle>
+        <circle r="5.5" class="packet-teal">
+          <animateMotion dur="4.6s" begin="0.6s" repeatCount="indefinite"
+            path="M 668 306 C 730 262, 800 232, 838 186"/>
+        </circle>
+      </svg>
+
+      <div id="node-calendar" class="node-card" style="left:28px;  top:62px;  width:168px;" onclick="tracePath('calendar')">
+        <div class="node-label">DIRECTION EXISTS</div>
+        <div class="node-title">TASK CALENDAR</div>
+        <div class="node-sub">[Agent] events → queued rows</div>
+      </div>
+
+      <div id="node-gmail" class="node-card" style="left:28px;  top:182px; width:168px;" onclick="tracePath('gmail')">
+        <div class="node-label">ALLOWLIST ENFORCED</div>
+        <div class="node-title">GMAIL · AGENT LABEL</div>
+        <div class="node-sub">forwards to agent@rerev.io</div>
+      </div>
+
+      <div id="node-gas" class="node-card" style="left:250px; top:118px; width:176px;" onclick="tracePath('gas')">
+        <div class="node-label">THE ONLY SENDER</div>
+        <div class="node-title">APPS SCRIPT WATCHER</div>
+        <div class="node-sub">5 timers · watches, mails, reclaims</div>
+      </div>
+
+      <div id="node-board" class="node-card" style="left:250px; top:276px; width:176px;" onclick="tracePath('board')">
+        <div class="node-label">THE ONLY STATE</div>
+        <div class="node-title">JOB BOARD · JOBS</div>
+        <div class="node-sub">status, end goal, open decisions</div>
+      </div>
+
+      <div id="node-deliv" class="node-card" style="left:250px; top:376px; width:176px;" onclick="tracePath('deliv')">
+        <div class="node-label">DEFINITION OF DONE</div>
+        <div class="node-title">DELIVERABLES TAB</div>
+        <div class="node-sub">one row per artifact that must exist</div>
+      </div>
+
+      <div id="node-cowork" class="node-card ai" style="left:496px; top:118px; width:172px;" onclick="tracePath('cowork')">
+        <div class="node-label">NEVER SENDS MAIL</div>
+        <div class="node-title">CLAUDE COWORK</div>
+        <div class="node-sub">claims one row · does the doable part</div>
+      </div>
+
+      <div id="node-nudge" class="node-card ai" style="left:496px; top:296px; width:172px;" onclick="tracePath('nudge')">
+        <div class="node-label">FOLLOWUP.GS</div>
+        <div class="node-title">CHASE + VERIFY</div>
+        <div class="node-sub">every 2 days · checks for the artifact</div>
+      </div>
+
+      <div id="node-keyona" class="node-card enduser" style="left:736px; top:118px; width:180px;" onclick="tracePath('keyona')">
+        <div class="node-label">ONE THREAD PER JOB</div>
+        <div class="node-title">KEYONA'S INBOX</div>
+        <div class="node-sub">answers, or replies close / snooze / confirm</div>
+      </div>
+    </div>
+  </div>
+  <div class="hint">Click a node to light up what feeds it and what it feeds. Click it again to reset.</div>
+
+  <!-- ===== LIFECYCLE ===== -->
+  <div class="section-head" style="margin-top:40px;"><span>Job Lifecycle</span><span>9 steps · one open at a time</span></div>
+
+  <div class="step-row" onclick="toggleStep(this)">
+    <div class="step-trigger">
+      <div class="step-num">01</div><div class="step-title">CAPTURE</div>
+      <span class="step-tag">INTAKE</span><div class="step-arrow">›</div>
+    </div>
+    <div class="step-body"><div class="step-content">
+      A calendar event tagged <strong>[Agent]</strong>, or an email forwarded to the agent
+      address, becomes a queued row on the board. Mail from anyone outside the allowlist is
+      turned away and reported. Nothing else can start a job.
+    </div></div>
+  </div>
+
+  <div class="step-row" onclick="toggleStep(this)">
+    <div class="step-trigger">
+      <div class="step-num">02</div><div class="step-title">CLAIM</div>
+      <span class="step-tag">WORKER</span><div class="step-arrow">›</div>
+    </div>
+    <div class="step-body"><div class="step-content">
+      One row per run. The worker writes a random token, waits, then re-reads it. If the
+      token changed, another run took the job and this one stops. A spreadsheet has no
+      atomic write — the re-read is what breaks the tie.
+    </div></div>
+  </div>
+
+  <div class="step-row" onclick="toggleStep(this)">
+    <div class="step-trigger">
+      <div class="step-num">03</div><div class="step-title">DEFINE</div>
+      <span class="step-tag">WORKER</span><div class="step-arrow">›</div>
+    </div>
+    <div class="step-body"><div class="step-content">
+      Before any work happens, the job gets an <strong>end goal</strong> in one sentence and
+      a list of <strong>deliverables</strong> — the concrete artifacts that must exist when
+      it is finished. A job with no defined end can never be closed, so it would chase
+      forever.
+    </div></div>
+  </div>
+
+  <div class="step-row" onclick="toggleStep(this)">
+    <div class="step-trigger">
+      <div class="step-num">04</div><div class="step-title">SPLIT</div>
+      <span class="step-tag">WORKER</span><div class="step-arrow">›</div>
+    </div>
+    <div class="step-body"><div class="step-content">
+      The work divides three ways: what can be done now, what can be drafted, and what
+      genuinely needs a human decision. The first two get done. The third is parked as a
+      short numbered list — never more than three questions.
+    </div></div>
+  </div>
+
+  <div class="step-row" onclick="toggleStep(this)">
+    <div class="step-trigger">
+      <div class="step-num">05</div><div class="step-title">SEND</div>
+      <span class="step-tag">APPS SCRIPT</span><div class="step-arrow">›</div>
+    </div>
+    <div class="step-body"><div class="step-content">
+      One email, one job, on its own thread — never a digest of everything in flight. It
+      fits on a phone screen: the context, the end goal, the deliverables proposed for
+      approval, and the decisions needed. Anything longer hands the work back while
+      appearing to have finished it.
+    </div></div>
+  </div>
+
+  <div class="step-row" onclick="toggleStep(this)">
+    <div class="step-trigger">
+      <div class="step-num">06</div><div class="step-title">CHASE</div>
+      <span class="step-tag">FOLLOW-UP</span><div class="step-arrow">›</div>
+    </div>
+    <div class="step-body"><div class="step-content">
+      A parked job is chased after two days, then every two days, as a reply on its own
+      thread. The wording escalates rather than repeating. After four attempts the job
+      goes quiet and marks itself stalled. Weekdays only, three chases a day, oldest first.
+    </div></div>
+  </div>
+
+  <div class="step-row" onclick="toggleStep(this)">
+    <div class="step-trigger">
+      <div class="step-num">07</div><div class="step-title">ANSWER</div>
+      <span class="step-tag">HUMAN</span><div class="step-arrow">›</div>
+    </div>
+    <div class="step-body"><div class="step-content">
+      Four one-word replies cost nothing: <strong>close</strong> ends it,
+      <strong>snooze 5d</strong> pauses it, <strong>waiting on [name]</strong> marks someone
+      else as the blocker and slows the chase, <strong>confirm [id]</strong> settles a
+      deliverable. Anything else is treated as a real answer and re-queues the job.
+    </div></div>
+  </div>
+
+  <div class="step-row" onclick="toggleStep(this)">
+    <div class="step-trigger">
+      <div class="step-num">08</div><div class="step-title">VERIFY</div>
+      <span class="step-tag">FOLLOW-UP</span><div class="step-arrow">›</div>
+    </div>
+    <div class="step-body"><div class="step-content">
+      Every check looks <em>for</em> the artifact, never for its absence. A sent message on
+      the thread. A file created after the job started. A doc modified since. A draft
+      sitting in Drafts is not a sent email — and a deleted draft is not delivery either.
+      Anything a machine cannot check honestly is marked manual and waits for a human.
+    </div></div>
+  </div>
+
+  <div class="step-row final" onclick="toggleStep(this)">
+    <div class="step-trigger">
+      <div class="step-num">09</div><div class="step-title">CLOSE</div>
+      <span class="step-tag" style="border-color:rgba(255,255,255,0.4);color:#fff;">OUTPUT</span>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step-body"><div class="step-content">
+      The job closes when every deliverable is verified, confirmed, or waived — not when
+      anything claims to have finished. A closing note lands on the same thread listing what
+      shipped. Nothing is marked done on someone's word, and nothing open is silently
+      dropped.
+    </div></div>
+  </div>
+
+  <div class="footer">
+    <div>ReRev Labs · Task Agent · Build v2</div>
+    <div>Google Apps Script · Google Sheets · Gmail · Claude Cowork</div>
+  </div>
+</div>
+
+<script>
+  var PATHS = {
+    calendar: { nodes:['node-calendar'], paths:['p-cal-gas'] },
+    gmail:    { nodes:['node-gmail'],    paths:['p-gmail-gas'] },
+    gas:      { nodes:['node-gas'],      paths:['p-cal-gas','p-gmail-gas','p-gas-board','p-gas-inbox'] },
+    board:    { nodes:['node-board'],    paths:['p-gas-board','p-board-cowork','p-cowork-board','p-nudge-board'] },
+    deliv:    { nodes:['node-deliv'],    paths:['p-cowork-deliv','p-nudge-deliv'] },
+    cowork:   { nodes:['node-cowork'],   paths:['p-board-cowork','p-cowork-board','p-cowork-deliv'] },
+    nudge:    { nodes:['node-nudge'],    paths:['p-nudge-deliv','p-nudge-board','p-nudge-inbox','p-inbox-nudge'] },
+    keyona:   { nodes:['node-keyona'],   paths:['p-gas-inbox','p-inbox-nudge','p-nudge-inbox'] }
+  };
+
+  var current = null;
+
+  function clearAll() {
+    var cards = document.querySelectorAll('.node-card');
+    for (var i = 0; i < cards.length; i++) cards[i].classList.remove('active-path');
+    var lines = document.querySelectorAll('.connection-line');
+    for (var j = 0; j < lines.length; j++) lines[j].classList.remove('lit');
+  }
+
+  function tracePath(key) {
+    if (current === key) { clearAll(); current = null; return; }
+    clearAll();
+    var cfg = PATHS[key];
+    if (!cfg) return;
+    cfg.nodes.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.add('active-path');
+    });
+    cfg.paths.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.add('lit');
+    });
+    current = key;
+  }
+
+  function toggleStep(row) {
+    var wasOpen = row.classList.contains('open');
+    var rows = document.querySelectorAll('.step-row');
+    for (var i = 0; i < rows.length; i++) rows[i].classList.remove('open');
+    if (!wasOpen) row.classList.add('open');
+  }
+</script>
+</body>
+</html>
