@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BlackTech Capital — Corporate Engagement Strategy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A2733;
+  --ink-soft:#3E5A66;
+  --teal:#107D9C;
+  --blue:#1E99DF;
+  --seafoam:#48A4A3;
+  --ice:#D8E5EB;
+  --paper:#F2F7F9;
+  --white:#FFFFFF;
+  --rule:#BFD4DD;
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'Instrument Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --wrap:1100px;
+}
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px;}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--teal);
+  margin:0 0 14px;
+}
+.eyebrow--pale{color:var(--seafoam);}
+h2.sec-title{
+  font-family:var(--display);
+  font-variation-settings:'wdth' 88;
+  font-weight:800;
+  font-size:clamp(28px,4.2vw,42px);
+  line-height:1.02;
+  letter-spacing:-.015em;
+  margin:0 0 10px;
+}
+.sec-lede{
+  font-size:18px;
+  color:var(--ink-soft);
+  max-width:58ch;
+  margin:0 0 38px;
+}
+h3.card-title{
+  font-family:var(--display);
+  font-variation-settings:'wdth' 92;
+  font-weight:700;
+  font-size:21px;
+  letter-spacing:-.01em;
+  margin:0 0 8px;
+  line-height:1.15;
+}
+p{margin:0 0 14px;}
+p:last-child{margin-bottom:0;}
+strong{font-weight:600;}
+
+/* ---------- masthead ---------- */
+.masthead{
+  background:var(--ink);
+  color:var(--white);
+  padding:52px 0 46px;
+  border-bottom:6px solid var(--blue);
+}
+.mast-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:20px;
+  flex-wrap:wrap;
+  font-family:var(--mono);
+  font-size:11.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--seafoam);
+  padding-bottom:22px;
+  margin-bottom:34px;
+  border-bottom:1px solid rgba(255,255,255,.16);
+}
+.mast-top span{display:block;}
+h1{
+  font-family:var(--display);
+  font-variation-settings:'wdth' 78;
+  font-weight:900;
+  font-size:clamp(46px,10vw,104px);
+  line-height:.9;
+  letter-spacing:-.028em;
+  margin:0;
+  text-transform:uppercase;
+}
+h1 em{
+  display:block;
+  font-style:normal;
+  color:var(--blue);
+}
+.mast-sub{
+  margin:26px 0 0;
+  max-width:62ch;
+  font-size:19px;
+  line-height:1.55;
+  color:#C9DDE6;
+}
+.mast-source{
+  margin-top:28px;
+  padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.16);
+  font-family:var(--mono);
+  font-size:12.5px;
+  line-height:1.7;
+  color:#7FA9B9;
+  max-width:70ch;
+}
+
+/* ---------- section frame ---------- */
+.sec{padding:76px 0;border-bottom:1px solid var(--rule);}
+.sec--dark{
+  background:var(--ink);
+  color:var(--white);
+  border-bottom:none;
+}
+.sec--dark .sec-lede{color:#A9C6D2;}
+.sec--dark h2.sec-title{color:var(--white);}
+
+/* ---------- the boundary diagram ---------- */
+.boundary{
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:3px;
+  overflow:hidden;
+  background:rgba(255,255,255,.03);
+}
+.band{padding:30px 30px 32px;}
+.band-head{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:6px;
+}
+.band-head h3{
+  font-family:var(--display);
+  font-variation-settings:'wdth' 88;
+  font-weight:800;
+  font-size:clamp(22px,3vw,30px);
+  letter-spacing:-.01em;
+  margin:0;
+  color:var(--white);
+}
+.band-tag{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  padding:4px 9px;
+  border-radius:2px;
+}
+.tag-above{background:rgba(72,164,163,.18);color:var(--seafoam);}
+.tag-below{background:rgba(30,153,223,.18);color:#68BDF0;}
+.band p{color:#B4CFDA;max-width:60ch;font-size:16px;}
+.payers{
+  margin:18px 0 0;
+  padding:0;
+  list-style:none;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.payers li{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.03em;
+  padding:6px 11px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:2px;
+  color:#D5E7EE;
+}
+.divider{
+  position:relative;
+  background:#9B2C2C;
+  color:#FFE9E7;
+  padding:15px 30px;
+  font-family:var(--mono);
+  font-size:12.5px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  text-align:center;
+  font-weight:500;
+}
+.divider::before,
+.divider::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;
+  height:3px;
+  background:repeating-linear-gradient(90deg,#FFE9E7 0 10px,transparent 10px 20px);
+  opacity:.55;
+}
+.divider::before{top:0;}
+.divider::after{bottom:0;}
+.position-note{
+  margin-top:26px;
+  padding:24px 28px;
+  border-left:4px solid var(--blue);
+  background:rgba(30,153,223,.09);
+}
+.position-note .eyebrow{color:#68BDF0;margin-bottom:8px;}
+.position-note p{color:#DCEBF2;font-size:17px;max-width:70ch;margin:0;}
+
+/* ---------- lanes ---------- */
+.lanes{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--rule);
+  border:1px solid var(--rule);
+}
+.lane{
+  background:var(--white);
+  padding:30px 26px 30px;
+  display:flex;
+  flex-direction:column;
+}
+.lane-rule{height:5px;margin:-30px -26px 24px;}
+.lane--a .lane-rule{background:var(--teal);}
+.lane--b .lane-rule{background:var(--blue);}
+.lane--c .lane-rule{background:var(--seafoam);}
+.lane dl{margin:18px 0 0;}
+.lane dt{
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--teal);
+  margin-bottom:3px;
+}
+.lane dd{
+  margin:0 0 15px;
+  font-size:15.5px;
+  line-height:1.5;
+  color:var(--ink-soft);
+}
+.lane dd:last-child{margin-bottom:0;}
+.lane dd b{color:var(--ink);font-weight:600;}
+
+/* ---------- constraints ---------- */
+.constraints{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:0 46px;
+}
+.con{
+  padding:22px 0;
+  border-top:1px solid var(--rule);
+  display:grid;
+  grid-template-columns:56px 1fr;
+  gap:16px;
+  align-items:start;
+}
+.con-num{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.06em;
+  color:var(--blue);
+  padding-top:3px;
+}
+.con h4{
+  font-family:var(--display);
+  font-variation-settings:'wdth' 92;
+  font-weight:700;
+  font-size:17.5px;
+  margin:0 0 5px;
+  line-height:1.25;
+}
+.con p{font-size:15.5px;color:var(--ink-soft);}
+
+/* ---------- targets ---------- */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.tier{
+  background:var(--white);
+  border:1px solid var(--rule);
+  border-radius:3px;
+  padding:26px 24px;
+}
+.tier .eyebrow{margin-bottom:10px;}
+.tier ul{margin:14px 0 0;padding-left:19px;}
+.tier li{font-size:15.5px;color:var(--ink-soft);margin-bottom:8px;}
+.tier li:last-child{margin-bottom:0;}
+.tier p{font-size:15.5px;color:var(--ink-soft);}
+.hypothesis{
+  margin-top:26px;
+  padding:20px 24px;
+  background:var(--ice);
+  border-radius:3px;
+  font-size:16px;
+  color:var(--ink);
+}
+.hypothesis .eyebrow{margin-bottom:6px;}
+
+/* ---------- build spec ---------- */
+.spec{
+  display:grid;
+  grid-template-columns:1.15fr 1fr;
+  gap:0;
+  border:1px solid var(--rule);
+  border-radius:3px;
+  overflow:hidden;
+  background:var(--white);
+}
+.spec-main{padding:34px 34px 34px;}
+.spec-side{
+  padding:34px 30px;
+  background:var(--ice);
+  border-left:1px solid var(--rule);
+}
+.spec-list{margin:20px 0 0;padding:0;list-style:none;}
+.spec-list li{
+  padding:13px 0;
+  border-top:1px solid var(--rule);
+  font-size:15.5px;
+  color:var(--ink-soft);
+  display:grid;
+  grid-template-columns:104px 1fr;
+  gap:14px;
+}
+.spec-list li span{
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--teal);
+  padding-top:3px;
+}
+.risk{
+  border-left:4px solid #9B2C2C;
+  padding:16px 0 4px 18px;
+  margin-top:22px;
+}
+.risk .eyebrow{color:#9B2C2C;margin-bottom:6px;}
+.risk p{font-size:15.5px;color:var(--ink);}
+
+/* ---------- shifts ---------- */
+.shifts{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+.shift{
+  background:var(--white);
+  border:1px solid var(--rule);
+  border-radius:3px;
+  padding:28px 26px;
+}
+.swap{margin:16px 0 0;padding:0;list-style:none;font-size:15.5px;}
+.swap li{padding:10px 0;border-top:1px solid var(--rule);color:var(--ink-soft);}
+.was{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#9B2C2C;
+  display:block;
+  margin-bottom:3px;
+}
+.now{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--teal);
+  display:block;
+  margin-bottom:3px;
+}
+
+/* ---------- questions ---------- */
+.qs{margin:0;padding:0;list-style:none;counter-reset:q;}
+.qs li{
+  counter-increment:q;
+  padding:22px 0;
+  border-top:1px solid rgba(255,255,255,.16);
+  display:grid;
+  grid-template-columns:56px 1fr;
+  gap:16px;
+  font-size:18px;
+  color:#DCEBF2;
+}
+.qs li::before{
+  content:"Q" counter(q);
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.08em;
+  color:var(--blue);
+  padding-top:6px;
+}
+.compliance{
+  margin-top:44px;
+  padding:24px 28px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:3px;
+}
+.compliance .eyebrow{color:#68BDF0;margin-bottom:8px;}
+.compliance p{color:#B4CFDA;font-size:16px;max-width:72ch;}
+
+/* ---------- footer ---------- */
+.foot{
+  background:var(--ink);
+  border-top:1px solid rgba(255,255,255,.16);
+  padding:34px 0 46px;
+  font-family:var(--mono);
+  font-size:11.5px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:#6F9EAF;
+}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease;}
+.rv.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none;}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:920px){
+  .lanes{grid-template-columns:1fr;}
+  .lane-rule{margin:-30px -26px 24px;}
+  .constraints{grid-template-columns:1fr;}
+  .tiers{grid-template-columns:1fr;}
+  .spec{grid-template-columns:1fr;}
+  .spec-side{border-left:none;border-top:1px solid var(--rule);}
+  .shifts{grid-template-columns:1fr;}
+}
+@media (max-width:560px){
+  body{font-size:16px;}
+  .wrap{padding:0 20px;}
+  .sec{padding:54px 0;}
+  .band{padding:24px 20px;}
+  .divider{padding:14px 18px;font-size:11px;letter-spacing:.1em;}
+  .spec-list li{grid-template-columns:1fr;gap:4px;}
+  .con{grid-template-columns:1fr;gap:6px;}
+  .qs li{grid-template-columns:1fr;gap:6px;}
+}
+a{color:inherit;}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <span>BlackTech Capital · Internal Strategy</span>
+      <span>v1 · August 2026 · Keyona Meeks</span>
+    </div>
+    <h1>Corporate<br>Engagement<em>Strategy</em></h1>
+    <p class="mast-sub">Two lanes, one boundary. Corporate money does not do one thing for a fund like ours. It does two unrelated things, for two different buyers, on two different timelines. Running them as one motion is why the pitch has been hard to write.</p>
+    <p class="mast-source">Source · 40-minute field interview with Niels Hagege, Head of Development &amp; Partnerships, Cycle Momentum (Montreal). Cycle Momentum runs the Circle of Allies: 23 industrial members including Rio Tinto, ArcelorMittal, Saint-Gobain, Schneider Electric and Hydro-Québec, meeting quarterly, in person, closed door. Two and a half years of operating history behind every constraint on this page.</p>
+  </div>
+</header>
+
+<section class="sec sec--dark">
+  <div class="wrap">
+    <p class="eyebrow eyebrow--pale rv">The finding that reorganizes everything</p>
+    <h2 class="sec-title rv">There is a line corporates will not cross</h2>
+    <p class="sec-lede rv">Industrials pay for pilots. They do not pay for the work that happens before a pilot is possible. Cycle Momentum spent real energy trying to pull corporates into projects earlier and called it wasted time.</p>
+
+    <div class="boundary rv">
+      <div class="band">
+        <div class="band-head">
+          <h3>Above the line</h3>
+          <span class="band-tag tag-above">Discovery</span>
+        </div>
+        <p>Scouting, qualification, convening, education, ecosystem-building. Necessary, unglamorous, and someone else's bill.</p>
+        <ul class="payers">
+          <li>LP capital</li>
+          <li>Foundations &amp; philanthropy</li>
+          <li>Federal / provincial innovation budgets</li>
+          <li>Professional-services sponsors</li>
+        </ul>
+      </div>
+
+      <div class="divider">Corporates will not fund above this line</div>
+
+      <div class="band">
+        <div class="band-head">
+          <h3>Below the line</h3>
+          <span class="band-tag tag-below">Deployment</span>
+        </div>
+        <p>Pilot execution against a named operational need, with a technology that has already been qualified by someone else.</p>
+        <ul class="payers">
+          <li>Industrial corporates</li>
+          <li>$100K – $300K per pilot</li>
+          <li>TRL 6 and above only</li>
+          <li>Sourced by warm intro</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="position-note rv">
+      <p class="eyebrow">BTC's structural position</p>
+      <p>Our discovery is already paid for. LPs fund diligence through the fund. We do not arrive asking a corporate to underwrite a search — we arrive with companies already qualified, already at TRL 6+, already holding paying customers. That is exactly the gap Niels described in the Canadian market, and it is a stronger opening position than an accelerator has.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow rv">The split</p>
+    <h2 class="sec-title rv">Two buyers, two motions</h2>
+    <p class="sec-lede rv">Money that comes <em>to</em> BTC comes from firms that sell into the ecosystem. Money that goes <em>to portcos</em> comes from firms that buy from it. Pitch either one at the other and neither converts.</p>
+
+    <div class="lanes rv">
+      <div class="lane lane--a">
+        <div class="lane-rule"></div>
+        <h3 class="card-title">Sponsor lane</h3>
+        <dl>
+          <dt>Who pays</dt>
+          <dd>Law firms, banks, accounting firms, insurers, EMDs, wealth managers. Firms whose customer is the ecosystem.</dd>
+          <dt>What they want</dt>
+          <dd>Client acquisition and deal flow. Visibility in a room they cannot convene themselves.</dd>
+          <dt>What comes back</dt>
+          <dd><b>Firm revenue, near term.</b> This is the 2026 answer to the revenue question.</dd>
+          <dt>Proof already in hand</dt>
+          <dd>CIBC confirmed at ~$3,500 for the New York dinner. Price the next two off that.</dd>
+        </dl>
+      </div>
+
+      <div class="lane lane--b">
+        <div class="lane-rule"></div>
+        <h3 class="card-title">Pilot lane</h3>
+        <dl>
+          <dt>Who pays</dt>
+          <dd>Industrial corporates, utilities, infrastructure owners. Firms with decarbonization targets and an operational problem.</dd>
+          <dt>What they want</dt>
+          <dd>Revenue transacted with the startup. Not returns. Vinci runs a $60M fund and does not optimize it for ROI.</dd>
+          <dt>What comes back</dt>
+          <dd><b>Portfolio value, not firm revenue.</b> Portco revenue becomes up rounds and markups. Size this as a fund investment, not a revenue line.</dd>
+          <dt>Where the work sits</dt>
+          <dd>Close to the business unit that owns the problem. Not the CVC desk.</dd>
+        </dl>
+      </div>
+
+      <div class="lane lane--c">
+        <div class="lane-rule"></div>
+        <h3 class="card-title">Co-investment lane</h3>
+        <dl>
+          <dt>Who pays</dt>
+          <dd>Corporate venture arms who have watched a portco perform inside their own operation.</dd>
+          <dt>What they want</dt>
+          <dd>Exposure to a company they already trust operationally. The cheque follows the pilot, never leads it.</dd>
+          <dt>What comes back</dt>
+          <dd><b>Fund II and III.</b> Co-investors first, LPs after. The real prize, and the slowest.</dd>
+          <dt>Dependency</dt>
+          <dd>Entirely downstream of the pilot lane working. Cannot be pursued directly.</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow rv">From the field</p>
+    <h2 class="sec-title rv">Constraints to design around</h2>
+    <p class="sec-lede rv">Each of these came from someone with two and a half years of running the motion, plus six or seven before that in Europe. Treat them as findings, not opinions.</p>
+
+    <div class="constraints rv">
+      <div class="con">
+        <div class="con-num">C-01</div>
+        <div>
+          <h4>The KPI moved from returns to revenue</h4>
+          <p>ArcelorMittal's head of investment spends 80% of his time with internal business-unit customers and 20% on deal flow. His single measure is how much revenue flows between the corporate and the startup. The investment is an add-on to an operational relationship, never the point of it.</p>
+        </div>
+      </div>
+      <div class="con">
+        <div class="con-num">C-02</div>
+        <div>
+          <h4>TRL 6 is a hard floor</h4>
+          <p>Below TRL 6 corporates say they are interested and then never engage. Everyone wastes time. Our portfolio clears this — by the time a company reaches us there is technical validation, market validation, and a customer who has paid real money.</p>
+        </div>
+      </div>
+      <div class="con">
+        <div class="con-num">C-03</div>
+        <div>
+          <h4>Depth beats breadth, and it isn't close</h4>
+          <p>You cannot understand forty corporations' problems deeply enough to be useful. Their answer was 23 members, quarterly, face to face, closed door, 85% attendance. Ours should be one corporate whose operational need aligns to one or two portcos.</p>
+        </div>
+      </div>
+      <div class="con">
+        <div class="con-num">C-04</div>
+        <div>
+          <h4>Invite two people per organization</h4>
+          <p>The senior, polished, outward-facing person often does not know what happens inside the company. The person who can actually decide is hands-on and does not want the spotlight. Invite both. Keep the first relationship, use the second one.</p>
+        </div>
+      </div>
+      <div class="con">
+        <div class="con-num">C-05</div>
+        <div>
+          <h4>Large-format events do not close anything</h4>
+          <p>Useful for surfacing names and nothing more. Every corporate engagement worth having requires customized understanding of that company's specific challenge. Budget conference time as sourcing, never as conversion.</p>
+        </div>
+      </div>
+      <div class="con">
+        <div class="con-num">C-06</div>
+        <div>
+          <h4>Canadian industrials sit outside the innovation ecosystem</h4>
+          <p>The large industrials in their circle are European or American, rarely Canadian, and are not connected to startups day to day. That disconnect is a wedge for a Canadian fund with Canadian portcos and documented pilot results.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow rv">Targeting</p>
+    <h2 class="sec-title rv">Warm doors before cold maps</h2>
+    <p class="sec-lede rv">The instinct is to build a corporate map. The better move is to work the doors that are already open and underused.</p>
+
+    <div class="tiers rv">
+      <div class="tier">
+        <p class="eyebrow">Tier 1 · Already validated us</p>
+        <h3 class="card-title">Co-validators</h3>
+        <ul>
+          <li><strong>GM Canada</strong> — the single warmest industrial door we have</li>
+          <li><strong>Shell GameChanger</strong></li>
+          <li><strong>Breakthrough Energy</strong></li>
+          <li><strong>Government of Ontario</strong></li>
+        </ul>
+      </div>
+      <div class="tier">
+        <p class="eyebrow">Tier 2 · Already bought</p>
+        <h3 class="card-title">Portco customers</h3>
+        <p>Every company in the portfolio has already sold a pilot to someone. Those buyers are corporates who have already said yes to climate tech, and their innovation and procurement people know their counterparts.</p>
+        <p>This list does not exist yet. Building it is the first real task.</p>
+      </div>
+      <div class="tier">
+        <p class="eyebrow">Tier 3 · Adjacent</p>
+        <h3 class="card-title">Network adjacencies</h3>
+        <p>Investment committee relationships, LP employers and boards, Cycle Momentum's investor community under the signed MOU, and the ecosystem partners already carrying our name.</p>
+      </div>
+    </div>
+
+    <div class="hypothesis rv">
+      <p class="eyebrow">Open hypothesis — verify before committing</p>
+      <p>Utilities and infrastructure owners may touch more of the portfolio at once than chemicals or automotive would, which would make them the highest-leverage single sector rather than a one-company fit. That depends entirely on the actual buyer categories for Serenity Power and Resiliocs Intelligence. Confirm those before this becomes a plan.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow rv">The build</p>
+    <h2 class="sec-title rv">Pilot exhibition</h2>
+    <p class="sec-lede rv">The one concrete thing to execute. Not a showcase of companies — a showcase of results, with the people who paid for them in the room.</p>
+
+    <div class="spec rv">
+      <div class="spec-main">
+        <h3 class="card-title">What it is</h3>
+        <p>A closed session where portfolio companies present completed and in-flight pilots, with outcome numbers, integration timelines, and the paying customer present to speak to what actually happened. Niels's addition was the customer: it converts a showcase into third-party proof and it is the reason this sells where a program would not.</p>
+        <p>It sits entirely below the line. We are not asking anyone to fund discovery. We are showing qualified technology with evidence attached.</p>
+
+        <div class="risk">
+          <p class="eyebrow">Dependency to test first</p>
+          <p>The hard constraint is not the corporates, it is the founders. Every founder has to be willing to ask a paying customer to vouch on the record. Some will say yes immediately. Some will not have a customer who can speak publicly. If only one portco can field a speakable customer, the format collapses. Test this before building anything around it.</p>
+        </div>
+      </div>
+
+      <div class="spec-side">
+        <p class="eyebrow">Spec</p>
+        <ul class="spec-list">
+          <li><span>Format</span> Virtual. Suits our bandwidth and our geography.</li>
+          <li><span>Size</span> Small and closed. Not a panel, not an audience.</li>
+          <li><span>Guests</span> Two per corporate — the visible one and the operator.</li>
+          <li><span>Sourcing</span> Warm introduction only. No open registration.</li>
+          <li><span>Content</span> Outcome numbers, speed to integration, customer testimony.</li>
+          <li><span>Timing</span> Late 2026 or early 2027, gated on founder readiness.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow rv">Consequences</p>
+    <h2 class="sec-title rv">What this changes</h2>
+    <p class="sec-lede rv">Two things in flight need repositioning based on the boundary finding.</p>
+
+    <div class="shifts rv">
+      <div class="shift">
+        <h3 class="card-title">Climate Tech Exit Lab</h3>
+        <ul class="swap">
+          <li><span class="was">Was</span> A program a corporate sponsor would fund.</li>
+          <li><span class="now">Now</span> Education sits above the line. Corporates are structurally the wrong funder. Its funders are foundations, government innovation budgets, and sponsor-lane firms.</li>
+          <li><span class="now">And</span> The investor-education half is the strongest non-dinner sponsor pitch we have. A room of high-net-worth investors learning how climate exits work is a direct client-acquisition channel for wealth managers, law firms and EMDs.</li>
+          <li><span class="now">Honestly</span> Its second function is converting HNW investors into people who understand the asset class well enough to write into Fund II. It is LP pipeline wearing a program's clothes. Good reason to build it — size it against Fund II, not 2026 revenue.</li>
+        </ul>
+      </div>
+
+      <div class="shift">
+        <h3 class="card-title">Intern scope</h3>
+        <ul class="swap">
+          <li><span class="was">Was</span> Map corporate sponsors.</li>
+          <li><span class="now">Now</span> Map the warm doors already inside the network: co-validators, portco customers, IC and LP adjacencies. Warm before cold.</li>
+          <li><span class="now">Now</span> Run the informational interview circuit. One 40-minute call produced six hard constraints. Twelve more is a body of knowledge nobody else in our position holds, and it is genuinely ownable work.</li>
+          <li><span class="now">Now</span> Build the sponsor-side prospect list separately, on different qualification criteria.</li>
+          <li><span class="now">Now</span> Keep a running findings file so constraints stop living only inside call transcripts.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--dark">
+  <div class="wrap">
+    <p class="eyebrow eyebrow--pale rv">Before this becomes a plan</p>
+    <h2 class="sec-title rv">Open questions</h2>
+
+    <ul class="qs rv">
+      <li>Which of the four portcos have completed a pilot with a customer who could speak publicly about it?</li>
+      <li>Does the near-term revenue target sit entirely on the sponsor lane, or are we still counting on corporate dollars inside 2026?</li>
+      <li>The tax-credit route — corporates directing credits toward ecosystem funding. Real information, or a hypothesis that needs research before it enters a plan?</li>
+      <li>Is NYC Climate Week the venue to run the interview circuit at volume, or is it a warm-intro venue for the pilot lane?</li>
+      <li>What are the actual buyer categories for Serenity Power and Resiliocs Intelligence?</li>
+    </ul>
+
+    <div class="compliance rv">
+      <p class="eyebrow">Standing compliance note</p>
+      <p>As this moves toward US corporates, the same line applies as with the New York dinner. Corporate engagement conversations stay operational and do not drift into fund solicitation. The $10K minimum stays out of anything US-facing.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;">
+    <span>BlackTech Capital · Catalyst Fund</span>
+    <span>Internal working document · v1 · Aug 2026</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var els = document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    els.forEach(function(e){e.classList.add('in');});
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  },{threshold:0.08, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){io.observe(e);});
+})();
+</script>
+</body>
+</html>
