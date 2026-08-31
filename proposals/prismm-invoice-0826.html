@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice · Prismm · August 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F0F7F7;
+      --primary:   #0D1F2D;
+      --text:      #3D5166;
+      --cyan:      #1A9E9E;
+      --purple:    #7C3AED;
+      --gradient:  linear-gradient(90deg, #1A9E9E, #7C3AED);
+      --white:     #FFFFFF;
+      --border:    #D4E6E6;
+      --muted:     #7A96A8;
+      --surface:   #EAF3F3;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      padding: 48px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary { background: var(--gradient); color: var(--white); }
+    .btn-secondary { background: var(--white); color: var(--primary); border: 1.5px solid var(--border); }
+
+    #dl-status {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    #capture-target {
+      width: 760px;
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 48px rgba(13,31,45,0.12);
+    }
+
+    .inv-topbar { height: 5px; background: var(--gradient); }
+
+    .inv-header {
+      background: var(--primary);
+      padding: 36px 52px 32px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .inv-logo { height: 32px; width: auto; display: block; margin-bottom: 12px; }
+
+    .inv-from-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.50);
+      font-weight: 300;
+    }
+
+    .inv-word { text-align: right; }
+
+    .inv-word-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+
+    .inv-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.90);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .inv-meta {
+      background: var(--surface);
+      padding: 18px 52px;
+      display: flex;
+      gap: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .meta-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 4px;
+    }
+
+    .meta-value {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--primary);
+    }
+
+    .inv-body { padding: 44px 52px; }
+
+    .billed-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .billed-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 10px;
+    }
+
+    .billed-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .billed-detail {
+      font-family: 'Inter', sans-serif;
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.75;
+      font-weight: 400;
+    }
+
+    .inv-desc-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 14px;
+    }
+
+    .inv-desc-card {
+      background: var(--surface);
+      border-left: 3px solid transparent;
+      border-image: var(--gradient) 1;
+      padding: 20px 24px;
+      margin-bottom: 36px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .inv-desc-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .inv-desc-period {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .inv-table { width: 100%; border-collapse: collapse; margin-bottom: 28px; }
+    .inv-table thead tr { border-bottom: 2px solid var(--primary); }
+
+    .inv-table thead th {
+      font-family: 'Outfit', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 0 10px;
+      text-align: left;
+    }
+
+    .inv-table thead th:last-child { text-align: right; }
+    .inv-table tbody tr { border-bottom: 1px solid var(--border); }
+
+    .inv-table tbody td {
+      padding: 18px 0;
+      font-size: 13.5px;
+      color: var(--text);
+      vertical-align: top;
+    }
+
+    .inv-table tbody td:last-child {
+      text-align: right;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--primary);
+    }
+
+    .td-desc { font-family: 'Inter', sans-serif; font-weight: 500; color: var(--primary); }
+
+    .td-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 4px;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .inv-totals { display: flex; justify-content: flex-end; margin-bottom: 44px; }
+    .totals-block { min-width: 270px; }
+
+    .totals-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .totals-row:last-child {
+      border-bottom: none;
+      border-top: 2px solid var(--primary);
+      margin-top: 4px;
+      padding-top: 14px;
+    }
+
+    .totals-label { font-family: 'Inter', sans-serif; color: var(--muted); font-size: 12px; }
+    .totals-value { font-family: 'Inter', sans-serif; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--text); }
+
+    .totals-row.total .totals-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    .totals-row.total .totals-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .inv-payment {
+      background: var(--primary);
+      border-radius: 10px;
+      padding: 24px 28px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .inv-payment::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gradient);
+    }
+
+    .payment-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 8px;
+    }
+
+    .payment-method {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.80);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .payment-due { text-align: right; }
+
+    .payment-due-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 6px;
+    }
+
+    .payment-due-date {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--white);
+    }
+
+    .inv-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+    }
+
+    .inv-footer-brand { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 500; color: var(--muted); }
+
+    .inv-footer-note { font-family: 'Inter', sans-serif; font-size: 10px; color: var(--muted); text-align: right; line-height: 1.6; }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(26,158,158,0.12);
+      color: var(--cyan);
+      font-family: 'Outfit', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(26,158,158,0.25);
+    }
+
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .controls { display: none; }
+      #capture-target { box-shadow: none; width: 100%; border-radius: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="controls">
+    <button class="btn btn-primary" id="download-btn" onclick="downloadAsImage()">⬇ Download as PNG</button>
+    <button class="btn btn-secondary" onclick="window.print()">🖨 Print / Save PDF</button>
+    <p id="dl-status"></p>
+  </div>
+
+  <div id="capture-target">
+
+    <div class="inv-topbar"></div>
+
+    <div class="inv-header">
+      <div>
+        <img class="inv-logo" src="https://res.cloudinary.com/dialhpycd/image/upload/v1770670281/rerev_labs_title_logo_afrgnu.png" alt="ReRev Labs" crossorigin="anonymous" />
+        <div class="inv-from-sub">keyona@rerev.io &nbsp;·&nbsp; 225-312-1615</div>
+      </div>
+      <div class="inv-word">
+        <div class="inv-word-text">Invoice</div>
+        <div class="inv-number">#00000052</div>
+      </div>
+    </div>
+
+    <div class="inv-meta">
+      <div class="meta-block">
+        <div class="meta-label">Issue Date</div>
+        <div class="meta-value">September 1, 2026</div>
+      </div>
+      <div class="meta-block">
+        <div class="meta-label">Service Period</div>
+        <div class="meta-value">August 2026</div>
+      </div>
+      <div class="meta-block">
+        <div class="meta-label">Due Date</div>
+        <div class="meta-value">Upon Receipt</div>
+      </div>
+      <div class="meta-block">
+        <div class="meta-label">Status</div>
+        <div class="meta-value">
+          <span class="status-badge"><span class="status-dot"></span>Awaiting Payment</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="inv-body">
+
+      <div class="billed-row">
+        <div>
+          <div class="billed-label">Billed To</div>
+          <div class="billed-name">Wunderwood DBA Prismm</div>
+          <div class="billed-detail">
+            591 Collaboration Way, Suite 605<br>
+            Newark, DE US 19713
+          </div>
+        </div>
+        <div>
+          <div class="billed-label">From</div>
+          <div class="billed-name">ReRev LLC</div>
+          <div class="billed-detail">
+            1124 20th St S #208<br>
+            Birmingham, AL USA 35205<br>
+            keyona@rerev.io
+          </div>
+        </div>
+      </div>
+
+      <div class="inv-desc-label">Services Rendered</div>
+      <div class="inv-desc-card">
+        <div class="inv-desc-title">August Fractional Chief of Staff Services for Prismm</div>
+        <div class="inv-desc-period">August 1 – August 31, 2026</div>
+      </div>
+
+      <table class="inv-table">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th style="text-align:right;">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="td-desc">August Fractional Chief of Staff Services for Prismm</div>
+              <div class="td-sub">Supporting the C-Suite, and especially CEO, in the strategy and execution of operations and growth initiatives</div>
+            </td>
+            <td>$2,500.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="inv-totals">
+        <div class="totals-block">
+          <div class="totals-row">
+            <span class="totals-label">Subtotal</span>
+            <span class="totals-value">$2,500.00</span>
+          </div>
+          <div class="totals-row">
+            <span class="totals-label">Tax</span>
+            <span class="totals-value">$0.00</span>
+          </div>
+          <div class="totals-row total">
+            <span class="totals-label">Total Due</span>
+            <span class="totals-value">$2,500.00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="inv-payment">
+        <div>
+          <div class="payment-label">Payment</div>
+          <div class="payment-method">
+            Stripe &nbsp;·&nbsp; <a href="https://buy.stripe.com/bJe28raf96Dm5tE1SugUM02" style="color:#1A9E9E; font-size:12px;">buy.stripe.com/bJe28raf96Dm5tE1SugUM02</a><br>
+            <span style="opacity:0.45; font-size:11px;">Taxes included in pricing &nbsp;·&nbsp; keyona@rerev.io &nbsp;·&nbsp; 225-312-1615</span>
+          </div>
+        </div>
+        <div class="payment-due">
+          <div class="payment-due-label">Due</div>
+          <div class="payment-due-date">Upon Receipt</div>
+        </div>
+      </div>
+
+      <div class="inv-footer">
+        <div class="inv-footer-brand">ReRev LLC × Prismm</div>
+        <div class="inv-footer-note">
+          Thank you for the partnership.<br>
+          Taxes are included in pricing.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    async function downloadAsImage() {
+      const btn = document.getElementById('download-btn');
+      const status = document.getElementById('dl-status');
+      const target = document.getElementById('capture-target');
+      btn.disabled = true;
+      btn.textContent = 'Capturing...';
+      status.textContent = '';
+      try {
+        const canvas = await html2canvas(target, { scale: 2, useCORS: true, allowTaint: false, backgroundColor: '#FFFFFF', logging: false });
+        const link = document.createElement('a');
+        link.download = 'prismm-invoice-august-2026.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        status.textContent = '✓ Saved to Downloads.';
+        status.style.color = '#1A9E9E';
+      } catch (err) {
+        status.textContent = '✗ ' + err.message;
+        status.style.color = '#7C3AED';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '⬇ Download as PNG';
+      }
+    }
+  </script>
+
+</body>
+</html>
