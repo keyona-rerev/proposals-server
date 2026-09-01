@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Lab — ReRev Labs</title>
+<meta name="description" content="A creative-technology and hardware club for students, from ReRev Labs. Kids build cyberdecks, Raspberry Pi projects, and smart mirrors — and walk out holding what they made.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --board: #0F2A3D;
+    --board-2: #16374E;
+    --paper: #F3F6F5;
+    --panel-line: #D7E1DE;
+    --line: #6FD6C4;
+    --accent: #F0A93B;
+    --accent-ink: #5B3B0C;
+    --ink: #10222E;
+    --ink-soft: #48606C;
+    --on-dark: #EAF3F1;
+    --on-dark-soft: #9AC1C4;
+    --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img, svg { max-width: 100%; }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 0 20px; }
+  }
+
+  /* ---------- header ---------- */
+
+  header.site {
+    padding: 28px 0 0;
+    background: var(--board);
+  }
+
+  .brandline {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(234, 243, 241, 0.14);
+  }
+
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--on-dark);
+    letter-spacing: 0.01em;
+  }
+
+  .wordmark span { color: var(--on-dark-soft); font-weight: 400; }
+
+  .tagline {
+    font-size: 13px;
+    color: var(--on-dark-soft);
+  }
+
+  @media (max-width: 560px) {
+    .tagline { display: none; }
+  }
+
+  /* ---------- hero ---------- */
+
+  .hero {
+    background: var(--board);
+    background-image:
+      linear-gradient(rgba(111, 214, 196, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(111, 214, 196, 0.06) 1px, transparent 1px);
+    background-size: 34px 34px;
+    padding: 64px 0 76px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.85fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  @media (max-width: 800px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .hero-kicker {
+    font-size: 14px;
+    color: var(--on-dark-soft);
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 42px;
+    line-height: 1.14;
+    letter-spacing: -0.01em;
+    color: var(--on-dark);
+    margin: 0 0 20px;
+  }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 32px; }
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--on-dark-soft);
+    max-width: 46ch;
+    margin: 0;
+  }
+
+  .hero-sub strong { color: var(--on-dark); font-weight: 500; }
+
+  .schematic-holder {
+    border: 1px solid rgba(111, 214, 196, 0.28);
+    background: var(--board-2);
+    padding: 20px;
+  }
+
+  .schematic-cap {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--on-dark-soft);
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(111, 214, 196, 0.18);
+  }
+
+  /* ---------- section shell ---------- */
+
+  section { padding: 68px 0; }
+
+  .section-head {
+    max-width: 56ch;
+    margin: 0 0 36px;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--ink);
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .section-head p {
+    color: var(--ink-soft);
+    font-size: 15.5px;
+    margin: 0;
+  }
+
+  /* ---------- builds ---------- */
+
+  .builds {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--panel-line);
+    border: 1px solid var(--panel-line);
+  }
+
+  @media (max-width: 760px) {
+    .builds { grid-template-columns: 1fr; }
+  }
+
+  .build {
+    background: #FFFFFF;
+    padding: 28px 26px 30px;
+  }
+
+  .build .mark {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 18px;
+  }
+
+  .build h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16.5px;
+    margin: 0 0 8px;
+    color: var(--ink);
+  }
+
+  .build p {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ---------- why now ---------- */
+
+  .why {
+    background: var(--board);
+    color: var(--on-dark);
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  @media (max-width: 760px) {
+    .why-grid { grid-template-columns: 1fr; gap: 36px; }
+  }
+
+  .why h2 { color: var(--on-dark); }
+
+  .why p {
+    color: var(--on-dark-soft);
+    font-size: 15px;
+    margin: 0 0 14px;
+  }
+
+  .why p:last-child { margin-bottom: 0; }
+
+  .proof {
+    border-left: 2px solid var(--accent);
+    padding-left: 20px;
+  }
+
+  .proof .label {
+    font-size: 13px;
+    color: var(--accent);
+    margin: 0 0 8px;
+    font-weight: 500;
+  }
+
+  /* ---------- partner / CTA ---------- */
+
+  .partner {
+    background: var(--paper);
+  }
+
+  .partner-panel {
+    border: 1px solid var(--panel-line);
+    background: #FFFFFF;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1.3fr auto;
+    gap: 32px;
+    align-items: center;
+  }
+
+  @media (max-width: 700px) {
+    .partner-panel { grid-template-columns: 1fr; padding: 30px 26px; }
+  }
+
+  .partner-panel h2 { margin-bottom: 12px; }
+
+  .partner-panel p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin: 0;
+    max-width: 52ch;
+  }
+
+  .cta {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    padding: 14px 26px;
+    border: 1px solid var(--accent);
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .cta:hover { background: transparent; color: var(--ink); border-color: var(--ink); }
+
+  .cta:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  /* ---------- footer ---------- */
+
+  footer.site {
+    background: var(--board);
+    padding: 30px 0;
+  }
+
+  .foot-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--on-dark-soft);
+  }
+
+  .foot-row a { text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .cta { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <div class="brandline">
+      <div class="wordmark">ReRev Labs <span>/ The Lab</span></div>
+      <div class="tagline">Youth creative-technology &amp; hardware club</div>
+    </div>
+  </div>
+</header>
+
+<section class="hero" aria-label="Introduction">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="hero-kicker">A program from ReRev Labs, for Wearable Tech Ventures</p>
+      <h1>From idea to a working device — in one sitting.</h1>
+      <p class="hero-sub">The Lab is a creative-technology club that makes it easy for kids to build real hardware: <strong>cyberdecks</strong>, <strong>Raspberry Pi projects</strong>, and <strong>smart mirrors</strong>. A student starts with an idea and leaves the session holding the thing they made.</p>
+    </div>
+    <div class="schematic-holder">
+      <svg viewBox="0 0 420 300" role="img" aria-label="Simple schematic illustration of a hardware build: a circuit board connected by traces to a small screen">
+        <rect x="30" y="40" width="220" height="160" rx="10" fill="none" stroke="#6FD6C4" stroke-width="1.4" opacity="0.9"/>
+        <rect x="62" y="72" width="70" height="70" rx="4" fill="none" stroke="#F0A93B" stroke-width="1.6"/>
+        <g stroke="#F0A93B" stroke-width="1.2">
+          <line x1="72" y1="72" x2="72" y2="60"/>
+          <line x1="88" y1="72" x2="88" y2="60"/>
+          <line x1="104" y1="72" x2="104" y2="60"/>
+          <line x1="120" y1="72" x2="120" y2="60"/>
+          <line x1="72" y1="142" x2="72" y2="154"/>
+          <line x1="88" y1="142" x2="88" y2="154"/>
+          <line x1="104" y1="142" x2="104" y2="154"/>
+          <line x1="120" y1="142" x2="120" y2="154"/>
+        </g>
+        <g fill="none" stroke="#6FD6C4" stroke-width="1.2">
+          <polyline points="150,90 210,90 210,60 250,60"/>
+          <polyline points="150,120 230,120 230,150 250,150"/>
+          <polyline points="96,142 96,172 250,172 250,190"/>
+        </g>
+        <g fill="#6FD6C4">
+          <circle cx="150" cy="90" r="2.6"/>
+          <circle cx="210" cy="90" r="2.6"/>
+          <circle cx="150" cy="120" r="2.6"/>
+          <circle cx="230" cy="120" r="2.6"/>
+          <circle cx="96" cy="142" r="2.6"/>
+          <circle cx="250" cy="172" r="2.6"/>
+        </g>
+        <rect x="300" y="46" width="90" height="150" rx="8" fill="none" stroke="#6FD6C4" stroke-width="1.4"/>
+        <rect x="312" y="60" width="66" height="94" rx="3" fill="rgba(111,214,196,0.10)" stroke="#6FD6C4" stroke-width="1"/>
+        <line x1="330" y1="168" x2="360" y2="168" stroke="#6FD6C4" stroke-width="1.4"/>
+        <circle cx="345" cy="180" r="4" fill="none" stroke="#6FD6C4" stroke-width="1.2"/>
+        <line x1="250" y1="60" x2="300" y2="80" stroke="#6FD6C4" stroke-width="1.2"/>
+        <line x1="250" y1="150" x2="300" y2="130" stroke="#6FD6C4" stroke-width="1.2"/>
+      </svg>
+      <div class="schematic-cap">
+        <span>build: cyberdeck / display module</span>
+        <span>status: prototyped</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-label="What students build">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What students build</h2>
+      <p>Three project lines students can move through, each ending in a physical object they keep.</p>
+    </div>
+    <div class="builds">
+      <div class="build">
+        <svg class="mark" viewBox="0 0 34 34" fill="none" stroke="#0F2A3D" stroke-width="1.4"><rect x="4" y="6" width="26" height="18" rx="2"/><line x1="10" y1="24" x2="10" y2="28"/><line x1="24" y1="24" x2="24" y2="28"/><line x1="6" y1="28" x2="28" y2="28"/><rect x="9" y="10" width="8" height="6" rx="1"/></svg>
+        <h3>Cyberdecks</h3>
+        <p>Handheld, hacker-style computers students wire and case themselves — screen, keyboard, and a small board doing the thinking.</p>
+      </div>
+      <div class="build">
+        <svg class="mark" viewBox="0 0 34 34" fill="none" stroke="#0F2A3D" stroke-width="1.4"><rect x="5" y="5" width="24" height="24" rx="2"/><circle cx="12" cy="12" r="2"/><circle cx="22" cy="12" r="2"/><circle cx="12" cy="22" r="2"/><circle cx="22" cy="22" r="2"/><line x1="12" y1="14" x2="12" y2="20"/><line x1="14" y1="12" x2="20" y2="12"/></svg>
+        <h3>Raspberry Pi projects</h3>
+        <p>Small physical-computing builds — sensors, lights, motors — driven by code students write and test themselves.</p>
+      </div>
+      <div class="build">
+        <svg class="mark" viewBox="0 0 34 34" fill="none" stroke="#0F2A3D" stroke-width="1.4"><rect x="7" y="4" width="20" height="26" rx="3"/><line x1="7" y1="24" x2="27" y2="24"/><line x1="14" y1="27" x2="20" y2="27"/></svg>
+        <h3>Smart mirrors</h3>
+        <p>A two-way mirror with a hidden display behind it, showing whatever a student's code decides to surface.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="why" aria-label="Why this works now">
+  <div class="wrap">
+    <div class="why-grid">
+      <div>
+        <h2>Why this works now</h2>
+        <p>AI coding tools have made hardware genuinely teachable at this age — the gap between "I have an idea" and "I have working code for it" has closed enough that a student can cross it in a single session.</p>
+        <p>The Lab is early: a program built behind the scenes for a while, now moving into real conversations with partners.</p>
+      </div>
+      <div class="proof">
+        <p class="label">Already running</p>
+        <p>This fall, ReRev Labs is running a startup club with Breakthrough Birmingham for their high school students, with the semester ending in a pitch competition. The Lab is the next program alongside it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="partner" aria-label="Partner with ReRev Labs">
+  <div class="wrap">
+    <div class="partner-panel">
+      <div>
+        <h2>Building this with partners</h2>
+        <p>Jade Lockard connected us because of Wearable Tech Ventures' social impact programming. As The Lab takes shape, I'd like to talk about where it could fit.</p>
+      </div>
+      <a class="cta" href="mailto:keyona@rerev.io?subject=The%20Lab%20%2F%20Wearable%20Tech%20Ventures">Talk to Keyona</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap foot-row">
+    <span>ReRev Labs — Keyona Meeks, Founder</span>
+    <a href="mailto:keyona@rerev.io">keyona@rerev.io</a>
+  </div>
+</footer>
+
+</body>
+</html>
