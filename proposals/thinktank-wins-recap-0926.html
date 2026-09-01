@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Think Tank — Wins in Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F0F7F7;
+    --primary: #0D1F2D;
+    --cyan: #1A9E9E;
+    --purple: #7C3AED;
+    --gradient: linear-gradient(90deg, #1A9E9E, #7C3AED);
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --card: #FFFFFF;
+    --muted: #5C7373;
+    --border: #DCEAEA;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--primary);
+    font-family: var(--font-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  header.hero {
+    padding: 80px 24px 56px;
+    text-align: center;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(26,158,158,0.10), transparent 45%),
+      radial-gradient(circle at 85% 10%, rgba(124,58,237,0.10), transparent 45%);
+  }
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    background: rgba(26,158,158,0.09);
+    border: 1px solid rgba(26,158,158,0.25);
+    border-radius: 999px;
+    padding: 6px 16px;
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(34px, 5.5vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    max-width: 700px;
+    margin: 0 auto 18px;
+  }
+  h1 .accent {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .members {
+    margin-top: 34px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  .member-chip {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--primary);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 16px;
+  }
+
+  .stats {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px 8px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .stat .num {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 28px;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .stat .label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  main { padding: 64px 0 20px; }
+
+  .session {
+    position: relative;
+    padding: 0 0 52px 34px;
+    border-left: 2px solid var(--border);
+    margin-left: 6px;
+  }
+  .session:last-child { border-left: 2px solid transparent; padding-bottom: 8px; }
+  .session::before {
+    content: '';
+    position: absolute;
+    left: -7px;
+    top: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gradient);
+    box-shadow: 0 0 0 4px var(--bg);
+  }
+  .session-date {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 6px;
+  }
+  .session-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 18px;
+  }
+  .win-list { display: flex; flex-direction: column; gap: 12px; }
+  .win {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .win .mark {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+  .win .mark svg { width: 12px; height: 12px; }
+  .win-body { font-size: 15px; color: var(--primary); }
+  .win-body strong { font-weight: 700; }
+  .win-credit {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--purple);
+    background: rgba(124,58,237,0.08);
+    border-radius: 999px;
+    padding: 2px 10px;
+  }
+
+  section.stalled {
+    max-width: 860px;
+    margin: 8px auto 0;
+    padding: 32px 24px 64px;
+  }
+  .stalled-card {
+    background: var(--card);
+    border: 1px dashed var(--border);
+    border-radius: 18px;
+    padding: 28px 26px;
+  }
+  .stalled-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+  .stalled-sub {
+    font-size: 13.5px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .stalled-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+    font-size: 14.5px;
+    color: var(--primary);
+  }
+  .stalled-item:first-of-type { border-top: none; padding-top: 0; }
+  .stalled-item .dot {
+    flex: 0 0 auto;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    margin-top: 8px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px 24px 60px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  footer .brand {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  @media (max-width: 640px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    header.hero { padding: 56px 20px 44px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">Think Tank · Mar – Aug 2026</div>
+  <h1>Five sessions. Five people. <span class="accent">Real work moved.</span></h1>
+  <p class="hero-sub">A running scoreboard of what the group actually shipped, closed, and decided — pulled straight from five months of notes.</p>
+  <div class="members">
+    <span class="member-chip">Keyona Meeks</span>
+    <span class="member-chip">Jade Lockard</span>
+    <span class="member-chip">Celeste Shields</span>
+    <span class="member-chip">Constance Thurmond</span>
+    <span class="member-chip">Isioma Orewa</span>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="num">5</div><div class="label">Sessions Held</div></div>
+  <div class="stat"><div class="num">18</div><div class="label">Wins Logged</div></div>
+  <div class="stat"><div class="num">$470K+</div><div class="label">BTC First Close</div></div>
+  <div class="stat"><div class="num">2</div><div class="label">Cohorts Launched</div></div>
+</div>
+
+<main class="wrap">
+
+  <div class="session">
+    <div class="session-date">March 27</div>
+    <div class="session-title">Session 1 — The Group Forms</div>
+    <div class="win-list">
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Five consultants and fund operators — automation, venture, insights, and market-expansion work — put their businesses on the table and agreed to trade institutional knowledge instead of guessing alone.<span class="win-credit">Group</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Turned an SXSW hallway conversation into a live content-partnership discussion with a Superhuman (now Grammarly) decision-maker.<span class="win-credit">Keyona</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Helped Microsoft for Startups recruit founders across Cape Town, Nairobi, Dakar, and Lagos.<span class="win-credit">Isioma</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">"The Art of the AGM" talk for Kaufman Fellows landed hard enough to trigger a wave of inbound DMs.<span class="win-credit">Constance</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Committed to a shared "sellers guide" for client acquisition, and floated the first idea for a Super Connector AI system the group could beta test together.<span class="win-credit">Group</span></div></div>
+    </div>
+  </div>
+
+  <div class="session">
+    <div class="session-date">April 24</div>
+    <div class="session-title">Session 2 — Momentum Builds</div>
+    <div class="win-list">
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Fellowship mentor delivered three solid introductions; landed VB membership on top.<span class="win-credit">Jade</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Fund crossed $470K — just $30K short of minimum viable size — plus a small-business loan secured to fund paid ad placements, and 28 strong applicants for the summer intern program.<span class="win-credit">Keyona</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Group locked a standing monthly speaker series (Wednesdays, 12–1pm) and moved everything into a shared Notion home base.<span class="win-credit">Group</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Built the first version of the post-meeting Claude follow-up automation for the group — the seed of everything running today.<span class="win-credit">Keyona</span></div></div>
+    </div>
+  </div>
+
+  <div class="session">
+    <div class="session-date">May 19</div>
+    <div class="session-title">Session 3 — Systems Take Hold</div>
+    <div class="win-list">
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Relocating to Brooklyn to sit closer to where the client base actually is.<span class="win-credit">Isioma</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">The Claude + Fathom follow-up automation was already saving hours a week, with tone tuning underway.<span class="win-credit">Constance</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Paired up on a joint NAACP Capital proposal, with Jade taking the LP side.<span class="win-credit">Constance &amp; Jade</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Made "just ask the group directly" an explicit, standing practice — not a nice-to-have.<span class="win-credit">Group</span></div></div>
+    </div>
+  </div>
+
+  <div class="session">
+    <div class="session-date">July 24</div>
+    <div class="session-title">Session 4 — Pricing Gets Real</div>
+    <div class="win-list">
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Priced and scoped the mastermind cohort — 6 seats at $1,500 each, launching September through December.<span class="win-credit">Jade</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Started productizing service delivery — mapping full sales and onboarding motions instead of one-off procedures, to make room for a team.<span class="win-credit">Keyona</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Committed to a mobile build of her tool so it can be demoed live on the conference floor.<span class="win-credit">Celeste</span></div></div>
+    </div>
+  </div>
+
+  <div class="session">
+    <div class="session-date">August 28</div>
+    <div class="session-title">Session 5 — The Biggest Month Yet</div>
+    <div class="win-list">
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Black Tech Capital's first close landed August 31 — plus two new contracts, a Canadian accelerator mentorship and a local nonprofit entrepreneurship program.<span class="win-credit">Keyona</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Opened applications for the Cultivate cohort.<span class="win-credit">Jade</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Group-wide commitment: each member refers one founder into Jade's cohort, and the group stops trading expertise for free — cash or equity, every time.<span class="win-credit">Group</span></div></div>
+      <div class="win"><div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="win-body">Shipped the automation running this very page — a zero-cost Google Workspace + Claude system now handling inbox work end to end.<span class="win-credit">Keyona</span></div></div>
+    </div>
+  </div>
+
+</main>
+
+<section class="stalled">
+  <div class="stalled-card">
+    <div class="stalled-title">Threads still warming up</div>
+    <div class="stalled-sub">Not failures — just not there yet. Worth a look next session.</div>
+    <div class="stalled-item"><span class="dot"></span><span>The Google partnership has come up in three separate sessions (March, April, May) — the right internal contact still hasn't surfaced.</span></div>
+    <div class="stalled-item"><span class="dot"></span><span>Constance's shift away from live event execution toward media and podcast is real progress, but the handoff partner for event delivery isn't picked yet.</span></div>
+    <div class="stalled-item"><span class="dot"></span><span>Celeste's termination-agreement dispute is documented and in motion, with the group's support behind her.</span></div>
+    <div class="stalled-item"><span class="dot"></span><span>June was the one gap in five months of otherwise steady meetings.</span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand">Think Tank</div>
+  Compiled from five months of session notes, March – August 2026.
+</footer>
+
+</body>
+</html>
