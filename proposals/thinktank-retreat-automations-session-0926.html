@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Task Agent — Think Tank Retreat</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F0F7F7;
+    --primary: #0D1F2D;
+    --body-text: #3D5166;
+    --cyan: #1A9E9E;
+    --purple: #7C3AED;
+    --gradient: linear-gradient(90deg, #1A9E9E, #7C3AED);
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--primary); overflow-x: hidden; }
+
+  /* SLIDE SYSTEM */
+  .slide { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 80px 10vw; position: relative; border-bottom: 1px solid rgba(13,31,45,0.08); }
+  .slide-number { font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan); margin-bottom: 32px; }
+
+  /* DARK SLIDES (title, demo, ship it) */
+  .slide-dark { background: var(--primary); color: white; }
+  .slide-dark h1, .slide-dark h2 { color: white; }
+  .slide-dark .subtitle, .slide-dark p { color: rgba(255,255,255,0.6); }
+  .gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .title-bg-accent { position: absolute; right: -100px; top: 50%; transform: translateY(-50%); width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(26,158,158,0.15) 0%, transparent 70%); pointer-events: none; }
+
+  /* EYEBROW / LABELS */
+  .eyebrow { font-family: var(--font-heading); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 24px; }
+
+  /* HEADINGS */
+  h1 { font-family: var(--font-heading); font-size: clamp(48px, 7vw, 96px); font-weight: 800; line-height: 1.0; margin-bottom: 32px; letter-spacing: -0.02em; }
+  h2 { font-family: var(--font-heading); font-size: clamp(28px, 3.5vw, 48px); font-weight: 700; margin-bottom: 40px; }
+  h3 { font-family: var(--font-heading); font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+  .subtitle { font-family: var(--font-body); font-size: clamp(16px, 2vw, 20px); font-weight: 300; max-width: 560px; line-height: 1.6; }
+
+  /* PAIN LIST */
+  .pain-list { list-style: none; display: flex; flex-direction: column; gap: 16px; max-width: 600px; }
+  .pain-list li { display: flex; align-items: flex-start; gap: 16px; font-size: 18px; color: var(--body-text); line-height: 1.5; }
+  .pain-list li .icon { width: 28px; height: 28px; border-radius: 50%; background: rgba(124,58,237,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; font-size: 13px; }
+
+  /* BIG STATEMENT + USE CASE TAGS */
+  .big-statement { font-family: var(--font-heading); font-size: clamp(20px, 2.5vw, 32px); font-weight: 600; line-height: 1.4; max-width: 700px; margin-bottom: 48px; color: var(--body-text); }
+  .big-statement strong { color: var(--primary); }
+  .use-case-grid { display: flex; flex-wrap: wrap; gap: 12px; max-width: 640px; }
+  .use-case-tag { font-family: var(--font-heading); font-size: 14px; font-weight: 600; padding: 8px 18px; border-radius: 100px; background: rgba(26,158,158,0.1); color: #0D7E7E; border: 1px solid rgba(26,158,158,0.2); }
+
+  /* HOW IT WORKS STEPS */
+  .steps { display: flex; flex-direction: column; gap: 0; max-width: 680px; position: relative; }
+  .steps::before { content: ''; position: absolute; left: 20px; top: 40px; bottom: 40px; width: 2px; background: linear-gradient(180deg, var(--cyan), var(--purple)); }
+  .step { display: flex; gap: 32px; align-items: flex-start; padding: 20px 0; position: relative; }
+  .step-dot { width: 42px; height: 42px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: white; flex-shrink: 0; position: relative; z-index: 1; }
+  .step-dot.cyan { background: var(--cyan); }
+  .step-dot.purple { background: var(--purple); }
+  .step-content p { font-size: 15px; color: var(--body-text); line-height: 1.5; }
+
+  /* UNDER THE HOOD CARDS */
+  .pieces-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 860px; }
+  .piece-card { background: white; border-radius: 16px; padding: 32px 28px; border: 1px solid rgba(13,31,45,0.08); position: relative; overflow: hidden; }
+  .piece-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .piece-card.accent-cyan::before { background: var(--gradient); }
+  .piece-card.accent-dark::before { background: var(--primary); }
+  .piece-card.accent-purple::before { background: var(--purple); }
+  .piece-label { font-family: var(--font-heading); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
+  .piece-card p { font-size: 14px; color: var(--body-text); line-height: 1.6; }
+
+  /* DEMO BADGE */
+  .demo-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(26,158,158,0.2); border: 1px solid rgba(26,158,158,0.4); border-radius: 100px; padding: 8px 20px; font-family: var(--font-heading); font-size: 13px; font-weight: 600; color: var(--cyan); letter-spacing: 0.05em; margin-bottom: 32px; }
+  .demo-badge::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+
+  /* SETUP INTRO */
+  .setup-intro-sub { font-size: 20px; color: var(--body-text); margin-bottom: 56px; }
+  .setup-overview { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .overview-item { background: white; border-radius: 14px; padding: 24px 28px; border: 1px solid rgba(13,31,45,0.08); min-width: 160px; }
+  .overview-num { font-family: var(--font-heading); font-size: 28px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+  .overview-label { font-family: var(--font-heading); font-size: 14px; font-weight: 600; color: var(--primary); }
+  .overview-arrow { font-size: 24px; color: var(--cyan); font-weight: 300; }
+
+  /* STEP SLIDES */
+  .step-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .instruction-list { display: flex; flex-direction: column; gap: 20px; }
+  .instruction-item { display: flex; gap: 16px; align-items: flex-start; font-size: 15px; color: var(--body-text); line-height: 1.6; }
+  .instruction-item strong { color: var(--primary); }
+  .instruction-num { width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: white; font-family: var(--font-heading); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+
+  /* SCREENSHOT PLACEHOLDER */
+  .screenshot-placeholder { background: white; border-radius: 16px; border: 1px solid rgba(13,31,45,0.1); overflow: hidden; box-shadow: 0 8px 32px rgba(13,31,45,0.08); }
+  .screenshot-label { background: var(--primary); color: rgba(255,255,255,0.6); font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 20px; }
+  .screenshot-fields { padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .mock-field { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--bg); border-radius: 8px; border: 1px solid rgba(13,31,45,0.08); }
+  .mock-label { font-family: var(--font-heading); font-size: 12px; font-weight: 600; color: var(--body-text); }
+  .mock-value { font-family: var(--font-heading); font-size: 13px; font-weight: 600; color: var(--primary); }
+  .mock-btn { background: var(--primary); color: white; font-family: var(--font-heading); font-size: 13px; font-weight: 600; padding: 10px 20px; border-radius: 8px; text-align: center; margin-top: 4px; }
+  .mock-warning { font-size: 12px; color: var(--purple); font-weight: 600; text-align: center; padding: 8px; background: rgba(124,58,237,0.08); border-radius: 8px; }
+  .mock-scope { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--body-text); padding: 10px 14px; background: rgba(26,158,158,0.06); border-radius: 8px; border: 1px solid rgba(26,158,158,0.2); }
+  .mock-badge { font-family: var(--font-heading); font-size: 12px; font-weight: 600; padding: 8px 14px; border-radius: 100px; border: 1px solid; text-align: center; }
+  .mock-code { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--primary); border-radius: 6px; gap: 12px; }
+  .mock-key { font-family: monospace; font-size: 12px; color: var(--cyan); flex-shrink: 0; }
+  .mock-value-code { font-family: monospace; font-size: 12px; color: rgba(255,255,255,0.7); text-align: right; }
+
+  /* TOGGLE BLOCKS */
+  .toggle-block { margin-top: 20px; border-radius: 12px; border: 1px solid rgba(26,158,158,0.25); overflow: hidden; }
+  .toggle-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; background: rgba(26,158,158,0.08); cursor: pointer; user-select: none; gap: 12px; }
+  .toggle-header:hover { background: rgba(26,158,158,0.14); }
+  .toggle-label { font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0D7E7E; display: flex; align-items: center; gap: 8px; }
+  .toggle-label .tag { background: rgba(26,158,158,0.15); border: 1px solid rgba(26,158,158,0.3); border-radius: 4px; padding: 2px 8px; font-size: 10px; }
+  .toggle-arrow { font-size: 12px; color: var(--cyan); transition: transform 0.2s; flex-shrink: 0; }
+  .toggle-block.open .toggle-arrow { transform: rotate(180deg); }
+  .toggle-body { display: none; background: var(--primary); padding: 0; }
+  .toggle-block.open .toggle-body { display: block; }
+  .toggle-copy-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 18px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .toggle-copy-bar span { font-family: var(--font-heading); font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.05em; }
+  .copy-btn { font-family: var(--font-heading); font-size: 11px; font-weight: 600; color: var(--cyan); background: rgba(26,158,158,0.15); border: 1px solid rgba(26,158,158,0.3); border-radius: 6px; padding: 4px 12px; cursor: pointer; letter-spacing: 0.05em; transition: all 0.15s; }
+  .copy-btn:hover { background: rgba(26,158,158,0.25); }
+  .copy-btn.copied { color: #4ade80; border-color: #4ade80; background: rgba(74,222,128,0.1); }
+  .toggle-code { padding: 16px 18px; font-family: monospace; font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.85); white-space: pre-wrap; word-break: break-all; overflow-x: auto; }
+  .toggle-code .placeholder { color: #f59e0b; font-weight: 700; }
+  .toggle-code .comment { color: rgba(255,255,255,0.3); }
+
+  /* PAUSE CALLOUT */
+  .pause-callout { margin-top: 24px; padding: 16px 20px; background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2); border-radius: 12px; display: flex; align-items: flex-start; gap: 12px; }
+  .pause-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .pause-callout p { font-size: 13px; color: var(--body-text); line-height: 1.5; }
+  .pause-callout strong { color: var(--purple); }
+
+  /* SHIP IT */
+  .slide-ship { align-items: center; text-align: center; }
+  .slide-ship h2 { font-family: var(--font-heading); font-size: clamp(56px, 10vw, 128px); font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin-bottom: 24px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .slide-ship p { font-size: 20px; color: rgba(255,255,255,0.5); font-weight: 300; }
+
+  /* NAV DOTS */
+  .nav { position: fixed; right: 32px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 100; }
+  .nav a { width: 8px; height: 8px; border-radius: 50%; background: rgba(13,31,45,0.2); display: block; transition: all 0.2s; }
+  .nav a:hover, .nav a.active { background: var(--cyan); transform: scale(1.4); }
+
+  @media (max-width: 768px) {
+    .slide { padding: 60px 6vw; }
+    .pieces-grid { grid-template-columns: 1fr; }
+    .step-layout { grid-template-columns: 1fr; }
+    .setup-overview { flex-direction: column; }
+    .overview-arrow { transform: rotate(90deg); }
+    .nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#s1"></a>
+  <a href="#s2"></a>
+  <a href="#s3"></a>
+  <a href="#s4"></a>
+  <a href="#s5"></a>
+  <a href="#s6"></a>
+  <a href="#s7"></a>
+  <a href="#s8"></a>
+  <a href="#s9"></a>
+  <a href="#s10"></a>
+  <a href="#s11"></a>
+  <a href="#s12"></a>
+</nav>
+
+<!-- S1: TITLE -->
+<section class="slide slide-dark" id="s1">
+  <div class="title-bg-accent"></div>
+  <div class="eyebrow">Think Tank Retreat · Automations Session</div>
+  <h1>Your Task<br><span class="gradient-text">Agent</span></h1>
+  <p class="subtitle">The zero-cost system that turns your calendar and inbox into tracked jobs — works them while you're in a client meeting, and won't let anything go quiet.</p>
+</section>
+
+<!-- S2: PROBLEM -->
+<section class="slide" id="s2">
+  <div class="slide-number">The Problem</div>
+  <h2>Running solo means nothing chases itself</h2>
+  <ul class="pain-list">
+    <li><span class="icon">📥</span>A client asks something on a call. You mean to follow up. Three days pass.</li>
+    <li><span class="icon">🗓️</span>A calendar block for "work on the proposal" comes and goes untouched.</li>
+    <li><span class="icon">✉️</span>Your inbox is where tasks go to get buried, not tracked.</li>
+    <li><span class="icon">🔁</span>The only follow-up system you have is your own memory — and it's already full.</li>
+  </ul>
+</section>
+
+<!-- S3: WHAT IT IS -->
+<section class="slide" id="s3">
+  <div class="slide-number">What It Is</div>
+  <h2>A worker that never forgets a job</h2>
+  <p class="big-statement">Every commitment — a calendar block, a forwarded email — becomes <strong>a tracked row</strong> that gets worked, followed up on, and closed. You stay the one who decides; the system is the one who remembers.</p>
+  <div class="use-case-grid">
+    <span class="use-case-tag">Client follow-ups</span>
+    <span class="use-case-tag">Proposal drafts</span>
+    <span class="use-case-tag">Meeting action items</span>
+    <span class="use-case-tag">Invoice chasing</span>
+    <span class="use-case-tag">Content calendars</span>
+  </div>
+</section>
+
+<!-- S4: HOW IT WORKS -->
+<section class="slide" id="s4">
+  <div class="slide-number">How It Works</div>
+  <h2>One loop, running in the background</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-dot cyan">1</div>
+      <div class="step-content"><h3>Trigger</h3><p>A calendar event or a forwarded email starts a job.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-dot cyan">2</div>
+      <div class="step-content"><h3>Job Board</h3><p>It lands as a row in a Google Sheet — the one place all state lives.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-dot purple">3</div>
+      <div class="step-content"><h3>Claude works it</h3><p>Reads the brief, does what it can, drafts what needs your voice, flags the real decisions.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-dot purple">4</div>
+      <div class="step-content"><h3>It reaches you</h3><p>One short email — never a digest — with exactly what you need to decide.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-dot">5</div>
+      <div class="step-content"><h3>It won't let go</h3><p>Unanswered jobs get a short nudge every couple of days until you close them.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- S5: UNDER THE HOOD -->
+<section class="slide" id="s5">
+  <div class="slide-number">Under The Hood</div>
+  <h2>Three pieces, zero monthly cost</h2>
+  <div class="pieces-grid">
+    <div class="piece-card accent-cyan">
+      <div class="piece-label">Google Sheet</div>
+      <p>The Job Board. One row per job, one column per fact — status, decisions, what's done. No database, no app to maintain.</p>
+    </div>
+    <div class="piece-card accent-dark">
+      <div class="piece-label">Apps Script</div>
+      <p>Free with Workspace. Watches your calendar and inbox, writes new rows, and is the only thing that ever actually sends an email.</p>
+    </div>
+    <div class="piece-card accent-purple">
+      <div class="piece-label">Claude</div>
+      <p>Reads the brief, does the research, drafts the email — and stops the moment a real decision needs you. Never sends on its own.</p>
+    </div>
+  </div>
+</section>
+
+<!-- S6: LIVE DEMO -->
+<section class="slide slide-dark" id="s6">
+  <div class="demo-badge">Live Now</div>
+  <h2>Watch it work a real job</h2>
+  <p class="subtitle">Keyona pulls up this week's actual Job Board and works a queued row live — the same loop behind every email you're about to build.</p>
+</section>
+
+<!-- S7: SETUP INTRO -->
+<section class="slide" id="s7">
+  <div class="slide-number">Let's Build</div>
+  <h2>Your starter version, in four steps</h2>
+  <p class="setup-intro-sub">Not the whole system — just enough to leave today with something already tracking a real job.</p>
+  <div class="setup-overview">
+    <div class="overview-item"><div class="overview-num">01</div><div class="overview-label">Job Sheet</div></div>
+    <div class="overview-arrow">→</div>
+    <div class="overview-item"><div class="overview-num">02</div><div class="overview-label">Standing Prompt</div></div>
+    <div class="overview-arrow">→</div>
+    <div class="overview-item"><div class="overview-num">03</div><div class="overview-label">A Real Job</div></div>
+    <div class="overview-arrow">→</div>
+    <div class="overview-item"><div class="overview-num">04</div><div class="overview-label">Follow-Up Rule</div></div>
+  </div>
+</section>
+
+<!-- S8: STEP 01 -->
+<section class="slide slide-step" id="s8">
+  <div class="slide-number">Step 01 — Create Your Job Sheet</div>
+  <h2>Give your jobs one home</h2>
+  <div class="step-layout">
+    <div class="step-instructions">
+      <div class="instruction-list">
+        <div class="instruction-item"><div class="instruction-num">1</div><div>Open Google Sheets, start a blank sheet, and name it <strong>"[Your Name] — Job Board."</strong></div></div>
+        <div class="instruction-item"><div class="instruction-num">2</div><div>Add one header row with five columns: <strong>job, status, next_action, due, notes.</strong></div></div>
+        <div class="instruction-item"><div class="instruction-num">3</div><div>Decide the three status values you'll use — <strong>queued, in progress, done</strong> — and stick to them.</div></div>
+      </div>
+      <div class="toggle-block" id="toggle-headers">
+        <div class="toggle-header" onclick="toggleBlock('toggle-headers')">
+          <div class="toggle-label"><span>Header Row</span><span class="tag">for reference</span></div>
+          <span class="toggle-arrow">▼</span>
+        </div>
+        <div class="toggle-body">
+          <div class="toggle-copy-bar"><span>Paste into row 1 of your sheet</span><button class="copy-btn" onclick="copyToggle('toggle-headers', this)">Copy</button></div>
+          <div class="toggle-code" id="toggle-headers-code">job	status	next_action	due	notes</div>
+        </div>
+      </div>
+    </div>
+    <div class="step-screenshot">
+      <div class="screenshot-placeholder">
+        <div class="screenshot-label">Google Sheets → New Sheet</div>
+        <div class="screenshot-fields">
+          <div class="mock-field"><span class="mock-label">Sheet name</span><span class="mock-value">Keyona — Job Board</span></div>
+          <div class="mock-field"><span class="mock-label">Row 1, col A</span><span class="mock-value">job</span></div>
+          <div class="mock-field"><span class="mock-label">Row 1, col B</span><span class="mock-value">status</span></div>
+          <div class="mock-field"><span class="mock-label">Row 1, col C</span><span class="mock-value">next_action</span></div>
+          <div class="mock-field"><span class="mock-label">Row 1, col D</span><span class="mock-value">due</span></div>
+          <div class="mock-field"><span class="mock-label">Row 1, col E</span><span class="mock-value">notes</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S9: STEP 02 -->
+<section class="slide slide-step" id="s9">
+  <div class="slide-number">Step 02 — Write A Standing Prompt</div>
+  <h2>Teach Claude your sheet, once</h2>
+  <div class="step-layout">
+    <div class="step-instructions">
+      <div class="instruction-list">
+        <div class="instruction-item"><div class="instruction-num">1</div><div>Open a Claude conversation dedicated to this sheet — a Project if you have one, a saved chat if not.</div></div>
+        <div class="instruction-item"><div class="instruction-num">2</div><div>Paste the standing prompt below <strong>once.</strong> It tells Claude how to read and update your sheet every time you come back.</div></div>
+        <div class="instruction-item"><div class="instruction-num">3</div><div>Keep returning to that same thread — it's what makes the second visit faster than the first.</div></div>
+      </div>
+      <div class="pause-callout">
+        <div class="pause-icon">⏸</div>
+        <p><strong>Pause here.</strong> Swap in your sheet's actual name before you paste — Claude needs the exact title to find it.</p>
+      </div>
+      <div class="toggle-block" id="toggle-standing-prompt">
+        <div class="toggle-header" onclick="toggleBlock('toggle-standing-prompt')">
+          <div class="toggle-label"><span>Standing Prompt</span><span class="tag">paste into Claude</span></div>
+          <span class="toggle-arrow">▼</span>
+        </div>
+        <div class="toggle-body">
+          <div class="toggle-copy-bar"><span>1 value to swap</span><button class="copy-btn" onclick="copyToggle('toggle-standing-prompt', this)">Copy</button></div>
+          <div class="toggle-code" id="toggle-standing-prompt-code">You're my job tracker. My Google Sheet is called <span class="placeholder">"[Your Name] — Job Board"</span>. Every time I paste a task, add a row with status "queued." When I ask what's outstanding, read the sheet and tell me what's queued or in progress, oldest first. When I tell you something is done, update that row's status to "done" and don't ask me about it again.</div>
+        </div>
+      </div>
+    </div>
+    <div class="step-screenshot">
+      <div class="screenshot-placeholder">
+        <div class="screenshot-label">Claude → New Project</div>
+        <div class="screenshot-fields">
+          <div class="mock-scope">💬 Standing prompt saved to project instructions — Claude reads it before every reply in this thread.</div>
+          <div class="mock-btn">Save Project</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S10: STEP 03 -->
+<section class="slide slide-step" id="s10">
+  <div class="slide-number">Step 03 — Give Claude A Real Job</div>
+  <h2>Feed it something you're actually behind on</h2>
+  <div class="step-layout">
+    <div class="step-instructions">
+      <div class="instruction-list">
+        <div class="instruction-item"><div class="instruction-num">1</div><div>Think of one thing you're genuinely behind on right now — a follow-up email, a draft, a call recap.</div></div>
+        <div class="instruction-item"><div class="instruction-num">2</div><div>Paste it into the same Claude thread exactly as you'd tell a person.</div></div>
+        <div class="instruction-item"><div class="instruction-num">3</div><div>Let Claude add the row and draft what it can — a first pass for you to edit, not a final send.</div></div>
+      </div>
+      <div class="pause-callout">
+        <div class="pause-icon">⏸</div>
+        <p><strong>Pause here.</strong> Use a real task, not a test one — a made-up example won't tell you whether you'll actually use this.</p>
+      </div>
+      <div class="toggle-block" id="toggle-real-job">
+        <div class="toggle-header" onclick="toggleBlock('toggle-real-job')">
+          <div class="toggle-label"><span>Example Prompt</span><span class="tag">for reference</span></div>
+          <span class="toggle-arrow">▼</span>
+        </div>
+        <div class="toggle-body">
+          <div class="toggle-copy-bar"><span>Adapt this to your own task</span><button class="copy-btn" onclick="copyToggle('toggle-real-job', this)">Copy</button></div>
+          <div class="toggle-code" id="toggle-real-job-code">Follow up with <span class="placeholder">[client name]</span> about the proposal I sent last Tuesday — they haven't replied. Draft something short.</div>
+        </div>
+      </div>
+    </div>
+    <div class="step-screenshot">
+      <div class="screenshot-placeholder">
+        <div class="screenshot-label">Google Sheets → Job Board</div>
+        <div class="screenshot-fields">
+          <div class="mock-field"><span class="mock-label">job</span><span class="mock-value">Follow up — proposal</span></div>
+          <div class="mock-field"><span class="mock-label">status</span><span class="mock-value">queued</span></div>
+          <div class="mock-field"><span class="mock-label">next_action</span><span class="mock-value">Draft written, awaiting your edit</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S11: STEP 04 -->
+<section class="slide slide-step" id="s11">
+  <div class="slide-number">Step 04 — Set Your Follow-Up Rule</div>
+  <h2>The one rule that makes it a system</h2>
+  <div class="step-layout">
+    <div class="step-instructions">
+      <div class="instruction-list">
+        <div class="instruction-item"><div class="instruction-num">1</div><div>Decide one number: how many days before an unanswered job gets raised again. Two is a reasonable default.</div></div>
+        <div class="instruction-item"><div class="instruction-num">2</div><div>Add it to the standing prompt from Step 02, right below what's already there.</div></div>
+        <div class="instruction-item"><div class="instruction-num">3</div><div>Now, whenever you open the thread and ask what's outstanding, nothing old gets to hide at the bottom of the list.</div></div>
+      </div>
+      <div class="toggle-block" id="toggle-followup-rule">
+        <div class="toggle-header" onclick="toggleBlock('toggle-followup-rule')">
+          <div class="toggle-label"><span>Add-On Line</span><span class="tag">1 value to swap</span></div>
+          <span class="toggle-arrow">▼</span>
+        </div>
+        <div class="toggle-body">
+          <div class="toggle-copy-bar"><span>Append to your Step 02 prompt</span><button class="copy-btn" onclick="copyToggle('toggle-followup-rule', this)">Copy</button></div>
+          <div class="toggle-code" id="toggle-followup-rule-code">If a row has been "queued" or "in progress" for more than <span class="placeholder">[2]</span> days, mention it first the next time I ask what's outstanding.</div>
+        </div>
+      </div>
+    </div>
+    <div class="step-screenshot">
+      <div class="screenshot-placeholder">
+        <div class="screenshot-label">Google Sheets → Job Board</div>
+        <div class="screenshot-fields">
+          <div class="mock-field"><span class="mock-label">job</span><span class="mock-value">Follow up — proposal</span></div>
+          <div class="mock-field"><span class="mock-label">status</span><span class="mock-value">queued (3 days)</span></div>
+          <div class="mock-warning">⚠ Raised first — open longer than your rule allows</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S12: SHIP IT -->
+<section class="slide slide-dark slide-ship" id="s12">
+  <h2>Shipped</h2>
+  <p>You're leaving with a live job sheet and one real task already being tracked. It gets more useful every time you use it.</p>
+</section>
+
+<script>
+  function toggleBlock(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  function copyToggle(id, btn) {
+    const text = document.getElementById(id + '-code').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.nav a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const index = Array.from(slides).findIndex(s => s.id === entry.target.id);
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+      }
+    });
+  }, { threshold: 0.5 });
+  slides.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
