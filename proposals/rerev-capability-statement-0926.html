@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReRev LLC — Capability Statement</title>
+<meta name="description" content="ReRev LLC capability statement. Strategic startup and SMB advisory, entrepreneur program design, and innovation ecosystem development. CAGE Code 9YA37.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F0F7F7;
+    --paper:#FFFFFF;
+    --primary:#0D1F2D;
+    --body:#3D5166;
+    --cyan:#1A9E9E;
+    --cyan-deep:#0D7E7E;
+    --purple:#7C3AED;
+    --purple-deep:#5B21B6;
+    --rule:#DCE9E9;
+    --gradient:linear-gradient(90deg,#1A9E9E,#7C3AED);
+    --font-heading:'Outfit',system-ui,sans-serif;
+    --font-body:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--body);
+    font-family:var(--font-body);
+    font-size:15px;
+    line-height:1.55;
+    padding:36px 20px 56px;
+  }
+  .sheet{
+    max-width:900px;
+    margin:0 auto;
+    background:var(--paper);
+    border:1px solid var(--rule);
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow:0 18px 40px rgba(13,31,45,.08);
+  }
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:28px;
+    align-items:center;
+    padding:34px 44px 30px;
+    border-bottom:1px solid var(--rule);
+  }
+  .wordmark{
+    font-family:var(--font-heading);
+    font-weight:700;
+    font-size:44px;
+    line-height:1;
+    letter-spacing:-.02em;
+    color:var(--primary);
+    margin:0 0 12px;
+  }
+  .tagline{
+    font-family:var(--font-heading);
+    font-weight:500;
+    font-size:16px;
+    line-height:1.35;
+    color:var(--cyan-deep);
+    margin:0 0 16px;
+    max-width:30ch;
+  }
+  .cage{
+    display:inline-flex;
+    align-items:baseline;
+    gap:8px;
+    font-family:var(--font-heading);
+    font-weight:600;
+    font-size:14px;
+    color:var(--purple-deep);
+    background:rgba(124,58,237,.08);
+    border-radius:4px;
+    padding:6px 12px;
+  }
+  .cage span{
+    font-weight:500;
+    color:var(--body);
+    letter-spacing:.04em;
+  }
+  .portrait{text-align:center;}
+  .portrait img{
+    width:150px;
+    height:150px;
+    object-fit:cover;
+    border-radius:50%;
+    border:3px solid var(--cyan);
+    display:block;
+  }
+  .portrait figcaption{
+    margin-top:10px;
+    font-family:var(--font-heading);
+    font-weight:600;
+    font-size:13px;
+    color:var(--primary);
+  }
+  .portrait figcaption em{
+    display:block;
+    font-style:normal;
+    font-weight:400;
+    color:var(--body);
+  }
+
+  /* ---------- about ---------- */
+  .about{
+    padding:30px 44px;
+    border-bottom:1px solid var(--rule);
+  }
+  h2{
+    font-family:var(--font-heading);
+    font-weight:600;
+    font-size:22px;
+    line-height:1.2;
+    color:var(--primary);
+    margin:0 0 14px;
+  }
+  h2::after{
+    content:"";
+    display:block;
+    width:52px;
+    height:3px;
+    margin-top:8px;
+    border-radius:2px;
+    background:var(--gradient);
+  }
+  .about p{
+    margin:0;
+    max-width:72ch;
+  }
+
+  /* ---------- two-column body ---------- */
+  .cols{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+  .col{padding:30px 44px 34px;}
+  .col + .col{border-left:1px solid var(--rule);}
+  .block + .block{margin-top:34px;}
+
+  /* competencies */
+  .comp{list-style:none;margin:0;padding:0;}
+  .comp > li{
+    font-family:var(--font-heading);
+    font-weight:600;
+    font-size:15px;
+    color:var(--primary);
+    padding-left:18px;
+    position:relative;
+  }
+  .comp > li + li{margin-top:14px;}
+  .comp > li::before{
+    content:"";
+    position:absolute;
+    left:0;top:9px;
+    width:7px;height:7px;
+    border-radius:2px;
+    background:var(--cyan);
+  }
+  .comp ul{
+    list-style:none;
+    margin:8px 0 0;
+    padding:0 0 0 2px;
+    border-left:2px solid var(--rule);
+  }
+  .comp ul li{
+    font-family:var(--font-body);
+    font-weight:400;
+    font-size:14px;
+    color:var(--body);
+    padding:2px 0 2px 14px;
+  }
+
+  /* NAICS */
+  .naics{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+  }
+  .naics th{
+    text-align:left;
+    font-family:var(--font-heading);
+    font-weight:600;
+    font-size:12px;
+    color:var(--body);
+    letter-spacing:.06em;
+    padding:0 0 8px;
+    border-bottom:1px solid var(--rule);
+  }
+  .naics th:last-child{text-align:right;}
+  .naics td{
+    padding:11px 0;
+    border-bottom:1px solid var(--rule);
+    vertical-align:middle;
+  }
+  .naics td:last-child{
+    text-align:right;
+    font-family:var(--font-heading);
+    font-weight:700;
+    font-size:17px;
+    color:var(--purple-deep);
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+    padding-left:14px;
+  }
+  .naics tr:last-child td{border-bottom:none;}
+
+  /* clients */
+  .client + .client{margin-top:22px;}
+  .client h3{
+    font-family:var(--font-heading);
+    font-weight:600;
+    font-size:19px;
+    color:var(--cyan-deep);
+    margin:0 0 2px;
+  }
+  .client .where{
+    font-family:var(--font-heading);
+    font-weight:600;
+    font-size:13px;
+    color:var(--primary);
+    margin:0 0 6px;
+  }
+  .client p{margin:0;font-size:14px;}
+
+  /* venn */
+  .venn{margin-top:8px;}
+  .venn svg{width:100%;height:auto;display:block;}
+  .venn p{
+    margin:6px 0 0;
+    font-family:var(--font-heading);
+    font-weight:500;
+    font-size:14px;
+    color:var(--primary);
+    text-align:center;
+  }
+
+  /* ---------- footer ---------- */
+  .contact{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    gap:14px 30px;
+    padding:20px 44px;
+    background:var(--primary);
+  }
+  .contact a,.contact span{
+    font-family:var(--font-heading);
+    font-weight:500;
+    font-size:16px;
+    color:#FFFFFF;
+    text-decoration:none;
+  }
+  .contact a:hover{text-decoration:underline;}
+  .contact a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:3px;}
+  .rule-top{height:5px;background:var(--gradient);}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:760px){
+    body{padding:20px 12px 36px;}
+    .masthead{grid-template-columns:1fr;padding:26px 24px;}
+    .portrait{justify-self:start;}
+    .about{padding:24px;}
+    .cols{grid-template-columns:1fr;}
+    .col{padding:24px;}
+    .col + .col{border-left:none;border-top:1px solid var(--rule);}
+    .wordmark{font-size:34px;}
+    .contact{padding:18px 24px;gap:10px;}
+    .contact a,.contact span{font-size:15px;}
+  }
+
+  /* ---------- print ---------- */
+  @media print{
+    @page{size:letter;margin:12mm;}
+    body{background:#FFFFFF;padding:0;font-size:11.5px;}
+    .sheet{box-shadow:none;border:none;max-width:none;}
+    .masthead,.about,.col{padding:14px 0;}
+    .col{padding-left:0;padding-right:18px;}
+    .col + .col{padding-left:18px;padding-right:0;}
+    .contact{padding:12px 0;}
+    .wordmark{font-size:32px;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+<article class="sheet">
+  <div class="rule-top"></div>
+
+  <header class="masthead">
+    <div>
+      <h1 class="wordmark">ReRev LLC</h1>
+      <p class="tagline">Strategic startup and SMB advisory, and innovation ecosystem development</p>
+      <p class="cage"><span>CAGE Code</span> 9YA37</p>
+    </div>
+    <figure class="portrait">
+      <img src="https://res.cloudinary.com/dialhpycd/image/upload/v1767978686/Keyona_Meeks_oowrn6.jpg" alt="Keyona Meeks, Chief Executive Officer of ReRev LLC">
+      <figcaption>Keyona Meeks<em>Chief Executive Officer</em></figcaption>
+    </figure>
+  </header>
+
+  <section class="about">
+    <h2>About us</h2>
+    <p>ReRev was founded to fill the gap in entrepreneurship education. We help startups and small-to-medium-sized businesses avoid common pitfalls and make smarter decisions. Our mission is to empower founders with a problem-first, tool-later approach. We guide companies to focus their resources on revenue-generating activities and achieve sustainable growth.</p>
+  </section>
+
+  <div class="cols">
+    <section class="col">
+      <div class="block">
+        <h2>Core competencies</h2>
+        <ul class="comp">
+          <li>Strategic advisory for startups and SMBs</li>
+          <li>Entrepreneur program design and implementation
+            <ul>
+              <li>Custom curriculum development</li>
+              <li>Entrepreneurship training</li>
+              <li>Mentorship programs</li>
+              <li>Program management</li>
+              <li>AI, tech, and automation education</li>
+            </ul>
+          </li>
+          <li>Innovation ecosystem development
+            <ul>
+              <li>Stakeholder engagement</li>
+              <li>Ecosystem mapping</li>
+              <li>Business community event facilitation</li>
+            </ul>
+          </li>
+          <li>Innovation strategy consulting for corporations and non-profits</li>
+          <li>Full-integrated marketing services</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <h2>NAICS codes</h2>
+        <table class="naics">
+          <thead>
+            <tr><th scope="col">Service</th><th scope="col">Code</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Administrative Management and General Management Consulting Services</td><td>541611</td></tr>
+            <tr><td>Marketing Consulting Services</td><td>541613</td></tr>
+            <tr><td>Educational Support Services</td><td>611710</td></tr>
+            <tr><td>Other Management Consulting Services</td><td>541618</td></tr>
+            <tr><td>Professional and Management Development Training</td><td>611430</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="col">
+      <div class="block">
+        <h2>Featured clients</h2>
+
+        <div class="client">
+          <h3>Barka Impact</h3>
+          <p class="where">New York, NY and Abidjan, C&ocirc;te d&rsquo;Ivoire</p>
+          <p>Created and delivered 10 weeks of entrepreneurship programming for two cohorts of African climate entrepreneurs.</p>
+        </div>
+
+        <div class="client">
+          <h3>Pruuvn</h3>
+          <p class="where">Atlanta, GA</p>
+          <p>Provided business development and marketing services for this compliance SaaS solution.</p>
+        </div>
+
+        <div class="client">
+          <h3>HBCU CARES</h3>
+          <p class="where">Alabama</p>
+          <p>Created and delivered programming for HBCU students to learn the fundamentals of AI and how to succeed in the tech field.</p>
+        </div>
+      </div>
+
+      <div class="block venn">
+        <svg viewBox="0 0 420 330" role="img" aria-label="Three nested circles. The largest circle is the problem. Inside it is strategy. Inside that is safe AI, automation, and technology.">
+          <circle cx="185" cy="175" r="140" fill="#7C3AED" opacity="0.13"></circle>
+          <circle cx="150" cy="200" r="100" fill="#1A9E9E" opacity="0.20"></circle>
+          <circle cx="120" cy="220" r="64" fill="#0D1F2D"></circle>
+
+          <text x="120" y="212" text-anchor="middle" fill="#FFFFFF" font-family="Outfit, sans-serif" font-size="15" font-weight="600">Safe AI,</text>
+          <text x="120" y="230" text-anchor="middle" fill="#FFFFFF" font-family="Outfit, sans-serif" font-size="15" font-weight="600">automation,</text>
+          <text x="120" y="248" text-anchor="middle" fill="#FFFFFF" font-family="Outfit, sans-serif" font-size="15" font-weight="600">tech</text>
+
+          <rect x="286" y="40" width="112" height="36" rx="18" fill="#7C3AED"></rect>
+          <text x="342" y="64" text-anchor="middle" fill="#FFFFFF" font-family="Outfit, sans-serif" font-size="17" font-weight="600">Problem</text>
+
+          <rect x="242" y="122" width="112" height="36" rx="18" fill="#0D7E7E"></rect>
+          <text x="298" y="146" text-anchor="middle" fill="#FFFFFF" font-family="Outfit, sans-serif" font-size="17" font-weight="600">Strategy</text>
+        </svg>
+        <p>Problem first. Strategy second. Tools last.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer class="contact">
+    <a href="tel:+12253121615">+1 225-312-1615</a>
+    <a href="https://rerev.io">rerev.io</a>
+    <a href="mailto:keyona@rerev.io">keyona@rerev.io</a>
+  </footer>
+</article>
+</body>
+</html>
