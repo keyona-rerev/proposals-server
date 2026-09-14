@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sabrina — Chief of Staff Agent: Install &amp; Test Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F0F7F7;
+    --primary: #0D1F2D;
+    --cyan: #1A9E9E;
+    --purple: #7C3AED;
+    --gradient: linear-gradient(90deg, #1A9E9E, #7C3AED);
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --card-bg: #FFFFFF;
+    --border: #DCE7E7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    font-family: var(--font-body);
+    color: var(--primary);
+    line-height: 1.55;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  .eyebrow {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin: 0 0 8px;
+  }
+  h1 {
+    font-family: var(--font-heading);
+    font-size: 34px;
+    font-weight: 700;
+    margin: 0 0 6px;
+  }
+  .subtitle {
+    font-size: 15px;
+    color: #4B5F63;
+    margin: 0 0 36px;
+  }
+  .section-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 30px;
+    margin-bottom: 28px;
+  }
+  .section-label {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    background: var(--gradient);
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  ol {
+    padding-left: 22px;
+    margin: 0;
+  }
+  ol > li {
+    margin-bottom: 14px;
+    font-size: 15px;
+  }
+  ol > li:last-child { margin-bottom: 0; }
+  ol.nested {
+    margin-top: 8px;
+    margin-bottom: 0;
+    padding-left: 20px;
+    list-style-type: disc;
+  }
+  ol.nested > li {
+    margin-bottom: 6px;
+    font-size: 14.5px;
+    list-style-type: none;
+    position: relative;
+  }
+  ol.nested > li::before {
+    content: "–";
+    position: absolute;
+    left: -16px;
+    color: var(--cyan);
+  }
+  code {
+    background: #EAF2F2;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 13.5px;
+    color: var(--purple);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .footer-note {
+    font-size: 13px;
+    color: #6B7C7F;
+    text-align: center;
+    margin-top: 12px;
+  }
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Chief of Staff Agent</p>
+  <h1>Sabrina — Install &amp; Test Guide</h1>
+  <p class="subtitle">Cowork + Apps Script + Google Workspace. Use this for every new install.</p>
+
+  <div class="section-card">
+    <span class="section-label">Installation</span>
+    <ol>
+      <li>Create the send-as alias (<code>agent@domain.com</code>) on the Google account. Confirm it in Gmail → Settings → Accounts → Send mail as.</li>
+      <li>Copy the Job Board Sheet template. Rename it for the new install.</li>
+      <li>Copy the Apps Script project template into the account.</li>
+      <li>Create Gmail labels: the <code>Agent</code> trigger label, plus one label per lane/client, matching the dossier tab names.</li>
+      <li>Authorize the Apps Script project with the Google account (OAuth).</li>
+      <li>In the copied script, set the identifiers for this install: the new Job Board Sheet ID, the Task Calendar ID, and the agent alias.</li>
+      <li>Add every sending address that should be able to start a job to the allowlist.</li>
+      <li>For any inbox that will not get its own Apps Script project, add a Gmail filter on that account (To: agent's address → apply label <code>Agent</code>).</li>
+      <li>Copy the Cowork runtime skill template. Update the identifiers (Sheet ID, Calendar ID) for this install.</li>
+      <li>Upload the skill as a zip via Settings → Customize → Skills.</li>
+      <li>Create the Cowork scheduled task. Set it Active, hourly cadence, pointed at the skill.</li>
+    </ol>
+  </div>
+
+  <div class="section-card">
+    <span class="section-label">Testing</span>
+    <ol>
+      <li>Run <code>selfTest</code> in Apps Script. Confirm it sends a real email from the agent alias.</li>
+      <li>Run a Cowork smoke test. Confirm all four: read a sheet cell, write a sheet cell, read the dossier doc by ID, state one fact only account memory would know.</li>
+      <li>Create one real <code>[Agent]</code> calendar event. Confirm the watcher writes a <code>queued</code> row.</li>
+      <li>Confirm Cowork claims and works the row on its next scheduled run.</li>
+      <li>Confirm Apps Script delivers the resulting email from the agent alias.</li>
+      <li>Test the inbound path on the agent alias separately from send-as. Confirm the alias can receive mail, not just send it.</li>
+    </ol>
+  </div>
+
+  <p class="footer-note">Sabrina — Chief of Staff Agent · Installation &amp; Test Reference</p>
+</div>
+</body>
+</html>
