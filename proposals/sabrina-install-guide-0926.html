@@ -49,14 +49,52 @@
   .subtitle {
     font-size: 15px;
     color: #4B5F63;
-    margin: 0 0 36px;
+    margin: 0 0 28px;
   }
+
+  /* Tab nav */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 28px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .tab-btn {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--primary);
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 10px 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+  }
+  .tab-btn:hover { border-color: var(--cyan); }
+  .tab-btn.active {
+    background: var(--gradient);
+    color: #FFFFFF;
+    border-color: transparent;
+  }
+  .tab-num {
+    display: inline-block;
+    margin-right: 6px;
+    opacity: 0.7;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
   .section-card {
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 28px 30px;
-    margin-bottom: 28px;
+    margin-bottom: 22px;
   }
   .section-label {
     display: inline-block;
@@ -71,86 +109,302 @@
     border-radius: 999px;
     margin-bottom: 16px;
   }
-  ol {
-    padding-left: 22px;
-    margin: 0;
+  h2.card-title {
+    font-family: var(--font-heading);
+    font-size: 19px;
+    margin: 0 0 14px;
   }
-  ol > li {
-    margin-bottom: 14px;
-    font-size: 15px;
-  }
+  p { margin: 0 0 12px; font-size: 15px; }
+  p:last-child { margin-bottom: 0; }
+
+  ol { padding-left: 22px; margin: 0; }
+  ol > li { margin-bottom: 14px; font-size: 15px; }
   ol > li:last-child { margin-bottom: 0; }
-  ol.nested {
-    margin-top: 8px;
-    margin-bottom: 0;
-    padding-left: 20px;
-    list-style-type: disc;
-  }
-  ol.nested > li {
-    margin-bottom: 6px;
-    font-size: 14.5px;
-    list-style-type: none;
-    position: relative;
-  }
-  ol.nested > li::before {
-    content: "–";
-    position: absolute;
-    left: -16px;
-    color: var(--cyan);
-  }
+  ol.nested { margin-top: 8px; padding-left: 20px; }
+
+  ul.plain { padding-left: 20px; margin: 0; }
+  ul.plain > li { margin-bottom: 10px; font-size: 15px; }
+  ul.plain > li:last-child { margin-bottom: 0; }
+
   code {
-    background: #EAF2F2;
+    background: #EEF6F6;
+    border: 1px solid var(--border);
     border-radius: 4px;
     padding: 1px 6px;
-    font-size: 13.5px;
-    color: var(--purple);
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  }
-  .footer-note {
     font-size: 13px;
-    color: #6B7C7F;
-    text-align: center;
-    margin-top: 12px;
   }
-  strong { font-weight: 600; }
+
+  .stack-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .stack-table th, .stack-table td {
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .stack-table th {
+    font-family: var(--font-heading);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--cyan);
+  }
+  .stack-table tr:last-child td { border-bottom: none; }
+
+  .why-box {
+    background: #F5F0FF;
+    border: 1px solid #E1D3FA;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-top: 16px;
+    font-size: 14px;
+  }
+  .why-box strong { color: var(--purple); }
+
+  /* Screenshot placeholder */
+  .shot {
+    border: 1px dashed #8FB6B6;
+    border-radius: 10px;
+    background: #F7FBFB;
+    padding: 12px 14px;
+    margin: 10px 0 0;
+    font-size: 13px;
+    color: #3A5B5F;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .shot .cam { font-size: 15px; line-height: 1; }
+  .shot b { color: var(--primary); }
+
+  /* Editorial note */
+  .note {
+    background: #FFF7E6;
+    border: 1px solid #F0DBA0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #6B5200;
+    margin-top: 10px;
+  }
+
+  /* Checklist (Run the Test page) */
+  .checklist { list-style: none; padding: 0; margin: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li.done span.label { text-decoration: line-through; color: #7C8B8D; }
+  .box {
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--cyan);
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #FFFFFF;
+    background: transparent;
+  }
+  .checklist li.done .box { background: var(--gradient); border-color: transparent; }
+  .progress-bar {
+    height: 8px;
+    border-radius: 999px;
+    background: var(--border);
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--gradient);
+    transition: width 0.2s ease;
+  }
+  .progress-label {
+    font-size: 13px;
+    color: #4B5F63;
+    margin-bottom: 8px;
+  }
+
+  footer {
+    text-align: center;
+    font-size: 12px;
+    color: #7C8B8D;
+    margin-top: 32px;
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
   <p class="eyebrow">Chief of Staff Agent</p>
   <h1>Sabrina — Install &amp; Test Guide</h1>
-  <p class="subtitle">Cowork + Apps Script + Google Workspace. Use this for every new install.</p>
+  <p class="subtitle">Cowork + Apps Script + Google Workspace. Use this for every new install. Gmail-based accounts only.</p>
 
-  <div class="section-card">
-    <span class="section-label">Installation</span>
-    <ol>
-      <li>Create the send-as alias (<code>agent@domain.com</code>) on the Google account. Confirm it in Gmail → Settings → Accounts → Send mail as.</li>
-      <li>Copy the Job Board Sheet template. Rename it for the new install.</li>
-      <li>Copy the Apps Script project template into the account.</li>
-      <li>Create Gmail labels: the <code>Agent</code> trigger label, plus one label per lane/client.</li>
-      <li>Authorize the Apps Script project with the Google account (OAuth).</li>
-      <li>In the copied script, set the identifiers for this install: the new Job Board Sheet ID, the Task Calendar ID, and the agent alias.</li>
-      <li>Add every sending address that should be able to start a job to the allowlist.</li>
-      <li>For any inbox that will not get its own Apps Script project, add a Gmail filter on that account (To: agent's address → apply label <code>Agent</code>).</li>
-      <li>Copy the Cowork runtime skill template. Update the identifiers (Sheet ID, Calendar ID) for this install.</li>
-      <li>Upload the skill as a zip via Settings → Customize → Skills.</li>
-      <li>Create the Cowork scheduled task. Set it Active, hourly cadence, pointed at the skill.</li>
-    </ol>
+  <div class="tabs">
+    <button class="tab-btn active" data-page="overview"><span class="tab-num">1</span>Overview</button>
+    <button class="tab-btn" data-page="stack"><span class="tab-num">2</span>Stack &amp; Order</button>
+    <button class="tab-btn" data-page="install"><span class="tab-num">3</span>Install</button>
+    <button class="tab-btn" data-page="test"><span class="tab-num">4</span>Run the Test</button>
   </div>
 
-  <div class="section-card">
-    <span class="section-label">Testing</span>
-    <ol>
-      <li>Run <code>selfTest</code> in Apps Script. Confirm it sends a real email from the agent alias.</li>
-      <li>Run a Cowork smoke test. Confirm all three: read a sheet cell, write a sheet cell, state one fact only account memory would know.</li>
-      <li>Create one real <code>[Agent]</code> calendar event. Confirm the watcher writes a <code>queued</code> row.</li>
-      <li>Confirm Cowork claims and works the row on its next scheduled run.</li>
-      <li>Confirm Apps Script delivers the resulting email from the agent alias.</li>
-      <li>Test the inbound path on the agent alias separately from send-as. Confirm the alias can receive mail, not just send it.</li>
-    </ol>
-  </div>
+  <!-- PAGE 1: OVERVIEW -->
+  <section class="page active" id="page-overview">
+    <div class="section-card">
+      <span class="section-label">Overview</span>
+      <h2 class="card-title">What Sabrina Does</h2>
+      <p>Sabrina is a chief-of-staff agent. She watches for work you assign her, does the part of it she can do on her own, and comes back to you only for the part that needs a human decision.</p>
+      <p>In practice, she does this:</p>
+      <ul class="plain">
+        <li><strong>Takes work in through your calendar, your inbox, or a direct email.</strong> Put an event on your Task Calendar, label an email, or email her alias — any of the three starts a job.</li>
+        <li><strong>Does the doable part first.</strong> She drafts the email, pulls the context, or works the task before asking you anything.</li>
+        <li><strong>Emails you only the open decisions.</strong> One short email per job. No digests, no long reports.</li>
+        <li><strong>Takes your reply like she's a colleague.</strong> Reply in plain language and she picks the job back up from there.</li>
+        <li><strong>Follows up until the job is actually done.</strong> She checks back every day or two on anything still open, and she verifies completion herself — she does not take her own word for it.</li>
+        <li><strong>Reads meeting transcripts for your action items.</strong> She pulls out only the next steps that belong to you and works those the same way.</li>
+      </ul>
+      <div class="why-box">
+        <strong>What this page is not:</strong> a list of function names from the code. That's intentional — the rest of this guide covers what's actually being installed and how. This page is only "what does it do for the person using it."
+      </div>
+    </div>
+  </section>
 
-  <p class="footer-note">Sabrina — Chief of Staff Agent · Installation &amp; Test Reference</p>
+  <!-- PAGE 2: STACK & ORDER -->
+  <section class="page" id="page-stack">
+    <div class="section-card">
+      <span class="section-label">Stack &amp; Order</span>
+      <h2 class="card-title">The Stack</h2>
+      <table class="stack-table">
+        <tr><th>Piece</th><th>Job it does</th></tr>
+        <tr><td>Job Board (Google Sheet)</td><td>The only memory the system has. Every job, its status, and its history live here as rows.</td></tr>
+        <tr><td>Google Apps Script</td><td>Watches the calendar and Gmail, writes new job rows, and sends every outgoing email from the agent's own address.</td></tr>
+        <tr><td>Gmail</td><td>Both the trigger surface (labels, direct email) and the reply surface. The account must be a Gmail/Google Workspace account — not Microsoft 365.</td></tr>
+        <tr><td>Google Calendar</td><td>A dedicated Task Calendar, separate from the real-events calendar, is the third trigger surface.</td></tr>
+        <tr><td>Cowork</td><td>The worker. On a schedule, it claims a queued job row, does the work, and writes the result back to the row.</td></tr>
+      </table>
+    </div>
+
+    <div class="section-card">
+      <h2 class="card-title">Why the Order Matters</h2>
+      <p>Do the Sheet before the Apps Script. In that order:</p>
+      <ol>
+        <li>Copy the Job Board Sheet first, so you have its real Sheet ID.</li>
+        <li>Copy the Apps Script project second, and set it up pointing at that real ID from the start.</li>
+      </ol>
+      <div class="why-box">
+        <strong>Why:</strong> the script needs the Sheet's real ID to work at all. Doing the script first means setting a placeholder, then coming back to fix it — that's exactly how the column-mismatch and wrong-ID bugs happened on a past install. Sheet first removes the placeholder step entirely.
+      </div>
+      <p style="margin-top:16px;">Full step-by-step order is on the Install page. High-level shape:</p>
+      <ol>
+        <li>Job Board Sheet</li>
+        <li>Apps Script project (configured with the real Sheet ID and Calendar ID)</li>
+        <li>Gmail labels and filters</li>
+        <li>Cowork skill and scheduled task</li>
+        <li>Test end to end</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PAGE 3: INSTALL -->
+  <section class="page" id="page-install">
+    <div class="section-card">
+      <span class="section-label">Step 3 of 4</span>
+      <h2 class="card-title">Installation</h2>
+      <p>Assumes the Job Board Sheet template and Apps Script project template are already attached/shared for this install.</p>
+      <ol>
+        <li>Create the send-as alias (<code>agent@domain.com</code>) on the Google account. Confirm it in Gmail → Settings → Accounts → Send mail as.
+          <div class="shot"><span class="cam">📸</span><span><b>Screenshot here:</b> the Gmail "Accounts" tab with the new alias listed under Send mail as.</span></div>
+        </li>
+        <li>Copy the Job Board Sheet template. Rename it for the new install.</li>
+        <li>Copy the Apps Script project template into the account.
+          <div class="shot"><span class="cam">📸</span><span><b>Screenshot here:</b> the Apps Script project list showing the copied project.</span></div>
+        </li>
+        <li>Create Gmail labels: the <code>Agent</code> trigger label, plus one label per lane/client.
+          <div class="shot"><span class="cam">📸</span><span><b>Screenshot here:</b> Gmail label list with the new labels visible.</span></div>
+        </li>
+        <li>Authorize the Apps Script project with the Google account (OAuth).
+          <div class="shot"><span class="cam">📸</span><span><b>Screenshot here:</b> the OAuth consent screen and the "Allow" step.</span></div>
+        </li>
+        <li>In the copied script, set the identifiers for this install: the new Job Board Sheet ID, the Task Calendar ID, and the agent alias.
+          <div class="note">This step is under review — moving these identifiers out of the code and into Script Properties, so this step no longer means editing code. Guide will update when that ships.</div>
+          <div class="shot"><span class="cam">📸</span><span><b>Screenshot here:</b> wherever the identifiers actually get set once this step is finalized.</span></div>
+        </li>
+        <li>Add every sending address that should be able to start a job to the allowlist.</li>
+        <li>For any inbox that will not get its own Apps Script project, add a Gmail filter on that account (To: agent's address → apply label <code>Agent</code>).
+          <div class="shot"><span class="cam">📸</span><span><b>Screenshot here:</b> the Gmail filter creation dialog with the rule filled in.</span></div>
+        </li>
+        <li>Copy the Cowork runtime skill template. Update the identifiers (Sheet ID, Calendar ID) for this install.</li>
+        <li>Upload the skill as a zip via Settings → Customize → Skills.
+          <div class="shot"><span class="cam">📸</span><span><b>Screenshot here:</b> the Customize → Skills screen with the zip uploaded.</span></div>
+        </li>
+        <li>Create the Cowork scheduled task. Set it Active, hourly cadence, pointed at the skill.
+          <div class="shot"><span class="cam">📸</span><span><b>Screenshot here:</b> the scheduled task setup screen, showing Active + hourly.</span></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PAGE 4: RUN THE TEST -->
+  <section class="page" id="page-test">
+    <div class="section-card">
+      <span class="section-label">Step 4 of 4</span>
+      <h2 class="card-title">Run the Test</h2>
+      <p>Check off each item as you complete it. Don't move to the next until the current one is confirmed.</p>
+      <div class="progress-label"><span id="progress-text">0 of 6 confirmed</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <ul class="checklist" id="test-checklist">
+        <li><span class="box"></span><span class="label">Run <code>selfTest</code> in Apps Script. Confirm it sends a real email from the agent alias.</span></li>
+        <li><span class="box"></span><span class="label">Run a Cowork smoke test. Confirm all three: read a sheet cell, write a sheet cell, state one fact only account memory would know.</span></li>
+        <li><span class="box"></span><span class="label">Create one real <code>[Agent]</code> calendar event. Confirm the watcher writes a <code>queued</code> row.</span></li>
+        <li><span class="box"></span><span class="label">Confirm Cowork claims and works the row on its next scheduled run.</span></li>
+        <li><span class="box"></span><span class="label">Confirm Apps Script delivers the resulting email from the agent alias.</span></li>
+        <li><span class="box"></span><span class="label">Test the inbound path on the agent alias separately from send-as. Confirm the alias can receive mail, not just send it.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>Sabrina — Chief of Staff Agent · Installation &amp; Test Reference</footer>
 </div>
+
+<script>
+  var tabs = document.querySelectorAll('.tab-btn');
+  var pages = document.querySelectorAll('.page');
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t){ t.classList.remove('active'); });
+      pages.forEach(function(p){ p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById('page-' + tab.dataset.page).classList.add('active');
+      window.scrollTo({top:0, behavior:'instant'});
+    });
+  });
+
+  var items = document.querySelectorAll('#test-checklist li');
+  var total = items.length;
+  function updateProgress() {
+    var done = document.querySelectorAll('#test-checklist li.done').length;
+    document.getElementById('progress-text').textContent = done + ' of ' + total + ' confirmed';
+    document.getElementById('progress-fill').style.width = (done / total * 100) + '%';
+  }
+  items.forEach(function(li) {
+    li.addEventListener('click', function() {
+      li.classList.toggle('done');
+      updateProgress();
+    });
+  });
+  updateProgress();
+</script>
 </body>
 </html>
