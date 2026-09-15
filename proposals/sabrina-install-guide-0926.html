@@ -366,7 +366,7 @@
       <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
       <ul class="checklist" id="test-checklist">
         <li><span class="box"></span><span class="label">Run <code>selfTest</code> in Apps Script. Confirm it sends a real email from the agent alias.</span></li>
-        <li><span class="box"></span><span class="label">Run a Cowork smoke test. Confirm all three: read a sheet cell, write a sheet cell, state one fact only account memory would know.</span></li>
+        <li><span class="box"></span><span class="label">Run a Cowork smoke test. Confirm all three: (1) read a cell on the Job Board sheet, (2) write a cell on the Job Board sheet, (3) ask Cowork a question that only account memory can answer — something not stored on the Sheet or Calendar, e.g. a saved writing-style preference — and confirm the answer is correct.</span></li>
         <li><span class="box"></span><span class="label">Create one real <code>[Agent]</code> calendar event. Confirm the watcher writes a <code>queued</code> row.</span></li>
         <li><span class="box"></span><span class="label">Confirm Cowork claims and works the row on its next scheduled run.</span></li>
         <li><span class="box"></span><span class="label">Confirm Apps Script delivers the resulting email from the agent alias.</span></li>
