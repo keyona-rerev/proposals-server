@@ -1,0 +1,320 @@
+<title>Martha Underwood</title>
+<style>
+  :root{
+    --page-bg:#f2efe9;
+    --page-panel:#ffffff;
+    --page-ink:#1b2b45;
+    --page-muted:#6b7280;
+    --page-line:#e2ddd3;
+    --accent:#c8503f;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --page-bg:#14171c;
+      --page-panel:#1b1f26;
+      --page-ink:#f2efe9;
+      --page-muted:#a3a9b3;
+      --page-line:#2b303a;
+      --accent:#f4917f;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --page-bg:#14171c;
+    --page-panel:#1b1f26;
+    --page-ink:#f2efe9;
+    --page-muted:#a3a9b3;
+    --page-line:#2b303a;
+    --accent:#f4917f;
+    color-scheme:dark;
+  }
+
+  *{ box-sizing:border-box; }
+  body{ background:var(--page-bg); color:var(--page-ink); }
+
+  .page{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+    padding-inline:16px;
+    padding-block:32px 40px;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+  }
+
+  .page-note{
+    max-width:480px;
+    width:100%;
+    background:var(--page-panel);
+    border:1px solid var(--page-line);
+    border-radius:10px;
+    padding:12px 16px;
+    font-size:.8rem;
+    line-height:1.5;
+    color:var(--page-muted);
+  }
+  .page-note b{ color:var(--accent); }
+  .page-note code{
+    font-family:'IBM Plex Mono',monospace;
+    background:var(--page-bg);
+    border:1px solid var(--page-line);
+    border-radius:4px;
+    padding:1px 5px;
+    font-size:.75rem;
+    color:var(--page-ink);
+  }
+
+  /* ============ THE PRINTED PIECE ============ */
+  /* Fixed palette by design: this is a physical print artifact, not a UI
+     that should shift with the viewer's OS theme. */
+
+  .poster{
+    --navy:#1c2b45;
+    --navy-deep:#131f33;
+    --coral:#f9655b;
+    --purple:#7d6ff2;
+    --yellow:#f5c070;
+    --paper:#f6f3ec;
+
+    width:min(94vw, 500px);
+    aspect-ratio: 11 / 17;
+    background:var(--navy);
+    color:var(--paper);
+    border-radius:14px;
+    box-shadow:0 30px 60px -20px rgba(19,31,51,.45), 0 2px 8px rgba(19,31,51,.25);
+    overflow:hidden;
+    position:relative;
+    container-type: inline-size;
+    font-family:'Inter',system-ui,sans-serif;
+  }
+
+  .poster::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(120% 60% at 100% -10%, rgba(125,111,242,.35), transparent 60%),
+      radial-gradient(90% 50% at -10% 110%, rgba(249,101,91,.30), transparent 60%);
+    pointer-events:none;
+  }
+
+  .frame{
+    position:relative;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    padding: 7cqw 8cqw 6cqw;
+  }
+
+  .top-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-size:2.6cqw;
+  }
+  .top-row .logo{
+    height:6.4cqw;
+    width:auto;
+    display:block;
+  }
+  .top-row .kicker{
+    color:rgba(246,243,236,.6);
+  }
+
+  .rule{
+    height:1px;
+    background:rgba(246,243,236,.18);
+    margin: 3.5cqw 0 4.5cqw;
+  }
+
+  h1{
+    font-family:'Fraunces',Georgia,serif;
+    font-weight:600;
+    font-size:11.2cqw;
+    line-height:1.02;
+    margin:0;
+    text-wrap:balance;
+    letter-spacing:-.01em;
+  }
+  .role{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:2.9cqw;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--yellow);
+    margin-top:2.4cqw;
+  }
+
+  .bio-block{
+    display:flex;
+    gap:5cqw;
+    align-items:flex-start;
+    margin-top:6cqw;
+  }
+
+  .headshot{
+    flex:0 0 auto;
+    width:22cqw;
+    aspect-ratio:1;
+    border-radius:12px;
+    background-image:url(https://res.cloudinary.com/dialhpycd/image/upload/v1790351951/Martha_image_uct1ib.jpg);
+    background-size:cover;
+    background-position:center;
+    position:relative;
+    box-shadow:0 0 0 1.5px rgba(246,243,236,.55);
+  }
+
+  .bio-copy{
+    font-size:3.05cqw;
+    line-height:1.5;
+    color:rgba(246,243,236,.92);
+  }
+  .bio-copy .note{
+    display:block;
+    margin-top:2cqw;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:1.9cqw;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--coral);
+  }
+
+  .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:2cqw;
+    margin-top:5cqw;
+  }
+  .chip{
+    border:1px solid rgba(246,243,236,.35);
+    border-radius:20px;
+    padding:1.3cqw 3cqw;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:1.9cqw;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:rgba(246,243,236,.85);
+  }
+
+  .spacer{ flex:1; }
+
+  .cta{
+    margin-top:6cqw;
+    background:var(--coral);
+    border-radius:12px;
+    padding:5cqw 5cqw 5.5cqw;
+    display:flex;
+    gap:4.5cqw;
+    align-items:center;
+    color:var(--navy-deep);
+  }
+  .cta-copy{ flex:1; min-width:0; }
+  .cta-copy .cta-head{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:5.2cqw;
+    line-height:1.1;
+    margin:0 0 1.6cqw;
+    text-wrap:balance;
+  }
+  .cta-copy .cta-sub{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:2cqw;
+    letter-spacing:.03em;
+    color:rgba(19,31,51,.75);
+    word-break:break-word;
+  }
+
+  .qr{
+    flex:0 0 auto;
+    width:20cqw;
+    aspect-ratio:1;
+    background:var(--paper);
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+  .qr svg{ width:78%; height:78%; }
+  .qr .qr-tag{
+    position:absolute;
+    inset:auto -3px -8px -3px;
+    text-align:center;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:1.5cqw;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--navy-deep);
+    background:var(--yellow);
+    border-radius:10px;
+    padding:.5cqw 0;
+  }
+
+  .footer-line{
+    margin-top:3.2cqw;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:1.9cqw;
+    letter-spacing:.03em;
+    color:rgba(246,243,236,.5);
+    display:flex;
+    justify-content:space-between;
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+
+<div class="page">
+  <div class="page-note">
+    <b>Draft — placeholder content.</b> The QR code now links to <code>marthaunderwood.co</code>. Still to confirm before printing: the bio paragraph, drafted from what's on file. Sized to 11×17&Prime; (small poster) proportions.
+  </div>
+
+  <div class="poster" id="poster">
+    <div class="frame">
+      <div class="top-row">
+        <img class="logo" src="https://res.cloudinary.com/dialhpycd/image/upload/v1772044659/prismm-logo-dark-bright_2x-removebg-preview_ut98x4.png" alt="Prismm">
+        <span class="kicker">About the Founder</span>
+      </div>
+
+      <div class="rule"></div>
+
+      <h1>Martha<br>Underwood</h1>
+      <div class="role">Founder &amp; CEO, Prismm</div>
+
+      <div class="bio-block">
+        <div class="headshot" role="img" aria-label="Martha Underwood"></div>
+        <div class="bio-copy">
+          Martha founded Prismm to give community banks and credit unions the
+          infrastructure to guide families through what happens after a loss —
+          instead of losing the relationship along with it. She now advises
+          bank leadership teams directly, building the strategy that turns
+          beneficiaries into acquired relationships instead of lost deposits.
+          <span class="note">Draft bio — confirm before print</span>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="cta">
+        <div class="cta-copy">
+          <p class="cta-head">Book time<br>with Martha</p>
+          <p class="cta-sub">marthaunderwood.co</p>
+        </div>
+        <div class="qr">
+          <svg viewBox="0 0 31 31" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QR code to marthaunderwood.co">
+            <rect x="0" y="0" width="31" height="31" fill="#f6f3ec"/>
+            <path d="M1,1H2V2H1zM2,1H3V2H2zM3,1H4V2H3zM4,1H5V2H4zM5,1H6V2H5zM6,1H7V2H6zM7,1H8V2H7zM12,1H13V2H12zM13,1H14V2H13zM15,1H16V2H15zM19,1H20V2H19zM20,1H21V2H20zM23,1H24V2H23zM24,1H25V2H24zM25,1H26V2H25zM26,1H27V2H26zM27,1H28V2H27zM28,1H29V2H28zM29,1H30V2H29zM1,2H2V3H1zM7,2H8V3H7zM9,2H10V3H9zM11,2H12V3H11zM12,2H13V3H12zM14,2H15V3H14zM18,2H19V3H18zM19,2H20V3H19zM20,2H21V3H20zM21,2H22V3H21zM23,2H24V3H23zM29,2H30V3H29zM1,3H2V4H1zM3,3H4V4H3zM4,3H5V4H4zM5,3H6V4H5zM7,3H8V4H7zM10,3H11V4H10zM12,3H13V4H12zM16,3H17V4H16zM19,3H20V4H19zM20,3H21V4H20zM23,3H24V4H23zM25,3H26V4H25zM26,3H27V4H26zM27,3H28V4H27zM29,3H30V4H29zM1,4H2V5H1zM3,4H4V5H3zM4,4H5V5H4zM5,4H6V5H5zM7,4H8V5H7zM11,4H12V5H11zM13,4H14V5H13zM14,4H15V5H14zM17,4H18V5H17zM23,4H24V5H23zM25,4H26V5H25zM26,4H27V5H26zM27,4H28V5H27zM29,4H30V5H29zM1,5H2V6H1zM3,5H4V6H3zM4,5H5V6H4zM5,5H6V6H5zM7,5H8V6H7zM9,5H10V6H9zM10,5H11V6H10zM12,5H13V6H12zM14,5H15V6H14zM17,5H18V6H17zM18,5H19V6H18zM19,5H20V6H19zM20,5H21V6H20zM23,5H24V6H23zM25,5H26V6H25zM26,5H27V6H26zM27,5H28V6H27zM29,5H30V6H29zM1,6H2V7H1zM7,6H8V7H7zM10,6H11V7H10zM12,6H13V7H12zM13,6H14V7H13zM15,6H16V7H15zM16,6H17V7H16zM17,6H18V7H17zM19,6H20V7H19zM20,6H21V7H20zM21,6H22V7H21zM23,6H24V7H23zM29,6H30V7H29zM1,7H2V8H1zM2,7H3V8H2zM3,7H4V8H3zM4,7H5V8H4zM5,7H6V8H5zM6,7H7V8H6zM7,7H8V8H7zM9,7H10V8H9zM11,7H12V8H11zM13,7H14V8H13zM15,7H16V8H15zM17,7H18V8H17zM19,7H20V8H19zM21,7H22V8H21zM23,7H24V8H23zM24,7H25V8H24zM25,7H26V8H25zM26,7H27V8H26zM27,7H28V8H27zM28,7H29V8H28zM29,7H30V8H29zM10,8H11V9H10zM12,8H13V9H12zM16,8H17V9H16zM18,8H19V9H18zM21,8H22V9H21zM1,9H2V10H1zM3,9H4V10H3zM5,9H6V10H5zM7,9H8V10H7zM10,9H11V10H10zM17,9H18V10H17zM18,9H19V10H18zM20,9H21V10H20zM21,9H22V10H21zM25,9H26V10H25zM28,9H29V10H28zM2,10H3V11H2zM3,10H4V11H3zM5,10H6V11H5zM6,10H7V11H6zM10,10H11V11H10zM11,10H12V11H11zM13,10H14V11H13zM14,10H15V11H14zM16,10H17V11H16zM17,10H18V11H17zM18,10H19V11H18zM21,10H22V11H21zM22,10H23V11H22zM23,10H24V11H23zM26,10H27V11H26zM29,10H30V11H29zM5,11H6V12H5zM6,11H7V12H6zM7,11H8V12H7zM8,11H9V12H8zM11,11H12V12H11zM12,11H13V12H12zM13,11H14V12H13zM15,11H16V12H15zM16,11H17V12H16zM17,11H18V12H17zM18,11H19V12H18zM19,11H20V12H19zM25,11H26V12H25zM27,11H28V12H27zM28,11H29V12H28zM29,11H30V12H29zM2,12H3V13H2zM3,12H4V13H3zM4,12H5V13H4zM6,12H7V13H6zM9,12H10V13H9zM11,12H12V13H11zM14,12H15V13H14zM15,12H16V13H15zM17,12H18V13H17zM18,12H19V13H18zM19,12H20V13H19zM21,12H22V13H21zM22,12H23V13H22zM28,12H29V13H28zM1,13H2V14H1zM6,13H7V14H6zM7,13H8V14H7zM8,13H9V14H8zM10,13H11V14H10zM12,13H13V14H12zM15,13H16V14H15zM16,13H17V14H16zM18,13H19V14H18zM22,13H23V14H22zM23,13H24V14H23zM24,13H25V14H24zM26,13H27V14H26zM28,13H29V14H28zM29,13H30V14H29zM3,14H4V15H3zM4,14H5V15H4zM6,14H7V15H6zM11,14H12V15H11zM13,14H14V15H13zM15,14H16V15H15zM16,14H17V15H16zM21,14H22V15H21zM22,14H23V15H22zM23,14H24V15H23zM26,14H27V15H26zM29,14H30V15H29zM2,15H3V16H2zM3,15H4V16H3zM4,15H5V16H4zM5,15H6V16H5zM7,15H8V16H7zM8,15H9V16H8zM10,15H11V16H10zM11,15H12V16H11zM12,15H13V16H12zM14,15H15V16H14zM18,15H19V16H18zM21,15H22V16H21zM23,15H24V16H23zM26,15H27V16H26zM28,15H29V16H28zM29,15H30V16H29zM4,16H5V17H4zM5,16H6V17H5zM6,16H7V17H6zM10,16H11V17H10zM11,16H12V17H11zM12,16H13V17H12zM13,16H14V17H13zM16,16H17V17H16zM18,16H19V17H18zM19,16H20V17H19zM24,16H25V17H24zM26,16H27V17H26zM28,16H29V17H28zM1,17H2V18H1zM3,17H4V18H3zM4,17H5V18H4zM6,17H7V18H6zM7,17H8V18H7zM9,17H10V18H9zM12,17H13V18H12zM13,17H14V18H13zM17,17H18V18H17zM18,17H19V18H18zM19,17H20V18H19zM22,17H23V18H22zM23,17H24V18H23zM24,17H25V18H24zM26,17H27V18H26zM28,17H29V18H28zM29,17H30V18H29zM3,18H4V19H3zM6,18H7V19H6zM8,18H9V19H8zM9,18H10V19H9zM11,18H12V19H11zM12,18H13V19H12zM13,18H14V19H13zM14,18H15V19H14zM16,18H17V19H16zM17,18H18V19H17zM21,18H22V19H21zM23,18H24V19H23zM26,18H27V19H26zM27,18H28V19H27zM29,18H30V19H29zM1,19H2V20H1zM3,19H4V20H3zM7,19H8V20H7zM9,19H10V20H9zM11,19H12V20H11zM12,19H13V20H12zM13,19H14V20H13zM15,19H16V20H15zM16,19H17V20H16zM17,19H18V20H17zM18,19H19V20H18zM22,19H23V20H22zM23,19H24V20H23zM24,19H25V20H24zM25,19H26V20H25zM28,19H29V20H28zM29,19H30V20H29zM2,20H3V21H2zM4,20H5V21H4zM9,20H10V21H9zM10,20H11V21H10zM11,20H12V21H11zM12,20H13V21H12zM13,20H14V21H13zM14,20H15V21H14zM15,20H16V21H15zM17,20H18V21H17zM18,20H19V21H18zM19,20H20V21H19zM20,20H21V21H20zM21,20H22V21H21zM24,20H25V21H24zM26,20H27V21H26zM28,20H29V21H28zM1,21H2V22H1zM3,21H4V22H3zM4,21H5V22H4zM5,21H6V22H5zM7,21H8V22H7zM8,21H9V22H8zM10,21H11V22H10zM11,21H12V22H11zM15,21H16V22H15zM16,21H17V22H16zM19,21H20V22H19zM21,21H22V22H21zM22,21H23V22H22zM23,21H24V22H23zM24,21H25V22H24zM25,21H26V22H25zM9,22H10V23H9zM11,22H12V23H11zM12,22H13V23H12zM13,22H14V23H13zM15,22H16V23H15zM16,22H17V23H16zM20,22H21V23H20zM21,22H22V23H21zM25,22H26V23H25zM27,22H28V23H27zM28,22H29V23H28zM29,22H30V23H29zM1,23H2V24H1zM2,23H3V24H2zM3,23H4V24H3zM4,23H5V24H4zM5,23H6V24H5zM6,23H7V24H6zM7,23H8V24H7zM10,23H11V24H10zM11,23H12V24H11zM12,23H13V24H12zM14,23H15V24H14zM18,23H19V24H18zM20,23H21V24H20zM21,23H22V24H21zM23,23H24V24H23zM25,23H26V24H25zM26,23H27V24H26zM28,23H29V24H28zM29,23H30V24H29zM1,24H2V25H1zM7,24H8V25H7zM11,24H12V25H11zM12,24H13V25H12zM13,24H14V25H13zM16,24H17V25H16zM21,24H22V25H21zM25,24H26V25H25zM26,24H27V25H26zM29,24H30V25H29zM1,25H2V26H1zM3,25H4V26H3zM4,25H5V26H4zM5,25H6V26H5zM7,25H8V26H7zM9,25H10V26H9zM10,25H11V26H10zM11,25H12V26H11zM12,25H13V26H12zM13,25H14V26H13zM17,25H18V26H17zM21,25H22V26H21zM22,25H23V26H22zM23,25H24V26H23zM24,25H25V26H24zM25,25H26V26H25zM1,26H2V27H1zM3,26H4V27H3zM4,26H5V27H4zM5,26H6V27H5zM7,26H8V27H7zM11,26H12V27H11zM12,26H13V27H12zM14,26H15V27H14zM16,26H17V27H16zM17,26H18V27H17zM18,26H19V27H18zM20,26H21V27H20zM24,26H25V27H24zM25,26H26V27H25zM27,26H28V27H27zM1,27H2V28H1zM3,27H4V28H3zM4,27H5V28H4zM5,27H6V28H5zM7,27H8V28H7zM9,27H10V28H9zM10,27H11V28H10zM11,27H12V28H11zM12,27H13V28H12zM16,27H17V28H16zM17,27H18V28H17zM19,27H20V28H19zM20,27H21V28H20zM21,27H22V28H21zM24,27H25V28H24zM25,27H26V28H25zM26,27H27V28H26zM29,27H30V28H29zM1,28H2V29H1zM7,28H8V29H7zM10,28H11V29H10zM12,28H13V29H12zM14,28H15V29H14zM17,28H18V29H17zM18,28H19V29H18zM19,28H20V29H19zM20,28H21V29H20zM21,28H22V29H21zM23,28H24V29H23zM28,28H29V29H28zM1,29H2V30H1zM2,29H3V30H2zM3,29H4V30H3zM4,29H5V30H4zM5,29H6V30H5zM6,29H7V30H6zM7,29H8V30H7zM9,29H10V30H9zM11,29H12V30H11zM14,29H15V30H14zM15,29H16V30H15zM16,29H17V30H16zM19,29H20V30H19zM20,29H21V30H20zM21,29H22V30H21zM24,29H25V30H24zM28,29H29V30H28zM29,29H30V30H29z" fill="#1c2b45"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="footer-line">
+        <span>getprismm.com</span>
+        <span>Prismm &middot; Founder Series</span>
+      </div>
+    </div>
+  </div>
+</div>
