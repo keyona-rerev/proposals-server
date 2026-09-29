@@ -273,7 +273,8 @@
         <li><strong>Emails you only the open decisions.</strong> One short email per job. No digests, no long reports.</li>
         <li><strong>Takes your reply like she's a colleague.</strong> Reply in plain language and she picks the job back up from there.</li>
         <li><strong>Follows up until the job is actually done.</strong> She checks back every day or two on anything still open, and she verifies completion herself — she does not take her own word for it.</li>
-        <li><strong>Reads meeting transcripts for your action items.</strong> She pulls out only the next steps that belong to you and works those the same way.</li>
+        <li><strong>Turns every meeting into tickets.</strong> After a call, she reads the transcript and files one ticket per action item that belongs to you. Each ticket is labeled: <em>Claude can do it</em> (she works it on a later run) or <em>Needs you</em> (a decision only you can make, emailed to you). She does not work the items while she reads the transcript, and she does not send a recap. Google already sends one.</li>
+        <li><strong>Keeps one living update doc per client.</strong> Each client has a single Client Update doc, attached to the recurring calendar invite. It shows what closed since the last call, what is still open, and the questions blocking work. After each call she updates it. You open it from the invite. It also works when a meeting is skipped or declined, because the doc and the email thread carry the state.</li>
       </ul>
       <div class="why-box">
         <strong>What this page is not:</strong> a list of function names from the code. That's intentional — the rest of this guide covers what's actually being installed and how. This page is only "what does it do for the person using it."
@@ -291,7 +292,8 @@
         <tr><td>Job Board (Google Sheet)</td><td>The only memory the system has. Every job, its status, and its history live here as rows.</td></tr>
         <tr><td>Google Apps Script</td><td>Watches the calendar and Gmail, writes new job rows, and sends every outgoing email from the agent's own address.</td></tr>
         <tr><td>Gmail</td><td>Both the trigger surface (labels, direct email) and the reply surface. The account must be a Gmail/Google Workspace account — not Microsoft 365.</td></tr>
-        <tr><td>Google Calendar</td><td>A dedicated Task Calendar, separate from the real-events calendar, is the third trigger surface.</td></tr>
+        <tr><td>Google Calendar</td><td>A dedicated Task Calendar, separate from the real-events calendar, is the third trigger surface. Cowork also reads the main calendar once per client, to find the recurring meeting the Client Update doc attaches to.</td></tr>
+        <tr><td>Google Drive and Docs</td><td>Holds one Client Update doc per client, copied from a template. The doc is client-visible, so it carries client-safe wording only. Meeting transcripts (Gemini notes or another note-taker) land in Drive for Cowork to read.</td></tr>
         <tr><td>Cowork</td><td>The worker. On a schedule, it claims a queued job row, does the work, and writes the result back to the row.</td></tr>
       </table>
     </div>
@@ -311,7 +313,8 @@
         <li>Job Board Sheet</li>
         <li>Apps Script project (configured with the real Sheet ID and Calendar ID)</li>
         <li>Gmail labels and filters</li>
-        <li>Cowork skill and scheduled task</li>
+        <li>Client Update doc template</li>
+        <li>Cowork skill, connectors, and scheduled task</li>
         <li>Test end to end</li>
       </ol>
     </div>
@@ -345,7 +348,14 @@
         <li>For any inbox that will not get its own Apps Script project, add a Gmail filter on that account (To: agent's address → apply label <code>Agent</code>).
           <div class="shot"><span class="cam">📸</span><span><b>Screenshot here:</b> the Gmail filter creation dialog with the rule filled in.</span></div>
         </li>
-        <li>Copy the Cowork runtime skill template. Update the identifiers (Sheet ID, Calendar ID) for this install.</li>
+        <li>Copy the Client Update doc template into the client's Drive. Note its file ID. Do not share it with anyone.
+          <div class="shot"><span class="cam">📸</span><span><b>Screenshot here:</b> the template doc in Drive, with the file ID visible in the address bar.</span></div>
+        </li>
+        <li>Copy the Cowork runtime skill template. Update the identifiers (Sheet ID, Calendar ID, Client Update template ID) for this install.</li>
+        <li>In Cowork, connect Google Drive, Google Docs, Google Calendar, and Google Sheets. The skill needs all four. Sheets holds the Job Board. Drive and Docs hold the Client Update docs. Calendar holds the meeting invites.
+          <div class="shot"><span class="cam">📸</span><span><b>Screenshot here:</b> the Connectors screen with all four connected.</span></div>
+        </li>
+        <li>Confirm the meeting transcript source. Google Meet with Gemini notes works with no extra setup. Any other note-taker needs one added step that lands its transcripts in a single Drive folder. Decide this before the test.</li>
         <li>Upload the skill as a zip via Settings → Customize → Skills.
           <div class="shot"><span class="cam">📸</span><span><b>Screenshot here:</b> the Customize → Skills screen with the zip uploaded.</span></div>
         </li>
@@ -362,7 +372,7 @@
       <span class="section-label">Step 4 of 4</span>
       <h2 class="card-title">Run the Test</h2>
       <p>Check off each item as you complete it. Don't move to the next until the current one is confirmed.</p>
-      <div class="progress-label"><span id="progress-text">0 of 6 confirmed</span></div>
+      <div class="progress-label"><span id="progress-text">0 of 9 confirmed</span></div>
       <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
       <ul class="checklist" id="test-checklist">
         <li><span class="box"></span><span class="label">Run <code>selfTest</code> in Apps Script. Confirm it sends a real email from the agent alias.</span></li>
@@ -371,6 +381,9 @@
         <li><span class="box"></span><span class="label">Confirm Cowork claims and works the row on its next scheduled run.</span></li>
         <li><span class="box"></span><span class="label">Confirm Apps Script delivers the resulting email from the agent alias.</span></li>
         <li><span class="box"></span><span class="label">Test the inbound path on the agent alias separately from send-as. Confirm the alias can receive mail, not just send it.</span></li>
+        <li><span class="box"></span><span class="label">Run one real call transcript through the meeting flow. Confirm the board shows one <code>meeting_item</code> row per action item. Confirm the ones Claude can do are <code>queued</code>. Confirm the ones that need the owner are <code>awaiting_human</code>, each with an email.</span></li>
+        <li><span class="box"></span><span class="label">Confirm the client's Client Update doc now exists and is still private. Confirm an approval ticket asks the owner to reply <code>yes</code> to share it.</span></li>
+        <li><span class="box"></span><span class="label">Reply <code>yes</code> to that ticket. Confirm the doc is attached to the recurring calendar invite. Confirm the client received no calendar or share email you did not expect.</span></li>
       </ul>
     </div>
   </section>
