@@ -283,6 +283,20 @@
     display:flex;
     justify-content:space-between;
   }
+
+  /* ============ PRINT: 11 x 17 in ============ */
+  @page{ size:11in 17in; margin:0; }
+  @media print{
+    html, body{ margin:0; padding:0; background:#1c2b45; }
+    .page{ display:block; padding:0; gap:0; }
+    .page-note{ display:none; }
+    .poster{
+      width:11in; height:17in; aspect-ratio:auto;
+      border-radius:0; box-shadow:none;
+      -webkit-print-color-adjust:exact; print-color-adjust:exact;
+      break-inside:avoid;
+    }
+  }
 </style>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
@@ -313,7 +327,6 @@
           instead of losing the relationship along with it. She now advises
           bank leadership teams directly, building the strategy that turns
           beneficiaries into acquired relationships instead of lost deposits.
-          <span class="note">Draft bio, confirm before print</span>
         </div>
       </div>
 
