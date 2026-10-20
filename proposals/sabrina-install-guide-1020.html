@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sabrina — Chief of Staff Agent: Install &amp; Test Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F0F7F7; --primary: #0D1F2D; --cyan: #1A9E9E; --purple: #7C3AED;
+    --gradient: linear-gradient(90deg, #1A9E9E, #7C3AED);
+    --font-heading: 'Outfit', sans-serif; --font-body: 'Inter', sans-serif;
+    --card-bg: #FFFFFF; --border: #DCE7E7;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); font-family: var(--font-body); color: var(--primary); line-height: 1.55; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+  .eyebrow { font-family: var(--font-heading); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cyan); margin: 0 0 8px; }
+  h1 { font-family: var(--font-heading); font-size: 34px; font-weight: 700; margin: 0 0 6px; }
+  .subtitle { font-size: 15px; color: #4B5F63; margin: 0 0 28px; }
+  .tabs { display: flex; gap: 6px; margin-bottom: 28px; overflow-x: auto; padding-bottom: 4px; }
+  .tab-btn { font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.02em; color: var(--primary); background: #FFFFFF; border: 1px solid var(--border); border-radius: 999px; padding: 10px 16px; cursor: pointer; white-space: nowrap; transition: all 0.15s ease; }
+  .tab-btn:hover { border-color: var(--cyan); }
+  .tab-btn.active { background: var(--gradient); color: #FFFFFF; border-color: transparent; }
+  .tab-num { display: inline-block; margin-right: 6px; opacity: 0.7; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .section-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 28px 30px; margin-bottom: 22px; }
+  .section-label { display: inline-block; font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #FFFFFF; background: var(--gradient); padding: 5px 12px; border-radius: 999px; margin-bottom: 16px; }
+  h2.card-title { font-family: var(--font-heading); font-size: 19px; margin: 0 0 14px; }
+  h3 { font-family: var(--font-heading); font-size: 15px; margin: 22px 0 8px; color: var(--cyan); }
+  p { margin: 0 0 12px; font-size: 15px; }
+  p:last-child { margin-bottom: 0; }
+  ol { padding-left: 22px; margin: 0; }
+  ol > li { margin-bottom: 14px; font-size: 15px; }
+  ol > li:last-child { margin-bottom: 0; }
+  ul.plain { padding-left: 20px; margin: 0; }
+  ul.plain > li { margin-bottom: 10px; font-size: 15px; }
+  ul.plain > li:last-child { margin-bottom: 0; }
+  code { background: #EEF6F6; border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-size: 13px; }
+  a { color: var(--cyan); }
+  .stack-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 4px; }
+  .stack-table th, .stack-table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .stack-table th { font-family: var(--font-heading); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--cyan); }
+  .stack-table tr:last-child td { border-bottom: none; }
+  .why-box { background: #F5F0FF; border: 1px solid #E1D3FA; border-radius: 10px; padding: 16px 18px; margin-top: 16px; font-size: 14px; }
+  .why-box strong { color: var(--purple); }
+  .shot { border: 1px dashed #8FB6B6; border-radius: 10px; background: #F7FBFB; padding: 12px 14px; margin: 10px 0 0; font-size: 13px; color: #3A5B5F; display: flex; gap: 8px; align-items: flex-start; }
+  .shot .cam { font-size: 15px; line-height: 1; }
+  .shot b { color: var(--primary); }
+  .note { background: #FFF7E6; border: 1px solid #F0DBA0; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #6B5200; margin-top: 10px; }
+  .checklist { list-style: none; padding: 0; margin: 0; }
+  .checklist li { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 15px; cursor: pointer; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li.done span.label { text-decoration: line-through; color: #7C8B8D; }
+  .box { flex: 0 0 22px; width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--cyan); margin-top: 1px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #FFFFFF; background: transparent; }
+  .checklist li.done .box { background: var(--gradient); border-color: transparent; }
+  .progress-bar { height: 8px; border-radius: 999px; background: var(--border); overflow: hidden; margin-bottom: 18px; }
+  .progress-fill { height: 100%; width: 0%; background: var(--gradient); transition: width 0.2s ease; }
+  .progress-label { font-size: 13px; color: #4B5F63; margin-bottom: 8px; }
+  footer { text-align: center; font-size: 12px; color: #7C8B8D; margin-top: 32px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Chief of Staff Agent</p>
+  <h1>Sabrina — Install &amp; Test Guide</h1>
+  <p class="subtitle">Cowork + Apps Script + Gmail add-on + Google Workspace. Use this for every new install. Gmail-based accounts only. Updated 2026-10-20 from the live script (13 files).</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-page="overview"><span class="tab-num">1</span>Overview</button>
+    <button class="tab-btn" data-page="stack"><span class="tab-num">2</span>Stack &amp; Order</button>
+    <button class="tab-btn" data-page="install"><span class="tab-num">3</span>Install</button>
+    <button class="tab-btn" data-page="test"><span class="tab-num">4</span>Run the Test</button>
+  </div>
+
+  <!-- PAGE 1: OVERVIEW -->
+  <section class="page active" id="page-overview">
+    <div class="section-card">
+      <span class="section-label">Overview</span>
+      <h2 class="card-title">What Sabrina Does</h2>
+      <p>Sabrina is a chief-of-staff agent. She watches for work you give her. She does the part she can do alone. She comes back to you only for the part that needs a human decision.</p>
+      <h3>Taking work in</h3>
+      <ul class="plain">
+        <li><strong>Three ways in.</strong> Put an event on your Task Calendar with <code>[Agent]</code> in the title. Label an email <code>Agent</code>. Email or forward to her alias.</li>
+        <li><strong>Gmail side panel.</strong> Open any email. Tap Send to Sabrina. Add a direction, pick a lane, and mark it heavy if it should run overnight.</li>
+        <li><strong>Attachments.</strong> Cowork cannot read Gmail attachments. The script copies each real attachment to Drive. Cowork reads it from there.</li>
+      </ul>
+      <h3>Doing the work</h3>
+      <ul class="plain">
+        <li><strong>Does the doable part first.</strong> She drafts, pulls context, or works the task before she asks you anything.</li>
+        <li><strong>Heavy jobs run overnight.</strong> Reply <code>heavy</code>, tick the box in the panel, or let Cowork decide. The job waits for the 10pm to 4am window.</li>
+        <li><strong>Lanes.</strong> Every job has a lane, one area of your work. Each email ends with a short In play list for that lane.</li>
+        <li><strong>Meetings become tickets.</strong> After a call she reads the transcript and files one ticket per action item that belongs to you. <em>Claude can do it</em> tickets run on a later pass. <em>Needs you</em> tickets are emailed to you. She sends no recap.</li>
+        <li><strong>One living Client Update doc per client.</strong> It shows what closed, what is open, and what blocks work. It attaches to the recurring invite.</li>
+        <li><strong>Ideas.</strong> A job of class <code>idea</code> gets one nurture question about every four days. Reply <code>mature</code> to turn it into real work, or <code>kill</code> to end it.</li>
+      </ul>
+      <h3>Talking to you</h3>
+      <ul class="plain">
+        <li><strong>One short email per job.</strong> It fits one phone screen. The subject starts with the time it costs you, such as <code>[15 min]</code>.</li>
+        <li><strong>Reply like to a colleague.</strong> Plain words work. So do these control words: <code>close</code>, <code>snooze 5d</code>, <code>waiting on &lt;name&gt;</code>, <code>confirm &lt;id&gt;</code>, <code>heavy</code>, <code>run now</code>. The panel buttons do the same things.</li>
+        <li><strong>Follows up until done.</strong> She chases every day or two. She checks completion herself. A job closes only when every deliverable is verified, confirmed by you, or waived.</li>
+        <li><strong>Dashboard.</strong> A web page shows work by lane: needs you, stalled, waiting on others, with Sabrina. Every email links to it.</li>
+      </ul>
+      <h3>Never quiet</h3>
+      <ul class="plain">
+        <li><strong>Dead-letter guard.</strong> A failed job that never reached you gets an email.</li>
+        <li><strong>Silent-parking guard.</strong> A job parked with nothing to say goes back to the queue.</li>
+      </ul>
+      <div class="why-box">
+        <strong>What this page is not:</strong> a list of function names. The rest of this guide covers what you install and how to prove it works.
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 2: STACK & ORDER -->
+  <section class="page" id="page-stack">
+    <div class="section-card">
+      <span class="section-label">Stack &amp; Order</span>
+      <h2 class="card-title">The Stack</h2>
+      <table class="stack-table">
+        <tr><th>Piece</th><th>Job it does</th></tr>
+        <tr><td>Job Board (Google Sheet)</td><td>The only memory the system has. Five tabs: <code>jobs</code> (17 columns), <code>history</code>, <code>deliverables</code>, <code>attachments</code>, <code>projects</code>. Every job, status and history entry is a row.</td></tr>
+        <tr><td>Google Apps Script</td><td>13 files. Watches the calendar and Gmail, writes job rows, sends every email from the agent address, chases and verifies, and runs the guards. It never does the work.</td></tr>
+        <tr><td>Gmail</td><td>Trigger surface (labels, direct email) and reply surface. Must be Gmail or Google Workspace. Not Microsoft 365.</td></tr>
+        <tr><td>Gmail add-on</td><td>The Sabrina side panel. Part of the same Apps Script project. Installed as a test deployment, one per person.</td></tr>
+        <tr><td>Dashboard (web app)</td><td>Part of the same project. Deployed as a web app. Its URL goes in the script config and in every email footer.</td></tr>
+        <tr><td>Google Calendar</td><td>A Task Calendar, separate from real events. Cowork also reads the main calendar once per client to find the recurring meeting.</td></tr>
+        <tr><td>Google Drive and Docs</td><td>One Client Update doc per client. A folder of copied attachments. Meeting transcripts land here for Cowork.</td></tr>
+        <tr><td>Cowork</td><td>The worker. Each hour it claims a queued row, does the work, and writes the result to the row.</td></tr>
+      </table>
+      <div class="why-box">
+        <strong>Know before you start:</strong> the lane names and the install identifiers are still inside the code. The wizard gives copy blocks for them. Moving them to Script Properties is open work.
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h2 class="card-title">Why the Order Matters</h2>
+      <p>Do the Sheet before the Apps Script. Copy the Job Board first so you have its real ID. Then copy the script and point it at that ID from the start. A placeholder ID caused the wrong-ID bug and the column-mismatch bug on past installs.</p>
+      <p style="margin-top:16px;">Order:</p>
+      <ol>
+        <li>Alias, Job Board, Task Calendar, Client Update template</li>
+        <li>Apps Script copy, time zone, identifiers, lanes</li>
+        <li>Gmail labels</li>
+        <li>Authorize and send the first test email</li>
+        <li>Dashboard deployment and Gmail add-on</li>
+        <li>Timers, then mail filters</li>
+        <li>Cowork: connectors, skill, scheduled task</li>
+        <li>Test end to end</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PAGE 3: INSTALL -->
+  <section class="page" id="page-install">
+    <div class="section-card">
+      <span class="section-label">Step 3 of 4</span>
+      <h2 class="card-title">Installation</h2>
+      <p>Use the setup wizard in the <code>setup-wizards</code> repo, folder <code>sabrina</code>. It keeps your values and fills them into each step. The steps below are the same list. Source: <a href="https://github.com/keyona-rerev/setup-wizards/tree/main/sabrina">github.com/keyona-rerev/setup-wizards/tree/main/sabrina</a>.</p>
+      <p>You need the Job Board template, the Apps Script template and the Client Update doc template from ReRev Labs.</p>
+      <ol>
+        <li>Create the send-as alias (<code>sabrina@domain.com</code>) on the Google account. Confirm it in Gmail → Settings → Accounts → Send mail as.
+          <div class="shot"><span class="cam">📸</span><span><b>Screenshot here:</b> Send mail as, with the alias listed and no Verify link.</span></div></li>
+        <li>Copy the Job Board template. Name it for the install. Save the Sheet ID.
+          <div class="note">Check that the <code>jobs</code> tab has 17 columns in row 1. Column 15 is <code>time_estimate</code>, 16 is <code>run_after</code>, 17 is <code>lane</code>. The template has no <code>installs</code> or <code>wizard_template</code> tab.</div></li>
+        <li>Create the Task Calendar. Save its Calendar ID (ends in <code>@group.calendar.google.com</code>).</li>
+        <li>Copy the Client Update doc template. Keep it private. Save its doc ID.</li>
+        <li>Copy the Apps Script project. In <code>appsscript.json</code>, set <code>timeZone</code> to the client's time zone. Delete <code>QueueCourses</code> if it is there.
+          <div class="note">The live script has <code>America/New_York</code>. Deadlines, nudges and the 10pm to 4am window all follow this setting.</div></li>
+        <li>In <code>Code.gs</code>, set <code>BOARD_ID</code>, <code>CALENDAR_NAME</code>, <code>OWNER</code>, <code>SEND_AS</code> and <code>ALLOWLIST</code>. Empty <code>PRIORITY_LANES</code>. In <code>SmokeTest.gs</code>, set <code>SMOKE_DOC_ID</code> to the Client Update template ID.
+          <div class="note">This step edits code. Moving these values to Script Properties is open work.</div></li>
+        <li>In <code>Lanes.gs</code>, replace <code>LANE_CANON</code>, <code>LANE_GROUPS</code>, <code>LANE_ALIASES</code> and <code>LANE_DOMAINS</code> with the client's lanes. If you skip this, the Dashboard shows another business's lanes on the client's data.</li>
+        <li>Create Gmail labels: <code>Agent</code>, plus one label per lane. Each lane label must match the lane name exactly.</li>
+        <li>Run <code>selfTest</code>. Authorize with the Google account. The warning screen is normal. An email must arrive from the alias with a <code>[5 min]</code> subject tag.</li>
+        <li>Deploy the Dashboard: Deploy → New deployment → Web app. Execute as Me. Access: Only myself. Name it <code>Sabrina Dashboard v1</code>. Copy the <code>/exec</code> URL into <code>CFG.DASHBOARD_URL</code>.
+          <div class="note">After any code change use Manage deployments → Edit → New version. A new deployment makes a new URL.</div></li>
+        <li>Install the Gmail add-on: Deploy → Test deployments → Gmail add-on → Install. Reload Gmail. The Sabrina icon shows in the side panel. Each person installs it from their own copy.</li>
+        <li>Run <code>installTriggers</code> once. The Triggers page lists 8 triggers.</li>
+        <li>Make a Gmail filter on the main account and on every extra inbox: To the alias → apply label <code>Agent</code>. Add every sending address to <code>ALLOWLIST</code>.</li>
+        <li>Confirm the meeting transcript source. Google Meet with Gemini notes needs nothing extra. Any other note-taker needs one added step that lands transcripts in one Drive folder.</li>
+        <li>In Cowork, connect Google Drive, Docs, Calendar and Sheets.</li>
+        <li>Copy the Cowork runtime skill. Fill its identifiers table: Sheet ID, Task Calendar ID and name, Client Update template ID, owner email, alias, time zone, lanes. Zip it. Upload it at Settings → Customize → Skills.</li>
+        <li>Create the Cowork scheduled task: Active, hourly, pointed at the skill.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PAGE 4: RUN THE TEST -->
+  <section class="page" id="page-test">
+    <div class="section-card">
+      <span class="section-label">Step 4 of 4</span>
+      <h2 class="card-title">Run the Test</h2>
+      <p>Check off each item when you confirm it. Do not move on until the current item is confirmed. Run the tests on a weekday.</p>
+      <div class="progress-label"><span id="progress-text">0 of 16 confirmed</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <ul class="checklist" id="test-checklist">
+        <li><span class="box"></span><span class="label">Run <code>selfTest</code>. An email arrives from the alias. The subject starts with <code>[5 min]</code>. The footer has a Dashboard button and a Job Board link. Both open.</span></li>
+        <li><span class="box"></span><span class="label">Open Triggers. It lists 8: <code>watchCalendar</code> (15 min), <code>watchGmailLabel</code> (5), <code>sendPending</code> (5), <code>watchReplies</code> (5), <code>watchdog</code> (1 h), <code>verifyDeliverables</code> (2 h), <code>nudgeSweep</code> (daily), <code>releaseHeavyJobs</code> (15 min).</span></li>
+        <li><span class="box"></span><span class="label">Run <code>smokeTestSetup</code>, then <code>verifyDeliverables</code>, then <code>smokeTestNudge</code>, then <code>smokeTestCleanup</code>. Deliverable d1 becomes verified. A nudge arrives as a reply on the same thread. d2 is waived at cleanup.</span></li>
+        <li><span class="box"></span><span class="label">Run a Cowork smoke test. Confirm all three: (1) read a cell on the Job Board, (2) write a cell on the Job Board, (3) answer a question only account memory can answer, such as a saved writing-style preference.</span></li>
+        <li><span class="box"></span><span class="label">Create one <code>[Agent]</code> event on the Task Calendar with <code>Lane: &lt;lane&gt;</code> in the description. The watcher writes a <code>queued</code> row with the lane in column 17.</span></li>
+        <li><span class="box"></span><span class="label">Cowork claims and works the row on its next hourly run. The status goes <code>claimed</code>, then <code>awaiting_human</code>.</span></li>
+        <li><span class="box"></span><span class="label">Apps Script delivers the email from the alias. It is short and fits one phone screen. It ends with an In play list for the lane.</span></li>
+        <li><span class="box"></span><span class="label">Send an email from the owner address to the alias. The filter applies the <code>Agent</code> label. A job row appears. Then send one from an address not on the allowlist. You get a rejected-message notice and no job starts.</span></li>
+        <li><span class="box"></span><span class="label">Open any email in Gmail. The Sabrina panel shows a form. Send it to Sabrina with a direction and a lane. A job row appears with that lane. Tap Snooze 2d on the job card. The panel home shows four numbers.</span></li>
+        <li><span class="box"></span><span class="label">Open the Dashboard URL. It shows the client's lanes and no other business's lanes. The job from the calendar test sits in the right lane.</span></li>
+        <li><span class="box"></span><span class="label">Forward an email with a PDF to the alias. The PDF is in Drive in <code>Task Agent - Attachments</code>, in a folder for the job. One row on the <code>attachments</code> tab names it.</span></li>
+        <li><span class="box"></span><span class="label">Reply with these words on an open job, one at a time: <code>snooze 2d</code>, <code>waiting on Test Person</code>, <code>heavy</code>, <code>run now</code>, <code>close</code>. After <code>heavy</code>, <code>run_after</code> is at or after 10pm local time, unless it is already between 10pm and 4am.</span></li>
+        <li><span class="box"></span><span class="label">Add a test row with status <code>failed</code> and no <code>pending_email</code>. Run <code>inspectDeadLetters</code>. It lists the row. The next hourly watchdog emails you about it. Delete the row.</span></li>
+        <li><span class="box"></span><span class="label">Add a test row with status <code>awaiting_human</code> and no <code>pending_email</code>. After 30 minutes and one send run, it returns to <code>queued</code>. Delete the row.</span></li>
+        <li><span class="box"></span><span class="label">Run one real call transcript through the meeting flow. The board shows one <code>meeting_item</code> row per action item. Items Claude can do are <code>queued</code>. Items for the owner are <code>awaiting_human</code>, each with an email. No recap is sent.</span></li>
+        <li><span class="box"></span><span class="label">The Client Update doc exists and is private. An approval ticket asks the owner to reply <code>yes</code>. After <code>yes</code>, the doc attaches to the recurring invite. The client got no calendar or share email you did not expect.</span></li>
+      </ul>
+      <div class="note" style="margin-top:18px;">Not covered by this test: the Idea Nurture flow, the <code>build</code> job class, and the <code>track</code> and <code>untrack</code> project verbs. Test them on first use.</div>
+    </div>
+  </section>
+
+  <footer>Sabrina — Chief of Staff Agent · Installation &amp; Test Reference · 2026-10-20</footer>
+</div>
+
+<script>
+  var tabs = document.querySelectorAll('.tab-btn');
+  var pages = document.querySelectorAll('.page');
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t){ t.classList.remove('active'); });
+      pages.forEach(function(p){ p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById('page-' + tab.dataset.page).classList.add('active');
+      window.scrollTo({top:0, behavior:'instant'});
+    });
+  });
+  var items = document.querySelectorAll('#test-checklist li');
+  var total = items.length;
+  function updateProgress() {
+    var done = document.querySelectorAll('#test-checklist li.done').length;
+    document.getElementById('progress-text').textContent = done + ' of ' + total + ' confirmed';
+    document.getElementById('progress-fill').style.width = (done / total * 100) + '%';
+  }
+  items.forEach(function(li) {
+    li.addEventListener('click', function() { li.classList.toggle('done'); updateProgress(); });
+  });
+  updateProgress();
+</script>
+</body>
+</html>
