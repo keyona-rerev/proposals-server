@@ -66,7 +66,7 @@
 <div class="wrap">
   <p class="eyebrow">Chief of Staff Agent</p>
   <h1>Sabrina — Install &amp; Test Guide</h1>
-  <p class="subtitle">Cowork + Apps Script + Gmail add-on + Google Workspace. Use this for every new install. Gmail-based accounts only. Updated 2026-10-20 from the live script (13 files).</p>
+  <p class="subtitle">Cowork + Apps Script + Gmail add-on + Google Workspace. Use this for every new install. Gmail-based accounts only. Updated 2026-10-20 from the live script (16 files).</p>
 
   <div class="tabs">
     <button class="tab-btn active" data-page="overview"><span class="tab-num">1</span>Overview</button>
@@ -122,7 +122,7 @@
       <table class="stack-table">
         <tr><th>Piece</th><th>Job it does</th></tr>
         <tr><td>Job Board (Google Sheet)</td><td>The only memory the system has. Five tabs: <code>jobs</code> (17 columns), <code>history</code>, <code>deliverables</code>, <code>attachments</code>, <code>projects</code>. Every job, status and history entry is a row.</td></tr>
-        <tr><td>Google Apps Script</td><td>13 files. Watches the calendar and Gmail, writes job rows, sends every email from the agent address, chases and verifies, and runs the guards. It never does the work.</td></tr>
+        <tr><td>Google Apps Script</td><td>16 files. Watches the calendar and Gmail, writes job rows, sends every email from the agent address, chases and verifies, and runs the guards. It never does the work.</td></tr>
         <tr><td>Gmail</td><td>Trigger surface (labels, direct email) and reply surface. Must be Gmail or Google Workspace. Not Microsoft 365.</td></tr>
         <tr><td>Gmail add-on</td><td>The Sabrina side panel. Part of the same Apps Script project. Installed as a test deployment, one per person.</td></tr>
         <tr><td>Dashboard (web app)</td><td>Part of the same project. Deployed as a web app. Its URL goes in the script config and in every email footer.</td></tr>
@@ -166,14 +166,14 @@
           <div class="note">Check that the <code>jobs</code> tab has 17 columns in row 1. Column 15 is <code>time_estimate</code>, 16 is <code>run_after</code>, 17 is <code>lane</code>. The template has no <code>installs</code> or <code>wizard_template</code> tab.</div></li>
         <li>Create the Task Calendar. Save its Calendar ID (ends in <code>@group.calendar.google.com</code>).</li>
         <li>Copy the Client Update doc template. Keep it private. Save its doc ID.</li>
-        <li>Copy the Apps Script project. In <code>appsscript.json</code>, set <code>timeZone</code> to the client's time zone. Delete <code>QueueCourses</code> if it is there.
-          <div class="note">The live script has <code>America/New_York</code>. Deadlines, nudges and the 10pm to 4am window all follow this setting.</div></li>
-        <li>In <code>Code.gs</code>, set <code>BOARD_ID</code>, <code>CALENDAR_NAME</code>, <code>OWNER</code>, <code>SEND_AS</code> and <code>ALLOWLIST</code>. Empty <code>PRIORITY_LANES</code>. In <code>SmokeTest.gs</code>, set <code>SMOKE_DOC_ID</code> to the Client Update template ID.
-          <div class="note">This step edits code. Moving these values to Script Properties is open work.</div></li>
-        <li>In <code>Lanes.gs</code>, replace <code>LANE_CANON</code>, <code>LANE_GROUPS</code>, <code>LANE_ALIASES</code> and <code>LANE_DOMAINS</code> with the client's lanes. If you skip this, the Dashboard shows another business's lanes on the client's data.</li>
-        <li>Create Gmail labels: <code>Agent</code>, plus one label per lane. Each lane label must match the lane name exactly.</li>
+        <li>Copy the Apps Script project. In <code>appsscript.json</code>, set <code>timeZone</code> to the client's time zone.
+          <div class="note">Deadlines, nudges and the overnight window all follow this setting. The template holds no ReRev Labs values.</div></li>
+        <li>In Project Settings → Script Properties, set <code>BOARD_ID</code>, <code>OWNER</code> and <code>SEND_AS</code> (required). Optionally set <code>ALLOWLIST</code>, <code>CALENDAR_NAME</code>, <code>DASHBOARD_URL</code>, <code>HEAVY_START_HOUR</code> (default 22) and <code>HEAVY_END_HOUR</code> (default 4). Run <code>checkConfig</code>.
+          <div class="note">No code is edited. The overnight window is in the script time zone.</div></li>
+        <li>On the Job Board <code>lanes</code> tab, add one row per lane (lane, group, aliases, domains). Delete the example rows. Run <code>refreshLanes</code>. If you skip this, the Dashboard shows no lanes.</li>
+        <li>Run <code>setupBoard</code> (creates missing tabs, the <code>Agent</code> label and the Task Calendar). Then create one Gmail label per lane. Each lane label must match the lane name exactly.</li>
         <li>Run <code>selfTest</code>. Authorize with the Google account. The warning screen is normal. An email must arrive from the alias with a <code>[5 min]</code> subject tag.</li>
-        <li>Deploy the Dashboard: Deploy → New deployment → Web app. Execute as Me. Access: Only myself. Name it <code>Sabrina Dashboard v1</code>. Copy the <code>/exec</code> URL into <code>CFG.DASHBOARD_URL</code>.
+        <li>Deploy the Dashboard: Deploy → New deployment → Web app. Execute as Me. Access: Only myself. Name it <code>Sabrina Dashboard v1</code>. Copy the <code>/exec</code> URL into the <code>DASHBOARD_URL</code> Script Property.
           <div class="note">After any code change use Manage deployments → Edit → New version. A new deployment makes a new URL.</div></li>
         <li>Install the Gmail add-on: Deploy → Test deployments → Gmail add-on → Install. Reload Gmail. The Sabrina icon shows in the side panel. Each person installs it from their own copy.</li>
         <li>Run <code>installTriggers</code> once. The Triggers page lists 8 triggers.</li>
