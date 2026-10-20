@@ -168,7 +168,7 @@
         <li>Copy the Client Update doc template. Keep it private. Save its doc ID.</li>
         <li>Copy the Apps Script project. In <code>appsscript.json</code>, set <code>timeZone</code> to the client's time zone.
           <div class="note">Deadlines, nudges and the overnight window all follow this setting. The template holds no ReRev Labs values.</div></li>
-        <li>In Project Settings → Script Properties, set <code>BOARD_ID</code>, <code>OWNER</code> and <code>SEND_AS</code> (required). Optionally set <code>ALLOWLIST</code>, <code>CALENDAR_NAME</code>, <code>DASHBOARD_URL</code>, <code>HEAVY_START_HOUR</code> (default 22) and <code>HEAVY_END_HOUR</code> (default 4). Run <code>checkConfig</code>.
+        <li>In Project Settings → Script Properties, set <code>BOARD_ID</code>, <code>OWNER</code> and <code>SEND_AS</code> (required). Set <code>AGENT_NAME</code> to the name the client chose (default Sabrina; it shows in the add-on, Dashboard and email sender name). Optionally set <code>ALLOWLIST</code>, <code>CALENDAR_NAME</code>, <code>DASHBOARD_URL</code>, <code>HEAVY_START_HOUR</code> (default 22) and <code>HEAVY_END_HOUR</code> (default 4). Run <code>checkConfig</code>.
           <div class="note">No code is edited. The overnight window is in the script time zone.</div></li>
         <li>On the Job Board <code>lanes</code> tab, add one row per lane (lane, group, aliases, domains). Delete the example rows. Run <code>refreshLanes</code>. If you skip this, the Dashboard shows no lanes.</li>
         <li>Run <code>setupBoard</code> (creates missing tabs, the <code>Agent</code> label and the Task Calendar). Then create one Gmail label per lane. Each lane label must match the lane name exactly.</li>
@@ -180,7 +180,7 @@
         <li>Make a Gmail filter on the main account and on every extra inbox: To the alias → apply label <code>Agent</code>. Add every sending address to <code>ALLOWLIST</code>.</li>
         <li>Confirm the meeting transcript source. Google Meet with Gemini notes needs nothing extra. Any other note-taker needs one added step that lands transcripts in one Drive folder.</li>
         <li>In Cowork, connect Google Drive, Docs, Calendar and Sheets.</li>
-        <li>Copy the Cowork runtime skill. Fill its identifiers table: Sheet ID, Task Calendar ID and name, Client Update template ID, owner email, alias, time zone, lanes. Zip it. Upload it at Settings → Customize → Skills.</li>
+        <li>Build the Cowork runtime skill. The setup wizard's Download finished skill button fills every placeholder for you (agent name, Sheet ID, Calendar ID, template ID, alias, allowlist). By hand, fill its identifiers table: Sheet ID, Task Calendar ID and name, Client Update template ID, owner email, alias, time zone, lanes. Zip it. Upload it at Settings → Customize → Skills.</li>
         <li>Create the Cowork scheduled task: Active, hourly, pointed at the skill.</li>
       </ol>
     </div>
