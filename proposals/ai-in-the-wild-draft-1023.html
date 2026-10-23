@@ -1,0 +1,26 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>AI in the Wild — Draft for review</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap">
+<style>:root{--bg:#F0F7F7;--primary:#0D1F2D;--cyan:#1A9E9E;--purple:#7C3AED}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--primary);font:16px/1.55 Inter,sans-serif}
+.w{max-width:860px;margin:0 auto;padding:0 16px 64px}h1,h2{font-family:Outfit,sans-serif;margin:0}
+.bn{background:#fff3cd;border-bottom:1px solid #e6c65c;padding:10px 16px;font-size:14px;text-align:center}
+header{padding:32px 0 8px}h1{font-size:clamp(28px,6vw,42px);background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:#fff;border-radius:14px;padding:16px 18px;margin:16px 0;box-shadow:0 1px 3px #0d1f2d14}
+.card ul{margin:6px 0 0;padding-left:20px}.ctl{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 8px}
+input,select{font:inherit;padding:10px 12px;border:1px solid #b8d4d4;border-radius:10px;background:#fff;color:var(--primary)}input{flex:1 1 220px}
+article{background:#fff;border-radius:12px;margin:8px 0;box-shadow:0 1px 2px #0d1f2d12}summary{cursor:pointer;padding:12px 14px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.t{flex:1 1 100%;font-weight:600;font-family:Outfit,sans-serif}.b{font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:99px;background:#e3eded}
+.b.ai{background:var(--cyan);color:#fff}.b.saves{background:var(--purple);color:#fff}details>*:not(summary){margin:0 14px 10px}
+.cv{font-size:14px;background:#fff8e1;padding:8px 10px;border-radius:8px}.src{font-size:14px;color:#4a6572}a{color:var(--cyan)}ol{padding-left:20px;font-size:14px}
+#n{font-size:14px;color:#4a6572}</style></head><body>
+<div class="bn"><b>DRAFT — private review copy.</b> Nothing here is approved or public. Unlisted link, not indexed.</div>
+<div class="w"><header><h1>AI in the Wild</h1><p>A free, searchable library of how people actually use AI, plus a separate index of useful non-AI saves. Built from ReRev's saved TikTok collection.</p></header>
+<div class="card"><b>What you are reviewing</b><ul><li><b>27</b> AI use cases, each with a workflow diagram</li><li><b>66</b> Saves Index entries (stories, skills, tools, advice)</li><li>Every entry is a draft written in original words, with attribution and a source link</li><li>Labels: <i>creator reported</i>, <i>advice</i>, <i>thesis</i>, <i>promotional</i>. None is "demonstrated" yet because only captions were read, not video frames</li></ul></div>
+<div class="card"><b>To approve</b><ul><li>Review entries below, or in the backbone <a href="https://docs.google.com/spreadsheets/d/1_5yo_Sa50DispfAwzt9fGqtnoNkQhdy4qd0B74k0WCs">Google Sheet</a></li><li>Reply "approved" in chat. Then the full interactive site (role dropdown, tags, diagrams, mock email signup) is built on the main branch of the rerev.io repo</li><li>The email signup stays a mock. No emails are collected or sent</li></ul></div>
+<div class="ctl"><input id="q" type="search" placeholder="Search titles, summaries, tools"><select id="l"><option value="">All lanes</option><option value="ai">AI use cases</option><option value="saves">Saves Index</option></select><select id="e"><option value="">All evidence</option><option>creator_reported</option><option>advice</option><option>thesis</option><option>promotional</option></select></div>
+<p id="n"></p><main id="m"></main></div>
+<script>(function(){var q=document.getElementById("q"),l=document.getElementById("l"),e=document.getElementById("e"),n=document.getElementById("n"),m=document.getElementById("m"),a=[];
+function f(){var s=q.value.toLowerCase(),c=0;a.forEach(function(x){var ok=(!l.value||x.dataset.lane===l.value)&&(!e.value||x.dataset.ev===e.value)&&(!s||x.textContent.toLowerCase().indexOf(s)>-1);x.hidden=!ok;if(ok)c++});n.textContent=c+" of "+a.length+" entries"}
+q.oninput=l.onchange=e.onchange=f;n.textContent="Loading entries...";
+var base="ai-in-the-wild-draft-1023-p";
+Promise.all([1,2,3].map(function(i){return fetch(base+i+".html").then(function(r){if(!r.ok)throw 0;return r.text()})})).then(function(t){m.innerHTML=t.join("");a=[].slice.call(m.querySelectorAll("article"));f()}).catch(function(){n.textContent="Could not load entries. Reload, or review them in the Google Sheet."})})();</script></body></html>
