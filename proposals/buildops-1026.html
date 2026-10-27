@@ -3,164 +3,160 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BuildOps</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<title>BuildOps: Fewer hours on paperwork for construction teams</title>
+<meta name="description" content="BuildOps sets up AI automations for estimating, bidding, subcontractor coordination and project paperwork. Tell us where paperwork slows your team down.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&display=swap">
 <style>
-/* Layout: drawing-sheet grid. Heavy condensed headline, mono spec labels, one orange accent used for actions and the form. */
+/* Layout: one readable column of content on warm white. Dark text throughout. The flip-board tiles are a small decorative accent above a normal heading. */
 :root{
-  --bg:#FBF9F5; --surface:#FFFFFF; --ink:#2A2F35; --muted:#666B70; --line:#E3DED3; --tint:#FFE9DC; --accent:#E8590C; --accent-ink:#FFFFFF;
-  --display:"Archivo","Arial Narrow",Arial,sans-serif; --body:"Archivo",Arial,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --bg:#FBF9F5; --surface:#FFFFFF; --ink:#22262B; --muted:#4A4F55; --line:#D9D3C7; --edge:#7A7F85; --tint:#FFEBDD;
+  --accent:#B23C00; --accent-ink:#FFFFFF;
+  --font:"Archivo",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
 }
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;margin:0}
-.w{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-header .w{display:flex;justify-content:space-between;align-items:center;padding-block:20px;border-bottom:1px solid var(--line);gap:16px;flex-wrap:wrap}
-.logo{font-family:var(--display);font-stretch:75%;font-weight:900;font-size:26px;letter-spacing:-.01em}
-.logo b{color:var(--accent)}
-a{color:inherit}
-.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:700;text-decoration:none;padding:14px 22px;border-radius:2px;font-size:16px}
-.btn:hover{filter:brightness(1.08)}
-.btn:focus-visible,a:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
-.hero{padding-block:64px 48px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:48px;align-items:end}
-h1{font-family:var(--display);font-stretch:62%;font-weight:900;font-size:clamp(56px,10vw,128px);line-height:.9;letter-spacing:-.015em;margin:12px 0 24px;text-transform:uppercase;text-wrap:balance}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:18px;line-height:1.6}
+.w{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--ink)}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 6px var(--surface)}
+.skip{position:absolute;left:16px;top:-80px;background:var(--ink);color:var(--surface);padding:12px 16px;z-index:10;border-radius:4px}
+.skip:focus{top:12px}
+header .w{display:flex;justify-content:space-between;align-items:center;gap:12px 16px;flex-wrap:wrap;padding-block:16px;border-bottom:1px solid var(--line)}
+.logo{font-weight:800;font-size:26px;letter-spacing:-.01em;line-height:1}
+.logo span{color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:700;font-size:18px;text-decoration:none;border-radius:4px;border:2px solid var(--accent);text-align:center}
+.btn:hover{background:#8F3000;border-color:#8F3000}
+.btn.sm{font-size:16px;padding:10px 18px;min-height:44px}
+.textlink{display:inline-block;padding:12px 4px;min-height:44px;font-weight:600}
+.hero{padding-block:48px 40px}
+.board{display:flex;gap:6px;margin:0 0 20px;font-size:clamp(22px,5vw,34px)}
+.tile{width:1.2em;height:1.5em;display:grid;place-items:center;background:var(--ink);color:var(--surface);font-weight:800;border-radius:4px;position:relative;line-height:1}
+.tile::after{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:var(--bg);opacity:.5}
+.tile.gap{background:transparent}
+.tile.gap::after{display:none}
+h1{font-size:clamp(34px,6.4vw,60px);line-height:1.08;font-weight:800;letter-spacing:-.015em;margin:0 0 20px;max-width:18ch;text-wrap:balance}
 h1 em{font-style:normal;color:var(--accent)}
-h1.board{font-size:clamp(26px,6vw,72px);line-height:1;letter-spacing:0;margin:20px 0 28px;display:flex;flex-wrap:wrap;gap:.45em 1em}
-.word{display:flex;gap:.07em}
-.tile{width:.74em;height:1.08em;display:grid;place-items:center;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:3px;box-shadow:0 .05em 0 var(--line);position:relative;font-family:var(--display);font-stretch:75%;font-weight:800;line-height:1}
-.tile::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line)}
-.tile.hot{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.tile.hot::after{background:rgba(0,0,0,.18)}
-.gate{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:4px}
-.gate .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:8px}
-.lede{font-size:20px;max-width:34ch;margin:0 0 28px}
-.cta{display:flex;gap:12px;flex-wrap:wrap}
-.spec{border:1.5px solid var(--line);background:var(--surface);padding:20px;display:grid;gap:0}
-.spec div{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px dashed var(--line)}
-.spec div:last-child{border-bottom:0}
-.spec span:last-child{font-weight:600;text-align:right}
+.lede{font-size:clamp(19px,2.4vw,22px);max-width:36ch;margin:0 0 28px}
+.cta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px}
 section{padding-block:56px;border-top:1px solid var(--line)}
-h2{font-family:var(--display);font-stretch:70%;font-weight:800;font-size:clamp(34px,5vw,56px);line-height:1;text-transform:uppercase;margin:8px 0 28px;max-width:18ch;text-wrap:balance}
-.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:0;border:1.5px solid var(--line)}
-.job{padding:24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface);min-width:0}
-.job h3{font-size:20px;margin:6px 0 8px;line-height:1.2}
-.job p{margin:0;color:var(--muted);font-size:16px}
-.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:40px}
-.two p{margin:0 0 14px;max-width:52ch}
-.steps{list-style:none;margin:0;padding:0;display:grid;gap:0}
-.steps li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
-.steps li strong{display:block}
-.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:0;border:1.5px solid var(--line)}
-.person{padding:24px;background:var(--surface);border-right:1px solid var(--line);min-width:0}
-.person h3{font-size:22px;margin:6px 0 8px;line-height:1.2}
-.person p{margin:0;color:var(--muted);font-size:16px}
-.formwrap{background:var(--tint);padding-block:56px;border-top:4px solid var(--accent)}
-.frame{background:#EFECE6;border:0;width:100%;height:640px;display:block;border-radius:2px}
-.alt{margin-top:16px;font-size:15px}
-.alt a{color:var(--ink)}
-footer .w{padding-block:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-@media(max-width:760px){.hero{grid-template-columns:minmax(0,1fr);gap:32px;padding-block:40px 32px}.steps li{grid-template-columns:minmax(0,1fr);gap:4px}}
-@media(prefers-reduced-motion:no-preference){.btn{transition:filter .15s}}
+h2{font-size:clamp(28px,4.4vw,40px);line-height:1.15;font-weight:800;letter-spacing:-.01em;margin:0 0 12px;max-width:24ch;text-wrap:balance}
+.sub{margin:0 0 28px;max-width:60ch;color:var(--muted)}
+.jobs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.job{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px 22px;min-width:0}
+.job h3{font-size:20px;line-height:1.3;margin:0 0 8px}
+.job p{margin:0;color:var(--muted);max-width:44ch}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px 22px;min-width:0}
+.card h3{font-size:18px;margin:0 0 8px}
+.card p{margin:0;max-width:44ch}
+.card.after{border:2px solid var(--ink)}
+.tag{display:inline-block;font-size:15px;font-weight:700;background:var(--tint);padding:4px 10px;border-radius:4px;margin:0 0 12px}
+.steps{margin:0;padding:0;list-style:none;display:grid;gap:12px;counter-reset:s;max-width:62ch}
+.steps li{counter-increment:s;display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:start}
+.steps li::before{content:counter(s);width:40px;height:40px;border-radius:50%;background:var(--ink);color:var(--surface);display:grid;place-items:center;font-weight:700}
+.steps strong{display:block}
+.team{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px}
+.person{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px 22px;min-width:0}
+.person h3{font-size:20px;margin:0 0 4px}
+.person .role{margin:0 0 8px;font-weight:600}
+.person p{margin:0;color:var(--muted)}
+.formwrap{background:var(--tint);border-top:4px solid var(--accent)}
+.direct{margin:0 0 16px;max-width:60ch}
+.frame{display:block;width:100%;height:960px;border:2px solid var(--edge);border-radius:6px;background:var(--bg)}
+.after-form{margin-top:16px}
+footer .w{padding-block:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;color:var(--muted);font-size:16px}
+@media(max-width:600px){body{font-size:17px}.hero{padding-block:32px}section{padding-block:40px}.frame{height:1200px}}
+@media(max-width:380px){.frame{height:1320px}}
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to main content</a>
 
 <header><div class="w">
-  <div class="logo">Build<b>Ops</b></div>
-  <a class="btn ghost" href="#start">Tell us about your team</a>
+  <div class="logo">Build<span>Ops</span></div>
+  <a class="btn sm" href="#start">Find your first automation</a>
 </div></header>
 
-<main>
+<main id="main">
 <div class="w hero">
-  <div>
-    <div class="mono gate"><span><i class="dot"></i>Now boarding: construction teams</span><span>First call: 20 min</span></div>
-    <h1 class="board" id="board" aria-label="Fewer hours on paper. More on the job." data-text="FEWER HOURS ON PAPER MORE ON *THE *JOB">Fewer hours on paper. More on the job.</h1>
-    <p class="lede">BuildOps sets up and runs AI automations for estimating, bidding, subcontractor coordination and project paperwork.</p>
-    <div class="cta">
-      <a class="btn" href="#start">Tell us about your team</a>
-      <a class="btn ghost" href="https://calendar.app.google/dcTsJdeWHTnvtQ5V7">Book 20 minutes</a>
-    </div>
-  </div>
-  <div class="spec" aria-label="At a glance">
-    <div class="mono"><span>At a glance</span><span></span></div>
-    <div><span>Built for</span><span>Trades, GCs, estimators</span></div>
-    <div><span>Form</span><span>8 questions, 2 minutes</span></div>
-    <div><span>First call</span><span>20 minutes</span></div>
-    <div><span>Reply</span><span>By email</span></div>
+  <div class="board" id="board" aria-hidden="true"></div>
+  <h1>Spend fewer hours on paperwork and more <em>on the job.</em></h1>
+  <p class="lede">Tell us where paperwork slows your team down. Let's find a useful place to start.</p>
+  <div class="cta">
+    <a class="btn" href="#start">Find your first automation</a>
+    <a class="textlink" href="https://calendar.app.google/dcTsJdeWHTnvtQ5V7">Prefer to talk? Book a short call</a>
   </div>
 </div>
 
-<section><div class="w">
-  <div class="mono">Where the hours go</div>
-  <h2>Seven jobs we automate first</h2>
-  <div class="jobs">
-    <div class="job"><div class="mono">Estimating</div><h3>Re-pricing a bid after the design changes</h3><p>Compare revised drawings to the first set and update the takeoff and price.</p></div>
-    <div class="job"><div class="mono">Procurement</div><h3>Chasing quotes from suppliers and subs</h3><p>Send requests, follow up on a schedule, and log every reply in one sheet.</p></div>
-    <div class="job"><div class="mono">Bid packages</div><h3>Matching subs to a bid package</h3><p>Shortlist subs by trade, region and past work, then invite them.</p></div>
-    <div class="job"><div class="mono">Business development</div><h3>Writing proposals and capture plans</h3><p>Draft from your past wins and the bid documents, ready for your review.</p></div>
-    <div class="job"><div class="mono">Closeout</div><h3>Pay applications and compliance paperwork</h3><p>Collect certificates and lien waivers, check them, and flag what is missing.</p></div>
-    <div class="job"><div class="mono">Contracts</div><h3>Reading long contracts and scope documents</h3><p>Pull out scope, dates, retainage and risk clauses into a one-page summary.</p></div>
-    <div class="job"><div class="mono">Office</div><h3>Sorting the inbox</h3><p>Route project email to the right person and draft the routine replies.</p></div>
+<section aria-labelledby="jobs-h"><div class="w">
+  <h2 id="jobs-h">Seven jobs we can automate</h2>
+  <p class="sub">BuildOps sets up and runs AI automations for estimating, bidding, subcontractor coordination and project paperwork. Each one below says what changes for your team.</p>
+  <ul class="jobs">
+    <li class="job"><h3>Re-pricing a bid after the design changes</h3><p>Your estimator reviews a list of what changed and the price impact, instead of re-reading two sets of drawings.</p></li>
+    <li class="job"><h3>Chasing quotes from suppliers and subs</h3><p>Requests and reminders go out on schedule. Every reply lands in one sheet you can compare.</p></li>
+    <li class="job"><h3>Matching subs to a bid package</h3><p>You get a shortlist of subs for each trade in the package, ready to invite.</p></li>
+    <li class="job"><h3>Writing proposals and capture plans</h3><p>You start from a draft built from your past wins and the bid documents, then edit it.</p></li>
+    <li class="job"><h3>Preparing pay applications and compliance paperwork</h3><p>A checklist shows which certificates and waivers are in, and which are still missing.</p></li>
+    <li class="job"><h3>Reading long contracts and scope documents</h3><p>A one-page summary lists scope, dates, retainage and risk clauses, with the page each came from.</p></li>
+    <li class="job"><h3>Sorting the inbox</h3><p>Project email goes to the right person, with a draft reply for the routine ones.</p></li>
+  </ul>
+</div></section>
+
+<section aria-labelledby="ex-h"><div class="w">
+  <p class="tag">Illustrative example, not a client result</p>
+  <h2 id="ex-h">What a better workflow can look like</h2>
+  <p class="sub">The job: collecting insurance certificates and lien waivers for a pay application.</p>
+  <div class="cols">
+    <div class="card"><h3>Today</h3><p>A project coordinator emails each sub for their documents. Replies arrive in different formats. Someone checks each one against the contract and chases the missing ones by hand.</p></div>
+    <div class="card after"><h3>With an automation</h3><p>Requests go out on a schedule. Each reply is filed and checked against a list. The coordinator gets one short list of what is missing and approves each follow-up before it goes out.</p></div>
   </div>
 </div></section>
 
-<section><div class="w two">
-  <div>
-    <div class="mono">Who it is for</div>
-    <h2>Teams that bid, build and chase paperwork</h2>
-    <p>Trade contractors, general contractors, independent estimators and owners all lose hours to the same repeat tasks. We start with the one that costs your team the most.</p>
-    <p>You keep your current tools. The automations run alongside them.</p>
-  </div>
-  <div>
-    <div class="mono">How it works</div>
-    <ol class="steps" style="margin-top:12px">
-      <li><span class="mono">Step 1</span><div><strong>Tell us about your team</strong>Fill in the short form below.</div></li>
-      <li><span class="mono">Step 2</span><div><strong>Talk for 20 minutes</strong>We confirm which job to automate first.</div></li>
-      <li><span class="mono">Step 3</span><div><strong>We build it</strong>You review the result and decide what stays.</div></li>
-    </ol>
-  </div>
+<section aria-labelledby="how-h"><div class="w">
+  <h2 id="how-h">What happens after you send your answers</h2>
+  <ol class="steps">
+    <li><div><strong>You answer a few questions</strong>Start with the job that eats up the most time. Add your name and email last.</div></li>
+    <li><div><strong>We read your answers</strong>The BuildOps team reads them and replies by email.</div></li>
+    <li><div><strong>You decide what to do next</strong>You can reply by email or book a short call. Neither is required.</div></li>
+  </ol>
 </div></section>
 
-<section id="about"><div class="w">
-  <div class="mono">About</div>
-  <h2>Three founders, one build team</h2>
-  <div class="team">
-    <div class="person"><div class="mono">Co-founder</div><h3>Keyona Meeks</h3><p>Founder of ReRev Labs. Builds AI automations and teaches AI workshops to founders and teams.</p></div>
-    <div class="person"><div class="mono">Co-founder</div><h3>Isis Simmons</h3><p>Brings the construction-industry network and leads client relationships.</p></div>
-    <div class="person"><div class="mono">Co-founder</div><h3>Ahmed</h3><p>Software engineer. Builds and maintains the automations.</p></div>
-  </div>
+<section aria-labelledby="about-h"><div class="w">
+  <h2 id="about-h">Who is behind BuildOps</h2>
+  <ul class="team">
+    <li class="person"><h3>Keyona Meeks</h3><p class="role">Co-founder</p><p>Founder of ReRev Labs. Builds AI automations and teaches AI workshops to founders and teams.</p></li>
+    <li class="person"><h3>Isis Simmons</h3><p class="role">Co-founder</p><p>Brings the construction-industry network and leads client relationships.</p></li>
+    <li class="person"><h3>Ahmed</h3><p class="role">Co-founder</p><p>Software engineer. Builds and maintains the automations.</p></li>
+  </ul>
 </div></section>
 
-<section class="formwrap" id="start"><div class="w">
-  <div class="mono">Start here</div>
-  <h2>Tell us about your team</h2>
-  <iframe id="f" class="frame" title="BuildOps interest form" src="https://rerev-forms.netlify.app/?f=buildops" loading="lazy"></iframe>
-  <p class="alt">Form not loading? <a id="direct" href="https://rerev-forms.netlify.app/?f=buildops">Open it in its own page</a>, or <a href="https://calendar.app.google/dcTsJdeWHTnvtQ5V7">book 20 minutes</a>.</p>
+<section class="formwrap" id="start" aria-labelledby="form-h"><div class="w">
+  <h2 id="form-h">Find your first automation</h2>
+  <p class="sub" style="color:var(--ink)">Tell us where paperwork slows your team down. Let's find a useful place to start.</p>
+  <p class="direct">The form below has seven short questions, and two are optional. If it does not load, <a id="direct" href="/assets/buildops-form/?f=buildops">open the form in its own page</a>.</p>
+  <iframe id="f" class="frame" title="Find your first automation: BuildOps form" src="/assets/buildops-form/?f=buildops"></iframe>
+  <p class="after-form"><a class="textlink" href="https://calendar.app.google/dcTsJdeWHTnvtQ5V7">Prefer to talk? Book a short call</a></p>
 </div></section>
 </main>
 
-<footer><div class="w mono"><span>BuildOps</span><span>Automation for construction</span></div></footer>
+<footer><div class="w"><span>BuildOps</span><span>Automation for construction teams</span></div></footer>
 
 <script>
 (function(){
-  var b=document.getElementById('board');
+  /* Decorative flip tiles. The real heading above is plain text and shows at once. */
   try{
-    var words=b.getAttribute('data-text').split(' '),A='ABCDEFGHIJKLMNOPQRSTUVWXYZ',tiles=[];
-    b.textContent='';
-    words.forEach(function(w){
-      var hot=w.charAt(0)==='*';if(hot)w=w.slice(1);
-      var el=document.createElement('span');el.className='word';el.setAttribute('aria-hidden','true');
-      w.split('').forEach(function(c){var t=document.createElement('span');t.className='tile'+(hot?' hot':'');t.textContent=c;t.dataset.c=c;el.appendChild(t);tiles.push(t)});
-      b.appendChild(el);
-    });
+    var b=document.getElementById('board'),text='THE JOB',A='ABCDEFGHIJKLMNOPQRSTUVWXYZ',tiles=[];
+    text.split('').forEach(function(c){var t=document.createElement('span');t.className='tile'+(c===' '?' gap':'');t.textContent=c===' '?'':c;t.dataset.c=c;b.appendChild(t);tiles.push(t)});
     if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
       tiles.forEach(function(t,i){
-        var n=0,max=4+Math.floor(Math.random()*6);
-        setTimeout(function(){var iv=setInterval(function(){n++;if(n>=max){t.textContent=t.dataset.c;clearInterval(iv)}else t.textContent=A.charAt(Math.floor(Math.random()*26))},70)},i*35);
+        if(t.dataset.c===' ')return;
+        var n=0,max=3+(i%3);
+        setTimeout(function(){var iv=setInterval(function(){n++;if(n>=max){t.textContent=t.dataset.c;clearInterval(iv)}else t.textContent=A.charAt(Math.floor(Math.random()*26))},60)},i*60);
       });
     }
   }catch(e){}
+  /* Pass campaign tags to the form so submissions show where the visit came from. */
   var f=document.getElementById('f'),d=document.getElementById('direct');
   try{
     var q=new URLSearchParams(location.search),keep=['utm_source','utm_medium','utm_campaign','utm_term','utm_content','fbclid'];
@@ -169,8 +165,9 @@ footer .w{padding-block:28px;display:flex;justify-content:space-between;gap:16px
     u.searchParams.set('landing_page',location.pathname);
     if(document.referrer)u.searchParams.set('referrer',document.referrer);
     f.src=u.toString();
-    var p=new URL(d.href);u.searchParams.forEach(function(v,k){if(k!=='key')p.searchParams.set(k,v)});d.href=p.toString();
+    d.href=u.toString();
   }catch(e){}
+  /* The form reports its height when the thank-you screen shows. */
   window.addEventListener('message',function(e){
     try{
       if(e.source!==f.contentWindow)return;
