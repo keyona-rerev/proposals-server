@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BuildOps</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: drawing-sheet grid. Heavy condensed headline, mono spec labels, one orange accent used for actions and the form. */
+:root{
+  --bg:#FBF9F5; --surface:#FFFFFF; --ink:#2A2F35; --muted:#666B70; --line:#E3DED3; --tint:#FFE9DC; --accent:#E8590C; --accent-ink:#FFFFFF;
+  --display:"Archivo","Arial Narrow",Arial,sans-serif; --body:"Archivo",Arial,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;margin:0}
+.w{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+header .w{display:flex;justify-content:space-between;align-items:center;padding-block:20px;border-bottom:1px solid var(--line);gap:16px;flex-wrap:wrap}
+.logo{font-family:var(--display);font-stretch:75%;font-weight:900;font-size:26px;letter-spacing:-.01em}
+.logo b{color:var(--accent)}
+a{color:inherit}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:700;text-decoration:none;padding:14px 22px;border-radius:2px;font-size:16px}
+.btn:hover{filter:brightness(1.08)}
+.btn:focus-visible,a:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.hero{padding-block:64px 48px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:48px;align-items:end}
+h1{font-family:var(--display);font-stretch:62%;font-weight:900;font-size:clamp(56px,10vw,128px);line-height:.9;letter-spacing:-.015em;margin:12px 0 24px;text-transform:uppercase;text-wrap:balance}
+h1 em{font-style:normal;color:var(--accent)}
+h1.board{font-size:clamp(26px,6vw,72px);line-height:1;letter-spacing:0;margin:20px 0 28px;display:flex;flex-wrap:wrap;gap:.45em 1em}
+.word{display:flex;gap:.07em}
+.tile{width:.74em;height:1.08em;display:grid;place-items:center;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:3px;box-shadow:0 .05em 0 var(--line);position:relative;font-family:var(--display);font-stretch:75%;font-weight:800;line-height:1}
+.tile::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line)}
+.tile.hot{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tile.hot::after{background:rgba(0,0,0,.18)}
+.gate{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.gate .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:8px}
+.lede{font-size:20px;max-width:34ch;margin:0 0 28px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.spec{border:1.5px solid var(--line);background:var(--surface);padding:20px;display:grid;gap:0}
+.spec div{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.spec div:last-child{border-bottom:0}
+.spec span:last-child{font-weight:600;text-align:right}
+section{padding-block:56px;border-top:1px solid var(--line)}
+h2{font-family:var(--display);font-stretch:70%;font-weight:800;font-size:clamp(34px,5vw,56px);line-height:1;text-transform:uppercase;margin:8px 0 28px;max-width:18ch;text-wrap:balance}
+.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:0;border:1.5px solid var(--line)}
+.job{padding:24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface);min-width:0}
+.job h3{font-size:20px;margin:6px 0 8px;line-height:1.2}
+.job p{margin:0;color:var(--muted);font-size:16px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:40px}
+.two p{margin:0 0 14px;max-width:52ch}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.steps li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.steps li strong{display:block}
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:0;border:1.5px solid var(--line)}
+.person{padding:24px;background:var(--surface);border-right:1px solid var(--line);min-width:0}
+.person h3{font-size:22px;margin:6px 0 8px;line-height:1.2}
+.person p{margin:0;color:var(--muted);font-size:16px}
+.formwrap{background:var(--tint);padding-block:56px;border-top:4px solid var(--accent)}
+.frame{background:#EFECE6;border:0;width:100%;height:640px;display:block;border-radius:2px}
+.alt{margin-top:16px;font-size:15px}
+.alt a{color:var(--ink)}
+footer .w{padding-block:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:760px){.hero{grid-template-columns:minmax(0,1fr);gap:32px;padding-block:40px 32px}.steps li{grid-template-columns:minmax(0,1fr);gap:4px}}
+@media(prefers-reduced-motion:no-preference){.btn{transition:filter .15s}}
+</style>
+</head>
+<body>
+
+<header><div class="w">
+  <div class="logo">Build<b>Ops</b></div>
+  <a class="btn ghost" href="#start">Tell us about your team</a>
+</div></header>
+
+<main>
+<div class="w hero">
+  <div>
+    <div class="mono gate"><span><i class="dot"></i>Now boarding: construction teams</span><span>First call: 20 min</span></div>
+    <h1 class="board" id="board" aria-label="Fewer hours on paper. More on the job." data-text="FEWER HOURS ON PAPER MORE ON *THE *JOB">Fewer hours on paper. More on the job.</h1>
+    <p class="lede">BuildOps sets up and runs AI automations for estimating, bidding, subcontractor coordination and project paperwork.</p>
+    <div class="cta">
+      <a class="btn" href="#start">Tell us about your team</a>
+      <a class="btn ghost" href="https://calendar.app.google/dcTsJdeWHTnvtQ5V7">Book 20 minutes</a>
+    </div>
+  </div>
+  <div class="spec" aria-label="At a glance">
+    <div class="mono"><span>At a glance</span><span></span></div>
+    <div><span>Built for</span><span>Trades, GCs, estimators</span></div>
+    <div><span>Form</span><span>8 questions, 2 minutes</span></div>
+    <div><span>First call</span><span>20 minutes</span></div>
+    <div><span>Reply</span><span>By email</span></div>
+  </div>
+</div>
+
+<section><div class="w">
+  <div class="mono">Where the hours go</div>
+  <h2>Seven jobs we automate first</h2>
+  <div class="jobs">
+    <div class="job"><div class="mono">Estimating</div><h3>Re-pricing a bid after the design changes</h3><p>Compare revised drawings to the first set and update the takeoff and price.</p></div>
+    <div class="job"><div class="mono">Procurement</div><h3>Chasing quotes from suppliers and subs</h3><p>Send requests, follow up on a schedule, and log every reply in one sheet.</p></div>
+    <div class="job"><div class="mono">Bid packages</div><h3>Matching subs to a bid package</h3><p>Shortlist subs by trade, region and past work, then invite them.</p></div>
+    <div class="job"><div class="mono">Business development</div><h3>Writing proposals and capture plans</h3><p>Draft from your past wins and the bid documents, ready for your review.</p></div>
+    <div class="job"><div class="mono">Closeout</div><h3>Pay applications and compliance paperwork</h3><p>Collect certificates and lien waivers, check them, and flag what is missing.</p></div>
+    <div class="job"><div class="mono">Contracts</div><h3>Reading long contracts and scope documents</h3><p>Pull out scope, dates, retainage and risk clauses into a one-page summary.</p></div>
+    <div class="job"><div class="mono">Office</div><h3>Sorting the inbox</h3><p>Route project email to the right person and draft the routine replies.</p></div>
+  </div>
+</div></section>
+
+<section><div class="w two">
+  <div>
+    <div class="mono">Who it is for</div>
+    <h2>Teams that bid, build and chase paperwork</h2>
+    <p>Trade contractors, general contractors, independent estimators and owners all lose hours to the same repeat tasks. We start with the one that costs your team the most.</p>
+    <p>You keep your current tools. The automations run alongside them.</p>
+  </div>
+  <div>
+    <div class="mono">How it works</div>
+    <ol class="steps" style="margin-top:12px">
+      <li><span class="mono">Step 1</span><div><strong>Tell us about your team</strong>Fill in the short form below.</div></li>
+      <li><span class="mono">Step 2</span><div><strong>Talk for 20 minutes</strong>We confirm which job to automate first.</div></li>
+      <li><span class="mono">Step 3</span><div><strong>We build it</strong>You review the result and decide what stays.</div></li>
+    </ol>
+  </div>
+</div></section>
+
+<section id="about"><div class="w">
+  <div class="mono">About</div>
+  <h2>Three founders, one build team</h2>
+  <div class="team">
+    <div class="person"><div class="mono">Co-founder</div><h3>Keyona Meeks</h3><p>Founder of ReRev Labs. Builds AI automations and teaches AI workshops to founders and teams.</p></div>
+    <div class="person"><div class="mono">Co-founder</div><h3>Isis Simmons</h3><p>Brings the construction-industry network and leads client relationships.</p></div>
+    <div class="person"><div class="mono">Co-founder</div><h3>Ahmed</h3><p>Software engineer. Builds and maintains the automations.</p></div>
+  </div>
+</div></section>
+
+<section class="formwrap" id="start"><div class="w">
+  <div class="mono">Start here</div>
+  <h2>Tell us about your team</h2>
+  <iframe id="f" class="frame" title="BuildOps interest form" src="https://rerev-forms.netlify.app/?f=buildops" loading="lazy"></iframe>
+  <p class="alt">Form not loading? <a id="direct" href="https://rerev-forms.netlify.app/?f=buildops">Open it in its own page</a>, or <a href="https://calendar.app.google/dcTsJdeWHTnvtQ5V7">book 20 minutes</a>.</p>
+</div></section>
+</main>
+
+<footer><div class="w mono"><span>BuildOps</span><span>Automation for construction</span></div></footer>
+
+<script>
+(function(){
+  var b=document.getElementById('board');
+  try{
+    var words=b.getAttribute('data-text').split(' '),A='ABCDEFGHIJKLMNOPQRSTUVWXYZ',tiles=[];
+    b.textContent='';
+    words.forEach(function(w){
+      var hot=w.charAt(0)==='*';if(hot)w=w.slice(1);
+      var el=document.createElement('span');el.className='word';el.setAttribute('aria-hidden','true');
+      w.split('').forEach(function(c){var t=document.createElement('span');t.className='tile'+(hot?' hot':'');t.textContent=c;t.dataset.c=c;el.appendChild(t);tiles.push(t)});
+      b.appendChild(el);
+    });
+    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      tiles.forEach(function(t,i){
+        var n=0,max=4+Math.floor(Math.random()*6);
+        setTimeout(function(){var iv=setInterval(function(){n++;if(n>=max){t.textContent=t.dataset.c;clearInterval(iv)}else t.textContent=A.charAt(Math.floor(Math.random()*26))},70)},i*35);
+      });
+    }
+  }catch(e){}
+  var f=document.getElementById('f'),d=document.getElementById('direct');
+  try{
+    var q=new URLSearchParams(location.search),keep=['utm_source','utm_medium','utm_campaign','utm_term','utm_content','fbclid'];
+    var u=new URL(f.src);
+    keep.forEach(function(k){if(q.get(k))u.searchParams.set(k,q.get(k))});
+    u.searchParams.set('landing_page',location.pathname);
+    if(document.referrer)u.searchParams.set('referrer',document.referrer);
+    f.src=u.toString();
+    var p=new URL(d.href);u.searchParams.forEach(function(v,k){if(k!=='key')p.searchParams.set(k,v)});d.href=p.toString();
+  }catch(e){}
+  window.addEventListener('message',function(e){
+    try{
+      if(e.source!==f.contentWindow)return;
+      var m=e.data;
+      if(m&&m.type==='rerev-form-outcome'&&m.height)f.style.height=Math.max(480,+m.height)+'px';
+    }catch(err){}
+  });
+})();
+</script>
+</body>
+</html>
