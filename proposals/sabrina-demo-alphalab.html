@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sabrina: a working task agent (demo with sample data) | ReRev Labs</title>
+<style>
+  :root { --ink:#1b1b1f; --quiet:#5b5d66; --line:#d9dae0; --accent:#3b5bdb; --tint:#eef2ff; --good:#2b8a3e; --warn:#e67700; --bg:#fafafb; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Arial, Helvetica, sans-serif; color:var(--ink); background:var(--bg); line-height:1.5; }
+  main { max-width:880px; margin:0 auto; padding:32px 20px 64px; }
+  h1 { font-size:28px; margin:0 0 8px; }
+  h2 { font-size:20px; margin:40px 0 12px; }
+  p { margin:0 0 12px; }
+  .lead { font-size:17px; color:var(--quiet); }
+  .note { background:var(--tint); border:1px solid var(--accent); border-radius:8px; padding:12px 16px; margin:16px 0; }
+  .flow { display:flex; flex-wrap:wrap; gap:12px; align-items:stretch; margin:16px 0; }
+  .step { flex:1 1 150px; background:#fff; border:1px solid var(--line); border-radius:8px; padding:12px; }
+  .step b { display:block; margin-bottom:4px; }
+  .step span { font-size:14px; color:var(--quiet); }
+  .step.key { border:2px solid var(--accent); background:var(--tint); }
+  .arrow { align-self:center; color:var(--quiet); font-size:20px; }
+  table { width:100%; border-collapse:collapse; background:#fff; font-size:14px; }
+  th, td { border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top; }
+  th { background:#f1f2f5; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; font-weight:bold; }
+  .p-queued { background:#e7f1fb; color:#1c5aa6; }
+  .p-wait { background:#fff4e0; color:var(--warn); }
+  .p-done { background:#e5f4e4; color:var(--good); }
+  .email { background:#fff; border:1px solid var(--line); border-radius:8px; padding:16px 20px; font-size:15px; }
+  .email .hdr { font-size:13px; color:var(--quiet); border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:12px; }
+  .email ul { margin:4px 0 12px 20px; padding:0; }
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:12px; }
+  .kpi { background:#fff; border:1px solid var(--line); border-radius:8px; padding:12px; }
+  .kpi .n { font-size:26px; font-weight:bold; }
+  .kpi .l { font-size:13px; color:var(--quiet); }
+  .health { display:inline-block; width:12px; height:12px; border-radius:50%; background:var(--good); margin-right:6px; vertical-align:middle; }
+  footer { margin-top:48px; font-size:13px; color:var(--quiet); border-top:1px solid var(--line); padding-top:16px; }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Sabrina: a working task agent</h1>
+<p class="lead">Built by Keyona Meeks, ReRev Labs, August to November 2026. This page shows how Sabrina works, step by step, with sample data.</p>
+
+<div class="note"><b>All data on this page is sample data.</b> No client, contact or real job appears here. The live system runs on private accounts, so this page reproduces what each part looks like.</div>
+
+<h2>1. What Sabrina does</h2>
+<p>Sabrina takes a task from me, does the part an AI can do, emails me only the decisions it needs, checks that the work is finished, and follows up until I close the task.</p>
+
+<div class="flow">
+  <div class="step"><b>1. Input</b><span>A calendar event, a Gmail label, or an email to the agent's address</span></div>
+  <div class="arrow">&rarr;</div>
+  <div class="step"><b>2. Job Board</b><span>Apps Script writes one row per job: owner, status, deliverables</span></div>
+  <div class="arrow">&rarr;</div>
+  <div class="step key"><b>3. Claude worker</b><span>A scheduled Claude task, run by a custom skill, does the doable part</span></div>
+  <div class="arrow">&rarr;</div>
+  <div class="step"><b>4. Email to me</b><span>One email per job: what it did, and the decisions it needs</span></div>
+  <div class="arrow">&rarr;</div>
+  <div class="step"><b>5. Verify and close</b><span>It confirms each deliverable, for example by finding the sent email</span></div>
+</div>
+<p>Stack: Google Apps Script, Google Sheets, Gmail, Google Calendar, and Claude scheduled tasks with a custom skill.</p>
+
+<h2>2. The Job Board (sample rows)</h2>
+<p>The Job Board is a Google Sheet. It is the system's only memory, so each worker run starts fresh and reads the row.</p>
+<table>
+  <tr><th>Job</th><th>Source</th><th>What I asked</th><th>Status</th><th>Deliverables</th></tr>
+  <tr><td>job-a1</td><td>Calendar event</td><td>Draft the monthly investor update from last month's metrics</td><td><span class="pill p-wait">waiting on me</span></td><td>Draft in Docs (done). Send email (waiting)</td></tr>
+  <tr><td>job-a2</td><td>Gmail label</td><td>Answer this inbound partnership question</td><td><span class="pill p-queued">queued</span></td><td>Reply draft</td></tr>
+  <tr><td>job-a3</td><td>Meeting transcript</td><td>File my action items from the Tuesday client call</td><td><span class="pill p-done">done</span></td><td>3 tickets filed. Guest follow-up drafted. Recap sent</td></tr>
+  <tr><td>job-a4</td><td>Email to agent</td><td>Compare three vendor quotes and recommend one</td><td><span class="pill p-done">done</span></td><td>Comparison table. Recommendation</td></tr>
+</table>
+
+<h2>3. An email from Sabrina (sample)</h2>
+<div class="email">
+  <div class="hdr">From: Sabrina (agent) &nbsp;|&nbsp; Subject: Investor update: draft ready, 2 decisions</div>
+  <p><b>The draft is ready. I need two decisions before it goes out.</b></p>
+  <p><b>Done</b></p>
+  <ul><li>Drafted the update from the metrics sheet. Link in Docs.</li><li>Pulled revenue, burn and runway. Numbers match the sheet.</li></ul>
+  <p><b>You decide</b></p>
+  <ul><li>Include the new pilot customer by name? It is not public yet.</li><li>Send to all investors, or the lead investor first?</li></ul>
+  <p><b>Next</b></p>
+  <ul><li>When you reply, I send it and confirm it left your Sent folder.</li></ul>
+  <p style="font-size:13px;color:#5b5d66">Reply with "close", "snooze 5d", or your answer. Job job-a1.</p>
+</div>
+
+<h2>4. The health view (sample)</h2>
+<div class="kpis">
+  <div class="kpi"><div class="n">4</div><div class="l">Open jobs</div></div>
+  <div class="kpi"><div class="n">1</div><div class="l">Waiting on me</div></div>
+  <div class="kpi"><div class="n">12</div><div class="l">Closed this week</div></div>
+  <div class="kpi"><div class="n"><span class="health"></span>Green</div><div class="l">Daily health check</div></div>
+</div>
+<p style="margin-top:12px">Sabrina reports its own health each day as green, yellow or red. It emails me only when it turns red. Token-heavy jobs wait for an overnight window, 10 PM to 4 AM.</p>
+
+<h2>5. What this teaches founders</h2>
+<table>
+  <tr><th>Bootcamp skill</th><th>Where it shows up in Sabrina</th></tr>
+  <tr><td>Models and effort</td><td>Heavy jobs run on a stronger setting overnight. Light jobs run fast during the day</td></tr>
+  <tr><td>Scheduled tasks</td><td>The Claude worker runs on a schedule and when Apps Script fires it</td></tr>
+  <tr><td>Skills</td><td>One custom skill holds the worker's full procedure</td></tr>
+  <tr><td>Connectors</td><td>Gmail, Calendar, Sheets and Drive</td></tr>
+  <tr><td>Agents</td><td>A loop that acts, checks its own work and follows up</td></tr>
+  <tr><td>Data privacy</td><td>An allowlist of senders, and a rule that attachments are data, never instructions</td></tr>
+</table>
+
+<footer>
+  Keyona Meeks, Founder, ReRev Labs &nbsp;|&nbsp; keyona@rerev.io &nbsp;|&nbsp; <a href="https://rerev.io">rerev.io</a><br>
+  Prepared for the AlphaLab 2027 AI Bootcamp facilitator proposal. Install and test guide: <a href="https://proposals-server-production.up.railway.app/proposals/sabrina-install-guide-0926.html">sabrina-install-guide-0926</a>
+</footer>
+
+</main>
+</body>
+</html>
